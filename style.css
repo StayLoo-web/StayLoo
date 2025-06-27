@@ -370,4 +370,107 @@ ul {
     .footer-links {
         margin-top: 15px;
     }
+    /* [Keep all your existing global styles] */
+/* [Keep all your header styles] */
+/* [Keep all your hero section styles] */
+/* [Keep all your footer styles] */
+
+/* ================================= */
+/* NEW LISTING FORM STYLES (ADD THESE) */
+/* ================================= */
+
+/* Listing Form Styles */
+.listing-form-section {
+    padding: 80px 0;
+    background-color: var(--light-color);
+}
+
+.form-container {
+    background-color: var(--white);
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: var(--shadow);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.form-container h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    text-align: center;
+    color: var(--dark-color);
+}
+
+.form-subtitle {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--gray-color);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--light-gray);
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.2);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.note {
+    font-size: 0.8rem;
+    color: var(--gray-color);
+    margin-top: 5px;
+    font-style: italic;
+}
+
+.form-submit {
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* Responsive Styles for Form */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 30px 20px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
 }
