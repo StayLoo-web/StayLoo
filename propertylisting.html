@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STAYLOO</title>
+    <title>STAYLOO - Find Your Perfect Stay</title>
     <style>
         /* Global Styles */
         body {
@@ -47,6 +47,23 @@
         
         .btn:hover {
             background-color: #0055aa;
+        }
+        
+        .btn-admin {
+            background-color: #28a745;
+            margin-right: 10px;
+        }
+        
+        .btn-admin:hover {
+            background-color: #218838;
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
         }
         
         /* Property Type Selection Page */
@@ -135,6 +152,7 @@
         .property-details {
             padding: 20px;
             flex: 1;
+            position: relative;
         }
         
         .property-details h3 {
@@ -185,6 +203,18 @@
             text-shadow: 0 0 8px rgba(0,0,0,0.5);
         }
         
+        /* Admin Controls */
+        .admin-controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: none;
+        }
+        
+        .admin-mode .admin-controls {
+            display: block;
+        }
+        
         /* Payment Page */
         .payment-container {
             background-color: white;
@@ -226,6 +256,44 @@
             margin: 20px 0;
         }
         
+        /* Admin Login */
+        .admin-login {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+        }
+        
+        /* Add Property Form */
+        .add-property-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .admin-mode .add-property-form {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
         /* Hidden class for page navigation */
         .hidden {
             display: none;
@@ -238,6 +306,9 @@
     <header>
         <div class="container">
             <div class="logo">STAYLOO</div>
+            <div class="admin-login">
+                <button class="btn btn-admin" id="adminToggle">Admin Login</button>
+            </div>
         </div>
     </header>
     
@@ -288,29 +359,57 @@
                 <button onclick="searchProperties()"><i class="fas fa-search"></i> Search</button>
             </div>
             
-            <div class="results-container" id="resultsContainer">
-                <!-- Sample property - would be dynamically generated in a real app -->
-                <div class="property-listing hidden" id="sampleProperty">
-                    <img src="https://via.placeholder.com/300x200" alt="Property Image" class="property-image">
-                    <div class="property-details">
-                        <h3>Sample Property</h3>
-                        <div class="price">₹12,000/month</div>
-                        <div class="property-info">
-                            <div class="info-item"><i class="fas fa-layer-group"></i> <span class="property-size">1BHK</span></div>
-                            <div class="info-item"><i class="fas fa-vector-square"></i> <span class="property-area">600 sq.ft</span></div>
-                            <div class="info-item"><i class="fas fa-map-marker-alt"></i> <span class="property-location">Sample Location</span></div>
-                        </div>
-                        <p class="property-description">This is a sample property description that would include details about the property, amenities, and other relevant information.</p>
-                        
-                        <div class="locked-info" onclick="showPaymentPage()">
-                            <i class="fas fa-lock"></i>
-                            <div>
-                                <div class="blurred">Contact: 98XXXXXXXX</div>
-                                <div class="blurred">Address: Full address will be shown after payment</div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Add Property Form (Admin Only) -->
+            <div class="add-property-form" id="addPropertyForm">
+                <h2>Add New Property</h2>
+                <div class="form-group">
+                    <label for="propertyTitle">Title</label>
+                    <input type="text" id="propertyTitle" placeholder="Property Title">
                 </div>
+                <div class="form-group">
+                    <label for="propertyType">Type</label>
+                    <select id="propertyType">
+                        <option value="1BHK">1BHK</option>
+                        <option value="2BHK">2BHK</option>
+                        <option value="3BHK">3BHK</option>
+                        <option value="Flat">Flat</option>
+                        <option value="PG">PG</option>
+                        <option value="House">House</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="propertyPrice">Price (₹/month)</label>
+                    <input type="number" id="propertyPrice" placeholder="e.g., 12000">
+                </div>
+                <div class="form-group">
+                    <label for="propertyArea">Area (sq.ft)</label>
+                    <input type="number" id="propertyArea" placeholder="e.g., 600">
+                </div>
+                <div class="form-group">
+                    <label for="propertyLocation">Location</label>
+                    <input type="text" id="propertyLocation" placeholder="e.g., Mumbai">
+                </div>
+                <div class="form-group">
+                    <label for="propertyImage">Image URL</label>
+                    <input type="text" id="propertyImage" placeholder="https://example.com/image.jpg">
+                </div>
+                <div class="form-group">
+                    <label for="propertyDescription">Description</label>
+                    <textarea id="propertyDescription" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="propertyContact">Contact Number</label>
+                    <input type="text" id="propertyContact" placeholder="98XXXXXXXX">
+                </div>
+                <div class="form-group">
+                    <label for="propertyAddress">Full Address</label>
+                    <textarea id="propertyAddress" rows="2"></textarea>
+                </div>
+                <button class="btn btn-admin" onclick="addProperty()">Add Property</button>
+            </div>
+            
+            <div class="results-container" id="resultsContainer">
+                <!-- Properties will be added here dynamically -->
             </div>
         </div>
     </div>
@@ -327,7 +426,7 @@
                 [QR Code Placeholder]
             </div>
             
-            <div class="upi-id">propertyfinder@upi</div>
+            <div class="upi-id">stayloo@upi</div>
             
             <p>After successful payment, the contact details will be unlocked automatically.</p>
             
@@ -336,8 +435,40 @@
     </div>
     
     <script>
-        // Global variable to store selected property type
+        // Global variables
         let currentPropertyType = '';
+        let isAdmin = false;
+        let properties = [];
+        
+        // Initialize with some sample properties (in a real app, these would come from a database)
+        function initializeSampleProperties() {
+            properties = [
+                {
+                    id: 1,
+                    title: "Cozy 1BHK in Mumbai",
+                    type: "1BHK",
+                    price: "₹12,000",
+                    area: "600 sq.ft",
+                    location: "Mumbai",
+                    image: "https://via.placeholder.com/300x200?text=1BHK+Mumbai",
+                    description: "A cozy 1BHK apartment in the heart of Mumbai with all modern amenities.",
+                    contact: "9876543210",
+                    address: "123 Main Street, Mumbai - 400001"
+                },
+                {
+                    id: 2,
+                    title: "Spacious 2BHK in Bangalore",
+                    type: "2BHK",
+                    price: "₹18,000",
+                    area: "900 sq.ft",
+                    location: "Bangalore",
+                    image: "https://via.placeholder.com/300x200?text=2BHK+Bangalore",
+                    description: "Spacious 2BHK flat in a peaceful neighborhood of Bangalore.",
+                    contact: "9876543211",
+                    address: "456 Oak Avenue, Bangalore - 560001"
+                }
+            ];
+        }
         
         // Function to handle property type selection
         function selectPropertyType(type) {
@@ -354,43 +485,92 @@
                 paymentAmount = '₹99';
             }
             document.getElementById('paymentAmount').textContent = paymentAmount;
+            
+            // Clear previous search results
+            document.getElementById('resultsContainer').innerHTML = '';
         }
         
-        // Function to search properties (simplified for demo)
+        // Function to search properties
         function searchProperties() {
-            const location = document.getElementById('locationInput').value.trim();
+            const location = document.getElementById('locationInput').value.trim().toLowerCase();
+            const resultsContainer = document.getElementById('resultsContainer');
+            
+            // Clear previous results
+            resultsContainer.innerHTML = '';
             
             if (location) {
-                // In a real app, this would fetch data from a server
-                // For demo, we'll just show the sample property
-                const sampleProperty = document.getElementById('sampleProperty');
-                const resultsContainer = document.getElementById('resultsContainer');
+                // Filter properties by location and type
+                const filteredProperties = properties.filter(property => 
+                    property.location.toLowerCase().includes(location) && 
+                    (currentPropertyType === '' || property.type === currentPropertyType)
+                );
                 
-                // Update sample property with search location
-                document.querySelector('.property-location').textContent = location;
-                
-                // Clear previous results (except our sample)
-                const allProperties = document.querySelectorAll('.property-listing');
-                allProperties.forEach(prop => {
-                    if (prop.id !== 'sampleProperty') {
-                        prop.remove();
-                    }
-                });
-                
-                // Show sample property (in real app, this would be dynamic)
-                sampleProperty.classList.remove('hidden');
-                
-                // Scroll to results
-                resultsContainer.scrollIntoView({ behavior: 'smooth' });
+                if (filteredProperties.length > 0) {
+                    // Display filtered properties
+                    filteredProperties.forEach(property => {
+                        createPropertyCard(property);
+                    });
+                } else {
+                    resultsContainer.innerHTML = '<p>No properties found in this location. Try a different search.</p>';
+                }
             } else {
-                alert('Please enter a location to search');
+                // Show all properties of the selected type if no location specified
+                const filteredProperties = currentPropertyType === '' ? 
+                    properties : 
+                    properties.filter(property => property.type === currentPropertyType);
+                
+                if (filteredProperties.length > 0) {
+                    filteredProperties.forEach(property => {
+                        createPropertyCard(property);
+                    });
+                } else {
+                    resultsContainer.innerHTML = '<p>No properties of this type available.</p>';
+                }
             }
+        }
+        
+        // Function to create a property card
+        function createPropertyCard(property) {
+            const propertyCard = document.createElement('div');
+            propertyCard.className = 'property-listing';
+            propertyCard.dataset.id = property.id;
+            
+            propertyCard.innerHTML = `
+                <img src="${property.image}" alt="${property.title}" class="property-image">
+                <div class="property-details">
+                    <h3>${property.title}</h3>
+                    <div class="price">${property.price}/month</div>
+                    <div class="property-info">
+                        <div class="info-item"><i class="fas fa-layer-group"></i> <span class="property-size">${property.type}</span></div>
+                        <div class="info-item"><i class="fas fa-vector-square"></i> <span class="property-area">${property.area}</span></div>
+                        <div class="info-item"><i class="fas fa-map-marker-alt"></i> <span class="property-location">${property.location}</span></div>
+                    </div>
+                    <p class="property-description">${property.description}</p>
+                    
+                    <div class="locked-info" onclick="showPaymentPage()">
+                        <i class="fas fa-lock"></i>
+                        <div>
+                            <div class="blurred">Contact: ${property.contact}</div>
+                            <div class="blurred">Address: ${property.address}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="admin-controls">
+                        <button class="btn btn-admin" onclick="editProperty(${property.id})"><i class="fas fa-edit"></i> Edit</button>
+                        <button class="btn btn-danger" onclick="deleteProperty(${property.id})"><i class="fas fa-trash"></i> Delete</button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('resultsContainer').appendChild(propertyCard);
         }
         
         // Function to show payment page
         function showPaymentPage() {
-            document.getElementById('searchPage').classList.add('hidden');
-            document.getElementById('paymentPage').classList.remove('hidden');
+            if (!isAdmin) {
+                document.getElementById('searchPage').classList.add('hidden');
+                document.getElementById('paymentPage').classList.remove('hidden');
+            }
         }
         
         // Function to close payment page
@@ -398,6 +578,86 @@
             document.getElementById('paymentPage').classList.add('hidden');
             document.getElementById('searchPage').classList.remove('hidden');
         }
+        
+        // Admin Functions
+        function toggleAdminMode() {
+            isAdmin = !isAdmin;
+            document.body.classList.toggle('admin-mode', isAdmin);
+            document.getElementById('adminToggle').textContent = isAdmin ? 'Exit Admin' : 'Admin Login';
+            
+            if (isAdmin) {
+                // Show all properties when admin logs in
+                document.getElementById('resultsContainer').innerHTML = '';
+                properties.forEach(property => {
+                    createPropertyCard(property);
+                });
+            } else {
+                // Return to normal view
+                searchProperties();
+            }
+        }
+        
+        function addProperty() {
+            const newProperty = {
+                id: properties.length > 0 ? Math.max(...properties.map(p => p.id)) + 1 : 1,
+                title: document.getElementById('propertyTitle').value,
+                type: document.getElementById('propertyType').value,
+                price: '₹' + document.getElementById('propertyPrice').value,
+                area: document.getElementById('propertyArea').value + ' sq.ft',
+                location: document.getElementById('propertyLocation').value,
+                image: document.getElementById('propertyImage').value,
+                description: document.getElementById('propertyDescription').value,
+                contact: document.getElementById('propertyContact').value,
+                address: document.getElementById('propertyAddress').value
+            };
+            
+            properties.push(newProperty);
+            createPropertyCard(newProperty);
+            
+            // Clear the form
+            document.getElementById('addPropertyForm').querySelectorAll('input, textarea').forEach(element => {
+                element.value = '';
+            });
+        }
+        
+        function editProperty(id) {
+            const property = properties.find(p => p.id === id);
+            if (!property) return;
+            
+            // Fill the form with property data
+            document.getElementById('propertyTitle').value = property.title;
+            document.getElementById('propertyType').value = property.type;
+            document.getElementById('propertyPrice').value = property.price.replace('₹', '').replace(',', '');
+            document.getElementById('propertyArea').value = property.area.replace(' sq.ft', '');
+            document.getElementById('propertyLocation').value = property.location;
+            document.getElementById('propertyImage').value = property.image;
+            document.getElementById('propertyDescription').value = property.description;
+            document.getElementById('propertyContact').value = property.contact;
+            document.getElementById('propertyAddress').value = property.address;
+            
+            // Remove the old property
+            deleteProperty(id, false);
+            
+            // Scroll to form
+            document.getElementById('addPropertyForm').scrollIntoView();
+        }
+        
+        function deleteProperty(id, confirmDelete = true) {
+            if (confirmDelete && !confirm('Are you sure you want to delete this property?')) {
+                return;
+            }
+            
+            properties = properties.filter(p => p.id !== id);
+            document.querySelector(`.property-listing[data-id="${id}"]`)?.remove();
+        }
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeSampleProperties();
+            
+            // Set up admin toggle
+            document.getElementById('adminToggle').addEventListener('click', toggleAdminMode);
+        });
     </script>
 </body>
 </html>
