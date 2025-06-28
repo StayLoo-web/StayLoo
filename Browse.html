@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Spaces | StayLoo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ===== Global Styles ===== */
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --light: #f8f9fa;
+            --dark: #1a1a2e;
+            --gray: #6c757d;
+            --border: #e9ecef;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --success: #4cc9f0;
+            --featured: #ffd700;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f5f7ff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 40px 0;
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--dark);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 15px;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* ===== Header Styles ===== */
+        header {
+            background: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            bottom: -5px;
+            left: 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* ===== Search Bar ===== */
+        .search-bar {
+            background: white;
+            padding: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .search-btn {
+            padding: 12px 25px;
+        }
+
+        /* ===== Filter Panel ===== */
+        .filter-panel {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .filter-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .filter-toggle {
+            display: none;
+            background: var(--light);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .filter-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .filter-group {
+            margin-bottom: 15px;
+        }
+
+        .filter-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+        }
+
+        .price-range {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .price-values {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .toggle-label {
+            margin-left: 10px;
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        /* ===== Property Listings ===== */
+        .listings-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .listing-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .listing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .listing-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .listing-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .listing-card:hover .listing-image img {
+            transform: scale(1.05);
+        }
+
+        .listing-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .featured-badge {
+            background: var(--featured);
+            color: var(--dark);
+        }
+
+        .listing-content {
+            padding: 20px;
+        }
+
+        .listing-title {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .listing-location {
+            color: var(--gray);
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .listing-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .listing-price span {
+            font-size: 14px;
+            font-weight: normal;
+            color: var(--gray);
+        }
+
+        .listing-tags {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: var(--light);
+            color: var(--dark);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .verified-tag {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .featured-tag {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        /* ===== Pagination ===== */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            gap: 10px;
+        }
+
+        .page-item {
+            list-style: none;
+        }
+
+        .page-link {
+            display: block;
+            padding: 8px 15px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--dark);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .page-link:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .page-link.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .load-more {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-links a {
+            color: white;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            opacity: 0.7;
+            font-size: 14px;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 992px) {
+            .listings-container {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            .auth-buttons {
+                margin-top: 10px;
+            }
+
+            .filter-content {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-toggle {
+                display: inline-block;
+            }
+
+            .filter-content {
+                display: none;
+            }
+
+            .filter-content.active {
+                display: grid;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .listings-container {
+                grid-template-columns: 1fr;
+            }
+
+            .search-container {
+                flex-direction: column;
+            }
+
+            .search-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo"><span>Stay</span>Loo</a>
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="browse.html" class="active">Browse Spaces</a>
+                    <a href="listing.html">List Your Space</a>
+                    <a href="about.html">About</a>
+                </div>
+                <div class="auth-buttons">
+                    <a href="#" class="btn btn-outline">Log In</a>
+                    <a href="#" class="btn btn-primary">Sign Up</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="search-bar">
+        <div class="container">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search by location, area, or property name">
+                <button class="btn btn-primary search-btn"><i class="fas fa-search"></i> Search</button>
+            </div>
+        </div>
+    </div>
+
+    <section class="browse-section">
+        <div class="container">
+            <div class="filter-panel">
+                <div class="filter-header" id="filterToggle">
+                    <h3 class="filter-title"><i class="fas fa-filter"></i> Filters</h3>
+                    <button class="filter-toggle">Toggle Filters</button>
+                </div>
+                <div class="filter-content" id="filterContent">
+                    <div class="filter-group">
+                        <label class="filter-label">Location</label>
+                        <select class="filter-select">
+                            <option value="">Any Location</option>
+                            <option value="mumbai">Mumbai</option>
+                            <option value="delhi">Delhi</option>
+                            <option value="bangalore">Bangalore</option>
+                            <option value="hyderabad">Hyderabad</option>
+                            <option value="chennai">Chennai</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Price Range (₹)</label>
+                        <input type="range" class="price-range" min="5000" max="50000" value="25000" step="1000">
+                        <div class="price-values">
+                            <span>5,000</span>
+                            <span>25,000</span>
+                            <span>50,000+</span>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Room Type</label>
+                        <select class="filter-select">
+                            <option value="">Any Type</option>
+                            <option value="1bhk">1 BHK</option>
+                            <option value="2bhk">2 BHK</option>
+                            <option value="3bhk">3 BHK</option>
+                            <option value="4bhk">4+ BHK</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Suitable For</label>
+                        <select class="filter-select">
+                            <option value="">Anyone</option>
+                            <option value="students">Students</option>
+                            <option value="professionals">Working Professionals</option>
+                            <option value="family">Families</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="toggle-label">Verified Only</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="filter-group">
+                        <label class="toggle-label">Featured Only</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="filter-group">
+                        <button class="btn btn-primary" style="width: 100%;">Apply Filters</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="listings-container">
+                <!-- Listing Card 1 -->
+                <div class="listing-card">
+                    <div class="listing-image">
+                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Property Image">
+                        <div class="listing-badge featured-badge">Featured</div>
+                    </div>
+                    <div class="listing-content">
+                        <h3 class="listing-title">Spacious 2BHK in Bandra West</h3>
+                        <p class="listing-location"><i class="fas fa-map-marker-alt"></i> Bandra West, Mumbai</p>
+                        <p class="listing-price">₹25,000 <span>/ month</span></p>
+                        <div class="listing-tags">
+                            <span class="tag verified-tag">Verified</span>
+                            <span class="tag featured-tag">Featured</span>
+                            <span class="tag">Furnished</span>
+                        </div>
+                        <a href="#" class="btn btn-primary" style="width: 100%;">View Details</a>
+                    </div>
+                </div>
+
+                <!-- Listing Card 2 -->
+                <div class="listing-card">
+                    <div class="listing-image">
+                        <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Property Image">
+                        <div class="listing-badge">New</div>
+                    </div>
+                    <div class="listing-content">
+                        <h3 class="listing-title">Modern 1BHK for Professionals</h3>
+                        <p class="listing-location"><i class="fas fa-map-marker-alt"></i> Koramangala, Bangalore</p>
+                        <p class="listing-price">₹18,500 <span>/ month</span></p>
+                        <div class="listing-tags">
+                            <span class="tag verified-tag">Verified</span>
+                            <span class="tag">Semi-Furnished</span>
+                        </div>
+                        <a href="#" class="btn btn-primary" style="width: 100%;">View Details</a>
+                    </div>
+                </div>
+
+                <!-- Listing Card 3 -->
+                <div class="listing-card">
+                    <div class="listing-image">
+                        <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Property Image">
+                    </div>
+                    <div class="listing-content">
+                        <h3 class="listing-title">Cozy PG for Female Students</h3>
+                        <p class="listing-location"><i class="fas fa-map-marker-alt"></i> Saket, Delhi</p>
+                        <p class="listing-price">₹8,000 <span>/ month</span></p>
+                        <div class="listing-tags">
+                            <span class="tag verified-tag">Verified</span>
+                            <span class="tag">Girls Only</span>
+                        </div>
+                        <a href="#" class="btn btn-primary" style="width: 100%;">View Details</a>
+                    </div>
+                </div>
+
+                <!-- Listing Card 4 -->
+                <div class="listing-card">
+                    <div class="listing-image">
+                        <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Property Image">
+                        <div class="listing-badge featured-badge">Featured</div>
+                    </div>
+                    <div class="listing-content">
+                        <h3 class="listing-title">Luxury 3BHK Apartment</h3>
+                        <p class="listing-location"><i class="fas fa-map-marker-alt"></i> Jubilee Hills, Hyderabad</p>
+                        <p class="listing-price">₹42,000 <span>/ month</span></p>
+                        <div class="listing-tags">
+                            <span class="tag verified-tag">Verified</span>
+                            <span class="tag featured-tag">Featured</span>
+                            <span class="tag">Fully Furnished</span>
+                        </div>
+                        <a href="#" class="btn btn-primary" style="width: 100%;">View Details</a>
+                    </div>
+                </div>
+
+                <!-- Listing Card 5 -->
+                <div class="listing-card">
+                    <div class="listing-image">
+                        <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Property Image">
+                    </div>
+                    <div class="listing-content">
+                        <h3 class="listing-title">Studio Apartment for Professionals</h3>
+                        <p class="listing-location"><i class="fas fa-map-marker-alt"></i> Whitefield, Bangalore</p>
+                        <p class="listing-price">₹15,000 <span>/ month</span></p>
+                        <div class="listing-tags">
+                            <span class="tag verified-tag">Verified</span>
+                            <span class="tag">Fully Furnished</span>
+                        </div>
+                        <a href="#" class="btn btn-primary" style="width: 100%;">View Details</a>
+                    </div>
+                </div>
+
+                <!-- Listing Card 6 -->
+                <div class="listing-card">
+                    <div class="listing-image">
+                        <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Property Image">
+                    </div>
+                    <div class="listing-content">
+                        <h3 class="listing-title">Family Home in Suburban Area</h3>
+                        <p class="listing-location"><i class="fas fa-map-marker-alt"></i> Thane, Mumbai</p>
+                        <p class="listing-price">₹30,000 <span>/ month</span></p>
+                        <div class="listing-tags">
+                            <span class="tag verified-tag">Verified</span>
+                            <span class="tag">Family Friendly</span>
+                        </div>
+                        <a href="#" class="btn btn-primary" style="width: 100%;">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pagination">
+                <ul>
+                    <li class="page-item"><a href="#" class="page-link active">1</a></li>
+                    <li class="page-item"><a href="#" class="page-link">2</a></li>
+                    <li class="page-item"><a href="#" class="page-link">3</a></li>
+                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                </ul>
+            </div>
+
+            <div class="load-more">
+                <button class="btn btn-outline">Load More Properties</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="listing.html">List Your Space</a>
+                <a href="contact.html">Contact</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+            <p class="copyright">© 2023 StayLoo. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle filters on mobile
+        document.getElementById('filterToggle').addEventListener('click', function() {
+            document.getElementById('filterContent').classList.toggle('active');
+        });
+
+        // Price range display
+        const priceRange = document.querySelector('.price-range');
+        const priceValues = document.querySelectorAll('.price-values span');
+        
+        priceRange.addEventListener('input', function() {
+            priceValues[1].textContent = this.value.toLocaleString();
+        });
+
+        // Smooth animations for cards
+        const listingCards = document.querySelectorAll('.listing-card');
+        
+        listingCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.3s ease';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transition = 'all 0.3s ease';
+            });
+        });
+
+        // Load more functionality
+        const loadMoreBtn = document.querySelector('.load-more button');
+        
+        loadMoreBtn.addEventListener('click', function() {
+            // In a real implementation, this would fetch more listings
+            this.textContent = 'Loading...';
+            setTimeout(() => {
+                this.textContent = 'No More Properties';
+                this.disabled = true;
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
