@@ -3,26 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1 BHK Finder</title>
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <title>Property Finder</title>
     <style>
-        :root {
-            --primary-color: #55394E;
-            --secondary-color: #f5f5f5;
-            --text-color: #333;
-            --border-color: #ddd;
-        }
-        
+        /* Global Styles */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: var(--secondary-color);
-            color: var(--text-color);
+            background-color: #f5f5f5;
+            color: #000;
         }
         
         .container {
@@ -31,1342 +20,384 @@
             padding: 20px;
         }
         
+        /* Header Styles */
         header {
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             padding: 15px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
         }
         
         .logo {
             font-size: 24px;
             font-weight: bold;
-            color: var(--primary-color);
+            color: #0066cc;
         }
         
-        .admin-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-        
-        .admin-btn.logged-in {
-            background-color: #4CAF50;
-        }
-        
-        .search-section {
-            text-align: center;
-            padding: 60px 20px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            border-radius: 10px;
-            margin: 20px 0;
-        }
-        
-        .search-container {
-            position: relative;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        #locationSearch {
-            width: 100%;
-            padding: 15px;
-            font-size: 16px;
-            border: 2px solid var(--border-color);
-            border-radius: 30px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        #locationSearch:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 4px 12px rgba(85, 57, 78, 0.2);
-        }
-        
-        .autocomplete-results {
-            position: absolute;
-            width: 100%;
-            background: white;
-            border: 1px solid var(--border-color);
-            border-radius: 0 0 10px 10px;
-            max-height: 300px;
-            overflow-y: auto;
-            display: none;
-            z-index: 10;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        
-        .autocomplete-item {
-            padding: 12px 20px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        
-        .autocomplete-item:hover {
-            background-color: var(--secondary-color);
-        }
-        
-        .listings-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            padding: 20px 0;
-        }
-        
-        .listing-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-        }
-        
-        .listing-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-        }
-        
-        .listing-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-        
-        .listing-details {
-            padding: 20px;
-        }
-        
-        .listing-price {
-            font-size: 22px;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-        
-        .listing-address {
-            color: #666;
-            margin-bottom: 15px;
-        }
-        
-        .listing-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .feature {
-            background-color: var(--secondary-color);
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
+        /* Button Styles */
         .btn {
-            background-color: var(--primary-color);
+            background-color: #0066cc;
             color: white;
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
-            font-weight: bold;
+            font-size: 16px;
             transition: background-color 0.3s;
-            display: inline-block;
-            text-align: center;
-            text-decoration: none;
         }
         
         .btn:hover {
-            background-color: #3d2a37;
+            background-color: #0055aa;
         }
         
-        .btn-secondary {
-            background-color: #6c757d;
+        /* Property Type Selection Page */
+        .property-types {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 40px;
         }
         
-        .btn-secondary:hover {
-            background-color: #5a6268;
-        }
-        
-        .no-listings {
-            text-align: center;
-            padding: 50px;
-            grid-column: 1 / -1;
-        }
-        
-        .loading {
-            display: flex;
-            justify-content: center;
-            padding: 30px;
-            grid-column: 1 / -1;
-        }
-        
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-radius: 50%;
-            border-top: 4px solid var(--primary-color);
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .hidden {
-            display: none;
-        }
-        
-        /* Admin menu styles */
-        .admin-menu {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            z-index: 10;
-        }
-
-        .admin-menu-btn {
-            background: white;
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .admin-menu-dropdown {
-            position: absolute;
-            right: 0;
-            top: 35px;
-            background: white;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            display: none;
-            min-width: 120px;
-            z-index: 20;
-        }
-
-        .admin-menu-dropdown button {
-            width: 100%;
-            padding: 8px 12px;
-            border: none;
-            background: none;
-            text-align: left;
-            cursor: pointer;
-        }
-
-        .admin-menu-dropdown button:hover {
-            background: #f5f5f5;
-        }
-
-        /* Protected info styles */
-        .protected-info {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-            color: #666;
-        }
-
-        .protected-info .lock-icon {
-            margin-right: 8px;
-            color: #55394E;
-            cursor: pointer;
-        }
-
-        .blurred {
-            filter: blur(4px);
-            user-select: none;
-        }
-
-        /* Payment modal styles */
-        #paymentModal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .payment-content {
-            background: white;
-            padding: 30px;
+        .property-card {
+            background-color: white;
             border-radius: 10px;
-            width: 90%;
-            max-width: 500px;
+            padding: 30px;
             text-align: center;
-        }
-
-        .payment-options {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .payment-option {
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
             cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .payment-option:hover {
-            border-color: #55394E;
-            background: #f9f9f9;
-        }
-
-        .payment-option.active {
-            border-color: #55394E;
-            background: #f5f5f5;
-        }
-
-        .payment-details {
-            display: none;
-            margin-top: 20px;
-            padding: 15px;
-            border: 1px dashed #55394E;
-            border-radius: 5px;
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 50px;
-            overflow-y: auto;
         }
         
-        .modal-content {
+        .property-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .property-card h2 {
+            margin-top: 0;
+            color: #0066cc;
+        }
+        
+        .property-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: #0066cc;
+        }
+        
+        /* Search Page */
+        .search-container {
             background-color: white;
             padding: 30px;
             border-radius: 10px;
-            width: 90%;
-            max-width: 800px;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            position: relative;
-            margin: 20px 0;
-        }
-        
-        .modal-title {
-            margin-top: 0;
-            color: var(--text-color);
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-        }
-        
-        .form-columns {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .full-width {
-            grid-column: span 2;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-        
-        .form-group label.required::after {
-            content: " *";
-            color: red;
-        }
-        
-        .form-group input, 
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            font-family: inherit;
-        }
-        
-        .image-preview-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        
-        .image-preview {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 5px;
-            border: 1px solid var(--border-color);
-            position: relative;
-        }
-        
-        .remove-image {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: red;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            font-size: 12px;
-            cursor: pointer;
-        }
-        
-        .modal-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             margin-top: 20px;
         }
         
-        /* Notification */
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 25px;
-            border-radius: 5px;
+        .search-box {
+            display: flex;
+            margin-bottom: 30px;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px 0 0 5px;
+            font-size: 16px;
+        }
+        
+        .search-box button {
+            padding: 12px 20px;
+            background-color: #0066cc;
             color: white;
-            z-index: 2000;
-            animation: slideIn 0.3s ease-out;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
         }
         
-        .notification.success {
-            background-color: #4CAF50;
+        .results-container {
+            margin-top: 30px;
         }
         
-        .notification.error {
-            background-color: #f44336;
+        .property-listing {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+            display: flex;
         }
         
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        .property-image {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
         }
         
-        @keyframes slideOut {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
+        .property-details {
+            padding: 20px;
+            flex: 1;
         }
         
-        /* Shake animation */
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        .property-details h3 {
+            margin-top: 0;
+            color: #0066cc;
         }
         
-        .shake {
-            animation: shake 0.5s;
+        .property-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 15px 0;
         }
         
-        @media (max-width: 768px) {
-            .listings-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .modal-content {
-                width: 95%;
-                padding: 15px;
-            }
-            
-            .form-columns {
-                grid-template-columns: 1fr;
-            }
-            
-            .full-width {
-                grid-column: span 1;
-            }
+        .info-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-item i {
+            margin-right: 5px;
+            color: #0066cc;
+        }
+        
+        .price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0066cc;
+        }
+        
+        .locked-info {
+            display: flex;
+            align-items: center;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        
+        .locked-info i {
+            margin-right: 10px;
+            color: #ff6600;
+        }
+        
+        .blurred {
+            color: transparent;
+            text-shadow: 0 0 8px rgba(0,0,0,0.5);
+        }
+        
+        /* Payment Page */
+        .payment-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: 40px auto;
+            text-align: center;
+        }
+        
+        .payment-container h2 {
+            color: #0066cc;
+        }
+        
+        .payment-amount {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #0066cc;
+        }
+        
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            background-color: #eee;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+        
+        .upi-id {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            margin: 20px 0;
+        }
+        
+        /* Hidden class for page navigation */
+        .hidden {
+            display: none;
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <div class="header-content">
-            <div class="logo">Let's Find a 1 BHK for You</div>
-            <button id="adminBtn" class="admin-btn">Admin Login</button>
+        <div class="container">
+            <div class="logo">PropertyFinder</div>
         </div>
     </header>
-
-    <div class="container">
-        <!-- Search Section -->
-        <section id="searchSection" class="search-section">
-            <div class="search-container">
-                <input type="text" id="locationSearch" placeholder="Search for a location...">
-                <div id="autocompleteResults" class="autocomplete-results"></div>
+    
+    <!-- Property Type Selection Page -->
+    <div class="container" id="propertyTypePage">
+        <h1>What are you looking for?</h1>
+        <div class="property-types">
+            <div class="property-card" onclick="selectPropertyType('1BHK')">
+                <div class="property-icon"><i class="fas fa-home"></i></div>
+                <h2>1BHK</h2>
+                <p>Compact and affordable living spaces</p>
             </div>
-        </section>
-
-        <!-- Listings Section - Hidden by default -->
-        <section id="listingsSection" class="hidden">
-            <h2 id="locationTitle">1 BHK in <span id="locationName">Location</span></h2>
-            <div class="listings-container" id="listingsContainer">
-                <div class="loading">
-                    <div class="spinner"></div>
-                </div>
+            <div class="property-card" onclick="selectPropertyType('2BHK')">
+                <div class="property-icon"><i class="fas fa-home"></i></div>
+                <h2>2BHK</h2>
+                <p>Spacious for small families</p>
             </div>
-        </section>
-    </div>
-
-    <!-- Admin Login Modal -->
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <h3 class="modal-title">Admin Login</h3>
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="adminUsername" class="required">Username</label>
-                    <input type="text" id="adminUsername" required>
-                </div>
-                <div class="form-group">
-                    <label for="adminPassword" class="required">Password</label>
-                    <input type="password" id="adminPassword" required>
-                </div>
-                <div id="loginError" style="color: red; margin-top: 10px;"></div>
-                <div class="modal-actions">
-                    <button type="button" id="cancelLogin" class="btn btn-secondary">Cancel</button>
-                    <button type="submit" class="btn">Login</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Add Property Modal -->
-    <div id="addPropertyModal" class="modal">
-        <div class="modal-content">
-            <h3 class="modal-title">Add New 1 BHK Property</h3>
-            <form id="propertyForm">
-                <div class="form-columns">
-                    <div class="form-group">
-                        <label for="propertyTitle" class="required">Title</label>
-                        <input type="text" id="propertyTitle" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="propertyPrice" class="required">Price (₹ per month)</label>
-                        <input type="number" id="propertyPrice" required>
-                    </div>
-                    
-                    <div class="form-group full-width">
-                        <label for="propertyLocation" class="required">Location</label>
-                        <input type="text" id="propertyLocation" readonly>
-                    </div>
-                    
-                    <div class="form-group full-width">
-                        <label for="propertyAddress" class="required">Full Address</label>
-                        <input type="text" id="propertyAddress" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="propertyContact" class="required">Contact Number</label>
-                        <input type="tel" id="propertyContact" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="propertyURL">Website URL (optional)</label>
-                        <input type="url" id="propertyURL" placeholder="https://example.com">
-                    </div>
-                    
-                    <div class="form-group full-width">
-                        <label for="propertyDescription" class="required">Description</label>
-                        <textarea id="propertyDescription" rows="3" required></textarea>
-                    </div>
-                    
-                    <div class="form-group full-width">
-                        <label for="propertyImages" class="required">Upload Images (Max 10)</label>
-                        <input type="file" id="propertyImages" multiple accept="image/*">
-                        <div class="image-preview-container" id="imagePreviewContainer"></div>
-                    </div>
-                </div>
-                
-                <div class="modal-actions">
-                    <button type="button" id="cancelProperty" class="btn btn-secondary">Cancel</button>
-                    <button type="submit" class="btn">Add Property</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Payment Modal -->
-    <div id="paymentModal" class="modal">
-        <div class="payment-content">
-            <h3>Unlock Contact Details</h3>
-            <p>Pay ₹50 to view the full contact information</p>
-            
-            <div class="payment-options">
-                <div class="payment-option" data-method="upi">
-                    <strong>UPI Payment</strong>
-                </div>
-                <div class="payment-option" data-method="qr">
-                    <strong>QR Code Payment</strong>
-                </div>
-                <div class="payment-option" data-method="card">
-                    <strong>Credit/Debit Card</strong>
-                </div>
+            <div class="property-card" onclick="selectPropertyType('3BHK')">
+                <div class="property-icon"><i class="fas fa-home"></i></div>
+                <h2>3BHK</h2>
+                <p>Comfortable for larger families</p>
             </div>
-            
-            <div id="upiDetails" class="payment-details">
-                <h4>UPI Payment Details</h4>
-                <p>Send payment to: <span id="upiId">[Your UPI ID will appear here]</span></p>
-                <button class="btn" id="copyUpi">Copy UPI ID</button>
+            <div class="property-card" onclick="selectPropertyType('Flat')">
+                <div class="property-icon"><i class="fas fa-building"></i></div>
+                <h2>Flat</h2>
+                <p>Modern apartment living</p>
             </div>
-            
-            <div id="qrDetails" class="payment-details">
-                <h4>Scan QR Code</h4>
-                <img id="qrCodeImage" src="" alt="QR Code" style="max-width: 200px; margin: 10px auto;">
+            <div class="property-card" onclick="selectPropertyType('PG')">
+                <div class="property-icon"><i class="fas fa-bed"></i></div>
+                <h2>PG</h2>
+                <p>Paying guest accommodations</p>
             </div>
-            
-            <div id="cardDetails" class="payment-details">
-                <h4>Card Payment</h4>
-                <form id="cardForm">
-                    <div class="form-group">
-                        <label for="cardNumber">Card Number</label>
-                        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456">
-                    </div>
-                    <div class="form-group">
-                        <label for="cardExpiry">Expiry Date</label>
-                        <input type="text" id="cardExpiry" placeholder="MM/YY">
-                    </div>
-                    <div class="form-group">
-                        <label for="cardCvv">CVV</label>
-                        <input type="text" id="cardCvv" placeholder="123">
-                    </div>
-                    <button type="submit" class="btn">Pay ₹50</button>
-                </form>
-            </div>
-            
-            <div class="modal-actions" style="margin-top: 20px;">
-                <button id="cancelPayment" class="btn btn-secondary">Cancel</button>
+            <div class="property-card" onclick="selectPropertyType('House')">
+                <div class="property-icon"><i class="fas fa-house-user"></i></div>
+                <h2>House</h2>
+                <p>Independent houses</p>
             </div>
         </div>
     </div>
-
+    
+    <!-- Search Page -->
+    <div class="container hidden" id="searchPage">
+        <h1 id="searchPageTitle">Find <span id="propertyTypeTitle">1BHK</span> for yourself</h1>
+        
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="locationInput" placeholder="Enter location (e.g., Mumbai, Bangalore)">
+                <button onclick="searchProperties()"><i class="fas fa-search"></i> Search</button>
+            </div>
+            
+            <div class="results-container" id="resultsContainer">
+                <!-- Sample property - would be dynamically generated in a real app -->
+                <div class="property-listing hidden" id="sampleProperty">
+                    <img src="https://via.placeholder.com/300x200" alt="Property Image" class="property-image">
+                    <div class="property-details">
+                        <h3>Sample Property</h3>
+                        <div class="price">₹12,000/month</div>
+                        <div class="property-info">
+                            <div class="info-item"><i class="fas fa-layer-group"></i> <span class="property-size">1BHK</span></div>
+                            <div class="info-item"><i class="fas fa-vector-square"></i> <span class="property-area">600 sq.ft</span></div>
+                            <div class="info-item"><i class="fas fa-map-marker-alt"></i> <span class="property-location">Sample Location</span></div>
+                        </div>
+                        <p class="property-description">This is a sample property description that would include details about the property, amenities, and other relevant information.</p>
+                        
+                        <div class="locked-info" onclick="showPaymentPage()">
+                            <i class="fas fa-lock"></i>
+                            <div>
+                                <div class="blurred">Contact: 98XXXXXXXX</div>
+                                <div class="blurred">Address: Full address will be shown after payment</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Payment Page -->
+    <div class="container hidden" id="paymentPage">
+        <div class="payment-container">
+            <h2>Unlock Contact Details</h2>
+            <p>To view the complete contact information and address of this property, please make a payment of:</p>
+            <div class="payment-amount" id="paymentAmount">₹59</div>
+            <p>Scan the QR code below or use the UPI ID to make payment</p>
+            
+            <div class="qr-code">
+                [QR Code Placeholder]
+            </div>
+            
+            <div class="upi-id">propertyfinder@upi</div>
+            
+            <p>After successful payment, the contact details will be unlocked automatically.</p>
+            
+            <button class="btn" onclick="closePaymentPage()"><i class="fas fa-arrow-left"></i> Back to Property</button>
+        </div>
+    </div>
+    
     <script>
-        // Firebase configuration (REPLACE WITH YOUR CONFIG)
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        const storage = firebase.storage();
-        const auth = firebase.auth();
-
-        // DOM Elements
-        const locationSearch = document.getElementById('locationSearch');
-        const autocompleteResults = document.getElementById('autocompleteResults');
-        const searchSection = document.getElementById('searchSection');
-        const listingsSection = document.getElementById('listingsSection');
-        const locationName = document.getElementById('locationName');
-        const listingsContainer = document.getElementById('listingsContainer');
-        const adminBtn = document.getElementById('adminBtn');
-        const loginModal = document.getElementById('loginModal');
-        const loginForm = document.getElementById('loginForm');
-        const cancelLogin = document.getElementById('cancelLogin');
-        const loginError = document.getElementById('loginError');
-        const addPropertyModal = document.getElementById('addPropertyModal');
-        const propertyForm = document.getElementById('propertyForm');
-        const cancelProperty = document.getElementById('cancelProperty');
-        const propertyLocation = document.getElementById('propertyLocation');
-        const propertyImages = document.getElementById('propertyImages');
-        const imagePreviewContainer = document.getElementById('imagePreviewContainer');
-        const paymentModal = document.getElementById('paymentModal');
-        const cancelPayment = document.getElementById('cancelPayment');
-        const copyUpi = document.getElementById('copyUpi');
-        const cardForm = document.getElementById('cardForm');
-
-        // Sample locations for autocomplete
-        const locations = [
-            // Lucknow
-            "Gomtinagar, Lucknow", "Hazratganj, Lucknow", "Alambagh, Lucknow", 
-            "Indira Nagar, Lucknow", "Aminabad, Lucknow", "Chowk, Lucknow",
-            "Aliganj, Lucknow", "Mahanagar, Lucknow", "Vikas Nagar, Lucknow",
-            "Jankipuram, Lucknow", "Ashiyana, Lucknow", "Telibagh, Lucknow",
+        // Global variable to store selected property type
+        let currentPropertyType = '';
+        
+        // Function to handle property type selection
+        function selectPropertyType(type) {
+            currentPropertyType = type;
+            document.getElementById('propertyTypeTitle').textContent = type;
             
-            // Delhi
-            "Connaught Place, Delhi", "Karol Bagh, Delhi", "Saket, Delhi",
-            "Greater Kailash, Delhi", "Lajpat Nagar, Delhi", "Dwarka, Delhi",
-            "Rohini, Delhi", "Pitampura, Delhi", "Janakpuri, Delhi",
-            "Vasant Kunj, Delhi", "Hauz Khas, Delhi", "Malviya Nagar, Delhi",
+            // Hide property type page and show search page
+            document.getElementById('propertyTypePage').classList.add('hidden');
+            document.getElementById('searchPage').classList.remove('hidden');
             
-            // Mumbai
-            "Bandra, Mumbai", "Andheri, Mumbai", "Juhu, Mumbai",
-            "Colaba, Mumbai", "Powai, Mumbai", "Dadar, Mumbai",
-            "Worli, Mumbai", "Malad, Mumbai", "Borivali, Mumbai",
-            "Thane, Mumbai", "Navi Mumbai, Mumbai", "Chembur, Mumbai",
-            
-            // Bangalore
-            "Koramangala, Bangalore", "Indiranagar, Bangalore", "Whitefield, Bangalore",
-            "MG Road, Bangalore", "Jayanagar, Bangalore", "Marathahalli, Bangalore",
-            "HSR Layout, Bangalore", "Electronic City, Bangalore", "Sarjapur Road, Bangalore",
-            "Bannerghatta Road, Bangalore", "Hebbal, Bangalore", "Yeshwantpur, Bangalore",
-            
-            // Himachal Pradesh
-            "Shimla, Himachal Pradesh", "Manali, Himachal Pradesh", "Dharamshala, Himachal Pradesh",
-            "Dalhousie, Himachal Pradesh", "Kasauli, Himachal Pradesh", "Mcleodganj, Himachal Pradesh",
-            "Kullu, Himachal Pradesh", "Solan, Himachal Pradesh", "Palampur, Himachal Pradesh",
-            "Chamba, Himachal Pradesh", "Kangra, Himachal Pradesh", "Mandi, Himachal Pradesh"
-        ];
-
-        // Current selected location
-        let currentLocation = '';
-        let isAdmin = false;
-        let properties = [];
-        let imageFiles = [];
-        let currentPropertyToUnlock = null;
-
-        // Admin credentials (original)
-        const ADMIN_CREDENTIALS = {
-            username: 'admin',
-            password: 'adminragh11aryan06'
-        };
-
-        // Initialize the app
-        async function init() {
-            setupEventListeners();
-            
-            // Check admin status
-            auth.onAuthStateChanged((user) => {
-                if (user) {
-                    isAdmin = true;
-                    updateAdminUI();
-                } else {
-                    isAdmin = false;
-                    updateAdminUI();
-                }
-            });
-
-            // Load properties from Firestore
-            await loadPropertiesFromFirestore();
-            
-            // Show search section by default
-            searchSection.classList.remove('hidden');
-            listingsSection.classList.add('hidden');
-        }
-
-        // Load properties from Firestore
-        async function loadPropertiesFromFirestore() {
-            try {
-                const snapshot = await db.collection('properties').get();
-                properties = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            } catch (error) {
-                console.error("Error loading properties:", error);
-                showNotification('Error loading properties', 'error');
+            // Set payment amount based on property type
+            let paymentAmount = '₹59';
+            if (type === '2BHK' || type === '3BHK' || type === 'Flat' || type === 'House') {
+                paymentAmount = '₹99';
             }
+            document.getElementById('paymentAmount').textContent = paymentAmount;
         }
-
-        // Filter and display properties for a location
-        function filterAndDisplayProperties(location) {
-            const filteredProperties = properties.filter(prop => prop.location === location);
+        
+        // Function to search properties (simplified for demo)
+        function searchProperties() {
+            const location = document.getElementById('locationInput').value.trim();
             
-            if (filteredProperties.length > 0) {
-                displayProperties(filteredProperties);
-            } else {
-                listingsContainer.innerHTML = `
-                    <div class="no-listings">
-                        <p>No 1 BHK properties found in ${location}.</p>
-                        ${isAdmin ? '<button id="addFirstProperty" class="btn">Add First Property</button>' : ''}
-                    </div>
-                `;
+            if (location) {
+                // In a real app, this would fetch data from a server
+                // For demo, we'll just show the sample property
+                const sampleProperty = document.getElementById('sampleProperty');
+                const resultsContainer = document.getElementById('resultsContainer');
                 
-                if (isAdmin) {
-                    document.getElementById('addFirstProperty')?.addEventListener('click', function() {
-                        propertyLocation.value = location;
-                        addPropertyModal.style.display = 'flex';
-                    });
-                }
-            }
-        }
-
-        // Upload image to Firebase Storage
-        async function uploadImageToStorage(file, propertyId) {
-            const storageRef = storage.ref(`properties/${propertyId}/${file.name}`);
-            await storageRef.put(file);
-            return await storageRef.getDownloadURL();
-        }
-
-        // Set up event listeners
-        function setupEventListeners() {
-            // Location search input
-            locationSearch.addEventListener('input', handleLocationInput);
-            
-            // Admin button
-            adminBtn.addEventListener('click', function() {
-                if (isAdmin) {
-                    if (currentLocation) {
-                        propertyLocation.value = currentLocation;
-                        addPropertyModal.style.display = 'flex';
-                    } else {
-                        showNotification('Please select a location first', 'error');
+                // Update sample property with search location
+                document.querySelector('.property-location').textContent = location;
+                
+                // Clear previous results (except our sample)
+                const allProperties = document.querySelectorAll('.property-listing');
+                allProperties.forEach(prop => {
+                    if (prop.id !== 'sampleProperty') {
+                        prop.remove();
                     }
-                } else {
-                    loginModal.style.display = 'flex';
-                }
-            });
-            
-            // Login form
-            loginForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const username = document.getElementById('adminUsername').value.trim();
-                const password = document.getElementById('adminPassword').value.trim();
-                
-                if (username === ADMIN_CREDENTIALS.username && 
-                    password === ADMIN_CREDENTIALS.password) {
-                    isAdmin = true;
-                    localStorage.setItem('isAdmin', 'true');
-                    updateAdminUI();
-                    loginModal.style.display = 'none';
-                    loginForm.reset();
-                    loginError.textContent = '';
-                    showNotification('Admin login successful!', 'success');
-                } else {
-                    loginError.textContent = 'Invalid credentials';
-                    loginForm.classList.add('shake');
-                    setTimeout(() => {
-                        loginForm.classList.remove('shake');
-                    }, 500);
-                }
-            });
-            
-            cancelLogin.addEventListener('click', function() {
-                loginModal.style.display = 'none';
-                loginForm.reset();
-                loginError.textContent = '';
-            });
-            
-            // Property form
-            propertyForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                addProperty();
-            });
-            
-            cancelProperty.addEventListener('click', function() {
-                addPropertyModal.style.display = 'none';
-                propertyForm.reset();
-                imagePreviewContainer.innerHTML = '';
-                imageFiles = [];
-                propertyImages.value = '';
-                delete propertyForm.dataset.editId;
-            });
-            
-            // Image upload preview
-            propertyImages.addEventListener('change', function(e) {
-                imageFiles = Array.from(e.target.files).slice(0, 10);
-                updateImagePreviews();
-            });
-            
-            // Payment modal
-            cancelPayment.addEventListener('click', function() {
-                paymentModal.style.display = 'none';
-            });
-            
-            // Copy UPI ID
-            copyUpi?.addEventListener('click', function() {
-                const upiId = document.getElementById('upiId');
-                navigator.clipboard.writeText(upiId.textContent);
-                showNotification('UPI ID copied to clipboard!', 'success');
-            });
-            
-            // Card form submission
-            cardForm?.addEventListener('submit', function(e) {
-                e.preventDefault();
-                // In a real app, you would process payment here
-                showNotification('Payment successful! Contact details unlocked.', 'success');
-                paymentModal.style.display = 'none';
-                
-                // Unlock the details (in real app, verify payment first)
-                if (currentPropertyToUnlock) {
-                    unlockPropertyDetails(currentPropertyToUnlock);
-                }
-            });
-            
-            // Payment option selection
-            document.querySelectorAll('.payment-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Hide all details first
-                    document.querySelectorAll('.payment-details').forEach(d => d.style.display = 'none');
-                    
-                    // Show selected method
-                    const method = this.getAttribute('data-method');
-                    document.getElementById(`${method}Details`).style.display = 'block';
                 });
-            });
-            
-            // Close dropdowns when clicking elsewhere
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.admin-menu')) {
-                    document.querySelectorAll('.admin-menu-dropdown').forEach(d => {
-                        d.style.display = 'none';
-                    });
-                }
-            });
-        }
-
-        // Update admin UI
-        function updateAdminUI() {
-            if (isAdmin) {
-                adminBtn.textContent = 'Add Property';
-                adminBtn.classList.add('logged-in');
+                
+                // Show sample property (in real app, this would be dynamic)
+                sampleProperty.classList.remove('hidden');
+                
+                // Scroll to results
+                resultsContainer.scrollIntoView({ behavior: 'smooth' });
             } else {
-                adminBtn.textContent = 'Admin Login';
-                adminBtn.classList.remove('logged-in');
+                alert('Please enter a location to search');
             }
         }
-
-        // Handle location input for autocomplete
-        function handleLocationInput() {
-            const input = this.value.toLowerCase();
-            autocompleteResults.innerHTML = '';
-            
-            if (!input) {
-                autocompleteResults.style.display = 'none';
-                return;
-            }
-
-            const filteredLocations = locations.filter(loc => 
-                loc.toLowerCase().includes(input)
-            );
-
-            if (filteredLocations.length > 0) {
-                filteredLocations.forEach(loc => {
-                    const div = document.createElement('div');
-                    div.className = 'autocomplete-item';
-                    div.textContent = loc;
-                    div.addEventListener('click', () => {
-                        selectLocation(loc);
-                    });
-                    autocompleteResults.appendChild(div);
-                });
-                autocompleteResults.style.display = 'block';
-            } else {
-                autocompleteResults.style.display = 'none';
-            }
+        
+        // Function to show payment page
+        function showPaymentPage() {
+            document.getElementById('searchPage').classList.add('hidden');
+            document.getElementById('paymentPage').classList.remove('hidden');
         }
-
-        // When a location is selected
-        function selectLocation(location) {
-            currentLocation = location;
-            localStorage.setItem('currentLocation', location);
-            locationSearch.value = location;
-            autocompleteResults.style.display = 'none';
-            
-            // Show listings section
-            searchSection.classList.add('hidden');
-            listingsSection.classList.remove('hidden');
-            
-            // Update location title
-            locationName.textContent = location;
-            
-            // Load properties for this location
-            filterAndDisplayProperties(location);
+        
+        // Function to close payment page
+        function closePaymentPage() {
+            document.getElementById('paymentPage').classList.add('hidden');
+            document.getElementById('searchPage').classList.remove('hidden');
         }
-
-        // Display properties in the UI
-        function displayProperties(properties) {
-            listingsContainer.innerHTML = '';
-            
-            properties.forEach(property => {
-                const propertyCard = document.createElement('div');
-                propertyCard.className = 'listing-card';
-                
-                // Use first image as main image
-                const mainImage = property.images.length > 0 ? property.images[0] : 'https://via.placeholder.com/400x300?text=Property';
-                
-                // Admin menu (only visible to admin)
-                const adminMenu = isAdmin ? `
-                    <div class="admin-menu">
-                        <button class="admin-menu-btn">⋮</button>
-                        <div class="admin-menu-dropdown">
-                            <button class="edit-property" data-id="${property.id}">Edit</button>
-                            <button class="delete-property" data-id="${property.id}">Delete</button>
-                        </div>
-                    </div>
-                ` : '';
-                
-                propertyCard.innerHTML = `
-                    ${adminMenu}
-                    <img src="${mainImage}" alt="${property.title}" class="listing-image">
-                    <div class="listing-details">
-                        <div class="listing-price">₹${property.price}/month</div>
-                        <h3>${property.title}</h3>
-                        
-                        <div class="protected-info">
-                            <span class="lock-icon" title="Click to unlock">🔒</span>
-                            <span class="blurred">${property.address}</span>
-                        </div>
-                        
-                        <div class="protected-info">
-                            <span class="lock-icon" title="Click to unlock">🔒</span>
-                            <span class="blurred">${property.contact}</span>
-                        </div>
-                        
-                        <div class="listing-features">
-                            <span class="feature">1 BHK</span>
-                        </div>
-                        <p>${property.description}</p>
-                        ${property.url ? `<a href="${property.url}" target="_blank" class="btn" style="margin-right: 10px;">Visit Site</a>` : ''}
-                        <button class="btn view-details" data-id="${property.id}">View Details</button>
-                    </div>
-                `;
-                
-                listingsContainer.appendChild(propertyCard);
-                
-                // Add admin menu functionality if admin
-                if (isAdmin) {
-                    const menuBtn = propertyCard.querySelector('.admin-menu-btn');
-                    const dropdown = propertyCard.querySelector('.admin-menu-dropdown');
-                    
-                    menuBtn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        // Hide all other dropdowns first
-                        document.querySelectorAll('.admin-menu-dropdown').forEach(d => {
-                            if (d !== dropdown) d.style.display = 'none';
-                        });
-                        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-                    });
-                    
-                    // Edit property
-                    propertyCard.querySelector('.edit-property')?.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        editProperty(property.id);
-                    });
-                    
-                    // Delete property
-                    propertyCard.querySelector('.delete-property')?.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        if (confirm('Are you sure you want to delete this property?')) {
-                            deleteProperty(property.id);
-                        }
-                    });
-                }
-                
-                // Add click handler for lock icons
-                propertyCard.querySelectorAll('.lock-icon').forEach(lock => {
-                    lock.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        showPaymentModal(property);
-                    });
-                });
-                
-                // Add click handler for view details button
-                propertyCard.querySelector('.view-details')?.addEventListener('click', function() {
-                    const propertyId = this.getAttribute('data-id');
-                    viewPropertyDetails(propertyId);
-                });
-            });
-        }
-
-        // Show payment modal
-        function showPaymentModal(property) {
-            currentPropertyToUnlock = property.id;
-            paymentModal.style.display = 'flex';
-            
-            // Reset payment options
-            document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('active'));
-            document.querySelectorAll('.payment-details').forEach(d => d.style.display = 'none');
-        }
-
-        // Unlock property details (after payment)
-        function unlockPropertyDetails(propertyId) {
-            // In a real app, you would verify payment before unlocking
-            document.querySelectorAll(`.listing-card [data-id="${propertyId}"] .blurred`).forEach(el => {
-                el.classList.remove('blurred');
-            });
-            
-            // Also unlock in any open details modal
-            document.querySelectorAll('.modal .blurred').forEach(el => {
-                el.classList.remove('blurred');
-            });
-        }
-
-        // Edit property
-        function editProperty(propertyId) {
-            const property = properties.find(p => p.id === propertyId);
-            if (!property) return;
-            
-            // Fill the form with property data
-            document.getElementById('propertyTitle').value = property.title;
-            document.getElementById('propertyLocation').value = property.location;
-            document.getElementById('propertyAddress').value = property.address;
-            document.getElementById('propertyPrice').value = property.price;
-            document.getElementById('propertyDescription').value = property.description;
-            document.getElementById('propertyContact').value = property.contact;
-            document.getElementById('propertyURL').value = property.url || '';
-            
-            // For images, you would need to handle differently in a real app
-            imageFiles = [];
-            imagePreviewContainer.innerHTML = '';
-            
-            // Change form to edit mode
-            propertyForm.dataset.editId = propertyId;
-            propertyForm.querySelector('button[type="submit"]').textContent = 'Update Property';
-            
-            // Show the modal
-            addPropertyModal.style.display = 'flex';
-        }
-
-        // Delete property
-        async function deleteProperty(propertyId) {
-            try {
-                await db.collection('properties').doc(propertyId).delete();
-                properties = properties.filter(p => p.id !== propertyId);
-                showNotification('Property deleted successfully', 'success');
-                
-                // Reload current view
-                if (currentLocation) {
-                    filterAndDisplayProperties(currentLocation);
-                }
-            } catch (error) {
-                console.error("Error deleting property:", error);
-                showNotification('Error deleting property', 'error');
-            }
-        }
-
-        // View property details
-        function viewPropertyDetails(propertyId) {
-            const property = properties.find(p => p.id === propertyId);
-            if (!property) return;
-            
-            // Create modal for property details
-            const modal = document.createElement('div');
-            modal.className = 'modal';
-            modal.style.display = 'flex';
-            modal.innerHTML = `
-                <div class="modal-content" style="max-width: 800px;">
-                    <h3 class="modal-title">${property.title}</h3>
-                    
-                    <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 20px;">
-                        <div style="flex: 1; min-width: 300px;">
-                            <div class="listing-price">₹${property.price}/month</div>
-                            <div class="protected-info" style="margin: 10px 0;">
-                                <span class="lock-icon" title="Click to unlock">🔒</span>
-                                <span class="blurred">${property.address}</span>
-                            </div>
-                            <div class="protected-info" style="margin-bottom: 15px;">
-                                <span class="lock-icon" title="Click to unlock">🔒</span>
-                                <span class="blurred">${property.contact}</span>
-                            </div>
-                            ${property.url ? `<div style="margin-bottom: 15px;"><strong>Website:</strong> <a href="${property.url}" target="_blank">${property.url}</a></div>` : ''}
-                            <p>${property.description}</p>
-                        </div>
-                    </div>
-                    
-                    <h4 style="margin-bottom: 15px;">Property Images</h4>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
-                        ${property.images.map(img => `
-                            <img src="${img}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 5px;">
-                        `).join('')}
-                    </div>
-                    
-                    <div class="modal-actions">
-                        <button id="closeDetails" class="btn">Close</button>
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-            
-            // Add click handler for lock icons in modal
-            modal.querySelectorAll('.lock-icon').forEach(lock => {
-                lock.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    showPaymentModal(property);
-                });
-            });
-            
-            // Close modal when clicking close button
-            modal.querySelector('#closeDetails').addEventListener('click', () => {
-                document.body.removeChild(modal);
-            });
-            
-            // Close modal when clicking outside
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    document.body.removeChild(modal);
-                }
-            });
-        }
-
-        // Update image previews
-        function updateImagePreviews() {
-            imagePreviewContainer.innerHTML = '';
-            
-            if (imageFiles.length === 0) return;
-            
-            imageFiles.forEach((file, index) => {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const previewDiv = document.createElement('div');
-                    previewDiv.style.position = 'relative';
-                    
-                    const img = document.createElement('img');
-                    img.className = 'image-preview';
-                    img.src = e.target.result;
-                    
-                    const removeBtn = document.createElement('button');
-                    removeBtn.className = 'remove-image';
-                    removeBtn.innerHTML = '×';
-                    removeBtn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        imageFiles.splice(index, 1);
-                        updateImagePreviews();
-                        propertyImages.value = '';
-                    });
-                    
-                    previewDiv.appendChild(img);
-                    previewDiv.appendChild(removeBtn);
-                    imagePreviewContainer.appendChild(previewDiv);
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-
-        // Add new property
-        async function addProperty() {
-            const title = document.getElementById('propertyTitle').value.trim();
-            const location = document.getElementById('propertyLocation').value.trim();
-            const address = document.getElementById('propertyAddress').value.trim();
-            const price = document.getElementById('propertyPrice').value.trim();
-            const description = document.getElementById('propertyDescription').value.trim();
-            const contact = document.getElementById('propertyContact').value.trim();
-            const url = document.getElementById('propertyURL').value.trim();
-            const isEdit = propertyForm.dataset.editId;
-            
-            // Validate required fields
-            if (!title || !location || !address || !price || !description || !contact) {
-                showNotification('Please fill all required fields', 'error');
-                return;
-            }
-            
-            try {
-                let propertyData = {
-                    title,
-                    location,
-                    address,
-                    price,
-                    description,
-                    contact,
-                    url: url || null,
-                    dateAdded: new Date().toISOString()
-                };
-
-                if (isEdit) {
-                    // Update existing property
-                    await db.collection('properties').doc(isEdit).update(propertyData);
-                    showNotification('Property updated successfully!', 'success');
-                } else {
-                    // Upload images first
-                    const imageUrls = [];
-                    const propertyId = Date.now().toString();
-                    
-                    for (const file of imageFiles) {
-                        const url = await uploadImageToStorage(file, propertyId);
-                        imageUrls.push(url);
-                    }
-                    
-                    propertyData.images = imageUrls;
-                    
-                    // Add new property
-                    const docRef = await db.collection('properties').add(propertyData);
-                    propertyData.id = docRef.id;
-                    properties.push(propertyData);
-                    showNotification('Property added successfully!', 'success');
-                }
-                
-                // Reset form and close modal
-                propertyForm.reset();
-                delete propertyForm.dataset.editId;
-                imagePreviewContainer.innerHTML = '';
-                imageFiles = [];
-                propertyImages.value = '';
-                addPropertyModal.style.display = 'none';
-                
-                // Reload properties for current location
-                if (location) {
-                    filterAndDisplayProperties(location);
-                }
-            } catch (error) {
-                console.error("Error saving property:", error);
-                showNotification('Error saving property', 'error');
-            }
-        }
-
-        // Show notification
-        function showNotification(message, type) {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.textContent = message;
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease-out';
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 3000);
-        }
-
-        // Initialize the app
-        init();
     </script>
 </body>
 </html>
