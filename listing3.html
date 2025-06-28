@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,14 +9,11 @@
         /* ===== Global Styles ===== */
         :root {
             --primary: #4361ee;
-            --secondary: #3f37c9;
-            --accent: #4895ef;
             --dark: #1b263b;
             --light: #f8f9fa;
             --gray: #6c757d;
-            --success: #4cc9f0;
+            --border: #e9ecef;
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         * {
@@ -34,7 +31,7 @@
 
         .container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -44,31 +41,22 @@
             color: inherit;
         }
 
-        ul {
-            list-style: none;
-        }
-
         /* ===== Header Styles ===== */
         header {
             background: white;
             box-shadow: var(--shadow);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
+            padding: 15px 0;
         }
 
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
         }
 
         .logo {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
-            color: var(--dark);
         }
 
         .logo span {
@@ -77,201 +65,67 @@
 
         .nav-links {
             display: flex;
-            gap: 30px;
+            gap: 20px;
         }
 
         .nav-links a {
             font-weight: 600;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .nav-links a:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            bottom: -5px;
-            left: 0;
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover:after {
-            width: 100%;
-        }
-
-        .auth-buttons {
-            display: flex;
-            gap: 15px;
         }
 
         .btn {
             display: inline-block;
-            padding: 10px 25px;
-            border-radius: 8px;
+            padding: 8px 20px;
+            border-radius: 6px;
             font-weight: 600;
-            transition: var(--transition);
             cursor: pointer;
-            border: none;
-            font-size: 15px;
-        }
-
-        .btn-outline {
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            background: transparent;
-        }
-
-        .btn-outline:hover {
-            background: var(--primary);
-            color: white;
         }
 
         .btn-primary {
             background: var(--primary);
             color: white;
-            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+            border: none;
         }
 
-        .btn-primary:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
-        }
-
-        /* ===== Form Section ===== */
+        /* ===== Form Styles ===== */
         .form-section {
-            padding: 150px 0 80px;
+            padding: 80px 0;
         }
 
         .form-container {
             background: white;
-            border-radius: 16px;
+            border-radius: 10px;
             box-shadow: var(--shadow);
-            overflow: hidden;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .form-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
             padding: 30px;
+        }
+
+        .form-title {
             text-align: center;
-        }
-
-        .form-header h1 {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-
-        .form-header p {
-            opacity: 0.9;
-        }
-
-        .form-body {
-            padding: 40px;
-        }
-
-        .progress-steps {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 40px;
-            position: relative;
-        }
-
-        .progress-steps:before {
-            content: '';
-            position: absolute;
-            top: 15px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: #e9ecef;
-            z-index: 1;
-        }
-
-        .step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .step-number {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: #e9ecef;
-            color: var(--gray);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            margin-bottom: 8px;
-            border: 2px solid white;
-        }
-
-        .step.active .step-number {
-            background: var(--primary);
-            color: white;
-        }
-
-        .step.completed .step-number {
-            background: var(--success);
-            color: white;
-        }
-
-        .step-label {
-            font-size: 14px;
-            color: var(--gray);
-            font-weight: 500;
-        }
-
-        .step.active .step-label {
+            margin-bottom: 30px;
             color: var(--primary);
-            font-weight: 600;
         }
 
         .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-row {
-            display: flex;
-            gap: 20px;
-        }
-
-        .form-row .form-group {
-            flex: 1;
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: var(--dark);
         }
 
         .form-control {
             width: 100%;
-            padding: 14px 16px;
-            border: 1px solid #e9ecef;
-            border-radius: 8px;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
             font-size: 15px;
-            transition: var(--transition);
             background: #f8f9fa;
         }
 
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
             background: white;
         }
 
@@ -279,69 +133,50 @@
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236c757d' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 16px center;
-            background-size: 16px;
+            background-position: right 15px center;
         }
 
-        textarea.form-control {
-            min-height: 120px;
-            resize: vertical;
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
         }
 
         .form-footer {
-            display: flex;
-            justify-content: space-between;
+            text-align: center;
             margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #e9ecef;
         }
 
-        .btn-lg {
-            padding: 14px 30px;
+        .btn-submit {
+            padding: 12px 30px;
             font-size: 16px;
-        }
-
-        .note {
-            font-size: 13px;
-            color: var(--gray);
-            margin-top: 6px;
-            font-style: italic;
         }
 
         /* ===== Footer ===== */
         footer {
-            background: var(--dark);
-            color: white;
-            padding: 30px 0;
             text-align: center;
+            padding: 20px 0;
+            color: var(--gray);
+            font-size: 14px;
         }
 
         /* ===== Responsive ===== */
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .nav-links {
-                gap: 20px;
-            }
-
-            .form-section {
-                padding: 120px 0 60px;
-            }
-
-            .form-body {
-                padding: 30px;
-            }
-
+        @media (max-width: 600px) {
             .form-row {
                 flex-direction: column;
                 gap: 0;
             }
-
-            .step-label {
-                display: none;
+            
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                justify-content: center;
             }
         }
     </style>
@@ -351,13 +186,12 @@
         <div class="container">
             <nav class="navbar">
                 <a href="index.html" class="logo"><span>Stay</span>Loo</a>
-                <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                </ul>
-                <div class="auth-buttons">
-                    <a href="#" class="btn btn-outline">Log In</a>
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="#">About</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div>
                     <a href="#" class="btn btn-primary">Sign Up</a>
                 </div>
             </nav>
@@ -367,109 +201,92 @@
     <section class="form-section">
         <div class="container">
             <div class="form-container">
-                <div class="form-header">
-                    <h1>List Your Property</h1>
-                    <p>Fill out this form to connect with thousands of potential tenants</p>
-                </div>
+                <h1 class="form-title">List Your Property</h1>
                 
-                <div class="form-body">
-                    <div class="progress-steps">
-                        <div class="step active">
-                            <div class="step-number">1</div>
-                            <div class="step-label">Basic Info</div>
+                <form id="propertyForm">
+                    <h3>Owner Information</h3>
+                    <div class="form-group">
+                        <label for="name">Full Name*</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone Number*</label>
+                            <input type="tel" id="phone" class="form-control" required>
                         </div>
-                        <div class="step">
-                            <div class="step-number">2</div>
-                            <div class="step-label">Property Details</div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <div class="step-label">Photos & Pricing</div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">4</div>
-                            <div class="step-label">Review</div>
+                        <div class="form-group">
+                            <label for="email">Email*</label>
+                            <input type="email" id="email" class="form-control" required>
                         </div>
                     </div>
-
-                    <form id="propertyForm">
-                        <h2 style="margin-bottom: 20px; color: var(--primary);">Basic Information</h2>
-                        
+                    
+                    <h3>Property Details</h3>
+                    <div class="form-group">
+                        <label for="title">Property Title*</label>
+                        <input type="text" id="title" class="form-control" placeholder="e.g. Spacious 2BHK in City Center" required>
+                    </div>
+                    
+                    <div class="form-row">
                         <div class="form-group">
-                            <label for="name">Your Full Name*</label>
-                            <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
+                            <label for="type">Property Type*</label>
+                            <select id="type" class="form-control" required>
+                                <option value="">Select type</option>
+                                <option value="flat">Flat/Apartment</option>
+                                <option value="house">House</option>
+                                <option value="pg">PG/Hostel</option>
+                                <option value="room">Private Room</option>
+                            </select>
                         </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="phone">Phone Number*</label>
-                                <input type="tel" id="phone" class="form-control" placeholder="Enter phone number" required>
-                                <p class="note">Your phone number is safe with us</p>
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email Address*</label>
-                                <input type="email" id="email" class="form-control" placeholder="Enter email address" required>
-                            </div>
-                        </div>
-
                         <div class="form-group">
-                            <label for="propertyTitle">Property Title*</label>
-                            <input type="text" id="propertyTitle" class="form-control" placeholder="e.g. Beautiful 2BHK in City Center" required>
+                            <label for="bhk">BHK Type*</label>
+                            <select id="bhk" class="form-control" required>
+                                <option value="">Select BHK</option>
+                                <option value="1">1 BHK</option>
+                                <option value="2">2 BHK</option>
+                                <option value="3">3 BHK</option>
+                                <option value="4+">4+ BHK</option>
+                            </select>
                         </div>
-
-                        <h2 style="margin: 30px 0 20px; color: var(--primary);">Property Details</h2>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="propertyType">Property Type*</label>
-                                <select id="propertyType" class="form-control" required>
-                                    <option value="">Select property type</option>
-                                    <option value="flat">Flat/Apartment</option>
-                                    <option value="house">House</option>
-                                    <option value="pg">PG/Hostel</option>
-                                    <option value="room">Private Room</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="bhk">BHK Type*</label>
-                                <select id="bhk" class="form-control" required>
-                                    <option value="">Select BHK</option>
-                                    <option value="1bhk">1 BHK</option>
-                                    <option value="2bhk">2 BHK</option>
-                                    <option value="3bhk">3 BHK</option>
-                                    <option value="4bhk">4 BHK</option>
-                                    <option value="4+bhk">4+ BHK</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="bedrooms">Bedrooms*</label>
-                                <input type="number" id="bedrooms" class="form-control" min="1" placeholder="Number of bedrooms" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="bathrooms">Bathrooms*</label>
-                                <input type="number" id="bathrooms" class="form-control" min="1" placeholder="Number of bathrooms" required>
-                            </div>
-                        </div>
-
+                    </div>
+                    
+                    <div class="form-row">
                         <div class="form-group">
-                            <label for="location">Full Address*</label>
-                            <input type="text" id="location" class="form-control" placeholder="Enter complete address" required>
+                            <label for="bedrooms">Bedrooms*</label>
+                            <input type="number" id="bedrooms" class="form-control" min="1" required>
                         </div>
-
                         <div class="form-group">
-                            <label for="details">Property Description</label>
-                            <textarea id="details" class="form-control" placeholder="Describe your property (amenities, facilities, nearby locations etc.)"></textarea>
+                            <label for="bathrooms">Bathrooms*</label>
+                            <input type="number" id="bathrooms" class="form-control" min="1" required>
                         </div>
-
-                        <div class="form-footer">
-                            <button type="button" class="btn btn-outline">Back</button>
-                            <button type="submit" class="btn btn-primary btn-lg">Continue</button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address">Full Address*</label>
+                        <input type="text" id="address" class="form-control" required>
+                    </div>
+                    
+                    <h3>Monthly Pricing</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="rent">Monthly Rent (₹)*</label>
+                            <input type="number" id="rent" class="form-control" required>
                         </div>
-                    </form>
-                </div>
+                        <div class="form-group">
+                            <label for="deposit">Security Deposit (₹)*</label>
+                            <input type="number" id="deposit" class="form-control" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Property Description</label>
+                        <textarea id="description" class="form-control" rows="4"></textarea>
+                    </div>
+                    
+                    <div class="form-footer">
+                        <button type="submit" class="btn btn-primary btn-submit">Submit Listing</button>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
@@ -484,30 +301,50 @@
         document.getElementById('propertyForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Get form values
+            // Get form data
             const formData = {
                 name: document.getElementById('name').value,
                 phone: document.getElementById('phone').value,
                 email: document.getElementById('email').value,
-                propertyTitle: document.getElementById('propertyTitle').value,
-                propertyType: document.getElementById('propertyType').value,
+                title: document.getElementById('title').value,
+                type: document.getElementById('type').value,
                 bhk: document.getElementById('bhk').value,
                 bedrooms: document.getElementById('bedrooms').value,
                 bathrooms: document.getElementById('bathrooms').value,
-                location: document.getElementById('location').value,
-                details: document.getElementById('details').value
+                address: document.getElementById('address').value,
+                rent: document.getElementById('rent').value,
+                deposit: document.getElementById('deposit').value,
+                description: document.getElementById('description').value
             };
-
-            // Here you would typically send this data to your server
-            // For this demo, we'll just show an alert and simulate WhatsApp integration
-            alert('Form submitted successfully! In a real implementation, this would send to your backend or WhatsApp.');
             
-            // WhatsApp integration would look like this (uncomment and replace number):
-            // const message = `New Property Listing:\n\nName: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email}\nProperty: ${formData.propertyTitle}\nType: ${formData.propertyType}\nBHK: ${formData.bhk}\nBedrooms: ${formData.bedrooms}\nBathrooms: ${formData.bathrooms}\nAddress: ${formData.location}\nDetails: ${formData.details}`;
-            // window.open(`https://wa.me/YOUR_WHATSAPP_NUMBER?text=${encodeURIComponent(message)}`, '_blank');
+            // Create WhatsApp message
+            const message = `New Property Listing:\n\n` +
+                            `*Owner Details*\n` +
+                            `Name: ${formData.name}\n` +
+                            `Phone: ${formData.phone}\n` +
+                            `Email: ${formData.email}\n\n` +
+                            `*Property Details*\n` +
+                            `Title: ${formData.title}\n` +
+                            `Type: ${formData.type}\n` +
+                            `BHK: ${formData.bhk}\n` +
+                            `Bedrooms: ${formData.bedrooms}\n` +
+                            `Bathrooms: ${formData.bathrooms}\n\n` +
+                            `*Pricing*\n` +
+                            `Monthly Rent: ₹${formData.rent}\n` +
+                            `Deposit: ₹${formData.deposit}\n\n` +
+                            `*Address*\n` +
+                            `${formData.address}\n\n` +
+                            `*Description*\n` +
+                            `${formData.description}`;
             
-            // For demo purposes, we'll just log the data
-            console.log('Form data:', formData);
+            // Encode for WhatsApp URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Replace with your WhatsApp number (without + or 0)
+            const whatsappNumber = '911234567890';
+            
+            // Open WhatsApp with pre-filled message
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
         });
     </script>
 </body>
