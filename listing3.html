@@ -9,11 +9,13 @@
         /* ===== Global Styles ===== */
         :root {
             --primary: #4361ee;
-            --dark: #1b263b;
+            --secondary: #3a0ca3;
             --light: #f8f9fa;
+            --dark: #1a1a2e;
             --gray: #6c757d;
             --border: #e9ecef;
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --success: #4cc9f0;
         }
 
         * {
@@ -36,26 +38,54 @@
             padding: 0 20px;
         }
 
-        a {
-            text-decoration: none;
-            color: inherit;
+        section {
+            padding: 80px 0;
+        }
+
+        h1, h2, h3 {
+            color: var(--dark);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
         }
 
         /* ===== Header Styles ===== */
         header {
             background: white;
             box-shadow: var(--shadow);
-            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 20px 0;
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
         }
 
@@ -65,37 +95,24 @@
 
         .nav-links {
             display: flex;
-            gap: 20px;
+            gap: 30px;
         }
 
         .nav-links a {
             font-weight: 600;
+            position: relative;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 8px 20px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-            border: none;
+        .nav-links a:hover {
+            color: var(--primary);
         }
 
         /* ===== Form Styles ===== */
-        .form-section {
-            padding: 80px 0;
-        }
-
         .form-container {
             background: white;
             border-radius: 10px;
+            padding: 40px;
             box-shadow: var(--shadow);
-            padding: 30px;
         }
 
         .form-title {
@@ -116,17 +133,17 @@
 
         .form-control {
             width: 100%;
-            padding: 12px 15px;
+            padding: 14px;
             border: 1px solid var(--border);
             border-radius: 6px;
-            font-size: 15px;
-            background: #f8f9fa;
+            font-size: 16px;
+            transition: all 0.3s ease;
         }
 
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
-            background: white;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
         }
 
         select.form-control {
@@ -153,6 +170,16 @@
         .btn-submit {
             padding: 12px 30px;
             font-size: 16px;
+        }
+
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+            text-align: center;
         }
 
         /* ===== Footer ===== */
@@ -188,11 +215,10 @@
                 <a href="index.html" class="logo"><span>Stay</span>Loo</a>
                 <div class="nav-links">
                     <a href="index.html">Home</a>
-                    <a href="#">About Us</a>
-                    <a href="#">Contact Us</a>
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Contact Us</a>
                 </div>
-                <div>
-                </div>
+                <a href="#" class="btn btn-primary">Sign Up</a>
             </nav>
         </div>
     </header>
@@ -213,7 +239,6 @@
                         <div class="form-group">
                             <label for="phone">Phone Number*</label>
                             <input type="tel" id="phone" class="form-control" required>
-                          <p class="note">(Your phone number is safe with us)</p>
                         </div>
                         <div class="form-group">
                             <label for="email">Email*</label>
@@ -235,7 +260,7 @@
                                 <option value="flat">Flat/Apartment</option>
                                 <option value="house">House</option>
                                 <option value="pg">PG/Hostel</option>
-                                <option value="room">Normal Room</option>
+                                <option value="room">Private Room</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -272,6 +297,10 @@
                             <label for="rent">Monthly Rent (₹)*</label>
                             <input type="number" id="rent" class="form-control" required>
                         </div>
+                        <div class="form-group">
+                            <label for="deposit">Security Deposit (₹)*</label>
+                            <input type="number" id="deposit" class="form-control" required>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -281,6 +310,9 @@
                     
                     <div class="form-footer">
                         <button type="submit" class="btn btn-primary btn-submit">Submit Listing</button>
+                        <div class="success-message" id="successMessage">
+                            <i class="fas fa-check-circle"></i> Thank you! We've received your listing and will contact you shortly.
+                        </div>
                     </div>
                 </form>
             </div>
@@ -289,7 +321,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 StayLoo. All rights reserved.</p>
+            <p>&copy; 2023 StayLoo. All rights reserved.</p>
         </div>
     </footer>
 
@@ -314,33 +346,45 @@
             };
             
             // Create WhatsApp message
-            const message = `New Property Listing:\n\n` +
-                            `*Owner Details*\n` +
-                            `Name: ${formData.name}\n` +
-                            `Phone: ${formData.phone}\n` +
-                            `Email: ${formData.email}\n\n` +
-                            `*Property Details*\n` +
-                            `Title: ${formData.title}\n` +
-                            `Type: ${formData.type}\n` +
-                            `BHK: ${formData.bhk}\n` +
-                            `Bedrooms: ${formData.bedrooms}\n` +
-                            `Bathrooms: ${formData.bathrooms}\n\n` +
-                            `*Pricing*\n` +
-                            `Monthly Rent: ₹${formData.rent}\n` +
-                            `Deposit: ₹${formData.deposit}\n\n` +
-                            `*Address*\n` +
-                            `${formData.address}\n\n` +
-                            `*Description*\n` +
+            const message = `*NEW PROPERTY LISTING - STAYLOO*\n\n` +
+                            `*Owner Details:*\n` +
+                            `👤 Name: ${formData.name}\n` +
+                            `📞 Phone: ${formData.phone}\n` +
+                            `📧 Email: ${formData.email}\n\n` +
+                            `*Property Details:*\n` +
+                            `🏠 Title: ${formData.title}\n` +
+                            `🏡 Type: ${formData.type}\n` +
+                            `🛏️ BHK: ${formData.bhk}\n` +
+                            `🛌 Bedrooms: ${formData.bedrooms}\n` +
+                            `🚿 Bathrooms: ${formData.bathrooms}\n\n` +
+                            `*Pricing:*\n` +
+                            `💰 Monthly Rent: ₹${formData.rent}\n` +
+                            `🔒 Security Deposit: ₹${formData.deposit}\n\n` +
+                            `*Location:*\n` +
+                            `📍 ${formData.address}\n\n` +
+                            `*Description:*\n` +
                             `${formData.description}`;
             
             // Encode for WhatsApp URL
             const encodedMessage = encodeURIComponent(message);
             
             // Replace with your WhatsApp number (without + or 0)
-            const whatsappNumber = '6387834084';
+            // Example: 911234567890 for Indian number
+            const whatsappNumber = '919170548739';
             
             // Open WhatsApp with pre-filled message
             window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+            
+            // Show success message
+            document.getElementById('successMessage').style.display = 'block';
+            
+            // Reset form
+            this.reset();
+            
+            // Scroll to success message
+            document.getElementById('successMessage').scrollIntoView({
+                behavior: 'smooth'
+            });
         });
     </script>
 </body>
