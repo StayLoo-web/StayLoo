@@ -538,77 +538,22 @@
     </div>
     
     <script>
-<script>
-    // Global variables
-    let currentPropertyType = '';
-    let isAdmin = false;
-    let properties = [];
-    let selectedImages = [];
-    
-    const ADMIN_CREDENTIALS = {
-        id: "stayloo_admin",
-        password: "admin@123"
-    };
-
-    // Initialize with empty properties (no demo data)
-    function initializeProperties() {
-        properties = []; // Start with empty array
-    }
-
-    function selectPropertyType(type) {
-        currentPropertyType = type;
-        document.getElementById('propertyTypeTitle').textContent = type;
-        document.getElementById('propertyTypePage').classList.add('hidden');
-        document.getElementById('searchPage').classList.remove('hidden');
+        // Global variables
+        let currentPropertyType = '';
+        let isAdmin = false;
+        let properties = [];
+        let selectedImages = [];
         
-        // Set payment amount based on type
-        document.getElementById('paymentAmount').textContent = 
-            (type === '1BHK') ? '₹59' : '₹99';
+        // Admin credentials (in a real app, these would be verified server-side)
+        const ADMIN_CREDENTIALS = {
+            id: "stayloo_admin",
+            password: "admin@123"
+        };
         
-        searchProperties(); // Show relevant properties immediately
-    }
-
-    // Fixed search function
-    function searchProperties() {
-        const locationInput = document.getElementById('locationInput').value.trim().toLowerCase();
-        const resultsContainer = document.getElementById('resultsContainer');
-        resultsContainer.innerHTML = '';
-
-        if (locationInput === '') {
-            // Show all properties of selected type if search box is empty
-            const filteredProperties = currentPropertyType === '' ? 
-                properties : 
-                properties.filter(property => property.type === currentPropertyType);
-            
-            if (filteredProperties.length === 0) {
-                resultsContainer.innerHTML = '<p>No properties available.</p>';
-            } else {
-                filteredProperties.forEach(property => {
-                    createPropertyCard(property);
-                });
-            }
-            return;
+        // Initialize with empty properties
+        function initializeProperties() {
+            properties = [];
         }
-
-        // Filter by location (partial match) and type
-        const filteredProperties = properties.filter(property => {
-            const matchesLocation = property.location.toLowerCase().includes(locationInput);
-            const matchesType = currentPropertyType === '' || property.type === currentPropertyType;
-            return matchesLocation && matchesType;
-        });
-
-        if (filteredProperties.length === 0) {
-            resultsContainer.innerHTML = '<p>No properties found matching "' + locationInput + '". Try a different search.</p>';
-        } else {
-            filteredProperties.forEach(property => {
-                createPropertyCard(property);
-            });
-        }
-    }
-
-    // Rest of your existing functions (createPropertyCard(), admin login, etc.) remain the same
-    // ...
-</script>
         
         // Function to handle property type selection
         function selectPropertyType(type) {
@@ -626,80 +571,45 @@
             }
             document.getElementById('paymentAmount').textContent = paymentAmount;
             
-            // Clear previous search results
-            document.getElementById('resultsContainer').innerHTML = '';
+            // Show properties of the selected type
+            searchProperties();
         }
         
-        // Function to search properties
-        // Updated searchProperties() function
-function searchProperties() {
-    const locationInput = document.getElementById('locationInput').value.trim().toLowerCase();
-    const resultsContainer = document.getElementById('resultsContainer');
-    resultsContainer.innerHTML = '';
-
-    if (locationInput === '') {
-        // If search box is empty, show all properties of the selected type
-        const filteredProperties = currentPropertyType === '' ? 
-            properties : 
-            properties.filter(property => property.type === currentPropertyType);
-        
-        if (filteredProperties.length === 0) {
-            resultsContainer.innerHTML = '<p>No properties available.</p>';
-        } else {
-            filteredProperties.forEach(property => {
-                createPropertyCard(property);
-            });
-        }
-        return;
-    }
-
-    // Filter properties by location (partial match) and type
-    const filteredProperties = properties.filter(property => {
-        const matchesLocation = property.location.toLowerCase().includes(locationInput);
-        const matchesType = currentPropertyType === '' || property.type === currentPropertyType;
-        return matchesLocation && matchesType;
-    });
-
-    if (filteredProperties.length === 0) {
-        resultsContainer.innerHTML = '<p>No properties found matching "' + locationInput + '". Try a different search.</p>';
-    } else {
-        filteredProperties.forEach(property => {
-            createPropertyCard(property);
-        });
-    }
-}
-            
-            // Clear previous results
+        // Fixed search function with location matching
+        function searchProperties() {
+            const locationInput = document.getElementById('locationInput').value.trim().toLowerCase();
+            const resultsContainer = document.getElementById('resultsContainer');
             resultsContainer.innerHTML = '';
             
-            if (location) {
-                // Filter properties by location and type
-                const filteredProperties = properties.filter(property => 
-                    property.location.toLowerCase().includes(location) && 
-                    (currentPropertyType === '' || property.type === currentPropertyType)
-                );
-                
-                if (filteredProperties.length > 0) {
-                    // Display filtered properties
-                    filteredProperties.forEach(property => {
-                        createPropertyCard(property);
-                    });
-                } else {
-                    resultsContainer.innerHTML = '<p>No properties found in this location. Try a different search.</p>';
-                }
-            } else {
-                // Show all properties of the selected type if no location specified
+            if (locationInput === '') {
+                // Show all properties of selected type if search box is empty
                 const filteredProperties = currentPropertyType === '' ? 
                     properties : 
                     properties.filter(property => property.type === currentPropertyType);
                 
-                if (filteredProperties.length > 0) {
+                if (filteredProperties.length === 0) {
+                    resultsContainer.innerHTML = '<p>No properties available.</p>';
+                } else {
                     filteredProperties.forEach(property => {
                         createPropertyCard(property);
                     });
-                } else {
-                    resultsContainer.innerHTML = '<p>No properties of this type available.</p>';
                 }
+                return;
+            }
+            
+            // Filter properties by location (partial match) and type
+            const filteredProperties = properties.filter(property => {
+                const matchesLocation = property.location.toLowerCase().includes(locationInput);
+                const matchesType = currentPropertyType === '' || property.type === currentPropertyType;
+                return matchesLocation && matchesType;
+            });
+            
+            if (filteredProperties.length === 0) {
+                resultsContainer.innerHTML = '<p>No properties found matching "' + locationInput + '". Try a different search.</p>';
+            } else {
+                filteredProperties.forEach(property => {
+                    createPropertyCard(property);
+                });
             }
         }
         
@@ -721,7 +631,7 @@ function searchProperties() {
                 const mainImage = property.images[0];
                 const thumbnails = property.images.slice(0, 10).map((img, index) => `
                     <img src="${img}" class="property-thumbnail ${index === 0 ? 'active' : ''}" 
-                         onclick="changeMainImage(this, '${mainImage}')">
+                         onclick="changeMainImage(this, '${mainImage}', ${property.id})">
                 `).join('');
                 
                 mediaHTML = `
@@ -771,9 +681,9 @@ function searchProperties() {
         }
         
         // Function to change main image when thumbnail is clicked
-        function changeMainImage(thumbnail, fallbackImage) {
+        function changeMainImage(thumbnail, fallbackImage, propertyId) {
             const propertyCard = thumbnail.closest('.property-listing');
-            const mainImage = propertyCard.querySelector('.property-main-image');
+            const mainImage = document.getElementById(`mainImage-${propertyId}`);
             const allThumbnails = propertyCard.querySelectorAll('.property-thumbnail');
             
             allThumbnails.forEach(t => t.classList.remove('active'));
@@ -893,6 +803,11 @@ function searchProperties() {
                 address: document.getElementById('propertyAddress').value
             };
             
+            if (!newProperty.title || !newProperty.price || !newProperty.location) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
             properties.push(newProperty);
             createPropertyCard(newProperty);
             
@@ -952,6 +867,8 @@ function searchProperties() {
         
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
+            initializeProperties();
+            
             // Set up admin toggle
             document.getElementById('adminToggle').addEventListener('click', toggleAdminMode);
             
@@ -959,6 +876,13 @@ function searchProperties() {
             document.getElementById('adminLoginModal').addEventListener('click', function(e) {
                 if (e.target === this) {
                     hideAdminLogin();
+                }
+            });
+            
+            // Allow pressing Enter in search box
+            document.getElementById('locationInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchProperties();
                 }
             });
         });
