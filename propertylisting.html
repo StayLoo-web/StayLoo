@@ -25,6 +25,7 @@
             background-color: #fff;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             padding: 15px 0;
+            position: relative;
         }
         
         .logo {
@@ -140,18 +141,46 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             margin-bottom: 20px;
             overflow: hidden;
+        }
+        
+        .property-media {
             display: flex;
         }
         
-        .property-image {
-            width: 300px;
-            height: 200px;
+        .property-main-image {
+            width: 400px;
+            height: 250px;
             object-fit: cover;
+        }
+        
+        .property-thumbnails {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            padding: 10px;
+            max-width: 200px;
+        }
+        
+        .property-thumbnail {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        .property-thumbnail:hover, .property-thumbnail.active {
+            border-color: #0066cc;
+        }
+        
+        .property-video {
+            width: 100%;
+            height: 300px;
+            background-color: #000;
         }
         
         .property-details {
             padding: 20px;
-            flex: 1;
             position: relative;
         }
         
@@ -256,11 +285,48 @@
             margin: 20px 0;
         }
         
-        /* Admin Login */
-        .admin-login {
+        /* Admin Login Modal */
+        .admin-login-modal {
+            display: none;
             position: fixed;
-            top: 10px;
-            right: 20px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .admin-login-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 400px;
+            max-width: 90%;
+        }
+        
+        .admin-login-form h2 {
+            margin-top: 0;
+            color: #0066cc;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
         
         /* Add Property Form */
@@ -277,21 +343,35 @@
             display: block;
         }
         
-        .form-group {
-            margin-bottom: 15px;
+        .image-preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0;
         }
         
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            padding: 10px;
+        .image-preview {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            position: relative;
+        }
+        
+        .remove-image {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
         }
         
         /* Hidden class for page navigation */
@@ -302,6 +382,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <!-- Admin Login Modal -->
+    <div class="admin-login-modal" id="adminLoginModal">
+        <div class="admin-login-form">
+            <h2>Admin Login</h2>
+            <div class="form-group">
+                <label for="adminId">Admin ID</label>
+                <input type="text" id="adminId" placeholder="Enter admin ID">
+            </div>
+            <div class="form-group">
+                <label for="adminPassword">Password</label>
+                <input type="password" id="adminPassword" placeholder="Enter password">
+            </div>
+            <button class="btn" onclick="attemptAdminLogin()">Login</button>
+            <div id="loginError" style="color: red; margin-top: 10px; display: none;">Invalid credentials</div>
+        </div>
+    </div>
+    
     <!-- Header -->
     <header>
         <div class="container">
@@ -390,8 +487,14 @@
                     <input type="text" id="propertyLocation" placeholder="e.g., Mumbai">
                 </div>
                 <div class="form-group">
-                    <label for="propertyImage">Image URL</label>
-                    <input type="text" id="propertyImage" placeholder="https://example.com/image.jpg">
+                    <label for="propertyVideo">Video URL (optional)</label>
+                    <input type="text" id="propertyVideo" placeholder="https://youtube.com/embed/example">
+                </div>
+                <div class="form-group">
+                    <label for="propertyImages">Images (Max 10)</label>
+                    <input type="file" id="propertyImages" multiple accept="image/*" onchange="previewImages()">
+                    <small>Select up to 10 images</small>
+                    <div class="image-preview-container" id="imagePreviewContainer"></div>
                 </div>
                 <div class="form-group">
                     <label for="propertyDescription">Description</label>
@@ -439,36 +542,13 @@
         let currentPropertyType = '';
         let isAdmin = false;
         let properties = [];
+        let selectedImages = [];
         
-        // Initialize with some sample properties (in a real app, these would come from a database)
-        function initializeSampleProperties() {
-            properties = [
-                {
-                    id: 1,
-                    title: "Cozy 1BHK in Mumbai",
-                    type: "1BHK",
-                    price: "₹12,000",
-                    area: "600 sq.ft",
-                    location: "Mumbai",
-                    image: "https://via.placeholder.com/300x200?text=1BHK+Mumbai",
-                    description: "A cozy 1BHK apartment in the heart of Mumbai with all modern amenities.",
-                    contact: "9876543210",
-                    address: "123 Main Street, Mumbai - 400001"
-                },
-                {
-                    id: 2,
-                    title: "Spacious 2BHK in Bangalore",
-                    type: "2BHK",
-                    price: "₹18,000",
-                    area: "900 sq.ft",
-                    location: "Bangalore",
-                    image: "https://via.placeholder.com/300x200?text=2BHK+Bangalore",
-                    description: "Spacious 2BHK flat in a peaceful neighborhood of Bangalore.",
-                    contact: "9876543211",
-                    address: "456 Oak Avenue, Bangalore - 560001"
-                }
-            ];
-        }
+        // Admin credentials (in a real app, these would be verified server-side)
+        const ADMIN_CREDENTIALS = {
+            id: "stayloo_admin",
+            password: "admin@123"
+        };
         
         // Function to handle property type selection
         function selectPropertyType(type) {
@@ -535,8 +615,39 @@
             propertyCard.className = 'property-listing';
             propertyCard.dataset.id = property.id;
             
+            // Create media section
+            let mediaHTML = '';
+            if (property.video) {
+                mediaHTML = `
+                    <div class="property-media">
+                        <iframe class="property-video" src="${property.video}" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                `;
+            } else if (property.images && property.images.length > 0) {
+                const mainImage = property.images[0];
+                const thumbnails = property.images.slice(0, 10).map((img, index) => `
+                    <img src="${img}" class="property-thumbnail ${index === 0 ? 'active' : ''}" 
+                         onclick="changeMainImage(this, '${mainImage}')">
+                `).join('');
+                
+                mediaHTML = `
+                    <div class="property-media">
+                        <img src="${mainImage}" class="property-main-image" id="mainImage-${property.id}">
+                        <div class="property-thumbnails">
+                            ${thumbnails}
+                        </div>
+                    </div>
+                `;
+            } else {
+                mediaHTML = `
+                    <div class="property-media">
+                        <img src="https://via.placeholder.com/400x250?text=No+Image" class="property-main-image">
+                    </div>
+                `;
+            }
+            
             propertyCard.innerHTML = `
-                <img src="${property.image}" alt="${property.title}" class="property-image">
+                ${mediaHTML}
                 <div class="property-details">
                     <h3>${property.title}</h3>
                     <div class="price">${property.price}/month</div>
@@ -565,6 +676,18 @@
             document.getElementById('resultsContainer').appendChild(propertyCard);
         }
         
+        // Function to change main image when thumbnail is clicked
+        function changeMainImage(thumbnail, fallbackImage) {
+            const propertyCard = thumbnail.closest('.property-listing');
+            const mainImage = propertyCard.querySelector('.property-main-image');
+            const allThumbnails = propertyCard.querySelectorAll('.property-thumbnail');
+            
+            allThumbnails.forEach(t => t.classList.remove('active'));
+            thumbnail.classList.add('active');
+            
+            mainImage.src = thumbnail.src || fallbackImage;
+        }
+        
         // Function to show payment page
         function showPaymentPage() {
             if (!isAdmin) {
@@ -580,21 +703,85 @@
         }
         
         // Admin Functions
-        function toggleAdminMode() {
-            isAdmin = !isAdmin;
-            document.body.classList.toggle('admin-mode', isAdmin);
-            document.getElementById('adminToggle').textContent = isAdmin ? 'Exit Admin' : 'Admin Login';
+        function showAdminLogin() {
+            document.getElementById('adminLoginModal').style.display = 'flex';
+        }
+        
+        function hideAdminLogin() {
+            document.getElementById('adminLoginModal').style.display = 'none';
+            document.getElementById('loginError').style.display = 'none';
+        }
+        
+        function attemptAdminLogin() {
+            const id = document.getElementById('adminId').value;
+            const password = document.getElementById('adminPassword').value;
             
-            if (isAdmin) {
+            if (id === ADMIN_CREDENTIALS.id && password === ADMIN_CREDENTIALS.password) {
+                isAdmin = true;
+                document.body.classList.add('admin-mode');
+                document.getElementById('adminToggle').textContent = 'Exit Admin';
+                hideAdminLogin();
+                
                 // Show all properties when admin logs in
                 document.getElementById('resultsContainer').innerHTML = '';
                 properties.forEach(property => {
                     createPropertyCard(property);
                 });
             } else {
-                // Return to normal view
-                searchProperties();
+                document.getElementById('loginError').style.display = 'block';
             }
+        }
+        
+        function toggleAdminMode() {
+            if (isAdmin) {
+                // Exit admin mode
+                isAdmin = false;
+                document.body.classList.remove('admin-mode');
+                document.getElementById('adminToggle').textContent = 'Admin Login';
+                searchProperties();
+            } else {
+                // Show admin login
+                showAdminLogin();
+            }
+        }
+        
+        // Image handling functions
+        function previewImages() {
+            const files = document.getElementById('propertyImages').files;
+            const previewContainer = document.getElementById('imagePreviewContainer');
+            previewContainer.innerHTML = '';
+            selectedImages = [];
+            
+            if (files.length > 10) {
+                alert('You can upload a maximum of 10 images');
+                document.getElementById('propertyImages').value = '';
+                return;
+            }
+            
+            for (let i = 0; i < Math.min(files.length, 10); i++) {
+                const file = files[i];
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const preview = document.createElement('div');
+                    preview.className = 'image-preview-wrapper';
+                    preview.innerHTML = `
+                        <img src="${e.target.result}" class="image-preview">
+                        <div class="remove-image" onclick="removeSelectedImage(${i})">×</div>
+                    `;
+                    previewContainer.appendChild(preview);
+                    
+                    // Store the image data (in a real app, you would upload to server)
+                    selectedImages.push(e.target.result);
+                }
+                
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        function removeSelectedImage(index) {
+            selectedImages.splice(index, 1);
+            previewImages(); // Refresh the preview
         }
         
         function addProperty() {
@@ -605,7 +792,8 @@
                 price: '₹' + document.getElementById('propertyPrice').value,
                 area: document.getElementById('propertyArea').value + ' sq.ft',
                 location: document.getElementById('propertyLocation').value,
-                image: document.getElementById('propertyImage').value,
+                video: document.getElementById('propertyVideo').value,
+                images: [...selectedImages], // Copy the selected images array
                 description: document.getElementById('propertyDescription').value,
                 contact: document.getElementById('propertyContact').value,
                 address: document.getElementById('propertyAddress').value
@@ -615,9 +803,11 @@
             createPropertyCard(newProperty);
             
             // Clear the form
-            document.getElementById('addPropertyForm').querySelectorAll('input, textarea').forEach(element => {
+            document.getElementById('addPropertyForm').querySelectorAll('input, textarea, select').forEach(element => {
                 element.value = '';
             });
+            document.getElementById('imagePreviewContainer').innerHTML = '';
+            selectedImages = [];
         }
         
         function editProperty(id) {
@@ -630,10 +820,25 @@
             document.getElementById('propertyPrice').value = property.price.replace('₹', '').replace(',', '');
             document.getElementById('propertyArea').value = property.area.replace(' sq.ft', '');
             document.getElementById('propertyLocation').value = property.location;
-            document.getElementById('propertyImage').value = property.image;
+            document.getElementById('propertyVideo').value = property.video || '';
             document.getElementById('propertyDescription').value = property.description;
             document.getElementById('propertyContact').value = property.contact;
             document.getElementById('propertyAddress').value = property.address;
+            
+            // Handle images
+            selectedImages = [...property.images];
+            const previewContainer = document.getElementById('imagePreviewContainer');
+            previewContainer.innerHTML = '';
+            
+            selectedImages.forEach((img, index) => {
+                const preview = document.createElement('div');
+                preview.className = 'image-preview-wrapper';
+                preview.innerHTML = `
+                    <img src="${img}" class="image-preview">
+                    <div class="remove-image" onclick="removeSelectedImage(${index})">×</div>
+                `;
+                previewContainer.appendChild(preview);
+            });
             
             // Remove the old property
             deleteProperty(id, false);
@@ -653,10 +858,15 @@
         
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
-            initializeSampleProperties();
-            
             // Set up admin toggle
             document.getElementById('adminToggle').addEventListener('click', toggleAdminMode);
+            
+            // Set up admin login modal close (click outside)
+            document.getElementById('adminLoginModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    hideAdminLogin();
+                }
+            });
         });
     </script>
 </body>
