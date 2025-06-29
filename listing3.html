@@ -1,389 +1,730 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List Your Space | StayLoo</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>List Your Property - StayLoo</title>
     <style>
-        /* ===== Global Styles ===== */
-        :root {
-            --primary: #4361ee;
-            --secondary: #3a0ca3;
-            --light: #f8f9fa;
-            --dark: #1a1a2e;
-            --gray: #6c757d;
-            --border: #e9ecef;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            --success: #4cc9f0;
-        }
-
+        /* Global Styles */
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--dark);
-            background-color: #f5f7ff;
         }
-
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
         .container {
-            width: 100%;
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 0 20px;
         }
-
-        section {
-            padding: 80px 0;
-        }
-
-        h1, h2, h3 {
-            color: var(--dark);
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            border-radius: 6px;
-            font-weight: 600;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 16px;
-            border: none;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
-        }
-
-        /* ===== Header Styles ===== */
+        
+        /* Header Styles */
         header {
-            background: white;
-            box-shadow: var(--shadow);
+            background-color: ##62cff4;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
             z-index: 100;
         }
-
-        .navbar {
+        
+        .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
         }
-
+        
         .logo {
-            font-size: 28px;
-            font-weight: 700;
+            font-size: 24px;
+            font-weight: bold;
         }
-
-        .logo span {
-            color: var(--primary);
+        
+        .logo a {
+            color: white;
+            text-decoration: none;
         }
-
-        .nav-links {
+        
+        nav ul {
             display: flex;
-            gap: 30px;
+            list-style: none;
         }
-
-        .nav-links a {
-            font-weight: 600;
+        
+        nav ul li {
+            margin-left: 25px;
             position: relative;
         }
-
-        .nav-links a:hover {
-            color: var(--primary);
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 5px 0;
         }
-
-        /* ===== Form Styles ===== */
-        .form-container {
-            background: white;
-            border-radius: 10px;
-            padding: 40px;
-            box-shadow: var(--shadow);
+        
+        nav ul li a:hover {
+            opacity: 0.8;
         }
-
-        .form-title {
+        
+        /* Main Content Styles */
+        main {
+            padding: 40px 0;
+        }
+        
+        .page-header {
             text-align: center;
             margin-bottom: 30px;
-            color: var(--primary);
         }
-
+        
+        .page-header h1 {
+            color: #4CAF50;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .page-header p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        /* Listing Form Styles */
+        .listing-form {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+        
+        .form-section {
+            margin-bottom: 30px;
+        }
+        
+        .form-section h2 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+            font-size: 20px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        
         .form-group {
             margin-bottom: 20px;
         }
-
+        
         label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 600;
+            font-weight: 500;
         }
-
-        .form-control {
+        
+        .required:after {
+            content: " *";
+            color: #e53935;
+        }
+        
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        input[type="number"],
+        select,
+        textarea {
             width: 100%;
-            padding: 14px;
-            border: 1px solid var(--border);
+            padding: 12px 15px;
+            border: 1px solid #ddd;
             border-radius: 6px;
             font-size: 16px;
-            transition: all 0.3s ease;
+            transition: border 0.3s;
         }
-
-        .form-control:focus {
+        
+        input:focus,
+        select:focus,
+        textarea:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
         }
-
-        select.form-control {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236c757d' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 15px center;
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
         }
-
-        .form-row {
+        
+        .phone-note {
+            font-size: 13px;
+            color: #666;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        .two-columns {
             display: flex;
-            gap: 15px;
+            gap: 20px;
         }
-
-        .form-row .form-group {
+        
+        .two-columns .form-group {
             flex: 1;
         }
-
-        .form-footer {
-            text-align: center;
+        
+        /* Subscription Section */
+        .subscription-section {
+            margin: 40px 0;
+            padding: 25px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        
+        .subscription-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .subscription-option {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .subscription-option input {
+            display: none;
+        }
+        
+        .subscription-option label {
+            display: block;
+            padding: 20px;
+            background-color: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            height: 100%;
+        }
+        
+        .subscription-option input:checked + label {
+            border-color: #4CAF50;
+            background-color: #f0fff4;
+            box-shadow: 0 2px 10px rgba(76, 175, 80, 0.1);
+        }
+        
+        .subscription-option .pack-name {
+            font-weight: bold;
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .subscription-option .pack-price {
+            color: #4CAF50;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        
+        .subscription-option .pack-features {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .subscription-option .pack-features ul {
+            list-style: none;
+        }
+        
+        .subscription-option .pack-features li {
+            margin-bottom: 5px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .subscription-option .pack-features li:before {
+            content: "✓";
+            color: #4CAF50;
+            position: absolute;
+            left: 0;
+        }
+        
+        .code-verification {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            border: 1px dashed #ccc;
+            display: none;
+        }
+        
+        .code-input-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        #subscription-code {
+            flex: 1;
+            max-width: 300px;
+            padding: 12px 15px;
+            margin-right: 15px;
+        }
+        
+        #verify-code {
+            padding: 12px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        #verify-code:hover {
+            background-color: #43a047;
+        }
+        
+        #verification-icon {
+            margin-left: 15px;
+            font-size: 22px;
+        }
+        
+        .verification-message {
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+            display: block;
+        }
+        
+        .error {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+            display: block;
+        }
+        
+        /* Submit Button */
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
             margin-top: 30px;
         }
-
-        .btn-submit {
-            padding: 12px 30px;
-            font-size: 16px;
+        
+        .submit-btn:hover {
+            background-color: #43a047;
         }
-
-        .success-message {
-            display: none;
-            background: #d4edda;
-            color: #155724;
-            padding: 15px;
-            border-radius: 6px;
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        /* ===== Footer ===== */
+        
+        /* Footer Styles */
         footer {
+            background-color: #333;
+            color: white;
+            padding: 30px 0;
             text-align: center;
-            padding: 20px 0;
-            color: var(--gray);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: #aaa;
             font-size: 14px;
         }
-
-        /* ===== Responsive ===== */
-        @media (max-width: 600px) {
-            .form-row {
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 10px;
+            }
+            
+            .two-columns {
                 flex-direction: column;
                 gap: 0;
             }
             
-            .navbar {
+            .subscription-options {
                 flex-direction: column;
-                gap: 15px;
             }
             
-            .nav-links {
-                justify-content: center;
+            .code-input-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            #subscription-code {
+                max-width: 100%;
+                margin-right: 0;
+                margin-bottom: 15px;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="container">
-            <nav class="navbar">
-                <a href="index.html" class="logo"><span>Stay</span>Loo</a>
-                <div class="nav-links">
-                    <a href="index.html">Home</a>
-                    <a href="about.html">About Us</a>
-                    <a href="contact.html">Contact Us</a>
-                </div>
+        <div class="container header-container">
+            <div class="logo">
+                <a href="index.html">StayLoo</a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="listings.html">Browse Listings</a></li>
+                    <li><a href="list-your-space.html" class="active">List Your Space</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
             </nav>
         </div>
     </header>
-
-    <section class="form-section">
-        <div class="container">
-            <div class="form-container">
-                <h1 class="form-title">List Your Property</h1>
-                
-                <form id="propertyForm">
-                    <h3>Owner Information</h3>
-                    <div class="form-group">
-                        <label for="name">Full Name*</label>
-                        <input type="text" id="name" class="form-control" required>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="phone">Phone Number*</label>
-                            <input type="tel" id="phone" class="form-control" required>
-                          <p>(Provide your Whatsapp no. so we can contact you easily)</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email*</label>
-                            <input type="email" id="email" class="form-control" required>
-                        </div>
-                    </div>
-                    
-                    <h3>Property Details</h3>
-                    <div class="form-group">
-                        <label for="title">Property Title*</label>
-                        <input type="text" id="title" class="form-control" placeholder="e.g. Spacious 2BHK in City Center" required>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="type">Property Type*</label>
-                            <select id="type" class="form-control" required>
-                                <option value="">Select type</option>
-                                <option value="flat">Flat/Apartment</option>
-                                <option value="house">House</option>
-                                <option value="pg">PG/Hostel</option>
-                                <option value="room">Private Room</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="bhk">BHK Type*</label>
-                            <select id="bhk" class="form-control" required>
-                                <option value="">Select BHK</option>
-                                <option value="1">1 BHK</option>
-                                <option value="2">2 BHK</option>
-                                <option value="3">3 BHK</option>
-                                <option value="4+">4+ BHK</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="bedrooms">Bedrooms*</label>
-                            <input type="number" id="bedrooms" class="form-control" min="1" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="bathrooms">Bathrooms*</label>
-                            <input type="number" id="bathrooms" class="form-control" min="1" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="address">Full Address*</label>
-                        <input type="text" id="address" class="form-control" required>
-                    </div>
-                    
-                    <h3>Monthly Pricing</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="rent">Monthly Rent (₹)*</label>
-                            <input type="number" id="rent" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="deposit">Security Deposit (₹)*</label>
-                            <input type="number" id="deposit" class="form-control" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="description">Property Description</label>
-                        <textarea id="description" class="form-control" rows="4"></textarea>
-                    </div>
-                    
-                    <div class="form-footer">
-                        <button type="submit" class="btn btn-primary btn-submit">Submit Listing</button>
-                        <div class="success-message" id="successMessage">
-                            <i class="fas fa-check-circle"></i> Thank you! We've received your listing and will contact you shortly.
-                        </div>
-                    </div>
-                </form>
-            </div>
+    
+    <main class="container">
+        <div class="page-header">
+            <h1>List Your Property on StayLoo</h1>
+            <p>Connect with thousands of seekers looking for their perfect space</p>
         </div>
-    </section>
-
+        
+        <form class="listing-form" id="staylooForm">
+            <!-- Owner Information Section -->
+            <div class="form-section">
+                <h2>Owner Information</h2>
+                
+                <div class="form-group">
+                    <label for="owner-name" class="required">Your Full Name</label>
+                    <input type="text" id="owner-name" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="two-columns">
+                    <div class="form-group">
+                        <label for="owner-phone" class="required">Phone Number</label>
+                        <input type="tel" id="owner-phone" placeholder="Enter 10-digit mobile number" required>
+                        <div class="phone-note">Your phone number is safe with us and will only be shared with verified seekers</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="owner-email" class="required">Email Address</label>
+                        <input type="email" id="owner-email" placeholder="Enter your email address" required>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Property Information Section -->
+            <div class="form-section">
+                <h2>Property Details</h2>
+                
+                <div class="form-group">
+                    <label for="property-title" class="required">Property Title</label>
+                    <input type="text" id="property-title" placeholder="e.g. Spacious 2BHK Flat near Metro Station" required>
+                </div>
+                
+                <div class="two-columns">
+                    <div class="form-group">
+                        <label for="property-type" class="required">Property Type</label>
+                        <select id="property-type" required>
+                            <option value="">Select property type</option>
+                            <option value="flat">Flat/Apartment</option>
+                            <option value="house">Independent House</option>
+                            <option value="pg">PG/Hostel</option>
+                            <option value="villa">Villa/Bungalow</option>
+                            <option value="studio">Studio Apartment</option>
+                            <option value="farmhouse">Farmhouse</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bhk-type" class="required">BHK Type</label>
+                        <select id="bhk-type" required>
+                            <option value="">Select BHK</option>
+                            <option value="1">1 BHK</option>
+                            <option value="2">2 BHK</option>
+                            <option value="3">3 BHK</option>
+                            <option value="4">4 BHK</option>
+                            <option value="4+">4+ BHK</option>
+                            <option value="studio">Studio</option>
+                            <option value="shared">Shared Room</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="two-columns">
+                    <div class="form-group">
+                        <label for="bedrooms" class="required">Number of Bedrooms</label>
+                        <input type="number" id="bedrooms" min="1" placeholder="Enter total bedrooms" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bathrooms" class="required">Number of Bathrooms</label>
+                        <input type="number" id="bathrooms" min="1" placeholder="Enter total bathrooms" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="location" class="required">Full Property Address</label>
+                    <input type="text" id="location" placeholder="Enter complete address with landmark" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="property-details" class="required">Property Description</label>
+                    <textarea id="property-details" placeholder="Describe your property including amenities, furniture, nearby facilities, rules, etc." required></textarea>
+                </div>
+            </div>
+            
+            <!-- Pricing Section -->
+            <div class="form-section">
+                <h2>Pricing Details</h2>
+                
+                <div class="form-group">
+                    <label for="monthly-price" class="required">Monthly Rent (₹)</label>
+                    <input type="number" id="monthly-price" min="0" placeholder="Enter monthly rent amount" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="security-deposit">Security Deposit (₹)</label>
+                    <input type="number" id="security-deposit" min="0" placeholder="Enter security deposit amount">
+                </div>
+            </div>
+            
+            <!-- Subscription Section -->
+            <div class="subscription-section">
+                <h2>Boost Your Listing Visibility</h2>
+                <p>Get more responses by featuring your listing prominently</p>
+                
+                <div class="subscription-options">
+                    <div class="subscription-option">
+                        <input type="radio" name="subscription" id="sub-none" value="none" checked>
+                        <label for="sub-none">
+                            <div class="pack-name">Basic Listing</div>
+                            <div class="pack-price">FREE</div>
+                            <div class="pack-features">
+                                <ul>
+                                    <li>Standard search results</li>
+                                    <li>Basic listing visibility</li>
+                                    <li>Up to 10 photos</li>
+                                    <li>Contact form</li>
+                                </ul>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <div class="subscription-option">
+                        <input type="radio" name="subscription" id="sub-starter" value="starter">
+                        <label for="sub-starter">
+                            <div class="pack-name">Starter Pack</div>
+                            <div class="pack-price">₹299/month</div>
+                            <div class="pack-features">
+                                <ul>
+                                    <li>Priority in search results</li>
+                                    <li>2x more profile views</li>
+                                    <li>Up to 20 photos</li>
+                                    <li>"Featured" badge</li>
+                                    <li>5 featured days/month</li>
+                                </ul>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <div class="subscription-option">
+                        <input type="radio" name="subscription" id="sub-pro" value="pro">
+                        <label for="sub-pro">
+                            <div class="pack-name">Pro Pack</div>
+                            <div class="pack-price">₹599/month</div>
+                            <div class="pack-features">
+                                <ul>
+                                    <li>Top placement in searches</li>
+                                    <li>5x more profile views</li>
+                                    <li>Unlimited photos</li>
+                                    <li>"Premium" badge</li>
+                                    <li>15 featured days/month</li>
+                                    <li>Instant notifications</li>
+                                </ul>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="code-verification">
+                    <p><strong>Have a promo code?</strong> Enter it below to get discounts:</p>
+                    <div class="code-input-group">
+                        <input type="text" id="subscription-code" placeholder="Enter 7-character code" maxlength="7">
+                        <button type="button" id="verify-code">Verify Code</button>
+                        <span id="verification-icon"></span>
+                    </div>
+                    <div id="verification-message" class="verification-message"></div>
+                </div>
+            </div>
+            
+            <button type="submit" class="submit-btn">Submit Listing</button>
+        </form>
+    </main>
+    
     <footer>
         <div class="container">
-            <p>&copy; 2023 StayLoo. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="about.html">About Us</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="contact.html">Contact Support</a>
+            </div>
+            <div class="copyright">
+                &copy; 2023 StayLoo. All rights reserved.
+            </div>
         </div>
     </footer>
 
     <script>
-        document.getElementById('propertyForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        document.addEventListener('DOMContentLoaded', function() {
+            // Subscription code verification
+            const subscriptionRadios = document.querySelectorAll('input[name="subscription"]');
+            const codeVerificationDiv = document.querySelector('.code-verification');
+            const subscriptionCodeInput = document.getElementById('subscription-code');
+            const verificationIcon = document.getElementById('verification-icon');
+            const verifyButton = document.getElementById('verify-code');
+            const verificationMessage = document.getElementById('verification-message');
             
-            // Get form data
-            const formData = {
-                name: document.getElementById('name').value,
-                phone: document.getElementById('phone').value,
-                email: document.getElementById('email').value,
-                title: document.getElementById('title').value,
-                type: document.getElementById('type').value,
-                bhk: document.getElementById('bhk').value,
-                bedrooms: document.getElementById('bedrooms').value,
-                bathrooms: document.getElementById('bathrooms').value,
-                address: document.getElementById('address').value,
-                rent: document.getElementById('rent').value,
-                deposit: document.getElementById('deposit').value,
-                description: document.getElementById('description').value
-            };
+            // Valid promo codes (replace with your actual codes)
+            const validCodes = [
+                "STAYLOO1", "PREMIUM7", "ADVANCE5", "PROPACK9", 
+                "STARTER3", "LOVEROO2", "HOLIDAY8", "WELCOME5", "NEWLIST7"
+            ];
             
-            // Create WhatsApp message
-            const message = `*NEW PROPERTY LISTING - STAYLOO*\n\n` +
-                            `*Owner Details:*\n` +
-                            `👤 Name: ${formData.name}\n` +
-                            `📞 Phone: ${formData.phone}\n` +
-                            `📧 Email: ${formData.email}\n\n` +
-                            `*Property Details:*\n` +
-                            `🏠 Title: ${formData.title}\n` +
-                            `🏡 Type: ${formData.type}\n` +
-                            `🛏️ BHK: ${formData.bhk}\n` +
-                            `🛌 Bedrooms: ${formData.bedrooms}\n` +
-                            `🚿 Bathrooms: ${formData.bathrooms}\n\n` +
-                            `*Pricing:*\n` +
-                            `💰 Monthly Rent: ₹${formData.rent}\n` +
-                            `🔒 Security Deposit: ₹${formData.deposit}\n\n` +
-                            `*Location:*\n` +
-                            `📍 ${formData.address}\n\n` +
-                            `*Description:*\n` +
-                            `${formData.description}`;
+            // Show/hide code verification when subscription is selected
+            subscriptionRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value !== 'none') {
+                        codeVerificationDiv.style.display = 'block';
+                        subscriptionCodeInput.value = '';
+                        verificationIcon.innerHTML = '';
+                        verificationMessage.textContent = '';
+                        verificationMessage.className = 'verification-message';
+                    } else {
+                        codeVerificationDiv.style.display = 'none';
+                    }
+                });
+            });
             
-            // Encode for WhatsApp URL
-            const encodedMessage = encodeURIComponent(message);
+            // Verify promo code
+            verifyButton.addEventListener('click', function() {
+                const enteredCode = subscriptionCodeInput.value.trim().toUpperCase();
+                
+                if (enteredCode.length !== 7) {
+                    verificationMessage.textContent = 'Promo code must be exactly 7 characters';
+                    verificationMessage.className = 'verification-message error';
+                    verificationIcon.innerHTML = '❌';
+                    return;
+                }
+                
+                if (validCodes.includes(enteredCode)) {
+                    verificationIcon.innerHTML = '✅';
+                    verificationMessage.textContent = 'Promo code applied successfully! 20% discount activated.';
+                    verificationMessage.className = 'verification-message success';
+                } else {
+                    verificationIcon.innerHTML = '❌';
+                    verificationMessage.textContent = 'Invalid promo code. Please check and try again.';
+                    verificationMessage.className = 'verification-message error';
+                }
+            });
             
-            // Replace with your WhatsApp number (without + or 0)
-            // Example: 911234567890 for Indian number
-            const whatsappNumber = '919170548739';
+            // Auto-verify when 7 characters are entered
+            subscriptionCodeInput.addEventListener('input', function() {
+                if (this.value.length === 7) {
+                    verifyButton.click();
+                }
+            });
             
-            // Open WhatsApp with pre-filled message
-            window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
-            
-            // Show success message
-            document.getElementById('successMessage').style.display = 'block';
-            
-            // Reset form
-            this.reset();
-            
-            // Scroll to success message
-            document.getElementById('successMessage').scrollIntoView({
-                behavior: 'smooth'
+            // Form submission to WhatsApp
+            const form = document.getElementById('staylooForm');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Collect all form data
+                const formData = {
+                    name: document.getElementById('owner-name').value,
+                    phone: document.getElementById('owner-phone').value,
+                    email: document.getElementById('owner-email').value,
+                    title: document.getElementById('property-title').value,
+                    type: document.getElementById('property-type').value,
+                    bhk: document.getElementById('bhk-type').value,
+                    bedrooms: document.getElementById('bedrooms').value,
+                    bathrooms: document.getElementById('bathrooms').value,
+                    location: document.getElementById('location').value,
+                    details: document.getElementById('property-details').value,
+                    price: document.getElementById('monthly-price').value,
+                    deposit: document.getElementById('security-deposit').value || 'Not specified',
+                    subscription: document.querySelector('input[name="subscription"]:checked').value,
+                    promoCode: subscriptionCodeInput.value || 'None'
+                };
+                
+                // Format the WhatsApp message
+                const whatsappMessage = 
+                    `*NEW STAYLOO LISTING SUBMISSION*\n\n` +
+                    `*OWNER DETAILS*\n` +
+                    `👤 Name: ${formData.name}\n` +
+                    `📱 Phone: ${formData.phone}\n` +
+                    `✉️ Email: ${formData.email}\n\n` +
+                    `*PROPERTY DETAILS*\n` +
+                    `🏠 Title: ${formData.title}\n` +
+                    `🏡 Type: ${formData.type}\n` +
+                    `🛏️ BHK: ${formData.bhk}\n` +
+                    `🛌 Bedrooms: ${formData.bedrooms}\n` +
+                    `🚽 Bathrooms: ${formData.bathrooms}\n` +
+                    `📍 Location: ${formData.location}\n\n` +
+                    `*PRICING*\n` +
+                    `💰 Monthly Rent: ₹${formData.price}\n` +
+                    `🔒 Security Deposit: ₹${formData.deposit}\n\n` +
+                    `*SUBSCRIPTION*\n` +
+                    `📢 Plan: ${formData.subscription.toUpperCase()}\n` +
+                    `🎟️ Promo Code: ${formData.promoCode}\n\n` +
+                    `*ADDITIONAL DETAILS*\n${formData.details}`;
+                
+                // Encode the message for URL
+                const encodedMessage = encodeURIComponent(whatsappMessage);
+                
+                // Replace with your WhatsApp number (with country code, remove any + or 0)
+                const whatsappNumber = "919876543210"; // Example: 91 for India + 9876543210
+                
+                // Open WhatsApp with the pre-filled message
+                window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
             });
         });
     </script>
