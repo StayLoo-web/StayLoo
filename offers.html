@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StayLoo - Exclusive Offers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* CSS Styles */
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #ff7e5f;
+            --dark-color: #2d3748;
+            --light-color: #f7fafc;
+            --success-color: #48bb78;
+            --warning-color: #ed8936;
+            --info-color: #4299e1;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: 2px solid var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--primary-color);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+            border: 2px solid var(--secondary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: transparent;
+            color: var(--secondary-color);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(74, 107, 255, 0.1) 0%, rgba(255, 126, 95, 0.1) 100%);
+            padding: 80px 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 50px;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: var(--dark-color);
+        }
+        
+        /* Offers Section */
+        .offers-section {
+            padding: 50px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .offers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .offer-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .offer-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .offer-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .offer-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .offer-card:hover .offer-img img {
+            transform: scale(1.1);
+        }
+        
+        .offer-content {
+            padding: 25px;
+        }
+        
+        .offer-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .badge-seasonal {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .badge-discount {
+            background-color: var(--warning-color);
+            color: white;
+        }
+        
+        .badge-new {
+            background-color: var(--info-color);
+            color: white;
+        }
+        
+        .offer-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .offer-content p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .offer-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        .offer-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .offer-price span {
+            font-size: 0.9rem;
+            color: #999;
+            text-decoration: line-through;
+            margin-left: 5px;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+            margin: 80px 0;
+            border-radius: 20px;
+        }
+        
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+        }
+        
+        .cta-btn {
+            background-color: white;
+            color: var(--primary-color);
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .offers-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-section h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <i class="fas fa-home"></i>
+                    StayLoo
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">Listings</a></li>
+                    <li><a href="offers.html">Offers</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+               
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Exclusive StayLoo Offers</h1>
+            <p>Discover amazing seasonal deals and special discounts on rooms, flats, and PGs across the city. Limited time offers to help you find your perfect stay at the best price.</p>
+            <a href="#" class="btn btn-primary">Explore Listings</a>
+        </div>
+    </section>
+
+    <!-- Offers Section -->
+    <section class="offers-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Current Special Offers</h2>
+                <p>Take advantage of these limited-time deals to save on your next accommodation</p>
+            </div>
+            
+            <div class="offers-grid">
+                <!-- Offer 1 -->
+                <div class="offer-card">
+                    <div class="offer-img">
+                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Summer Special">
+                    </div>
+                    <div class="offer-content">
+                        <span class="offer-badge badge-seasonal">Seasonal</span>
+                        <h3>Summer Stay Special</h3>
+                        <p>Book any PG or shared flat for the summer months and get 15% off on your first month's rent. Perfect for students and interns.</p>
+                        <div class="offer-meta">
+                            <div class="offer-price">₹8,500 <span>₹10,000</span></div>
+                            <a href="#" class="btn btn-secondary">Claim Offer</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Offer 2 -->
+                <div class="offer-card">
+                    <div class="offer-img">
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="New Listing">
+                    </div>
+                    <div class="offer-content">
+                        <span class="offer-badge badge-new">New Listing</span>
+                        <h3>First Month Free</h3>
+                        <p>New luxury apartment listings in downtown area. Get your first month completely free when you sign a 6-month lease.</p>
+                        <div class="offer-meta">
+                            <div class="offer-price">₹0 <span>₹25,000</span></div>
+                            <a href="#" class="btn btn-secondary">Claim Offer</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Offer 3 -->
+                <div class="offer-card">
+                    <div class="offer-img">
+                        <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Long Term">
+                    </div>
+                    <div class="offer-content">
+                        <span class="offer-badge badge-discount">Long Term</span>
+                        <h3>Extended Stay Discount</h3>
+                        <p>Commit to a 12-month lease and receive 10% off every month. Available on select premium apartments and flats.</p>
+                        <div class="offer-meta">
+                            <div class="offer-price">₹18,000 <span>₹20,000</span></div>
+                            <a href="#" class="btn btn-secondary">Claim Offer</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Offer 4 -->
+                <div class="offer-card">
+                    <div class="offer-img">
+                        <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Weekend Deal">
+                    </div>
+                    <div class="offer-content">
+                        <span class="offer-badge badge-seasonal">Weekend Deal</span>
+                        <h3>Weekend Getaway</h3>
+                        <p>Special weekend rates for fully furnished guest houses. Book Friday-Sunday and save 30% on normal rates.</p>
+                        <div class="offer-meta">
+                            <div class="offer-price">₹3,500 <span>₹5,000</span></div>
+                            <a href="#" class="btn btn-secondary">Claim Offer</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Offer 5 -->
+                <div class="offer-card">
+                    <div class="offer-img">
+                        <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Group Discount">
+                    </div>
+                    <div class="offer-content">
+                        <span class="offer-badge badge-discount">Group Discount</span>
+                        <h3>Group Booking Bonus</h3>
+                        <p>Book 3 or more rooms in the same PG or apartment and each member gets 5% additional discount on monthly rent.</p>
+                        <div class="offer-meta">
+                            <div class="offer-price">₹9,500 <span>₹10,000</span></div>
+                            <a href="#" class="btn btn-secondary">Claim Offer</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Offer 6 -->
+                <div class="offer-card">
+                    <div class="offer-img">
+                        <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Early Bird">
+                    </div>
+                    <div class="offer-content">
+                        <span class="offer-badge badge-new">Early Bird</span>
+                        <h3>Early Booking Special</h3>
+                        <p>Book your accommodation at least 30 days in advance and receive a complimentary cleaning service package worth ₹2,000.</p>
+                        <div class="offer-meta">
+                            <div class="offer-price">Free Service <span>₹2,000</span></div>
+                            <a href="#" class="btn btn-secondary">Claim Offer</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Find Your Perfect Stay?</h2>
+            <p>Join thousands of happy residents who found their ideal accommodation through StayLoo. Sign up today to access all features and personalized recommendations.</p>
+            <a href="#" class="btn cta-btn">Get Started Now</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>StayLoo</h3>
+                    <p>Connecting room seekers with property owners to create perfect living matches across India.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">Listings</a></li>
+                        <li><a href="offers.html">Offers</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Property Types</h3>
+                    <ul>
+                        <li><a href="#">Flats & Apartments</a></li>
+                        <li><a href="#">PG Accommodations</a></li>
+                        <li><a href="#">Hostels</a></li>
+                        <li><a href="#">Guest Houses</a></li>
+                        <li><a href="#">Villas</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Safety Tips</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 StayLoo. All rights reserved. Connecting seekers and owners across India.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>  
