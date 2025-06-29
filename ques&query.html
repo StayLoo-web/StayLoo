@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STAYLOO - Rental Pricing & Queries</title>
+    <style>
+        :root {
+            --primary: #4a6bff;
+            --secondary: #ff7e5f;
+            --dark: #2d3748;
+            --light: #f7fafc;
+            --gray: #e2e8f0;
+            --black: #000000;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--black);
+        }
+        
+        .ask-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .ask-btn:hover {
+            background-color: #3a5bef;
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        h1, h2, h3 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--gray);
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            color: var(--secondary);
+        }
+        
+        .process-steps {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 1rem;
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            background-color: var(--secondary);
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+            font-weight: bold;
+        }
+        
+        .faq-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        
+        .contact-info div {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            position: relative;
+            animation: modalFadeIn 0.3s ease-out;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--gray);
+            border-radius: 5px;
+        }
+        
+        .submit-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            background-color: #3a5bef;
+        }
+        
+        /* Payment Concept Styles */
+        .payment-concept {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .payment-column {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .payment-column:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .payment-column h3 {
+            text-align: center;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--gray);
+            margin-bottom: 1.5rem;
+        }
+        
+        .price-point {
+            display: flex;
+            margin-bottom: 1rem;
+            align-items: center;
+            padding: 0.8rem;
+            border-radius: 5px;
+            background-color: #f8fafc;
+        }
+        
+        .price-point .price {
+            font-weight: 700;
+            color: var(--primary);
+            min-width: 80px;
+        }
+        
+        .subscription-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid var(--gray);
+            transition: all 0.3s ease;
+        }
+        
+        .subscription-card:hover {
+            border-color: var(--primary);
+        }
+        
+        .subscription-card .price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin: 0.5rem 0;
+        }
+        
+        .subscription-feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subscription-feature:before {
+            content: "✓";
+            color: var(--secondary);
+            margin-right: 0.5rem;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .payment-concept {
+                flex-direction: column;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <a href="#" class="logo">STAY<span>LOO</span></a>
+            <button class="ask-btn" id="askBtn">Ask a Question</button>
+        </div>
+    </header>
+    
+    <div class="container">
+        <h1>STAYLOO Rental Information</h1>
+        
+        <h2>Our Payment Concept</h2>
+        
+        <div class="payment-concept">
+            <div class="payment-column">
+                <h3>For Tenants</h3>
+                <div class="price-point">
+                    <div class="price">₹99</div>
+                    <div class="description">To unlock information of property under ₹5000</div>
+                </div>
+                <div class="price-point">
+                    <div class="price">₹129</div>
+                    <div class="description">To unlock information of property between ₹5000-₹10000</div>
+                </div>
+                <div class="price-point">
+                    <div class="price">₹149</div>
+                    <div class="description">To unlock information of property between ₹10000-₹20000</div>
+                </div>
+                <div class="price-point">
+                    <div class="price">₹299</div>
+                    <div class="description">To unlock information of property between ₹20000-₹30000</div>
+                </div>
+                <div class="price-point">
+                    <div class="price">₹499</div>
+                    <div class="description">To unlock information of property over ₹30000</div>
+                </div>
+            </div>
+            
+            <div class="payment-column">
+                <h3>Subscription Plans</h3>
+                <div class="subscription-card">
+                    <h4>Monthly Subscription</h4>
+                    <div class="price">₹299</div>
+                    <div class="subscription-feature">Get verified badge</div>
+                    <div class="subscription-feature">Property visible on top for your location</div>
+                </div>
+                <div class="subscription-card">
+                    <h4>Premium Subscription</h4>
+                    <div class="price">₹799</div>
+                    <div class="subscription-feature">All basic features plus</div>
+                    <div class="subscription-feature">Priority customer support</div>
+                    <div class="subscription-feature">Featured in our newsletter</div>
+                    <div class="subscription-feature">Advanced analytics</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="process-steps">
+            <h3>How to List Your Room</h3>
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">Go to our home page</div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">Visit "List Your Property" option</div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">Fill the form with your property details and submit</div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">That's it!! Thank you for choosing us. We will reply back within 24hrs</div>
+            </div>
+        </div>
+        
+        <div class="process-steps">
+            <h3>How to Book a Room</h3>
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">Go to our home page</div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">Click on "Browse Space"</div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">Search your location and select your dream room</div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">Click on "Unlock Information"</div>
+            </div>
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-content">That's it! Thank you for choosing us. We will reach you out within 1 hour</div>
+            </div>
+        </div>
+        
+        <h2>Frequently Asked Questions</h2>
+        
+        <div class="faq-item">
+            <div class="faq-question">How do I make a reservation?</div>
+            <div class="faq-answer">Visit our website at www.stayloo.com/book or call our reservation line at 1-800-STAYLOO.</div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">Are utilities included in the rental price?</div>
+            <div class="faq-answer">Yes, all accommodation prices include WiFi, electricity, and water.</div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">What is your minimum rental period?</div>
+            <div class="faq-answer">Our minimum rental period is 2 days for accommodations.</div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">Do you offer long-term discounts?</div>
+            <div class="faq-answer">Yes! Monthly rentals receive 15% off our standard rates. Ask about our seasonal promotions.</div>
+        </div>
+    </div>
+    
+    <footer>
+        <h3>Contact STAYLOO</h3>
+        <div class="contact-info">
+            <div>📞 1-800-STAYLOO</div>
+            <div>📧 bookings@stayloo.com</div>
+            <div>📍 123 Hospitality Blvd, Suite 100</div>
+        </div>
+    </footer>
+    
+    <!-- Question Modal -->
+    <div id="questionModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Ask a Question</h2>
+            <form id="questionForm">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="question-type">Question About</label>
+                    <select id="question-type" required>
+                        <option value="">Select topic</option>
+                        <option value="listing">Listing a Property</option>
+                        <option value="booking">Booking a Property</option>
+                        <option value="payment">Payment Questions</option>
+                        <option value="other">Other Questions</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="question">Your Question</label>
+                    <textarea id="question" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit Question</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // Modal functionality
+        const modal = document.getElementById("questionModal");
+        const btn = document.getElementById("askBtn");
+        const span = document.getElementsByClassName("close")[0];
+        const form = document.getElementById("questionForm");
+        
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+        
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        
+        form.onsubmit = function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const questionType = document.getElementById("question-type").value;
+            const question = document.getElementById("question").value;
+            
+            // Here you would typically send this data to a server
+            // For now, we'll just show an alert
+            alert(`Thank you for your question, ${name}! We'll get back to you at ${email} soon regarding your ${questionType} inquiry.`);
+            
+            // Close modal and reset form
+            modal.style.display = "none";
+            form.reset();
+        }
+        
+        // Animation for price points when they come into view
+        const pricePoints = document.querySelectorAll('.price-point');
+        
+        const animateOnScroll = () => {
+            pricePoints.forEach(point => {
+                const pointPosition = point.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if(pointPosition < screenPosition) {
+                    point.style.opacity = '1';
+                    point.style.transform = 'translateX(0)';
+                }
+            });
+        };
+        
+        // Set initial state for animation
+        pricePoints.forEach(point => {
+            point.style.opacity = '0';
+            point.style.transform = 'translateX(-20px)';
+            point.style.transition = 'all 0.5s ease-out';
+        });
+        
+        window.addEventListener('scroll', animateOnScroll);
+        // Trigger once on load in case elements are already in view
+        animateOnScroll();
+    </script>
+</body>
+</html>
