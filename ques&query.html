@@ -15,6 +15,7 @@
             --black: #000000;
             --success: #48bb78;
             --highlight: #ffd700;
+            --whatsapp: #25D366;
         }
         
         * {
@@ -225,18 +226,21 @@
             height: 100%;
             background-color: rgba(0,0,0,0.5);
             animation: fadeIn 0.3s ease-out;
+            overflow-y: auto;
         }
         
         .modal-content {
             background-color: white;
-            margin: 10% auto;
+            margin: 5% auto;
             padding: 2.5rem;
             border-radius: 10px;
-            width: 80%;
+            width: 90%;
             max-width: 600px;
             position: relative;
             animation: modalFadeIn 0.3s ease-out;
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            max-height: 90vh;
+            overflow-y: auto;
         }
         
         @keyframes modalFadeIn {
@@ -342,11 +346,22 @@
             transform: translateY(20px);
             opacity: 0;
             animation: fadeInUp 0.8s ease-out forwards;
+            position: relative;
+            overflow: hidden;
         }
         
-        .payment-column:nth-child(1) { animation-delay: 0.2s; }
-        .payment-column:nth-child(2) { animation-delay: 0.4s; }
-        .payment-column:nth-child(3) { animation-delay: 0.6s; }
+        .payment-column:nth-child(1) { 
+            animation-delay: 0.2s;
+            background: linear-gradient(135deg, #e6f7ff 0%, #fff 100%);
+        }
+        .payment-column:nth-child(2) { 
+            animation-delay: 0.4s;
+            background: linear-gradient(135deg, #fff5f5 0%, #fff 100%);
+        }
+        .payment-column:nth-child(3) { 
+            animation-delay: 0.6s;
+            background: linear-gradient(135deg, #fff8e1 0%, #fff 100%);
+        }
         
         .payment-column:hover {
             transform: translateY(-5px);
@@ -358,6 +373,60 @@
             padding-bottom: 1rem;
             border-bottom: 2px solid var(--gray);
             margin-bottom: 1.5rem;
+        }
+        
+        /* For Tenants Column */
+        .tenants-card {
+            border: 2px solid #4a6bff;
+            animation: pulse 2s infinite 3s;
+        }
+        
+        .tenants-card:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary);
+            transform: rotate(45deg) translate(20px, -30px);
+            opacity: 0.1;
+        }
+        
+        /* Subscription Column */
+        .subscription-card {
+            border: 2px solid var(--secondary);
+            animation: pulse 2s infinite 3.5s;
+        }
+        
+        .subscription-card:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background-color: var(--secondary);
+            transform: rotate(45deg) translate(20px, -30px);
+            opacity: 0.1;
+        }
+        
+        /* Owner Commission Column */
+        .commission-card {
+            border: 2px solid var(--highlight);
+            animation: pulse 2s infinite 4s;
+        }
+        
+        .commission-card:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background-color: var(--highlight);
+            transform: rotate(45deg) translate(20px, -30px);
+            opacity: 0.2;
         }
         
         .price-point {
@@ -384,30 +453,6 @@
             min-width: 80px;
         }
         
-        .subscription-card {
-            background: white;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border: 2px solid var(--gray);
-            transition: all 0.3s ease;
-            transform: scale(0.95);
-            opacity: 0;
-        }
-        
-        .subscription-card:hover {
-            border-color: var(--primary);
-            transform: scale(1);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .subscription-card .price {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--secondary);
-            margin: 0.5rem 0;
-        }
-        
         .subscription-feature {
             display: flex;
             align-items: center;
@@ -419,44 +464,6 @@
             color: var(--secondary);
             margin-right: 0.5rem;
             font-weight: bold;
-        }
-        
-        /* Owner Commission Card */
-        .commission-card {
-            background: white;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border: 2px solid var(--highlight);
-            transition: all 0.3s ease;
-            transform: scale(0.95);
-            opacity: 0;
-            background: linear-gradient(135deg, #fff8e1 0%, #fff 100%);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .commission-card:before {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 60px;
-            height: 60px;
-            background-color: var(--highlight);
-            transform: rotate(45deg) translate(20px, -30px);
-            opacity: 0.2;
-        }
-        
-        .commission-card:hover {
-            transform: scale(1);
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
-        }
-        
-        .commission-card h4 {
-            color: var(--dark);
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
         }
         
         .commission-rate {
@@ -511,7 +518,7 @@
         
         /* WhatsApp highlight */
         .whatsapp-highlight {
-            color: #25D366;
+            color: var(--whatsapp);
             font-weight: 600;
         }
         
@@ -567,7 +574,7 @@
         
         @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.02); }
             100% { transform: scale(1); }
         }
         
@@ -586,8 +593,8 @@
             }
             
             .modal-content {
-                width: 90%;
-                margin: 20% auto;
+                width: 95%;
+                margin: 2% auto;
                 padding: 1.5rem;
             }
             
@@ -612,7 +619,7 @@
         <h2>Our Payment Concept</h2>
         
         <div class="payment-concept">
-            <div class="payment-column" style="animation: fadeInUp 0.8s ease-out forwards; animation-delay: 0.2s;">
+            <div class="payment-column tenants-card" style="animation: fadeInUp 0.8s ease-out forwards; animation-delay: 0.2s;">
                 <h3>For Tenants</h3>
                 <div class="price-point" style="animation: fadeInRight 0.5s ease-out forwards; animation-delay: 0.2s;">
                     <div class="price">₹99</div>
@@ -636,43 +643,37 @@
                 </div>
             </div>
             
-            <div class="payment-column" style="animation: fadeInUp 0.8s ease-out forwards; animation-delay: 0.4s;">
+            <div class="payment-column subscription-card" style="animation: fadeInUp 0.8s ease-out forwards; animation-delay: 0.4s;">
                 <h3>Subscription Plans</h3>
-                <div class="subscription-card" style="animation: fadeInUp 0.5s ease-out forwards; animation-delay: 0.3s;">
-                    <h4>Monthly Subscription</h4>
+                <div class="price-point" style="animation: fadeInRight 0.5s ease-out forwards; animation-delay: 0.3s;">
                     <div class="price">₹299</div>
-                    <div class="subscription-feature">Get verified badge</div>
-                    <div class="subscription-feature">Property visible on top for your location</div>
+                    <div class="description">Get verified badge and top visibility</div>
                 </div>
-                <div class="subscription-card" style="animation: fadeInUp 0.5s ease-out forwards; animation-delay: 0.5s;">
-                    <h4>Premium Subscription</h4>
+                <div class="price-point" style="animation: fadeInRight 0.5s ease-out forwards; animation-delay: 0.5s;">
                     <div class="price">₹799</div>
-                    <div class="subscription-feature">All basic features plus</div>
-                    <div class="subscription-feature">Priority customer support</div>
-                    <div class="subscription-feature">Featured in our newsletter</div>
-                    <div class="subscription-feature">Advanced analytics</div>
+                    <div class="description">Premium features and priority support</div>
                 </div>
+                <div class="subscription-feature">Priority customer support</div>
+                <div class="subscription-feature">Featured in our newsletter</div>
+                <div class="subscription-feature">Advanced analytics</div>
             </div>
             
-            <div class="payment-column" style="animation: fadeInUp 0.8s ease-out forwards; animation-delay: 0.6s;">
+            <div class="payment-column commission-card" style="animation: fadeInUp 0.8s ease-out forwards; animation-delay: 0.6s;">
                 <h3>For Property Owners</h3>
-                <div class="commission-card" style="animation: fadeInUp 0.5s ease-out forwards; animation-delay: 0.4s;">
-                    <h4>Our Service Fee</h4>
-                    <div class="commission-rate">Only 10%</div>
-                    <p style="text-align: center; margin-bottom: 1rem;">of your rental price</p>
-                    
-                    <div class="commission-split">
-                        <div>
-                            <div class="percentage">7%</div>
-                            <div class="label">While Listing</div>
-                        </div>
-                        <div>
-                            <div class="percentage">+ 3%</div>
-                            <div class="label">After Tenant Found</div>
-                        </div>
+                <div class="commission-rate">Only 10%</div>
+                <p style="text-align: center; margin-bottom: 1rem;">of your rental price</p>
+                
+                <div class="commission-split">
+                    <div>
+                        <div class="percentage">7%</div>
+                        <div class="label">While Listing</div>
                     </div>
-                    <p style="text-align: center; font-size: 0.9rem; margin-top: 1rem;">Pay only when you earn!</p>
+                    <div>
+                        <div class="percentage">+ 3%</div>
+                        <div class="label">After Tenant Found</div>
+                    </div>
                 </div>
+                <p style="text-align: center; font-size: 0.9rem; margin-top: 1rem;">Pay only when you earn!</p>
             </div>
         </div>
         
@@ -855,7 +856,7 @@
         
         // Animate elements when they come into view
         const animateOnScroll = () => {
-            const elements = document.querySelectorAll('.price-point, .subscription-card, .faq-item, .commission-card');
+            const elements = document.querySelectorAll('.price-point, .faq-item');
             
             elements.forEach(element => {
                 const elementPosition = element.getBoundingClientRect().top;
@@ -863,13 +864,7 @@
                 
                 if(elementPosition < screenPosition) {
                     element.style.opacity = '1';
-                    if(element.classList.contains('price-point')) {
-                        element.style.transform = 'translateX(0)';
-                    } else if(element.classList.contains('subscription-card') || element.classList.contains('commission-card')) {
-                        element.style.transform = 'scale(1)';
-                    } else {
-                        element.style.transform = 'translateY(0)';
-                    }
+                    element.style.transform = 'translateX(0)';
                 }
             });
         };
@@ -889,12 +884,6 @@
             // Initially hide answers
             question.nextElementSibling.style.display = 'none';
         });
-        
-        // Add pulse animation to commission card
-        const commissionCard = document.querySelector('.commission-card');
-        if (commissionCard) {
-            commissionCard.style.animation = 'pulse 2s infinite 3s';
-        }
     </script>
 </body>
 </html>
