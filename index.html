@@ -185,6 +185,34 @@
             flex-wrap: wrap;
         }
 
+
+    .btn-offer {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 12px 20px;
+  background-color: #ff6f00;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 30px;
+  text-decoration: none;
+  animation: bounce 2s infinite;
+  transition: background 0.3s ease;
+}
+
+.btn-offer:hover {
+  background-color: #ff8800;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}    
+        
+
         /* ===== Features Section ===== */
         .features {
             padding: 80px 0;
@@ -494,6 +522,7 @@ button:hover {
                 <div class="hero-buttons">
                     <a href="Browse.html" class="btn btn-primary">Browse Spaces</a>
                     <a href="listing3.html" class="btn btn-secondary">List Your Space</a>
+                    <a href="" class="btn-offer">Checkout latest offers</a>
                 </div>
             </div>
         </div>
