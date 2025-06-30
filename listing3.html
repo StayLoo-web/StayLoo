@@ -604,10 +604,10 @@
     <footer>
         <div class="container">
             <div class="footer-links">
-                <a href="about.html">About Us</a>
-                <a href="privacy.html">Privacy Policy</a>
-                <a href="terms.html">Terms of Service</a>
-                <a href="contact.html">Contact Support</a>
+                <a href="">About Us</a>
+                <a href="">Privacy Policy</a>
+                <a href="">Terms of Service</a>
+                <a href="">Contact Support</a>
             </div>
             <div class="copyright">
                 &copy; 2023 StayLoo. All rights reserved.
@@ -694,6 +694,7 @@
                     details: document.getElementById('property-details').value,
                     price: document.getElementById('monthly-price').value,
                     deposit: document.getElementById('security-deposit').value || 'Not specified',
+                    offers: document.getElementById('offers by owner').value,
                     subscription: document.querySelector('input[name="subscription"]:checked').value,
                     promoCode: subscriptionCodeInput.value || 'None'
                 };
@@ -715,6 +716,7 @@
                     `*PRICING*\n` +
                     `💰 Monthly Rent: ₹${formData.price}\n` +
                     `🔒 Security Deposit: ₹${formData.deposit}\n\n` +
+                    `** Any offer included: ₹${formData.offers}\n\n` +
                     `*SUBSCRIPTION*\n` +
                     `📢 Plan: ${formData.subscription.toUpperCase()}\n` +
                     `🎟️ Promo Code: ${formData.promoCode}\n\n` +
