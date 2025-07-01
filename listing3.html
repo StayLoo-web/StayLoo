@@ -398,6 +398,67 @@
                 margin-right: 0;
                 margin-bottom: 15px;
             }
+            
+.offers-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9ff;
+            border: 1px solid #e0e0ff;
+            border-radius: 8px;
+        }
+        
+        .offers-section h3 {
+            color: #4a6bff;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .offer-options {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .offer-option {
+            flex: 1;
+        }
+        
+        .offer-option input {
+            display: none;
+        }
+        
+        .offer-option label {
+            display: block;
+            padding: 10px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .offer-option input:checked + label {
+            border-color: #4a6bff;
+            background-color: #f0f4ff;
+        }
+        
+        .offer-details {
+            display: none;
+            margin-top: 15px;
+        }
+        
+        .offer-details.active {
+            display: block;
+        }
+        
+        .offer-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 5px;
+         }      
         }
     </style>
 </head>
@@ -522,10 +583,39 @@
                     <label for="security-deposit">Security Deposit (₹)(Optional)</label>
                     <input type="number" id="security-deposit" min="0" placeholder="Enter security deposit amount">
                 </div>
-                <div class="form-group">
-                    <label for="monthly-price" class="required">Want to give any offer?</label>
-                    <input type="text" id="monthly-price" placeholder="If not then write 'No'">
+                <div class="offers-section">
+            <h3>Any Offers for Seekers?</h3>
+            
+            <div class="offer-options">
+                <div class="offer-option">
+                    <input type="radio" name="has-offer" id="no-offer" value="no" checked>
+                    <label for="no-offer">No Offers</label>
                 </div>
+                <div class="offer-option">
+                    <input type="radio" name="has-offer" id="has-offer" value="yes">
+                    <label for="has-offer">Yes, I have an offer</label>
+                </div>
+            </div>
+            
+            <div id="offer-details" class="offer-details">
+                <div class="form-group">
+                    <label for="offer-title">Offer Title</label>
+                    <input type="text" id="offer-title" class="offer-input" placeholder="e.g. Discount for long stay">
+                </div>
+                
+                <div class="form-group">
+                    <label for="offer-description">Offer Details</label>
+                    <textarea id="offer-description" class="offer-input" placeholder="Describe your offer terms and conditions"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="offer-validity">Offer Valid Until</label>
+                    <input type="date" id="offer-validity" class="offer-input">
+                </div>
+            </div>
+        </div>
+    </div>
+    
             </div>
             
             <!-- Subscription Section -->
@@ -674,6 +764,18 @@
                     verifyButton.click();
                 }
             });
+
+    // Add this new script for offer section
+        document.querySelectorAll('input[name="has-offer"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const offerDetails = document.getElementById('offer-details');
+                if (this.value === 'yes') {
+                    offerDetails.classList.add('active');
+                } else {
+                    offerDetails.classList.remove('active');
+                }
+            });
+        });        
             
             // Form submission to WhatsApp
             const form = document.getElementById('staylooForm');
@@ -694,7 +796,10 @@
                     details: document.getElementById('property-details').value,
                     price: document.getElementById('monthly-price').value,
                     deposit: document.getElementById('security-deposit').value || 'Not specified',
-                    offers: document.getElementById('offers by owner').value,
+                   hasOffer: document.querySelector('input[name="has-offer"]:checked').value,
+                   offerTitle: document.getElementById('offer-title').value || 'None',
+                   offerDescription: document.getElementById('offer-description').value || 'None',
+                   offerValidity: document.getElementById('offer-validity').value || 'Not specified',
                     subscription: document.querySelector('input[name="subscription"]:checked').value,
                     promoCode: subscriptionCodeInput.value || 'None'
                 };
@@ -716,7 +821,11 @@
                     `*PRICING*\n` +
                     `💰 Monthly Rent: ₹${formData.price}\n` +
                     `🔒 Security Deposit: ₹${formData.deposit}\n\n` +
-                    `** Any offer included: ₹${formData.offers}\n\n` +
+                   `*OFFER DETAILS*\n` +
+                   `🎁 Has Offer: ${formData.hasOffer === 'yes' ? 'Yes' : 'No'}\n` +
+                   `🏷️ Offer Title: ${formData.offerTitle}\n` +
+                   `📝 Offer Details: ${formData.offerDescription}\n` +
+                    `📅 Valid Until: ${formData.offerValidity}\n\n` +
                     `*SUBSCRIPTION*\n` +
                     `📢 Plan: ${formData.subscription.toUpperCase()}\n` +
                     `🎟️ Promo Code: ${formData.promoCode}\n\n` +
