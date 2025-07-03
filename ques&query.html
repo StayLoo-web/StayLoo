@@ -169,6 +169,10 @@
             transform: translateY(20px);
             opacity: 0;
             animation: fadeInUp 0.5s ease-out forwards;
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
         
         .faq-item:nth-child(1) { animation-delay: 0.3s; }
@@ -186,6 +190,11 @@
         
         .faq-question:hover {
             color: #3a5bef;
+        }
+        
+        .faq-answer {
+            display: none;
+            padding-top: 0.5rem;
         }
         
         footer {
@@ -732,8 +741,9 @@
               </p>
                  </div>
             </div>
+        </div>
        
-           <div class="process-steps">
+        <div class="process-steps">
             <h3>How to List Your Room</h3>
             <div class="step">
                 <div class="step-number">1</div>
@@ -785,41 +795,33 @@
             </div>
         </div>
         
-        <div class="container">
-            <h2>Frequently Asked Questions</h2>
-        </div>
+        <h2>Frequently Asked Questions</h2>
         
         <div class="faq-item">
             <div class="faq-question">Can I set my own rental terms(pricing,lease duration,house rules)?</div>
             <div class="faq-answer">Yes!! You can set your own rental terms by letting us know by "List Your Propert" from.</div>
         </div>
             
-        
         <div class="faq-item">
             <div class="faq-question">Can I nagotiate the rent or lease terms with the landlord?</div>
             <div class="faq-answer">Yes!! You can, Once you unlock phone number of the owner of the property you can discuss all you want too.</div>
         </div>
             
-        
         <div class="faq-item">
             <div class="faq-question">How can I attract more renters to my listing?</div>
             <div class="faq-answer">You can attract more renters to your  listing by buying one of our subscription plans for better visibility.</div>
         </div>
             
-        
         <div class="faq-item">
             <div class="faq-question">How do I handle damage or dispute with renters?</div>
             <div class="faq-answer">We are not responsible for any damage or dispute with renters.We are here to help you in finding tenants for your rooms.</div>
         </div>
-    </div>
-        
 
         <div class="faq-item">
             <div class="faq-question">What happens if I cancel my booking after payment?</div>
             <div class="faq-answer">There is a 50% return policy if you get any problem and don't want to move in after you unlock any property.</div>
         </div>
     </div>
-
     
     <footer>
         <h3>Contact STAYLOO</h3>
@@ -830,10 +832,6 @@
         </div>
     </footer>
        
-           
-
-     
-    
     <!-- Question Modal -->
     <div id="questionModal" class="modal">
         <div class="modal-content">
@@ -954,7 +952,7 @@
                 answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
             });
             
-            // Initially hide answers
+           // Initially hide answers
             question.nextElementSibling.style.display = 'none';
         });
     </script>
