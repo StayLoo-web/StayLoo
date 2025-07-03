@@ -35,15 +35,13 @@
         .logo {
             font-size: 28px;
             font-weight: bold;
-            color: #4a6bff;
         }
 
- 
-        .logo .Stay {
+        .logo span.Stay {
             color: var(--primary);
         }
         
-      .logo .Loo {
+      .logo span.Loo {
             color: #000000;
         }    
         
@@ -306,7 +304,11 @@
 </head>
 <body>
     <header>
-      <a href="index.html" class="logo"><span class="stay">Stay</span><span class="loo">Loo</span></a>
+      <div class="container">
+            <div class="logo">
+                <span class="stay">Stay</span><span class="loo">Loo</span>
+            </div>
+        </div>  
     </header>
     
     <main class="container">
