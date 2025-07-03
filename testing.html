@@ -1,73 +1,78 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Property Details | StayLoo</title>
+    <title>Property Details - StayLoo</title>
     <style>
+        /* Global Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background-color: #f5f5f5;
+            background-color: #f8f9fa;
             color: #333;
             line-height: 1.6;
         }
         
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
         header {
-            background-color: #2c3e50;
-            color: white;
+            background-color: white;
             padding: 20px 0;
-            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
         .logo {
-            font-size: 2rem;
+            font-size: 28px;
             font-weight: bold;
+            color: #4a6bff;
         }
         
-        .property-gallery {
-            display: flex;
-            flex-wrap: wrap;
+        /* Hero Section - Image Gallery */
+        .hero-gallery {
+            margin: 30px 0;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
             gap: 10px;
-            padding: 20px;
-            background: white;
+            border-radius: 10px;
+            overflow: hidden;
         }
         
-        .gallery-main {
-            flex: 2;
-            min-width: 300px;
+        .gallery-item {
+            height: 200px;
+            background-color: #eee;
+            position: relative;
+            overflow: hidden;
         }
         
-        .gallery-thumbs {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            min-width: 200px;
-        }
-        
-        .gallery-thumbs img {
-            height: calc((100% - 20px) / 4);
-        }
-        
-        .property-gallery img {
+        .gallery-item img {
             width: 100%;
-            height: auto;
-            border-radius: 8px;
+            height: 100%;
             object-fit: cover;
+            transition: transform 0.5s;
         }
         
-        .property-info {
-            background: white;
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Property Details Section */
+        .property-details {
+            background-color: white;
+            border-radius: 10px;
             padding: 30px;
-            margin: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
         }
         
         .property-header {
@@ -78,235 +83,415 @@
         }
         
         .property-title {
-            font-size: 1.8rem;
-            color: #2c3e50;
+            font-size: 24px;
+            color: #4a6bff;
         }
         
         .property-price {
-            font-size: 1.5rem;
-            color: #e74c3c;
+            font-size: 24px;
             font-weight: bold;
+            color: #4a6bff;
         }
         
-        .property-meta {
+        .property-location {
             display: flex;
-            gap: 20px;
+            align-items: center;
+            color: #666;
             margin-bottom: 20px;
         }
         
-        .meta-item {
+        .property-location i {
+            margin-right: 8px;
+            color: #4a6bff;
+        }
+        
+        .property-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .feature {
             display: flex;
             align-items: center;
-            gap: 5px;
         }
         
-        .property-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #f0f4ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            color: #4a6bff;
         }
         
-        .detail-section h3 {
-            margin-bottom: 10px;
-            color: #2c3e50;
+        .feature-text span {
+            display: block;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .feature-text strong {
+            font-size: 16px;
+            color: #333;
+        }
+        
+        .section-title {
+            color: #4a6bff;
+            margin: 25px 0 15px;
+            font-size: 20px;
             border-bottom: 1px solid #eee;
-            padding-bottom: 5px;
+            padding-bottom: 8px;
         }
         
-        .unlock-section {
+        .property-description {
+            color: #555;
+            line-height: 1.7;
+        }
+        
+        /* Amenities Section */
+        .amenities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .amenity-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .amenity-item i {
+            margin-right: 8px;
+            color: #4a6bff;
+        }
+        
+        /* Contact Unlock Section */
+        .contact-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
             text-align: center;
-            padding: 20px;
-            border-top: 1px dashed #ccc;
-            border-bottom: 1px dashed #ccc;
-            margin: 30px 0;
+            margin-bottom: 40px;
         }
         
-        .unlock-text {
-            font-size: 1.2rem;
+        .contact-section h2 {
+            color: #4a6bff;
             margin-bottom: 15px;
         }
         
-        .unlock-price {
-            font-weight: bold;
-            color: #e74c3c;
+        .contact-section p {
+            color: #666;
+            margin-bottom: 25px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         .unlock-btn {
-            background-color: #e74c3c;
+            background-color: #4a6bff;
             color: white;
             border: none;
-            padding: 12px 30px;
-            border-radius: 5px;
-            font-size: 1rem;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(74, 107, 255, 0.3);
         }
         
         .unlock-btn:hover {
-            background-color: #c0392b;
+            background-color: #3a5bef;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 107, 255, 0.4);
         }
         
+        /* Footer */
         footer {
-            background-color: #2c3e50;
+            background-color: #333;
             color: white;
-            padding: 40px 20px;
+            padding: 40px 0;
         }
         
-        .footer-content {
+        .footer-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
         }
         
-        .footer-column h3 {
-            margin-bottom: 20px;
-            font-size: 1.2rem;
+        .footer-logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 15px;
         }
         
-        .footer-column ul {
+        .footer-links h3 {
+            color: #4a6bff;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .footer-links ul {
             list-style: none;
         }
         
-        .footer-column ul li {
+        .footer-links li {
             margin-bottom: 10px;
         }
         
-        .footer-column ul li a {
-            color: #ecf0f1;
+        .footer-links a {
+            color: #ddd;
             text-decoration: none;
+            transition: color 0.3s;
         }
         
-        .footer-column ul li a:hover {
-            text-decoration: underline;
+        .footer-links a:hover {
+            color: #4a6bff;
         }
         
         .copyright {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 40px;
             padding-top: 20px;
-            border-top: 1px solid #34495e;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .hero-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .property-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .property-price {
+                margin-top: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-item {
+                height: 250px;
+            }
         }
     </style>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
-        <div class="logo">StayLoo</div>
+        <div class="container">
+            <div class="logo">StayLoo</div>
+        </div>
     </header>
     
-    <section class="property-gallery">
-        <div class="gallery-main">
-            <img src="images/house.jpeg">
-        </div>
-        <div class="gallery-thumbs">
-            <img src="images/house.jpeg">
-            <img src="images/house.jpeg">
-            <img src="images/house.jpeg">
-            <img src="images/house.jpeg">
-        </div>
-    </section>
-    
-    <section class="property-info">
-        <div class="property-header">
-            <h1 class="property-title">Luxury Villa with Ocean View</h1>
-            <div class="property-price">₹15,000/night</div>
-        </div>
-        
-        <div class="property-meta">
-            <div class="meta-item">
-                <span>★ 4.8 (120 reviews)</span>
+    <main class="container">
+        <!-- Hero Image Gallery -->
+        <div class="hero-gallery">
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/800x600?text=Space+Image+1" alt="Property Image 1">
             </div>
-            <div class="meta-item">
-                <span>📍 Goa, India</span>
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/800x600?text=Space+Image+2" alt="Property Image 2">
             </div>
-            <div class="meta-item">
-                <span>🛏️ 3 Bedrooms</span>
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/800x600?text=Space+Image+3" alt="Property Image 3">
             </div>
-            <div class="meta-item">
-                <span>🛁 2 Bathrooms</span>
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/800x600?text=Space+Image+4" alt="Property Image 4">
             </div>
         </div>
         
+        <!-- Property Details -->
         <div class="property-details">
-            <div class="detail-section">
-                <h3>Description</h3>
-                <p>This stunning luxury villa offers breathtaking ocean views from its private terrace. The property features modern amenities, a private pool, and direct beach access. Perfect for families or groups looking for a memorable vacation experience.</p>
+            <div class="property-header">
+                <h1 class="property-title">2 BHK Apartment in Gomti Nagar</h1>
+                <div class="property-price">₹12,000/month</div>
             </div>
             
-            <div class="detail-section">
-                <h3>Amenities</h3>
-                <ul>
-                    <li>Private swimming pool</li>
-                    <li>Air conditioning</li>
-                    <li>Fully equipped kitchen</li>
-                    <li>Free WiFi</li>
-                    <li>Smart TV</li>
-                    <li>Beach access</li>
-                </ul>
+            <div class="property-location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Gomti Nagar, Lucknow, Uttar Pradesh - Near Metro Station</span>
             </div>
             
-            <div class="detail-section">
-                <h3>House Rules</h3>
-                <ul>
-                    <li>Check-in: 2:00 PM</li>
-                    <li>Check-out: 11:00 AM</li>
-                    <li>No smoking inside</li>
-                    <li>No pets allowed</li>
-                    <li>No parties/events</li>
-                </ul>
+            <div class="property-features">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-bed"></i>
+                    </div>
+                    <div class="feature-text">
+                        <span>Bedrooms</span>
+                        <strong>2</strong>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-bath"></i>
+                    </div>
+                    <div class="feature-text">
+                        <span>Bathrooms</span>
+                        <strong>2</strong>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-ruler-combined"></i>
+                    </div>
+                    <div class="feature-text">
+                        <span>Area</span>
+                        <strong>950 sq.ft</strong>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="feature-text">
+                        <span>Type</span>
+                        <strong>Apartment</strong>
+                    </div>
+                </div>
+            </div>
+            
+            <h2 class="section-title">Description</h2>
+            <div class="property-description">
+                <p>This beautiful 2 BHK apartment is located in the prime location of Gomti Nagar, Lucknow. The property is fully furnished with modern amenities and offers a comfortable living space. The apartment is on the 3rd floor of a well-maintained society with 24/7 security, power backup, and parking facilities.</p>
+                <p>The living room is spacious with ample natural light, and the bedrooms are well-ventilated. The kitchen is modular with all necessary appliances. The property is just 5 minutes walk from the metro station and close to shopping malls, hospitals, and schools.</p>
+                <p>Ideal for working professionals or small families looking for a peaceful yet well-connected place to live.</p>
+            </div>
+            
+            <h2 class="section-title">Amenities</h2>
+            <div class="amenities-grid">
+                <div class="amenity-item">
+                    <i class="fas fa-wifi"></i>
+                    <span>High Speed WiFi</span>
+                </div>
+                <div class="amenity-item">
+                    <i class="fas fa-tv"></i>
+                    <span>Cable TV</span>
+                </div>
+                <div class="amenity-item">
+                    <i class="fas fa-utensils"></i>
+                    <span>Fully Equipped Kitchen</span>
+                </div>
+                <div class="amenity-item">
+                    <i class="fas fa-car"></i>
+                    <span>Parking Space</span>
+                </div>
+                <div class="amenity-item">
+                    <i class="fas fa-snowflake"></i>
+                    <span>Air Conditioning</span>
+                </div>
+                <div class="amenity-item">
+                    <i class="fas fa-water"></i>
+                    <span>24/7 Water Supply</span>
+                </div>
+                <div class="amenity-item">
+                    <i class="fas fa-lock"></i>
+                    <span>Security</span>
+                </div>
+                <div class="amenity-item">
+                    <i class="fas fa-dumbbell"></i>
+                    <span>Gym</span>
+                </div>
             </div>
         </div>
         
-        <div class="unlock-section">
-            <p class="unlock-text">Unlock more details and contact information for just <span class="unlock-price">₹99/-</span></p>
-            <button class="unlock-btn">Unlock Now</button>
+        <!-- Contact Unlock Section -->
+        <div class="contact-section">
+            <h2>Unlock Owner Contact Information</h2>
+            <p>Get direct access to the owner's contact details and more exclusive information about this property for just ₹99/-. This small fee helps us maintain the quality of our platform and verify all listings.</p>
+            <button class="unlock-btn" id="unlockBtn">Unlock Now for ₹99/-</button>
         </div>
-    </section>
+    </main>
     
     <footer>
-        <div class="footer-content">
-            <div class="footer-column">
-                <h3>About StayLoo</h3>
-                <ul>
-                    <li><a href="#">Our Story</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Press</a></li>
-                </ul>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-links">
+                    <div class="footer-logo">StayLoo</div>
+                    <p>Finding your perfect space made simple and secure.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="listings.html">Browse Listings</a></li>
+                        <li><a href="list-your-space.html">List Your Space</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="help.html">Help Center</a></li>
+                        <li><a href="safety.html">Safety Tips</a></li>
+                    </ul>
+                </div>
             </div>
             
-            <div class="footer-column">
-                <h3>Support</h3>
-                <ul>
-                    <li><a href="#">Help Center</a></li>
-                    <li><a href="#">Safety Information</a></li>
-                    <li><a href="#">Cancellation Options</a></li>
-                </ul>
+            <div class="copyright">
+                &copy; 2023 StayLoo. All rights reserved.
             </div>
-            
-            <div class="footer-column">
-                <h3>Community</h3>
-                <ul>
-                    <li><a href="#">Disaster Relief</a></li>
-                    <li><a href="#">Support Refugees</a></li>
-                    <li><a href="#">Combating Discrimination</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h3>Hosting</h3>
-                <ul>
-                    <li><a href="#">Try Hosting</a></li>
-                    <li><a href="#">AirCover for Hosts</a></li>
-                    <li><a href="#">Explore Hosting Resources</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="copyright">
-            <p>© 2023 StayLoo, Inc. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        document.getElementById('unlockBtn').addEventListener('click', function() {
+            // Property details to include in the WhatsApp message
+            const propertyTitle = document.querySelector('.property-title').textContent;
+            const propertyPrice = document.querySelector('.property-price').textContent;
+            const propertyLocation = document.querySelector('.property-location span').textContent;
+            
+            // Create the WhatsApp message
+            const message = `Dear StayLoo,\n\nI'm interested in this space:\n\n` +
+                            `*${propertyTitle}*\n` +
+                            `Price: ${propertyPrice}\n` +
+                            `Location: ${propertyLocation}\n\n` +
+                            `Please provide more details and contact information of the owner.\n` +
+                            `I'm ready to pay ₹99/- for unlocking the contact details.`;
+            
+            // Encode the message for URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Replace with your WhatsApp number (with country code, remove any + or 0)
+            const whatsappNumber = "919876543210"; // Example: 91 for India + 9876543210
+            
+            // Open WhatsApp with the pre-filled message
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+        });
+    </script>
 </body>
 </html>
