@@ -769,7 +769,7 @@
                 </div>
                 
                 <div class="code-verification">
-                    <p><strong>Enter your subscription code?</strong> If not then buy from pricing section:</p>
+                    <p><strong>Enter your subscription code</strong> If not then buy from pricing section of StayLoo:</p>
                     <div class="code-input-group">
                         <input type="text" id="subscription-code" placeholder="Enter 7-character code" maxlength="7">
                         <button type="button" id="verify-code">Verify Code</button>
@@ -888,7 +888,7 @@
                 
                 if (validCodes.includes(enteredCode)) {
                     verificationIcon.innerHTML = '✅';
-                    verificationMessage.textContent = 'Promo code applied successfully! 20% discount activated.';
+                    verificationMessage.textContent = 'Subscription code applied successfully! Your plan activated.';
                     verificationMessage.className = 'verification-message success';
                 } else {
                     verificationIcon.innerHTML = '❌';
