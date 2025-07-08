@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -916,7 +917,15 @@
             const questionType = document.getElementById("question-type").value;
             const question = document.getElementById("question").value;
             
-            // Here you would typically send this data to a server using fetch or AJAX
+            // Create the email body
+            const subject = "New Question from StayLoo Website";
+            const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0AQuestion About: ${questionType}%0D%0AQuestion: ${question}`;
+            
+            // Create mailto link
+            const mailtoLink = `mailto:info.stayloo@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+            
+            // Open default email client
+            window.location.href = mailtoLink;
             
             // Hide form and show success message
             form.style.display = "none";
