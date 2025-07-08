@@ -205,17 +205,20 @@
         /* Listings Section */
         .listings-section {
             padding: 40px 0;
+            text-align: center;
+        }
+        
+        .section-title-container {
+            width: 100%;
+            margin-bottom: 30px;
         }
         
         .section-title {
             text-align: center;
             font-size: 28px;
             color: #4a6bff;
-            margin-bottom: 30px;
             position: relative;
             display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
         }
         
         .section-title::after {
@@ -578,7 +581,9 @@
         
         <!-- Featured Listings Section -->
         <section class="listings-section">
-            <h2 class="section-title animate-fade">Featured Spaces</h2>
+            <div class="section-title-container">
+                <h2 class="section-title animate-fade">Featured Spaces</h2>
+            </div>
             
             <div class="listings-grid">
                 <!-- Listing Card 1 -->
