@@ -48,47 +48,71 @@
         }
         
         /* Hero Section - City Selection */
-        .hero {
-            background-color: #4a6bff;
-            color: white;
-            padding: 60px 0;
-            text-align: center;
-            margin-bottom: 40px;
-            border-radius: 10px;
-            margin-top: 30px;
-        }
-        
-        .hero h1 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-        
-        .city-selection {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
+         .city-selection {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 30px auto;
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
         }
-        
-        .city-btn {
-            padding: 12px 25px;
-            background-color: white;
+
+        .city-selection h2 {
+            text-align: center;
             color: #4a6bff;
-            border: none;
-            border-radius: 30px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            font-size: 22px;
         }
-        
-        .city-btn:hover {
-            background-color: #f0f4ff;
+
+        .city-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .city-card {
+            background: #f8f9ff;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e4ff;
+            cursor: pointer;
+        }
+
+        .city-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(74, 107, 255, 0.15);
+            background: #4a6bff;
+            color: white;
+            border-color: #4a6bff;
+        }
+
+        .city-card:hover .city-icon {
+            color: white;
+        }
+
+        .city-icon {
+            font-size: 24px;
+            color: #4a6bff;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+
+        .city-name {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .city-count {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+            transition: all 0.3s;
+        }
+
+        .city-card:hover .city-count {
+            color: rgba(255,255,255,0.8);
         }
         
         /* Listings Section */
@@ -311,20 +335,73 @@
     
     <main class="container">
         <!-- Hero Section with City Selection -->
-        <section class="hero">
+       <section class="hero">
             <h1>Find Your Perfect Space</h1>
-            <p>Browse available spaces in your preferred city</p>
+            <p>Browse available spaces in top Indian cities</p>
             
             <div class="city-selection">
-                <button class="city-btn" onclick="window.location.href='lucknow.html'">Lucknow</button>
-                <button class="city-btn" onclick="window.location.href='delhi.html'">Delhi</button>
-                <button class="city-btn" onclick="window.location.href='bangalore.html'">Bangalore</button>
-                <button class="city-btn" onclick="window.location.href='mumbai.html'">Mumbai</button>
-                <button class="city-btn" onclick="window.location.href='pune.html'">Pune</button>
-                <button class="city-btn" onclick="window.location.href='kota.html'">Kota</button>
-                <button class="city-btn" onclick="window.location.href='hyderabad.html'">Hyderabad</button>
-                <button class="city-btn" onclick="window.location.href='chennai.html'">Chennai</button>
-                <button class="city-btn" onclick="window.location.href='noida.html'">Noida</button>
+                <h2>Popular Cities</h2>
+                <div class="city-grid">
+                    <div class="city-card" onclick="window.location.href='lucknow.html'">
+                        <div class="city-icon"><i class="fas fa-landmark"></i></div>
+                        <div class="city-name">Lucknow</div>
+                        <div class="city-count">124+ spaces</div>
+                    </div>
+                    
+                    <div class="city-card" onclick="window.location.href='delhi.html'">
+                        <div class="city-icon"><i class="fas fa-monument"></i></div>
+                        <div class="city-name">Delhi</div>
+                        <div class="city-count">356+ spaces</div>
+                    </div>
+                    
+                    <div class="city-card" onclick="window.location.href='bangalore.html'">
+                        <div class="city-icon"><i class="fas fa-laptop-code"></i></div>
+                        <div class="city-name">Bangalore</div>
+                        <div class="city-count">289+ spaces</div>
+                    </div>
+                    
+                    <div class="city-card" onclick="window.location.href='mumbai.html'">
+                        <div class="city-icon"><i class="fas fa-umbrella-beach"></i></div>
+                        <div class="city-name">Mumbai</div>
+                        <div class="city-count">412+ spaces</div>
+                    </div>
+                    
+                    <div class="city-card" onclick="window.location.href='pune.html'">
+                        <div class="city-icon"><i class="fas fa-university"></i></div>
+                        <div class="city-name">Pune</div>
+                        <div class="city-count">187+ spaces</div>
+                    </div>
+                    
+                    <div class="city-card" onclick="window.location.href='kota.html'">
+                        <div class="city-icon"><i class="fas fa-book"></i></div>
+                        <div class="city-name">Kota</div>
+                        <div class="city-count">76+ spaces</div>
+                    </div>
+                    
+                    <div class="city-card" onclick="window.location.href='hyderabad.html'">
+                        <div class="city-icon"><i class="fas fa-pepper-hot"></i></div>
+                        <div class="city-name">Hyderabad</div>
+                        <div class="city-count">203+ spaces</div>
+                    </div>
+                    
+                    <div class="city-card" onclick="window.location.href='chennai.html'">
+                        <div class="city-icon"><i class="fas fa-film"></i></div>
+                        <div class="city-name">Chennai</div>
+                        <div class="city-count">158+ spaces</div>
+                    </div>
+                    
+                    <div class="city-card" onclick="window.location.href='noida.html'">
+                        <div class="city-icon"><i class="fas fa-building"></i></div>
+                        <div class="city-name">Noida</div>
+                        <div class="city-count">132+ spaces</div>
+                    </div>
+                    
+                    <div class="city-card" onclick="window.location.href='gurgaon.html'">
+                        <div class="city-icon"><i class="fas fa-briefcase"></i></div>
+                        <div class="city-name">Gurgaon</div>
+                        <div class="city-count">178+ spaces</div>
+                    </div>
+                </div>
             </div>
         </section>
         
