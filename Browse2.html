@@ -25,18 +25,64 @@
             padding: 0 20px;
         }
         
+        /* Animation Classes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+        
+        .animate-fade {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        .animate-delay-1 {
+            animation-delay: 0.2s;
+        }
+        
+        .animate-delay-2 {
+            animation-delay: 0.4s;
+        }
+        
+        .animate-delay-3 {
+            animation-delay: 0.6s;
+        }
+        
+        .hover-pulse:hover {
+            animation: pulse 1s ease infinite;
+        }
+        
         /* Header Styles */
         header {
             background-color: white;
             padding: 20px 0;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            padding: 15px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         
         .logo {
             font-size: 32px;
             font-weight: bold;
             display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled .logo {
+            font-size: 28px;
         }
         
         .logo .stay {
@@ -48,7 +94,7 @@
         }
         
         /* Hero Section - City Selection */
-     .hero {
+        .hero {
             background-color: #4a6bff;
             color: white;
             padding: 60px 0;
@@ -56,25 +102,42 @@
             margin-bottom: 40px;
             border-radius: 10px;
             margin-top: 30px;
+            background: linear-gradient(135deg, #4a6bff 0%, #2c67f2 100%);
+            animation: gradientShift 8s ease infinite;
+            background-size: 200% 200%;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         .hero h1 {
             font-size: 36px;
             margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
-         .city-selection {
+        .city-selection {
             max-width: 800px;
             margin: 30px auto;
-            background: #b22222;
+            background: white;
             border-radius: 12px;
             padding: 30px;
             box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .city-selection:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
         }
 
         .city-selection h2 {
             text-align: center;
-            color: white;
+            color: #333;
             margin-bottom: 25px;
             font-size: 22px;
         }
@@ -86,18 +149,20 @@
         }
 
         .city-card {
-            background: #2c67f2;
+            background: #f8f9fa;
             border-radius: 8px;
             padding: 15px;
             text-align: center;
             transition: all 0.3s ease;
             border: 1px solid #e0e4ff;
             cursor: pointer;
+            transform: scale(1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
         .city-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(74, 107, 255, 0.15);
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 8px 15px rgba(74, 107, 255, 0.15);
             background: #4a6bff;
             color: white;
             border-color: #4a6bff;
@@ -105,6 +170,7 @@
 
         .city-card:hover .city-icon {
             color: white;
+            transform: scale(1.1);
         }
 
         .city-icon {
@@ -117,6 +183,12 @@
         .city-name {
             font-weight: 600;
             font-size: 15px;
+            color: #333;
+            transition: all 0.3s;
+        }
+        
+        .city-card:hover .city-name {
+            color: white;
         }
 
         .city-count {
@@ -140,6 +212,21 @@
             font-size: 28px;
             color: #4a6bff;
             margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #4a6bff 0%, rgba(74,107,255,0) 100%);
+            border-radius: 3px;
         }
         
         .listings-grid {
@@ -153,12 +240,19 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .listing-card.animated {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .listing-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
         }
         
         .listing-image {
@@ -172,11 +266,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s;
+            transition: transform 0.5s ease;
         }
         
         .listing-card:hover .listing-image img {
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
         
         .listing-badge {
@@ -189,6 +283,7 @@
             border-radius: 4px;
             font-size: 12px;
             font-weight: bold;
+            z-index: 2;
         }
         
         .listing-details {
@@ -200,6 +295,11 @@
             font-weight: 600;
             margin-bottom: 5px;
             color: #333;
+            transition: color 0.3s;
+        }
+        
+        .listing-card:hover .listing-title {
+            color: #4a6bff;
         }
         
         .listing-location {
@@ -230,6 +330,23 @@
             font-weight: bold;
             color: #4a6bff;
             margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .listing-price::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #4a6bff;
+            transition: width 0.3s ease;
+        }
+        
+        .listing-card:hover .listing-price::after {
+            width: 100%;
         }
         
         .listing-btn {
@@ -241,11 +358,29 @@
             border-radius: 4px;
             font-weight: 500;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .listing-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
         }
         
         .listing-btn:hover {
             background-color: #3a5bef;
+            box-shadow: 0 5px 15px rgba(58, 91, 239, 0.4);
+        }
+        
+        .listing-btn:hover::before {
+            left: 100%;
         }
         
         /* Footer */
@@ -280,6 +415,18 @@
             color: #4a6bff;
             margin-bottom: 15px;
             font-size: 18px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-links h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50%;
+            height: 2px;
+            background-color: #4a6bff;
         }
         
         .footer-links ul {
@@ -288,6 +435,11 @@
         
         .footer-links li {
             margin-bottom: 10px;
+            transition: transform 0.3s;
+        }
+        
+        .footer-links li:hover {
+            transform: translateX(5px);
         }
         
         .footer-links a {
@@ -334,13 +486,17 @@
                 flex-direction: column;
                 gap: 30px;
             }
+            
+            .city-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
     </style>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <header>
+    <header id="mainHeader">
         <div class="container">
             <div class="logo">
                 <span class="stay">Stay</span><span class="loo">Loo</span>
@@ -350,68 +506,68 @@
     
     <main class="container">
         <!-- Hero Section with City Selection -->
-       <section class="hero">
+       <section class="hero animate-fade">
             <h1>Find Your Perfect Space</h1>
             <p>Browse available spaces in top Indian cities</p>
             
-            <div class="city-selection">
+            <div class="city-selection hover-pulse">
                 <h2>Popular Cities</h2>
                 <div class="city-grid">
-                    <div class="city-card" onclick="window.location.href='lucknow.html'">
+                    <div class="city-card animate-fade animate-delay-1" onclick="window.location.href='lucknow.html'">
                         <div class="city-icon"><i class="fas fa-landmark"></i></div>
                         <div class="city-name">Lucknow</div>
                         <div class="city-count">124+ spaces</div>
                     </div>
                     
-                    <div class="city-card" onclick="window.location.href='delhi.html'">
+                    <div class="city-card animate-fade animate-delay-1" onclick="window.location.href='delhi.html'">
                         <div class="city-icon"><i class="fas fa-monument"></i></div>
                         <div class="city-name">Delhi</div>
                         <div class="city-count">356+ spaces</div>
                     </div>
                     
-                    <div class="city-card" onclick="window.location.href='bangalore.html'">
+                    <div class="city-card animate-fade animate-delay-2" onclick="window.location.href='bangalore.html'">
                         <div class="city-icon"><i class="fas fa-laptop-code"></i></div>
                         <div class="city-name">Bangalore</div>
                         <div class="city-count">289+ spaces</div>
                     </div>
                     
-                    <div class="city-card" onclick="window.location.href='mumbai.html'">
+                    <div class="city-card animate-fade animate-delay-2" onclick="window.location.href='mumbai.html'">
                         <div class="city-icon"><i class="fas fa-umbrella-beach"></i></div>
                         <div class="city-name">Mumbai</div>
                         <div class="city-count">412+ spaces</div>
                     </div>
                     
-                    <div class="city-card" onclick="window.location.href='pune.html'">
+                    <div class="city-card animate-fade animate-delay-3" onclick="window.location.href='pune.html'">
                         <div class="city-icon"><i class="fas fa-university"></i></div>
                         <div class="city-name">Pune</div>
                         <div class="city-count">187+ spaces</div>
                     </div>
                     
-                    <div class="city-card" onclick="window.location.href='kota.html'">
+                    <div class="city-card animate-fade animate-delay-3" onclick="window.location.href='kota.html'">
                         <div class="city-icon"><i class="fas fa-book"></i></div>
                         <div class="city-name">Kota</div>
                         <div class="city-count">76+ spaces</div>
                     </div>
                     
-                    <div class="city-card" onclick="window.location.href='hyderabad.html'">
+                    <div class="city-card animate-fade animate-delay-1" onclick="window.location.href='hyderabad.html'">
                         <div class="city-icon"><i class="fas fa-pepper-hot"></i></div>
                         <div class="city-name">Hyderabad</div>
                         <div class="city-count">203+ spaces</div>
                     </div>
                     
-                    <div class="city-card" onclick="window.location.href='chennai.html'">
+                    <div class="city-card animate-fade animate-delay-2" onclick="window.location.href='chennai.html'">
                         <div class="city-icon"><i class="fas fa-film"></i></div>
                         <div class="city-name">Chennai</div>
                         <div class="city-count">158+ spaces</div>
                     </div>
                     
-                    <div class="city-card" onclick="window.location.href='noida.html'">
+                    <div class="city-card animate-fade animate-delay-3" onclick="window.location.href='noida.html'">
                         <div class="city-icon"><i class="fas fa-building"></i></div>
                         <div class="city-name">Noida</div>
                         <div class="city-count">132+ spaces</div>
                     </div>
                     
-                    <div class="city-card" onclick="window.location.href='gurgaon.html'">
+                    <div class="city-card animate-fade animate-delay-1" onclick="window.location.href='gurgaon.html'">
                         <div class="city-icon"><i class="fas fa-briefcase"></i></div>
                         <div class="city-name">Gurgaon</div>
                         <div class="city-count">178+ spaces</div>
@@ -422,7 +578,7 @@
         
         <!-- Featured Listings Section -->
         <section class="listings-section">
-            <h2 class="section-title">Featured Spaces</h2>
+            <h2 class="section-title animate-fade">Featured Spaces</h2>
             
             <div class="listings-grid">
                 <!-- Listing Card 1 -->
@@ -549,14 +705,14 @@
     <footer>
         <div class="container">
             <div class="footer-container">
-                <div class="footer-links">
+                <div class="footer-links animate-fade">
                     <div class="footer-logo">
                         <span class="stay">Stay</span><span class="loo">Loo</span>
                     </div>
                     <p>Find your perfect living space with ease</p>
                 </div>
                 
-                <div class="footer-links">
+                <div class="footer-links animate-fade animate-delay-1">
                     <h3>Quick Links</h3>
                     <ul>
                         <li><a href="index.html">Home</a></li>
@@ -565,7 +721,7 @@
                     </ul>
                 </div>
                 
-                <div class="footer-links">
+                <div class="footer-links animate-fade animate-delay-2">
                     <h3>Company</h3>
                     <ul>
                         <li><a href="about.html">About Us</a></li>
@@ -575,10 +731,51 @@
                 </div>
             </div>
             
-            <div class="copyright">
+            <div class="copyright animate-fade animate-delay-3">
                 &copy; 2023 StayLoo. All rights reserved.
             </div>
         </div>
     </footer>
+
+    <script>
+        // Animate listing cards on scroll
+        function animateOnScroll() {
+            const listingCards = document.querySelectorAll('.listing-card');
+            const windowHeight = window.innerHeight;
+            
+            listingCards.forEach((card, index) => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const animationDelay = index * 0.1;
+                
+                if (cardPosition < windowHeight - 100) {
+                    card.style.animation = `fadeIn 0.5s ease-out ${animationDelay}s forwards`;
+                    card.classList.add('animated');
+                }
+            });
+        }
+        
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            animateOnScroll();
+        });
+        
+        // Initialize animations on load
+        document.addEventListener('DOMContentLoaded', function() {
+            animateOnScroll();
+            
+            // Animate listing cards with staggered delays
+            const listingCards = document.querySelectorAll('.listing-card');
+            listingCards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
 </body>
 </html>
