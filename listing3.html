@@ -276,6 +276,65 @@
         .offer-details.active {
             display: block;
         }
+
+      /* Boost Plan Section - Simplified */
+        .boost-section {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8f9ff;
+            border: 1px solid #e0e4ff;
+            border-radius: 8px;
+        }
+        
+        .boost-section h3 {
+            color: #4a6bff;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .boost-options {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .boost-option {
+            flex: 1;
+        }
+        
+        .boost-option input {
+            display: none;
+        }
+        
+        .boost-option label {
+            display: block;
+            padding: 12px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .boost-option input:checked + label {
+            border-color: #4a6bff;
+            background-color: #f0f4ff;
+        }
+        
+        .boost-message {
+            display: none;
+            padding: 10px;
+            background-color: #f0f4ff;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #4a6bff;
+        }
+        
+        .boost-message.active {
+            display: block;
+        }
         
         /* Subscription Section */
         .subscription-section {
@@ -688,6 +747,27 @@
                     </div>
                 </div>
             </div>
+
+           <!-- Boost Plan Section - Simplified -->
+                <div class="boost-section">
+                    <h3>Activate Boost Plan</h3>
+                    
+                    <div class="boost-options">
+                        <div class="boost-option">
+                            <input type="radio" name="has-boost" id="activate-boost" value="yes" checked>
+                            <label for="activate-boost">Activate Plan</label>
+                        </div>
+                        <div class="boost-option">
+                            <input type="radio" name="has-boost" id="no-boost" value="no">
+                            <label for="no-boost">Don't Activate</label>
+                        </div>
+                    </div>
+                    
+                    <div id="boost-message" class="boost-message active">
+                        You are activating the plan
+                    </div>
+                </div>
+            </div>
             
             <!-- Subscription Section with 3 Paid Plans -->
             <div class="form-section subscription-section">
@@ -845,6 +925,18 @@
                     }
                 });
             });
+
+           // Boost Plan Toggle - Simplified
+            document.querySelectorAll('input[name="has-boost"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const boostMessage = document.getElementById('boost-message');
+                    if (this.value === 'yes') {
+                        boostMessage.classList.add('active');
+                    } else {
+                        boostMessage.classList.remove('active');
+                    }
+                });
+            });
             
             // Subscription Code Verification
             const subscriptionRadios = document.querySelectorAll('input[name="subscription"]');
@@ -904,7 +996,7 @@
                 
                 // Collect all form data
                 const formData = {
-                    name: document.getElementById('owner-name').value,
+                     name: document.getElementById('owner-name').value,
                     phone: document.getElementById('owner-phone').value,
                     email: document.getElementById('owner-email').value,
                     title: document.getElementById('property-title').value,
@@ -920,6 +1012,7 @@
                     offerTitle: document.getElementById('offer-title').value || 'None',
                     offerDescription: document.getElementById('offer-description').value || 'None',
                     offerValidity: document.getElementById('offer-validity').value || 'Not specified',
+                    hasBoost: document.querySelector('input[name="has-boost"]:checked').value,
                     subscription: document.querySelector('input[name="subscription"]:checked').value,
                     promoCode: subscriptionCodeInput.value || 'None'
                 };
@@ -946,6 +1039,8 @@
                     `🏷️ Offer Title: ${formData.offerTitle}\n` +
                     `📝 Offer Details: ${formData.offerDescription}\n` +
                     `📅 Valid Until: ${formData.offerValidity}\n\n` +
+                    `*BOOST PLAN*\n` +
+                    `🚀 Boost Activated: ${formData.hasBoost === 'yes' ? 'Yes' : 'No'}\n\n` +
                     `*SUBSCRIPTION*\n` +
                     `📢 Plan: ${formData.subscription.toUpperCase()}\n` +
                     `🎟️ Promo Code: ${formData.promoCode}\n\n` +
