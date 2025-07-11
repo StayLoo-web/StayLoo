@@ -274,8 +274,8 @@
           <h2>Send Us a Message</h2>
           <p>We'll respond within 24 hours</p>
 
-          <!-- ✅ Updated form for Formspree -->
-          <form action="https://formspree.io/f/myzjrplk" method="POST" id="contactForm">
+          <!-- ✅ Updated form -->
+          <form action="https://formspree.io/f/myzjrplk" method="POST" id="contactForm" novalidate>
             <div class="form-group">
               <label for="name">Your Name*</label>
               <input type="text" id="name" name="name" class="form-control" required>
@@ -324,5 +324,37 @@
       <p class="copyright">© 2025 StayLoo. All rights reserved.</p>
     </div>
   </footer>
+
+  <!-- ✅ JS to prevent redirect and show custom success message -->
+  <script>
+    const form = document.getElementById("contactForm");
+    const successMessage = document.getElementById("successMessage");
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          successMessage.style.display = "block";
+          form.reset();
+          successMessage.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          alert("Oops! Something went wrong. Please try again.");
+        }
+      } catch (error) {
+        alert("Oops! Unable to submit. Please check your connection.");
+      }
+    });
+  </script>
 </body>
 </html>
