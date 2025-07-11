@@ -1,431 +1,328 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us | StayLoo</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* ===== Global Styles ===== */
-        :root {
-            --primary: #4361ee;
-            --secondary: #3a0ca3;
-            --light: #f8f9fa;
-            --dark: #1a1a2e;
-            --gray: #6c757d;
-            --border: #e9ecef;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            --success: #4cc9f0;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--dark);
-            background-color: #f5f7ff;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        section {
-            padding: 80px 0;
-        }
-
-        h1, h2, h3 {
-            color: var(--dark);
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            border-radius: 6px;
-            font-weight: 600;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 16px;
-            border: none;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
-        }
-
-        /* ===== Header Styles ===== */
-        header {
-            background: white;
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-           cursor: default;
-            user-select: none;
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: 700;
-        }
-
-        .logo .Stay {
-            color: var(--primary);
-        }
-        
-      .logo .Loo {
-            color: #000000;
-        }    
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-
-        .nav-links a {
-            font-weight: 600;
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .nav-links a:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            bottom: -5px;
-            left: 0;
-            transition: all 0.3s ease;
-        }
-
-        .nav-links a:hover:after {
-            width: 100%;
-        }
-
-        /* ===== Contact Hero ===== */
-        .contact-hero {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            text-align: center;
-            padding: 100px 0;
-           cursor: default;
-            user-select: none;
-        }
-
-        .contact-hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: white;
-        }
-
-        .contact-hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto;
-            opacity: 0.9;
-        }
-
-        /* ===== Contact Content ===== */
-        .contact-content {
-            display: flex;
-            gap: 50px;
-            margin-top: 50px;
-           cursor: default;
-            user-select: none;
-        }
-
-        .contact-info {
-            flex: 1;
-            background: white;
-            border-radius: 10px;
-            padding: 40px;
-            box-shadow: var(--shadow);
-        }
-
-        .contact-form-container {
-            flex: 1;
-            background: white;
-            border-radius: 10px;
-            padding: 40px;
-            box-shadow: var(--shadow);
-        }
-
-        .info-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .info-icon {
-            font-size: 24px;
-            color: var(--primary);
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 14px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
-        }
-
-        textarea.form-control {
-            min-height: 150px;
-            resize: vertical;
-        }
-
-        .success-message {
-            display: none;
-            background: #d4edda;
-            color: #155724;
-            padding: 15px;
-            border-radius: 6px;
-            margin-top: 20px;
-            border: 1px solid #c3e6cb;
-            text-align: center;
-        }
-
-        /* ===== Footer ===== */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 50px 0 20px;
-            text-align: center;
-           cursor: default;
-            user-select: none;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .footer-links a {
-            color: white;
-        }
-
-        .footer-links a:hover {
-            color: var(--primary);
-        }
-
-        .copyright {
-            opacity: 0.7;
-            font-size: 14px;
-        }
-
-        /* ===== Responsive ===== */
-        @media (max-width: 768px) {
-            .contact-content {
-                flex-direction: column;
-            }
-            
-            .navbar {
-                flex-direction: column;
-                gap: 20px;
-            }
-            
-            .nav-links {
-                gap: 20px;
-            }
-            
-            .contact-hero h1 {
-                font-size: 2rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us | StayLoo</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3a0ca3;
+      --light: #f8f9fa;
+      --dark: #1a1a2e;
+      --gray: #6c757d;
+      --border: #e9ecef;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      --success: #4cc9f0;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--dark);
+      background-color: #f5f7ff;
+    }
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    section {
+      padding: 80px 0;
+    }
+    h1, h2, h3 {
+      color: var(--dark);
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      border-radius: 6px;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 16px;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    .btn-primary:hover {
+      background: var(--secondary);
+      transform: translateY(-2px);
+    }
+    header {
+      background: white;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      cursor: default;
+      user-select: none;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+    }
+    .logo {
+      font-size: 28px;
+      font-weight: 700;
+    }
+    .logo .Stay {
+      color: var(--primary);
+    }
+    .logo .Loo {
+      color: #000000;
+    }
+    .nav-links {
+      display: flex;
+      gap: 30px;
+    }
+    .nav-links a {
+      font-weight: 600;
+      position: relative;
+    }
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+    .nav-links a:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      bottom: -5px;
+      left: 0;
+      transition: all 0.3s ease;
+    }
+    .nav-links a:hover:after {
+      width: 100%;
+    }
+    .contact-hero {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      text-align: center;
+      padding: 100px 0;
+      cursor: default;
+      user-select: none;
+    }
+    .contact-hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: white;
+    }
+    .contact-hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto;
+      opacity: 0.9;
+    }
+    .contact-content {
+      display: flex;
+      gap: 50px;
+      margin-top: 50px;
+      cursor: default;
+      user-select: none;
+    }
+    .contact-info, .contact-form-container {
+      flex: 1;
+      background: white;
+      border-radius: 10px;
+      padding: 40px;
+      box-shadow: var(--shadow);
+    }
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .info-icon {
+      font-size: 24px;
+      color: var(--primary);
+    }
+    .form-group {
+      margin-bottom: 25px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .form-control {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+    }
+    textarea.form-control {
+      min-height: 150px;
+      resize: vertical;
+    }
+    .success-message {
+      display: none;
+      background: #d4edda;
+      color: #155724;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 20px;
+      border: 1px solid #c3e6cb;
+      text-align: center;
+    }
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 50px 0 20px;
+      text-align: center;
+      cursor: default;
+      user-select: none;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+    .footer-links a {
+      color: white;
+    }
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+    .copyright {
+      opacity: 0.7;
+      font-size: 14px;
+    }
+    @media (max-width: 768px) {
+      .contact-content {
+        flex-direction: column;
+      }
+      .navbar {
+        flex-direction: column;
+        gap: 20px;
+      }
+      .nav-links {
+        gap: 20px;
+      }
+      .contact-hero h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <nav class="navbar">
-                <div class="logo"><span class="Stay">Stay</span><span class="Loo">Loo</span></div>
-            </nav>
-        </div>
-    </header>
+  <header>
+    <div class="container">
+      <nav class="navbar">
+        <div class="logo"><span class="Stay">Stay</span><span class="Loo">Loo</span></div>
+      </nav>
+    </div>
+  </header>
 
-    <section class="contact-hero">
-        <div class="container">
-            <h1>Contact StayLoo</h1>
-            <p>We're here to help with any questions about our services</p>
-        </div>
-    </section>
+  <section class="contact-hero">
+    <div class="container">
+      <h1>Contact StayLoo</h1>
+      <p>We're here to help with any questions about our services</p>
+    </div>
+  </section>
 
-    <section class="contact-section">
-        <div class="container">
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h2>Get in Touch</h2>
-                    <p>Have questions or need assistance? Reach out to our team.</p>
+  <section class="contact-section">
+    <div class="container">
+      <div class="contact-content">
+        <div class="contact-info">
+          <h2>Get in Touch</h2>
+          <p>Have questions or need assistance? Reach out to our team.</p>
 
-                   <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div>
-                            <h3>Our Office</h3>
-                            <p>Lucknow, India</p>
-                        </div>
-                    </div>
-                    
-                 
-                    
-                    <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div>
-                            <h3>Email</h3>
-                            <p>info.stayloo@gmail.com</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="contact-form-container">
-                    <h2>Send Us a Message</h2>
-                    <p>We'll respond within 24 hours</p>
-                    
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name">Your Name*</label>
-                            <input type="text" id="name" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email">Email Address*</label>
-                            <input type="email" id="email" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="phone">Phone Number*</label>
-                            <input type="tel" id="phone" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" class="form-control">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="message">Your Message*</label>
-                            <textarea id="message" class="form-control" required></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                        
-                        <div class="success-message" id="successMessage">
-                            <i class="fas fa-check-circle" style="margin-right: 10px;"></i>
-                            Thank you! We've received your message and will contact you within 24 hours.
-                        </div>
-                    </form>
-                </div>
+          <div class="info-item">
+            <div class="info-icon">
+              <i class="fas fa-map-marker-alt"></i>
             </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <div class="footer-links">
-                <a href="index.html">Home</a>
-                <a href="Browse2.html">Browse spaces</a>
-                <a href="listing3.html">List Your Space</a>
-                <a href="#">Privacy Policy</a>
+            <div>
+              <h3>Our Office</h3>
+              <p>Lucknow, India</p>
             </div>
-            <p class="copyright">© 2025 StayLoo. All rights reserved.</p>
-        </div>
-    </footer>
+          </div>
 
-    <script>
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                subject: document.getElementById('subject').value || 'No Subject',
-                message: document.getElementById('message').value
-            };
-            
-            // Create email body
-            const emailBody = `New Contact Form Submission from StayLoo:\n\n` +
-                             `*Contact Details*\n` +
-                             `Name: ${formData.name}\n` +
-                             `Email: ${formData.email}\n` +
-                             `Phone: ${formData.phone}\n\n` +
-                             `*Message Details*\n` +
-                             `Subject: ${formData.subject}\n` +
-                             `Message:\n${formData.message}`;
-            
-            // Encode for mailto link
-            const encodedBody = encodeURIComponent(emailBody);
-            
-            // Replace with your email address
-            const yourEmail = 'info.stayloo@gmail.com';
-            
-            // Create mailto link (like WhatsApp link)
-            const mailtoLink = `mailto:${yourEmail}?subject=New Contact Query - ${encodeURIComponent(formData.subject)}&body=${encodedBody}`;
-            
-            // Open email client
-            window.location.href = mailtoLink;
-            
-            // Show success message
-            document.getElementById('successMessage').style.display = 'block';
-            
-            // Reset form
-            this.reset();
-            
-            // Scroll to success message
-            document.getElementById('successMessage').scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
-    </script>
+          <div class="info-item">
+            <div class="info-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div>
+              <h3>Email</h3>
+              <p>info.stayloo@gmail.com</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form-container">
+          <h2>Send Us a Message</h2>
+          <p>We'll respond within 24 hours</p>
+
+          <!-- ✅ Updated form for Formspree -->
+          <form action="https://formspree.io/f/your_form_endpoint_here" method="POST" id="contactForm">
+            <div class="form-group">
+              <label for="name">Your Name*</label>
+              <input type="text" id="name" name="name" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address*</label>
+              <input type="email" id="email" name="email" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number*</label>
+              <input type="tel" id="phone" name="phone" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="subject" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label for="message">Your Message*</label>
+              <textarea id="message" name="message" class="form-control" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Send Message</button>
+
+            <div class="success-message" id="successMessage">
+              <i class="fas fa-check-circle" style="margin-right: 10px;"></i>
+              Thank you! We've received your message and will contact you within 24 hours.
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="Browse2.html">Browse spaces</a>
+        <a href="listing3.html">List Your Space</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+      <p class="copyright">© 2025 StayLoo. All rights reserved.</p>
+    </div>
+  </footer>
 </body>
 </html>
