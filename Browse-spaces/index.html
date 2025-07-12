@@ -27,14 +27,8 @@
         
         /* Animation Classes */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-            100% { transform: scale(1); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
         .animate-fade {
@@ -53,10 +47,6 @@
             animation-delay: 0.6s;
         }
         
-        .hover-pulse:hover {
-            animation: pulse 1s ease infinite;
-        }
-        
         /* Header Styles */
         header {
             background-color: white;
@@ -67,7 +57,7 @@
             top: 0;
             z-index: 100;
             transition: all 0.3s ease;
-             cursor: default;
+            cursor: default;
             user-select: none;
         }
         
@@ -107,7 +97,7 @@
             background: linear-gradient(135deg, #4a6bff 0%, #2c67f2 100%);
             animation: gradientShift 8s ease infinite;
             background-size: 200% 200%;
-             cursor: default;
+            cursor: default;
             user-select: none;
         }
         
@@ -130,13 +120,6 @@
             border-radius: 12px;
             padding: 30px;
             box-shadow: 0 5px 25px rgba(0,0,0,0.08);
-            transform: translateY(0);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .city-selection:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
         }
 
         .city-selection h2 {
@@ -160,12 +143,10 @@
             transition: all 0.3s ease;
             border: 1px solid #e0e4ff;
             cursor: pointer;
-            transform: scale(1);
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
         .city-card:hover {
-            transform: translateY(-5px) scale(1.03);
             box-shadow: 0 8px 15px rgba(74, 107, 255, 0.15);
             background: #4a6bff;
             color: white;
@@ -174,7 +155,6 @@
 
         .city-card:hover .city-icon {
             color: white;
-            transform: scale(1.1);
         }
 
         .city-icon {
@@ -210,7 +190,7 @@
         .listings-section {
             padding: 40px 0;
             text-align: center;
-             cursor: default;
+            cursor: default;
             user-select: none;
         }
         
@@ -249,18 +229,15 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s ease;
             opacity: 0;
-            transform: translateY(20px);
         }
         
         .listing-card.animated {
             opacity: 1;
-            transform: translateY(0);
         }
         
         .listing-card:hover {
-            transform: translateY(-10px) scale(1.02);
             box-shadow: 0 15px 30px rgba(0,0,0,0.1);
         }
         
@@ -398,7 +375,7 @@
             color: white;
             padding: 40px 0;
             margin-top: 60px;
-             cursor: default;
+            cursor: default;
             user-select: none;
         }
         
@@ -521,7 +498,7 @@
             <h1>Find Your Perfect Space</h1>
             <p>Browse available spaces in your city</p>
             
-            <div class="city-selection hover-pulse">
+            <div class="city-selection">
                 <h2>Popular Cities</h2>
                 <div class="city-grid">
                     <div class="city-card animate-fade animate-delay-1" onclick="window.location.href='testing.html'">
