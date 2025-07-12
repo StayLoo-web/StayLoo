@@ -705,7 +705,7 @@
                 
                 <div class="form-group">
                     <label for="monthly-price" class="required">Monthly Rent (₹)</label>
-                    <input type="number" id="monthly-price" min="0" placeholder="Enter monthly rent amount" minlength="4" required>
+                    <input type="number" id="monthly-price" min="0" placeholder="Enter monthly rent amount" min="1000" step="100" required>
                 </div>
                 
                 <div class="form-group">
@@ -1063,17 +1063,5 @@
             });
         });
     </script>
-  
-  <script>
-  document.getElementById("staylooForm").addEventListener("submit", function(e) {
-    const phone = document.getElementById("owner-phone").value.trim();
-    const phoneValid = /^\d{10}$/.test(phone);
-
-    if (!phoneValid) {
-      alert("Please enter a valid 10-digit mobile number.");
-      e.preventDefault(); // Prevent form submission
-    }
-  });
-</script>
 </body>
 </html>
