@@ -301,6 +301,115 @@
             font-size: 14px;
         }
 
+        /* ===== Reviews Section ===== */
+        .reviews {
+            background: white;
+            padding: 80px 0;
+        }
+
+        .reviews-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .reviews-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            gap: 30px;
+            padding: 20px 0;
+        }
+
+        .review-card {
+            min-width: 300px;
+            scroll-snap-align: start;
+            background: var(--light);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .review-card:before {
+            content: '\201C';
+            font-family: Georgia, serif;
+            font-size: 60px;
+            color: var(--primary);
+            opacity: 0.2;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        .review-content {
+            margin-bottom: 20px;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        .review-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .review-rating {
+            color: #ffc107;
+            margin-bottom: 15px;
+        }
+
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slider-dot.active {
+            background: var(--primary);
+            transform: scale(1.2);
+        }
+
         /* ===== Footer ===== */
         footer {
             background: var(--dark);
@@ -563,7 +672,7 @@ button:hover {
         <div class="container">
             <h2 class="section-title">Browse by Property Type</h2>
             <div class="property-grid">
-                <div class="property-card">
+                <a href="properties/flats/" class="property-card">
                     <div class="property-image">
                         <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Flats">
                     </div>
@@ -571,8 +680,8 @@ button:hover {
                         <h3>Flats & Apartments</h3>
                         <p class="property-count"></p>
                     </div>
-                </div>
-                <div class="property-card">
+                </a>
+                <a href="properties/houses/" class="property-card">
                     <div class="property-image">
                         <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Houses">
                     </div>
@@ -580,8 +689,8 @@ button:hover {
                         <h3>Houses</h3>
                         <p class="property-count"></p>
                     </div>
-                </div>
-                <div class="property-card">
+                </a>
+                <a href="properties/pgs/" class="property-card">
                     <div class="property-image">
                         <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="PGs">
                     </div>
@@ -589,8 +698,8 @@ button:hover {
                         <h3>PGs & Hostels</h3>
                         <p class="property-count"></p>
                     </div>
-                </div>
-                <div class="property-card">
+                </a>
+                <a href="properties/rooms/" class="property-card">
                     <div class="property-image">
                         <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Rooms">
                     </div>
@@ -598,10 +707,101 @@ button:hover {
                         <h3>Normal Rooms</h3>
                         <p class="property-count"></p>
                     </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="reviews">
+        <div class="container">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="reviews-container">
+                <div class="reviews-slider">
+                    <div class="review-card">
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-content">"StayLoo made finding my perfect apartment so easy! The verified listings saved me so much time and the support team was incredibly helpful throughout the process."</p>
+                        <div class="review-author">
+                            <div class="author-avatar">
+                                <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah Johnson">
+                            </div>
+                            <div class="author-info">
+                                <h4>Sarah Johnson</h4>
+                                <p>Tenant in Lucknow</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p class="review-content">"As a property owner, I was able to find a reliable tenant within just 2 weeks of listing. The platform is user-friendly and the verification process gives tenants confidence."</p>
+                        <div class="review-author">
+                            <div class="author-avatar">
+                                <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Rajesh Kumar">
+                            </div>
+                            <div class="author-info">
+                                <h4>Rajesh Kumar</h4>
+                                <p>Property Owner</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-content">"The wide selection of PGs in my preferred location was impressive. I found exactly what I was looking for at a reasonable price. Highly recommended!"</p>
+                        <div class="review-author">
+                            <div class="author-avatar">
+                                <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Priya Sharma">
+                            </div>
+                            <div class="author-info">
+                                <h4>Priya Sharma</h4>
+                                <p>Student Tenant</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <p class="review-content">"The secure payment system and transparent documentation process gave me peace of mind when renting my new home. No hidden fees or surprises."</p>
+                        <div class="review-author">
+                            <div class="author-avatar">
+                                <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Amit Patel">
+                            </div>
+                            <div class="author-info">
+                                <h4>Amit Patel</h4>
+                                <p>Professional Tenant</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-controls">
+                    <div class="slider-dot active" data-index="0"></div>
+                    <div class="slider-dot" data-index="1"></div>
+                    <div class="slider-dot" data-index="2"></div>
+                    <div class="slider-dot" data-index="3"></div>
                 </div>
             </div>
         </div>
-        
     </section>
 
     <footer>
@@ -630,10 +830,10 @@ button:hover {
                 <div class="footer-column">
                     <h3>Property Types</h3>
                     <ul>
-                        <li><a href="">Flats/Apartments</a></li>
-                        <li><a href="">Houses</a></li>
-                        <li><a href="">PGs/Hostels</a></li>
-                        <li><a href="">Normal Rooms</a></li>
+                        <li><a href="properties/flats/">Flats/Apartments</a></li>
+                        <li><a href="properties/houses/">Houses</a></li>
+                        <li><a href="properties/pgs/">PGs/Hostels</a></li>
+                        <li><a href="properties/rooms/">Normal Rooms</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -670,6 +870,43 @@ button:hover {
                     document.getElementById('navLinks').classList.remove('active');
                     document.getElementById('menuToggle').querySelector('i').classList.add('fa-bars');
                     document.getElementById('menuToggle').querySelector('i').classList.remove('fa-times');
+                }
+            });
+        });
+
+        // Review slider functionality
+        const slider = document.querySelector('.reviews-slider');
+        const dots = document.querySelectorAll('.slider-dot');
+        
+        dots.forEach(dot => {
+            dot.addEventListener('click', function() {
+                const index = this.getAttribute('data-index');
+                const cardWidth = document.querySelector('.review-card').offsetWidth;
+                const gap = 30; // Same as gap in CSS
+                
+                slider.scrollTo({
+                    left: index * (cardWidth + gap),
+                    behavior: 'smooth'
+                });
+                
+                // Update active dot
+                dots.forEach(d => d.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        // Update active dot on scroll
+        slider.addEventListener('scroll', function() {
+            const cardWidth = document.querySelector('.review-card').offsetWidth;
+            const gap = 30;
+            const scrollPos = slider.scrollLeft;
+            const activeIndex = Math.round(scrollPos / (cardWidth + gap));
+            
+            dots.forEach((dot, index) => {
+                if (index === activeIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
                 }
             });
         });
