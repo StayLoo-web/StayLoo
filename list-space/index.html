@@ -622,13 +622,13 @@
                 
                 <div class="form-group">
                     <label for="owner-name" class="required">Your Full Name</label>
-                    <input type="text" id="owner-name" placeholder="Enter your full name" required>
+                    <input type="text" id="owner-name" placeholder="Enter your full name" minlength="3" required>
                 </div>
                 
                 <div class="two-columns">
                     <div class="form-group">
                         <label for="owner-phone" class="required">Phone Number</label>
-                        <input type="tel" id="owner-phone" placeholder="Enter 10-digit mobile number" required>
+                        <input type="tel" id="owner-phone" placeholder="Enter 10-digit mobile number" patter="[0-9]{10}" maxlength="10" required>
                         <div class="phone-note">Your phone number is safe with us and will only be shared with verified seekers</div>
                     </div>
                     
@@ -645,7 +645,7 @@
                 
                 <div class="form-group">
                     <label for="property-title" class="required">Property Title</label>
-                    <input type="text" id="property-title" placeholder="e.g. Spacious 2BHK Flat near Metro Station" required>
+                    <input type="text" id="property-title" placeholder="e.g. Spacious 2BHK Flat near Metro Station" minlength="10" required>
                 </div>
                 
                 <div class="two-columns">
@@ -656,9 +656,8 @@
                             <option value="flat">Flat/Apartment</option>
                             <option value="house">Independent House</option>
                             <option value="pg">PG/Hostel</option>
-                            <option value="villa">Villa/Bungalow</option>
-                            <option value="studio">Studio Apartment</option>
-                            <option value="farmhouse">Farmhouse</option>
+                            <option value="villa">Normal rooms</option>
+                            <option value="farmhouse">other</option>
                         </select>
                     </div>
                     
@@ -691,12 +690,12 @@
                 
                 <div class="form-group">
                     <label for="location" class="required">Full Property Address</label>
-                    <input type="text" id="location" placeholder="Enter complete address with landmark" required>
+                    <input type="text" id="location" placeholder="Enter complete address with landmark" minlength="10" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="property-details" class="required">Property Description</label>
-                    <textarea id="property-details" placeholder="Describe your property including amenities, furniture, nearby facilities, rules, etc." required></textarea>
+                    <textarea id="property-details" placeholder="Describe your property including amenities, furniture, nearby facilities, rules, etc." minlength="10" required></textarea>
                 </div>
             </div>
             
@@ -706,7 +705,7 @@
                 
                 <div class="form-group">
                     <label for="monthly-price" class="required">Monthly Rent (₹)</label>
-                    <input type="number" id="monthly-price" min="0" placeholder="Enter monthly rent amount" required>
+                    <input type="number" id="monthly-price" min="0" placeholder="Enter monthly rent amount" minlength="4" required>
                 </div>
                 
                 <div class="form-group">
@@ -1064,5 +1063,17 @@
             });
         });
     </script>
+  
+  <script>
+  document.getElementById("staylooForm").addEventListener("submit", function(e) {
+    const phone = document.getElementById("owner-phone").value.trim();
+    const phoneValid = /^\d{10}$/.test(phone);
+
+    if (!phoneValid) {
+      alert("Please enter a valid 10-digit mobile number.");
+      e.preventDefault(); // Prevent form submission
+    }
+  });
+</script>
 </body>
 </html>
