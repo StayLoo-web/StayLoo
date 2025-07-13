@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Listings | Your Website Name</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: white;
+            color: #333;
+        }
+        
+        .container {
+            padding: 40px 5%;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .page-title {
+            font-size: 28px;
+            color: #4a6bff;
+        }
+        
+        .filter-section {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-section select, .filter-section input {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            min-width: 180px;
+        }
+        
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .property-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .property-image {
+            height: 200px;
+            background-color: #f5f5f5;
+            overflow: hidden;
+        }
+        
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .property-details {
+            padding: 20px;
+        }
+        
+        .property-price {
+            font-size: 22px;
+            font-weight: bold;
+            color: #4a6bff;
+            margin-bottom: 5px;
+        }
+        
+        .property-address {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .property-features {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            color: #555;
+        }
+        
+        .property-features span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .property-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .btn {
+            background-color: #4a6bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            background-color: #3a5bef;
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 900px;
+            position: relative;
+        }
+        
+        .close {
+            position: absolute;
+            right: 25px;
+            top: 15px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #333;
+        }
+        
+        .property-detail-container {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .property-detail-images {
+            flex: 1;
+        }
+        
+        .property-detail-images img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .property-detail-info {
+            flex: 1;
+        }
+        
+        .detail-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #4a6bff;
+        }
+        
+        .detail-price {
+            font-size: 28px;
+            font-weight: bold;
+            color: #4a6bff;
+            margin-bottom: 10px;
+        }
+        
+        .detail-address {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .detail-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            background-color: #f0f4ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4a6bff;
+        }
+        
+        .feature-text {
+            color: #555;
+        }
+        
+        .detail-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        
+        .detail-contact-btn {
+            background-color: #4a6bff;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .detail-contact-btn:hover {
+            background-color: #3a5bef;
+        }
+        
+        @media (max-width: 768px) {
+            .property-detail-container {
+                flex-direction: column;
+            }
+            
+            .filter-section {
+                flex-direction: column;
+            }
+            
+            .filter-section select, .filter-section input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">Available Properties</h1>
+            <button class="btn" onclick="alert('Property listing form would appear here')">List Your Property</button>
+        </div>
+        
+        <div class="filter-section">
+            <select>
+                <option>All Types</option>
+                <option>Apartment</option>
+                <option>House</option>
+                <option>Villa</option>
+                <option>Condo</option>
+            </select>
+            <select>
+                <option>Any Bedrooms</option>
+                <option>1 Bedroom</option>
+                <option>2 Bedrooms</option>
+                <option>3+ Bedrooms</option>
+            </select>
+            <select>
+                <option>Any Price</option>
+                <option>Under $1,000</option>
+                <option>$1,000 - $2,000</option>
+                <option>$2,000 - $3,000</option>
+                <option>Over $3,000</option>
+            </select>
+            <input type="text" placeholder="Search by location...">
+            <button class="btn">Filter</button>
+        </div>
+        
+        <div class="property-grid">
+            <!-- Property Card 1 -->
+            <div class="property-card">
+                <div class="property-image">
+                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Modern Apartment">
+                </div>
+                <div class="property-details">
+                    <div class="property-price">$1,200/month</div>
+                    <div class="property-address">123 Downtown St, Cityville</div>
+                    <div class="property-features">
+                        <span>2 Beds</span>
+                        <span>1 Bath</span>
+                        <span>850 sqft</span>
+                    </div>
+                    <div class="property-description">
+                        Beautiful modern apartment in the heart of the city with great amenities and easy access to transportation.
+                    </div>
+                    <button class="btn" onclick="showPropertyDetails(1)">View Details</button>
+                </div>
+            </div>
+            
+            <!-- Property Card 2 -->
+            <div class="property-card">
+                <div class="property-image">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Luxury Apartment">
+                </div>
+                <div class="property-details">
+                    <div class="property-price">$2,500/month</div>
+                    <div class="property-address">456 Uptown Ave, Townsville</div>
+                    <div class="property-features">
+                        <span>3 Beds</span>
+                        <span>2 Baths</span>
+                        <span>1,200 sqft</span>
+                    </div>
+                    <div class="property-description">
+                        Spacious luxury apartment with stunning views, modern appliances, and access to pool and gym facilities.
+                    </div>
+                    <button class="btn" onclick="showPropertyDetails(2)">View Details</button>
+                </div>
+            </div>
+            
+            <!-- Property Card 3 -->
+            <div class="property-card">
+                <div class="property-image">
+                    <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Cozy Studio">
+                </div>
+                <div class="property-details">
+                    <div class="property-price">$850/month</div>
+                    <div class="property-address">789 Center Lane, Metro City</div>
+                    <div class="property-features">
+                        <span>Studio</span>
+                        <span>1 Bath</span>
+                        <span>500 sqft</span>
+                    </div>
+                    <div class="property-description">
+                        Cozy studio apartment perfect for students or young professionals. Recently renovated with new appliances.
+                    </div>
+                    <button class="btn" onclick="showPropertyDetails(3)">View Details</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Property Detail Modals -->
+    <div id="propertyModal1" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('propertyModal1')">&times;</span>
+            <div class="property-detail-container">
+                <div class="property-detail-images">
+                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Modern Apartment">
+                    <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Living Room">
+                    <img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Kitchen">
+                </div>
+                <div class="property-detail-info">
+                    <h2 class="detail-title">Modern Downtown Apartment</h2>
+                    <div class="detail-price">$1,200/month</div>
+                    <div class="detail-address">123 Downtown St, Cityville</div>
+                    
+                    <div class="detail-features">
+                        <div class="feature-item">
+                            <div class="feature-icon">🛏️</div>
+                            <div class="feature-text">2 Bedrooms</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🚿</div>
+                            <div class="feature-text">1 Bathroom</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📏</div>
+                            <div class="feature-text">850 sqft</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🏢</div>
+                            <div class="feature-text">Apartment</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🅿️</div>
+                            <div class="feature-text">Parking Available</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🏋️</div>
+                            <div class="feature-text">Gym Access</div>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-description">
+                        <p>This beautiful modern apartment is located in the heart of the city with great amenities and easy access to transportation. The unit features:</p>
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li>Open-concept living area with large windows</li>
+                            <li>Modern kitchen with stainless steel appliances</li>
+                            <li>Spacious master bedroom with walk-in closet</li>
+                            <li>In-unit laundry</li>
+                            <li>24/7 security and concierge</li>
+                            <li>Rooftop terrace with city views</li>
+                        </ul>
+                        <p style="margin-top: 10px;">Available for move-in immediately. Minimum 12-month lease preferred.</p>
+                    </div>
+                    
+                    <button class="detail-contact-btn">Contact Landlord</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="propertyModal2" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('propertyModal2')">&times;</span>
+            <div class="property-detail-container">
+                <div class="property-detail-images">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Luxury Apartment">
+                    <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Living Area">
+                    <img src="https://images.unsplash.com/photo-1556911220-bff31c812dba?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Kitchen">
+                </div>
+                <div class="property-detail-info">
+                    <h2 class="detail-title">Luxury Uptown Apartment</h2>
+                    <div class="detail-price">$2,500/month</div>
+                    <div class="detail-address">456 Uptown Ave, Townsville</div>
+                    
+                    <div class="detail-features">
+                        <div class="feature-item">
+                            <div class="feature-icon">🛏️</div>
+                            <div class="feature-text">3 Bedrooms</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🚿</div>
+                            <div class="feature-text">2 Bathrooms</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📏</div>
+                            <div class="feature-text">1,200 sqft</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🏢</div>
+                            <div class="feature-text">Apartment</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🏊</div>
+                            <div class="feature-text">Pool Access</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🏋️</div>
+                            <div class="feature-text">Gym Included</div>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-description">
+                        <p>This spacious luxury apartment offers stunning city views, modern appliances, and access to premium amenities including:</p>
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li>Resort-style swimming pool</li>
+                            <li>State-of-the-art fitness center</li>
+                            <li>Community lounge with coworking spaces</li>
+                            <li>Pet-friendly with dog park</li>
+                            <li>Underground parking available</li>
+                            <li>24-hour maintenance</li>
+                        </ul>
+                        <p style="margin-top: 10px;">The unit features hardwood floors throughout, a gourmet kitchen with quartz countertops, and floor-to-ceiling windows. Perfect for professionals or small families.</p>
+                    </div>
+                    
+                    <button class="detail-contact-btn">Contact Landlord</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="propertyModal3" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('propertyModal3')">&times;</span>
+            <div class="property-detail-container">
+                <div class="property-detail-images">
+                    <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Cozy Studio">
+                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Living Space">
+                    <img src="https://images.unsplash.com/photo-1556911220-bf31c812dbb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Kitchenette">
+                </div>
+                <div class="property-detail-info">
+                    <h2 class="detail-title">Cozy Studio Apartment</h2>
+                    <div class="detail-price">$850/month</div>
+                    <div class="detail-address">789 Center Lane, Metro City</div>
+                    
+                    <div class="detail-features">
+                        <div class="feature-item">
+                            <div class="feature-icon">🛏️</div>
+                            <div class="feature-text">Studio</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🚿</div>
+                            <div class="feature-text">1 Bathroom</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📏</div>
+                            <div class="feature-text">500 sqft</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🏢</div>
+                            <div class="feature-text">Apartment</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🚲</div>
+                            <div class="feature-text">Bike Storage</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🏪</div>
+                            <div class="feature-text">Walk Score: 92</div>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-description">
+                        <p>This recently renovated studio apartment is perfect for students or young professionals. Features include:</p>
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li>Efficient layout with separate sleeping and living areas</li>
+                            <li>Brand new kitchen appliances</li>
+                            <li>Hardwood floors</li>
+                            <li>Large closet space</li>
+                            <li>In-building laundry facilities</li>
+                            <li>Excellent public transportation access</li>
+                        </ul>
+                        <p style="margin-top: 10px;">Located in a vibrant neighborhood with cafes, restaurants, and shops just steps away. Utilities not included in rent.</p>
+                    </div>
+                    
+                    <button class="detail-contact-btn">Contact Landlord</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showPropertyDetails(propertyId) {
+            document.getElementById('propertyModal' + propertyId).style.display = 'block';
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+        
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
