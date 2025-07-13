@@ -9,44 +9,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
   
-    <style>
-     /* city suggestion css */
-        .city-search-container {
-            position: relative;
-            margin-bottom: 20px;
-        }
-        
-        #city-input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 16px;
-        }
-        
-        .city-suggestions {
-            position: absolute;
-            width: 100%;
-            max-height: 200px;
-            overflow-y: auto;
-            background: white;
-            border: 1px solid #ddd;
-            border-top: none;
-            border-radius: 0 0 6px 6px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            z-index: 100;
-            display: none;
-        }
-        
-        .city-suggestion {
-            padding: 10px 15px;
-            cursor: pointer;
-        }
-        
-        .city-suggestion:hover {
-            background-color: #f0f4ff;
-        }
-      
+    <style>  
         /* Global Styles */
         * {
             margin: 0;
@@ -626,6 +589,41 @@
                 margin-right: 0;
                 margin-bottom: 15px;
             }
+          /* Add city search styles */
+        .city-search-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        #city-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        
+        .city-suggestions {
+            position: absolute;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 100;
+            display: none;
+        }
+        
+        .city-suggestion {
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+        
+        .city-suggestion:hover {
+            background-color: #f0f4ff;
         }
     </style>
 </head>
@@ -736,7 +734,7 @@
                         <input type="text" id="city-input" placeholder="Start typing your city..." required>
                         <div class="city-suggestions" id="city-suggestions"></div>
                     </div>
-                </div>
+                </div>                              
                 
                 <div class="form-group">
                     <label for="location" class="required">Full Property Address</label>
@@ -925,28 +923,44 @@
         </div>
     </footer>
 
-    <script>
-// Sample city data (replace with your actual city list)
+    <script>          
+    // Your web app's Firebase configuration
+        const firebaseConfig = {
+             apiKey: "AIzaSyC62frfWfIEqz0tucqu4Ie5AvEzPmTx3qg",
+             authDomain: "stayloo-97012.firebaseapp.com",
+             databaseURL: "https://stayloo-97012-default-rtdb.asia-southeast1.firebasedatabase.app",
+             projectId: "stayloo-97012",
+             storageBucket: "stayloo-97012.firebasestorage.app",
+             messagingSenderId: "134671320511",
+            appId: "1:134671320511:web:e0fde87479ff90a1c14d0a"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+       // Sample city data (replace with your actual city list)
         const cities = [
             "Mumbai", "Delhi", "Bangalore", "Hyderabad", "Ahmedabad",
             "Chennai", "Kolkata", "Surat", "Pune", "Jaipur",
             "Lucknow", "Kanpur", "Nagpur", "Indore", "Thane",
-            "Bhopal", "Visakhapatnam", "Pimpri-Chinchwad", "Patna", "Vadodara",
-            "Ghaziabad", "Ludhiana", "Agra", "Nashik", "Faridabad",
-            "Meerut", "Rajkot", "Kalyan-Dombivli", "Vasai-Virar", "Varanasi",
-            "Srinagar", "Aurangabad", "Dhanbad", "Amritsar", "Navi Mumbai",
-            "Allahabad", "Ranchi", "Howrah", "Coimbatore", "Jabalpur"
+            "Bhopal", "Visakhapatnam", "Pimpri-Chinchwad", "Patna", "Vadodara"
         ];
 
         document.addEventListener('DOMContentLoaded', function() {
+            // City search functionality
             const cityInput = document.getElementById('city-input');
             const citySuggestions = document.getElementById('city-suggestions');
             
-            // City search functionality
             cityInput.addEventListener('input', function() {
                 const inputText = this.value.toLowerCase();
+                if (inputText.length === 0) {
+                    citySuggestions.style.display = 'none';
+                    return;
+                }
+                
                 const filteredCities = cities.filter(city => 
-                    city.toLowerCase().startsWith(inputText)
+                    city.toLowerCase().includes(inputText)
                 );
                 
                 displaySuggestions(filteredCities);
@@ -955,7 +969,7 @@
             function displaySuggestions(filteredCities) {
                 citySuggestions.innerHTML = '';
                 
-                if (filteredCities.length === 0 || cityInput.value === '') {
+                if (filteredCities.length === 0) {
                     citySuggestions.style.display = 'none';
                     return;
                 }
@@ -976,25 +990,10 @@
             
             // Close suggestions when clicking outside
             document.addEventListener('click', function(e) {
-                if (e.target !== cityInput) {
+                if (!cityInput.contains(e.target) {
                     citySuggestions.style.display = 'none';
                 }
             });
-          
-    // Your web app's Firebase configuration
-        const firebaseConfig = {
-             apiKey: "AIzaSyC62frfWfIEqz0tucqu4Ie5AvEzPmTx3qg",
-             authDomain: "stayloo-97012.firebaseapp.com",
-             databaseURL: "https://stayloo-97012-default-rtdb.asia-southeast1.firebasedatabase.app",
-             projectId: "stayloo-97012",
-             storageBucket: "stayloo-97012.firebasestorage.app",
-             messagingSenderId: "134671320511",
-            appId: "1:134671320511:web:e0fde87479ff90a1c14d0a"
-        };
-
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
       
         // Mobile Menu Functionality
         document.addEventListener('DOMContentLoaded', function() {
@@ -1142,6 +1141,7 @@
                     hasBoost: document.querySelector('input[name="has-boost"]:checked').value,
                     subscription: document.querySelector('input[name="subscription"]:checked').value,
                     promoCode: subscriptionCodeInput.value || 'None'
+                    timestamp: new Date().toISOString()
                 };
 
               // Push data to Firebase
