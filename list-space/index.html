@@ -589,42 +589,6 @@
                 margin-right: 0;
                 margin-bottom: 15px;
             }
-          /* Add city search styles */
-        .city-search-container {
-            position: relative;
-            margin-bottom: 20px;
-        }
-        
-        #city-input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 16px;
-        }
-        
-        .city-suggestions {
-            position: absolute;
-            width: 100%;
-            max-height: 200px;
-            overflow-y: auto;
-            background: white;
-            border: 1px solid #ddd;
-            border-top: none;
-            border-radius: 0 0 6px 6px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            z-index: 100;
-            display: none;
-        }
-        
-        .city-suggestion {
-            padding: 10px 15px;
-            cursor: pointer;
-        }
-        
-        .city-suggestion:hover {
-            background-color: #f0f4ff;
-        }
     </style>
 </head>
 <body>
@@ -726,15 +690,7 @@
                         <label for="bathrooms" class="required">Number of Bathrooms</label>
                         <input type="number" id="bathrooms" min="1" placeholder="Enter total bathrooms" required>
                     </div>
-                </div>
-
-               <div class="form-group">
-                    <label for="city-input" class="required">Your City</label>
-                    <div class="city-search-container">
-                        <input type="text" id="city-input" placeholder="Start typing your city..." required>
-                        <div class="city-suggestions" id="city-suggestions"></div>
-                    </div>
-                </div>                              
+                </div>                            
                 
                 <div class="form-group">
                     <label for="location" class="required">Full Property Address</label>
@@ -938,62 +894,6 @@
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
-
-       // Sample city data (replace with your actual city list)
-        const cities = [
-            "Mumbai", "Delhi", "Bangalore", "Hyderabad", "Ahmedabad",
-            "Chennai", "Kolkata", "Surat", "Pune", "Jaipur",
-            "Lucknow", "Kanpur", "Nagpur", "Indore", "Thane",
-            "Bhopal", "Visakhapatnam", "Pimpri-Chinchwad", "Patna", "Vadodara"
-        ];
-
-        document.addEventListener('DOMContentLoaded', function() {
-            // City search functionality
-            const cityInput = document.getElementById('city-input');
-            const citySuggestions = document.getElementById('city-suggestions');
-            
-            cityInput.addEventListener('input', function() {
-                const inputText = this.value.toLowerCase();
-                if (inputText.length === 0) {
-                    citySuggestions.style.display = 'none';
-                    return;
-                }
-                
-                const filteredCities = cities.filter(city => 
-                    city.toLowerCase().includes(inputText)
-                );
-                
-                displaySuggestions(filteredCities);
-            });
-            
-            function displaySuggestions(filteredCities) {
-                citySuggestions.innerHTML = '';
-                
-                if (filteredCities.length === 0) {
-                    citySuggestions.style.display = 'none';
-                    return;
-                }
-                
-                filteredCities.forEach(city => {
-                    const div = document.createElement('div');
-                    div.classList.add('city-suggestion');
-                    div.textContent = city;
-                    div.addEventListener('click', function() {
-                        cityInput.value = city;
-                        citySuggestions.style.display = 'none';
-                    });
-                    citySuggestions.appendChild(div);
-                });
-                
-                citySuggestions.style.display = 'block';
-            }
-            
-            // Close suggestions when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!cityInput.contains(e.target) {
-                    citySuggestions.style.display = 'none';
-                }
-            });
       
         // Mobile Menu Functionality
         document.addEventListener('DOMContentLoaded', function() {
@@ -1124,7 +1024,6 @@
                      name: document.getElementById('owner-name').value,
                     phone: document.getElementById('owner-phone').value,
                     email: document.getElementById('owner-email').value,
-                    city: document.getElementById('city-input').value,            
                     title: document.getElementById('property-title').value,
                     type: document.getElementById('property-type').value,
                     bhk: document.getElementById('bhk-type').value,
@@ -1141,7 +1040,6 @@
                     hasBoost: document.querySelector('input[name="has-boost"]:checked').value,
                     subscription: document.querySelector('input[name="subscription"]:checked').value,
                     promoCode: subscriptionCodeInput.value || 'None'
-                    timestamp: new Date().toISOString()
                 };
 
               // Push data to Firebase
@@ -1161,7 +1059,6 @@
                     `📱 Phone: ${formData.phone}\n` +
                     `✉️ Email: ${formData.email}\n\n` +
                     `*PROPERTY DETAILS*\n` +
-                   `🏙️ City: ${formData.city}\n` +  // Added city line      
                     `🏠 Title: ${formData.title}\n` +
                     `🏡 Type: ${formData.type}\n` +
                     `🛏️ BHK: ${formData.bhk}\n` +
