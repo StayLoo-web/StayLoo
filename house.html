@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Property Listings | Your Website Name</title>
+    <title>Property Listings | StayLoo</title>
     <style>
         * {
             margin: 0;
@@ -23,7 +23,7 @@
         
         .page-header {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             margin-bottom: 30px;
         }
@@ -31,6 +31,7 @@
         .page-title {
             font-size: 28px;
             color: #4a6bff;
+            text-align: center;
         }
         
         .filter-section {
@@ -38,6 +39,7 @@
             gap: 15px;
             margin-bottom: 30px;
             flex-wrap: wrap;
+            justify-content: center;
         }
         
         .filter-section select, .filter-section input {
@@ -45,6 +47,21 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             min-width: 180px;
+        }
+        
+        .filter-btn {
+            background-color: #4a6bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .filter-btn:hover {
+            background-color: #3a5bef;
         }
         
         .property-grid {
@@ -272,32 +289,19 @@
     <div class="container">
         <div class="page-header">
             <h1 class="page-title">Available Properties</h1>
-            <button class="btn" onclick="alert('Property listing form would appear here')">List Your Property</button>
         </div>
         
         <div class="filter-section">
-            <select>
-                <option>All Types</option>
-                <option>Apartment</option>
-                <option>House</option>
-                <option>Villa</option>
-                <option>Condo</option>
-            </select>
-            <select>
-                <option>Any Bedrooms</option>
-                <option>1 Bedroom</option>
-                <option>2 Bedrooms</option>
-                <option>3+ Bedrooms</option>
-            </select>
+            <input type="text" placeholder="Search by location...">
             <select>
                 <option>Any Price</option>
-                <option>Under $1,000</option>
-                <option>$1,000 - $2,000</option>
-                <option>$2,000 - $3,000</option>
-                <option>Over $3,000</option>
+                <option>Under ₹10,000</option>
+                <option>₹10,000 - ₹20,000</option>
+                <option>₹20,000 - ₹30,000</option>
+                <option>₹30,000 - ₹50,000</option>
+                <option>Over ₹50,000</option>
             </select>
-            <input type="text" placeholder="Search by location...">
-            <button class="btn">Filter</button>
+            <button class="filter-btn">Filter</button>
         </div>
         
         <div class="property-grid">
@@ -307,7 +311,7 @@
                     <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Modern Apartment">
                 </div>
                 <div class="property-details">
-                    <div class="property-price">$1,200/month</div>
+                    <div class="property-price">₹15,000/month</div>
                     <div class="property-address">123 Downtown St, Cityville</div>
                     <div class="property-features">
                         <span>2 Beds</span>
@@ -327,7 +331,7 @@
                     <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Luxury Apartment">
                 </div>
                 <div class="property-details">
-                    <div class="property-price">$2,500/month</div>
+                    <div class="property-price">₹25,000/month</div>
                     <div class="property-address">456 Uptown Ave, Townsville</div>
                     <div class="property-features">
                         <span>3 Beds</span>
@@ -347,7 +351,7 @@
                     <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Cozy Studio">
                 </div>
                 <div class="property-details">
-                    <div class="property-price">$850/month</div>
+                    <div class="property-price">₹8,500/month</div>
                     <div class="property-address">789 Center Lane, Metro City</div>
                     <div class="property-features">
                         <span>Studio</span>
@@ -375,7 +379,7 @@
                 </div>
                 <div class="property-detail-info">
                     <h2 class="detail-title">Modern Downtown Apartment</h2>
-                    <div class="detail-price">$1,200/month</div>
+                    <div class="detail-price">₹15,000/month</div>
                     <div class="detail-address">123 Downtown St, Cityville</div>
                     
                     <div class="detail-features">
@@ -418,7 +422,7 @@
                         <p style="margin-top: 10px;">Available for move-in immediately. Minimum 12-month lease preferred.</p>
                     </div>
                     
-                    <button class="detail-contact-btn">Contact Landlord</button>
+                    <button class="detail-contact-btn" onclick="contactLandlord(1)">Contact Landlord</button>
                 </div>
             </div>
         </div>
@@ -435,7 +439,7 @@
                 </div>
                 <div class="property-detail-info">
                     <h2 class="detail-title">Luxury Uptown Apartment</h2>
-                    <div class="detail-price">$2,500/month</div>
+                    <div class="detail-price">₹25,000/month</div>
                     <div class="detail-address">456 Uptown Ave, Townsville</div>
                     
                     <div class="detail-features">
@@ -478,7 +482,7 @@
                         <p style="margin-top: 10px;">The unit features hardwood floors throughout, a gourmet kitchen with quartz countertops, and floor-to-ceiling windows. Perfect for professionals or small families.</p>
                     </div>
                     
-                    <button class="detail-contact-btn">Contact Landlord</button>
+                    <button class="detail-contact-btn" onclick="contactLandlord(2)">Contact Landlord</button>
                 </div>
             </div>
         </div>
@@ -495,7 +499,7 @@
                 </div>
                 <div class="property-detail-info">
                     <h2 class="detail-title">Cozy Studio Apartment</h2>
-                    <div class="detail-price">$850/month</div>
+                    <div class="detail-price">₹8,500/month</div>
                     <div class="detail-address">789 Center Lane, Metro City</div>
                     
                     <div class="detail-features">
@@ -538,7 +542,7 @@
                         <p style="margin-top: 10px;">Located in a vibrant neighborhood with cafes, restaurants, and shops just steps away. Utilities not included in rent.</p>
                     </div>
                     
-                    <button class="detail-contact-btn">Contact Landlord</button>
+                    <button class="detail-contact-btn" onclick="contactLandlord(3)">Contact Landlord</button>
                 </div>
             </div>
         </div>
@@ -551,6 +555,32 @@
         
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
+        }
+        
+        function contactLandlord(propertyId) {
+            let propertyTitle, propertyPrice, propertyAddress;
+            
+            switch(propertyId) {
+                case 1:
+                    propertyTitle = "Modern Downtown Apartment";
+                    propertyPrice = "₹15,000/month";
+                    propertyAddress = "123 Downtown St, Cityville";
+                    break;
+                case 2:
+                    propertyTitle = "Luxury Uptown Apartment";
+                    propertyPrice = "₹25,000/month";
+                    propertyAddress = "456 Uptown Ave, Townsville";
+                    break;
+                case 3:
+                    propertyTitle = "Cozy Studio Apartment";
+                    propertyPrice = "₹8,500/month";
+                    propertyAddress = "789 Center Lane, Metro City";
+                    break;
+            }
+            
+            const message = `Hello, I'm interested in the property:\n\n*${propertyTitle}*\n\nPrice: ${propertyPrice}\nAddress: ${propertyAddress}\n\nCould you please provide more information?`;
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/9170548739?text=${encodedMessage}`, '_blank');
         }
         
         // Close modal when clicking outside of it
