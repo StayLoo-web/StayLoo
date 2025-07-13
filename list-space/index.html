@@ -690,6 +690,19 @@
                         <input type="number" id="bathrooms" min="1" placeholder="Enter total bathrooms" required>
                     </div>
                 </div>                            
+
+             <!-- New City and Area Info Fields -->
+    <div class="two-columns">
+        <div class="form-group">
+            <label for="city" class="required">Your City</label>
+            <input type="text" id="city" placeholder="Enter your city name" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="area-info" class="required">Area Info</label>
+            <input type="text" id="area-info" placeholder="Enter area/locality name" required>
+        </div>
+    </div>  
                 
                 <div class="form-group">
                     <label for="location" class="required">Full Property Address</label>
@@ -1028,6 +1041,8 @@
                     bhk: document.getElementById('bhk-type').value,
                     bedrooms: document.getElementById('bedrooms').value,
                     bathrooms: document.getElementById('bathrooms').value,
+                    city: document.getElementById('city').value,
+                    areaInfo: document.getElementById('area-info').value,      
                     location: document.getElementById('location').value,
                     details: document.getElementById('property-details').value,
                     price: document.getElementById('monthly-price').value,
@@ -1063,6 +1078,8 @@
                     `🛏️ BHK: ${formData.bhk}\n` +
                     `🛌 Bedrooms: ${formData.bedrooms}\n` +
                     `🚽 Bathrooms: ${formData.bathrooms}\n` +
+                   `🌆 City: ${formData.city}\n` +
+                   `🏙️ Area: ${formData.areaInfo}\n` +
                     `📍 Location: ${formData.location}\n\n` +
                     `*PRICING*\n` +
                     `💰 Monthly Rent: ₹${formData.price}\n` +
