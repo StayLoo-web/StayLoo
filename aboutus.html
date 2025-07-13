@@ -1,1 +1,360 @@
  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About StayLoo - No-Broker Room Rentals</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Hero Section Animation */
+        .hero-title {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .hero-subtitle {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        /* Card Animation */
+        .feature-card {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        /* Pulse Animation */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        /* Counter Animation */
+        .counter {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm py-4">
+        <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
+            <a href="/" class="text-2xl font-bold text-blue-600">StayLoo</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="/" class="text-gray-600 hover:text-blue-600">Home</a>
+                <a href="/listings" class="text-gray-600 hover:text-blue-600">Browse Rooms</a>
+                <a href="/host" class="text-gray-600 hover:text-blue-600">Become a Host</a>
+                <a href="/about" class="font-medium text-blue-600">About Us</a>
+            </div>
+            <div class="md:hidden">
+                <i class="fas fa-bars text-gray-600 text-xl"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen flex items-center justify-center bg-blue-800 overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?q=80&w=1380&auto=format&fit=crop')] bg-cover bg-center opacity-20"></div>
+        <div class="relative z-10 text-center px-6 max-w-4xl">
+            <h1 class="hero-title text-4xl md:text-6xl font-bold text-white mb-6">
+                Rent Rooms. <span class="text-blue-300">No Brokers.</span>
+            </h1>
+            <p class="hero-subtitle text-xl md:text-2xl text-blue-100 mb-8">
+                Book affordable stays directly from hosts across India
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="/listings" class="bg-white text-blue-800 px-6 py-3 rounded-lg font-medium hover:bg-blue-100 transition duration-300">
+                    Find a Room <i class="fas fa-search ml-2"></i>
+                </a>
+                <a href="/host" class="border-2 border-white text-white px-6 py-3 rounded-lg font-medium hover:bg-white hover:text-blue-800 transition duration-300">
+                    List Your Space <i class="fas fa-home ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why StayLoo Section -->
+    <section class="py-20 px-6 max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Why Choose StayLoo?</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                We're revolutionizing room rentals by cutting out the middlemen
+            </p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Card 1 -->
+            <div class="feature-card bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300">
+                <div class="w-16 h-16 mx-auto mb-6 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 text-2xl">
+                    <i class="fas fa-hand-holding-usd"></i>
+                </div>
+                <h3 class="text-xl font-bold text-center text-gray-800 mb-3">Zero Brokerage</h3>
+                <p class="text-gray-600 text-center">
+                    Save up to 50% compared to traditional brokers
+                </p>
+            </div>
+            
+            <!-- Card 2 -->
+            <div class="feature-card bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300">
+                <div class="w-16 h-16 mx-auto mb-6 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 text-2xl">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="text-xl font-bold text-center text-gray-800 mb-3">Verified Listings</h3>
+                <p class="text-gray-600 text-center">
+                    Every room and host is personally verified
+                </p>
+            </div>
+            
+            <!-- Card 3 -->
+            <div class="feature-card bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300">
+                <div class="w-16 h-16 mx-auto mb-6 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 text-2xl">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3 class="text-xl font-bold text-center text-gray-800 mb-3">Instant Booking</h3>
+                <p class="text-gray-600 text-center">
+                    Confirm your stay in minutes, not days
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-20 bg-blue-600 text-white">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-12">StayLoo in Numbers</h2>
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="stat-item">
+                    <div class="text-4xl font-bold mb-2"><span class="counter" data-target="25000">0</span>+</div>
+                    <p class="text-blue-100">Rooms Listed</p>
+                </div>
+                <div class="stat-item">
+                    <div class="text-4xl font-bold mb-2"><span class="counter" data-target="100000">0</span>+</div>
+                    <p class="text-blue-100">Happy Guests</p>
+                </div>
+                <div class="stat-item">
+                    <div class="text-4xl font-bold mb-2"><span class="counter" data-target="500">0</span>+</div>
+                    <p class="text-blue-100">Cities</p>
+                </div>
+                <div class="stat-item">
+                    <div class="text-4xl font-bold mb-2"><span class="counter" data-target="99">0</span>%</div>
+                    <p class="text-blue-100">Satisfaction Rate</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-20 px-6 max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">How It Works</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Simple steps to find or list a room
+            </p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Step 1 -->
+            <div class="step-card bg-white p-8 rounded-xl shadow-md relative">
+                <div class="absolute -top-4 -left-4 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xl">
+                    1
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-4 mt-4">Find or List</h3>
+                <p class="text-gray-600">
+                    Browse rooms or list your space in minutes
+                </p>
+            </div>
+            
+            <!-- Step 2 -->
+            <div class="step-card bg-white p-8 rounded-xl shadow-md relative">
+                <div class="absolute -top-4 -left-4 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xl">
+                    2
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-4 mt-4">Connect</h3>
+                <p class="text-gray-600">
+                    Message directly with hosts/guests
+                </p>
+            </div>
+            
+            <!-- Step 3 -->
+            <div class="step-card bg-white p-8 rounded-xl shadow-md relative">
+                <div class="absolute -top-4 -left-4 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xl">
+                    3
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-4 mt-4">Confirm</h3>
+                <p class="text-gray-600">
+                    Secure booking with our payment system
+                </p>
+            </div>
+        </div>
+    </section>
+
+  
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-blue-700 text-white">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-6">Ready to Experience Broker-Free Rentals?</h2>
+            <p class="text-xl text-blue-100 mb-8">
+                Join thousands of happy users across India
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="/signup" class="bg-white text-blue-800 px-8 py-4 rounded-lg font-medium hover:bg-blue-100 transition duration-300">
+                    List Your Space <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+                <a href="/listings" class="border-2 border-white text-white px-8 py-4 rounded-lg font-medium hover:bg-white hover:text-blue-800 transition duration-300">
+                    Browse Listings <i class="fas fa-search ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-xl font-bold mb-4">StayLoo</h3>
+                <p class="text-gray-400">
+                    India's fastest growing no-broker room rental platform
+                </p>
+            </div>
+            <div>
+                <h4 class="font-bold mb-4">For Guests</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-white">Search Rooms</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">How It Works</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Safety Tips</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-4">For Hosts</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-white">List Your Space</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Hosting Tips</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Pricing</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-4">Contact</h4>
+                <ul class="space-y-2">
+                    <li class="flex items-center text-gray-400"><i class="fas fa-envelope mr-2"></i> hello@stayloo.com</li>
+                    <li class="flex items-center text-gray-400"><i class="fas fa-phone mr-2"></i> +91 9876543210</li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-6xl mx-auto px-6 pt-8 mt-8 border-t border-gray-800 text-center text-gray-400">
+            <p>© 2025 StayLoo. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    
+    <!-- Animation Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize GSAP
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Hero Animation
+            gsap.to(".hero-title", {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                delay: 0.3
+            });
+            gsap.to(".hero-subtitle", {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                delay: 0.6
+            });
+            
+            // Feature Cards Animation
+            gsap.utils.toArray(".feature-card").forEach((card, index) => {
+                gsap.to(card, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    delay: index * 0.15,
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    }
+                });
+            });
+            
+            // Step Cards Animation
+            gsap.utils.toArray(".step-card").forEach((card, index) => {
+                gsap.to(card, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    delay: index * 0.15,
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    }
+                });
+            });
+            
+            // Testimonial Cards Animation
+            gsap.utils.toArray(".testimonial-card").forEach((card, index) => {
+                gsap.to(card, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    delay: index * 0.15,
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    }
+                });
+            });
+            
+            // Counter Animation
+            ScrollTrigger.create({
+                trigger: ".bg-blue-600",
+                start: "top 70%",
+                onEnter: animateCounters,
+                once: true
+            });
+            
+            function animateCounters() {
+                document.querySelectorAll('.counter').forEach(counter => {
+                    const target = +counter.getAttribute('data-target');
+                    const duration = 2000;
+                    const step = target / (duration / 16);
+                    let current = 0;
+                    
+                    const updateCounter = () => {
+                        current += step;
+                        if (current < target) {
+                            counter.textContent = Math.floor(current);
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.textContent = target.toLocaleString();
+                        }
+                    };
+                    
+                    updateCounter();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
