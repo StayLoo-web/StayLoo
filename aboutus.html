@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | Your Property Website</title>
+    <title>About Us | StayLoo</title>
     <style>
         * {
             margin: 0;
@@ -32,7 +32,12 @@
         .logo {
             font-size: 24px;
             font-weight: bold;
+        }
+        .logo span.stay {
             color: #4a6bff;
+        }
+        .logo span.loo {
+            color: #000000; /* Black color for Loo */
         }
         
         .btn {
@@ -73,6 +78,7 @@
             margin: 0 auto;
         }
         
+        /* Rest of your existing CSS remains the same */
         /* About Content */
         .about-content {
             display: flex;
@@ -221,13 +227,13 @@
 <body>
     <header>
         <div class="container">
-            <div class="logo">StayLoo</div>
+            <div class="logo"><span class="stay">Stay</span><span class="loo">Loo</span></div>
         </div>
     </header>
     
     <section class="hero">
         <div class="container">
-            <h1>About StayLoo</h1>
+            <h1>About <span class="stay">Stay</span><span class="loo">Loo</span></h1>
             <p>Connecting property owners with tenants. Our mission is to make property rental simple, transparent, and stress-free for everyone involved.</p>
         </div>
     </section>
@@ -237,7 +243,7 @@
             <div class="about-text">
                 <h2>Our Story</h2>
                 <p>Stayloo was born from a simple yet powerful idea: everyone deserves a comfortable, hassle-free place to stay, whether for a night or a lifetime. Founded in 2025, we started as a small team of travel enthusiasts and real estate experts who saw firsthand how difficult it could be to find quality rentals that felt like home.</p>
-                <p>Frustrated by outdated booking processes, hidden fees, and impersonal stays, we set out to create a platform that puts people first. Today, Stayloo connects property owners with travelers and long-term renters through a seamless, transparent experience. From cozy city apartments to spacious vacation homes, we’re committed to offering stays that inspire comfort, trust, and a sense of belonging.</p>
+                <p>Frustrated by outdated booking processes, hidden fees, and impersonal stays, we set out to create a platform that puts people first. Today, Stayloo connects property owners with travelers and long-term renters through a seamless, transparent experience. From cozy city apartments to spacious vacation homes, we're committed to offering stays that inspire comfort, trust, and a sense of belonging.</p>
                 <p>Our journey is fueled by innovation and a passion for redefining rental experiences—one stay at a time.</p>
                 <a href="list-space/" class="btn">List Your Property</a>
             </div>
@@ -295,8 +301,8 @@
         
         <section class="cta-section">
             <h2>Ready to Find Your Perfect Property?</h2>
-            <p>Join thousands of satisfied property owners and tenants who have made RentEase their preferred rental platform.</p>
-            <a href="browse-space/" class="btn">Browse Properties</a>
+            <p>Join thousands of satisfied property owners and tenants who have made StayLoo their preferred rental platform.</p>
+            <a href="Browse-space/" class="btn">Browse Properties</a>
         </section>
     </div>
     
@@ -310,7 +316,7 @@
                 <a href="privacy.html">Privacy Policy</a>
             </div>
             <div class="copyright">
-                &copy; 2025 StayLoo. All rights reserved.
+                &copy; 2025 <span class="stay">Stay</span><span class="loo">Loo</span>. All rights reserved.
             </div>
         </div>
     </footer>
