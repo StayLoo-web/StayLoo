@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List Your Property - StayLoo</title>
+
+<!-- Add Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+  
     <style>
         /* Global Styles */
         * {
@@ -876,6 +881,21 @@
     </footer>
 
     <script>
+// Your web app's Firebase configuration
+        const firebaseConfig = {
+             apiKey: "AIzaSyC62frfWfIEqz0tucqu4Ie5AvEzPmTx3qg",
+             authDomain: "stayloo-97012.firebaseapp.com",
+             databaseURL: "https://stayloo-97012-default-rtdb.asia-southeast1.firebasedatabase.app",
+             projectId: "stayloo-97012",
+             storageBucket: "stayloo-97012.firebasestorage.app",
+             messagingSenderId: "134671320511",
+            appId: "1:134671320511:web:e0fde87479ff90a1c14d0a"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+      
         // Mobile Menu Functionality
         document.addEventListener('DOMContentLoaded', function() {
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
@@ -1022,6 +1042,15 @@
                     subscription: document.querySelector('input[name="subscription"]:checked').value,
                     promoCode: subscriptionCodeInput.value || 'None'
                 };
+
+              // Push data to Firebase
+                database.ref('propertyListings').push(formData)
+                .then(() => {
+                    console.log('Data saved successfully');
+                })
+                .catch((error) => {
+                    console.error('Error saving data', error);
+                });
                 
                 // Format the WhatsApp message
                 const whatsappMessage = 
