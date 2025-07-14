@@ -283,6 +283,15 @@
                 width: 100%;
             }
         }
+
+        /* Added for no results message */
+        .no-results {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 40px;
+            color: #666;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
@@ -292,21 +301,22 @@
         </div>
         
         <div class="filter-section">
-            <input type="text" placeholder="Search by location...">
-            <select>
-                <option>Any Price</option>
-                <option>Under ₹10,000</option>
-                <option>₹10,000 - ₹20,000</option>
-                <option>₹20,000 - ₹30,000</option>
-                <option>₹30,000 - ₹50,000</option>
-                <option>Over ₹50,000</option>
+            <input type="text" id="locationSearch" placeholder="Search by location...">
+            <select id="priceFilter">
+                <option value="any">Any Price</option>
+                <option value="under-10000">Under ₹10,000</option>
+                <option value="10000-20000">₹10,000 - ₹20,000</option>
+                <option value="20000-30000">₹20,000 - ₹30,000</option>
+                <option value="30000-50000">₹30,000 - ₹50,000</option>
+                <option value="over-50000">Over ₹50,000</option>
             </select>
-            <button class="filter-btn">Filter</button>
+            <button class="filter-btn" id="applyFilters">Filter</button>
+            <button class="filter-btn" id="resetFilters" style="background-color: #666;">Reset</button>
         </div>
         
-        <div class="property-grid">
+        <div class="property-grid" id="propertyGrid">
             <!-- Property Card 1 -->
-            <div class="property-card">
+            <div class="property-card" data-location="cityville" data-price="15000" data-beds="2" data-baths="1">
                 <div class="property-image">
                     <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Modern Apartment">
                 </div>
@@ -326,7 +336,7 @@
             </div>
             
             <!-- Property Card 2 -->
-            <div class="property-card">
+            <div class="property-card" data-location="townsville" data-price="25000" data-beds="3" data-baths="2">
                 <div class="property-image">
                     <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Luxury Apartment">
                 </div>
@@ -346,7 +356,7 @@
             </div>
             
             <!-- Property Card 3 -->
-            <div class="property-card">
+            <div class="property-card" data-location="metro city" data-price="8500" data-beds="1" data-baths="1">
                 <div class="property-image">
                     <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Cozy Studio">
                 </div>
@@ -362,6 +372,46 @@
                         Cozy studio apartment perfect for students or young professionals. Recently renovated with new appliances.
                     </div>
                     <button class="btn" onclick="showPropertyDetails(3)">View Details</button>
+                </div>
+            </div>
+
+            <!-- Property Card 4 (added for more filtering examples) -->
+            <div class="property-card" data-location="cityville" data-price="12000" data-beds="1" data-baths="1">
+                <div class="property-image">
+                    <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="City Apartment">
+                </div>
+                <div class="property-details">
+                    <div class="property-price">₹12,000/month</div>
+                    <div class="property-address">321 Main St, Cityville</div>
+                    <div class="property-features">
+                        <span>1 Bed</span>
+                        <span>1 Bath</span>
+                        <span>700 sqft</span>
+                    </div>
+                    <div class="property-description">
+                        Comfortable one-bedroom apartment in downtown Cityville with great natural light and updated kitchen.
+                    </div>
+                    <button class="btn" onclick="showPropertyDetails(4)">View Details</button>
+                </div>
+            </div>
+
+            <!-- Property Card 5 (added for more filtering examples) -->
+            <div class="property-card" data-location="suburbia" data-price="35000" data-beds="4" data-baths="3">
+                <div class="property-image">
+                    <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Suburban Home">
+                </div>
+                <div class="property-details">
+                    <div class="property-price">₹35,000/month</div>
+                    <div class="property-address">101 Oak Lane, Suburbia</div>
+                    <div class="property-features">
+                        <span>4 Beds</span>
+                        <span>3 Baths</span>
+                        <span>2,000 sqft</span>
+                    </div>
+                    <div class="property-description">
+                        Spacious suburban home with large backyard, perfect for families. Quiet neighborhood with excellent schools.
+                    </div>
+                    <button class="btn" onclick="showPropertyDetails(5)">View Details</button>
                 </div>
             </div>
         </div>
@@ -547,8 +597,254 @@
             </div>
         </div>
     </div>
+
+    <!-- Added modals for the new properties -->
+    <div id="propertyModal4" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('propertyModal4')">&times;</span>
+            <div class="property-detail-container">
+                <div class="property-detail-images">
+                    <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="City Apartment">
+                    <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Living Room">
+                    <img src="https://images.unsplash.com/photo-1556910633-8b5a5c4b1e6e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Bedroom">
+                </div>
+                <div class="property-detail-info">
+                    <h2 class="detail-title">Cityville Apartment</h2>
+                    <div class="detail-price">₹12,000/month</div>
+                    <div class="detail-address">321 Main St, Cityville</div>
+                    
+                    <div class="detail-features">
+                        <div class="feature-item">
+                            <div class="feature-icon">🛏️</div>
+                            <div class="feature-text">1 Bedroom</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🚿</div>
+                            <div class="feature-text">1 Bathroom</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📏</div>
+                            <div class="feature-text">700 sqft</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🏢</div>
+                            <div class="feature-text">Apartment</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🌞</div>
+                            <div class="feature-text">South Facing</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🏪</div>
+                            <div class="feature-text">Walk Score: 87</div>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-description">
+                        <p>Comfortable one-bedroom apartment in downtown Cityville with great natural light and updated kitchen. Features include:</p>
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li>Bright living room with large windows</li>
+                            <li>Updated kitchen with new appliances</li>
+                            <li>Spacious bedroom with closet</li>
+                            <li>Hardwood floors throughout</li>
+                            <li>Secure building with intercom</li>
+                            <li>Close to public transportation</li>
+                        </ul>
+                        <p style="margin-top: 10px;">Perfect for young professionals or couples. Available immediately.</p>
+                    </div>
+                    
+                    <button class="detail-contact-btn" onclick="contactLandlord(4)">Contact Landlord</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="propertyModal5" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('propertyModal5')">&times;</span>
+            <div class="property-detail-container">
+                <div class="property-detail-images">
+                    <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Suburban Home">
+                    <img src="https://images.unsplash.com/photo-1560448205-17d3a46cdfde?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Living Room">
+                    <img src="https://images.unsplash.com/photo-1560448205-97abe7378152?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Backyard">
+                </div>
+                <div class="property-detail-info">
+                    <h2 class="detail-title">Suburban Family Home</h2>
+                    <div class="detail-price">₹35,000/month</div>
+                    <div class="detail-address">101 Oak Lane, Suburbia</div>
+                    
+                    <div class="detail-features">
+                        <div class="feature-item">
+                            <div class="feature-icon">🛏️</div>
+                            <div class="feature-text">4 Bedrooms</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🚿</div>
+                            <div class="feature-text">3 Bathrooms</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📏</div>
+                            <div class="feature-text">2,000 sqft</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🏠</div>
+                            <div class="feature-text">House</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🌳</div>
+                            <div class="feature-text">Large Backyard</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🚗</div>
+                            <div class="feature-text">2 Parking Spaces</div>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-description">
+                        <p>Spacious suburban home with large backyard, perfect for families. Quiet neighborhood with excellent schools. Features include:</p>
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li>Open concept living and dining area</li>
+                            <li>Modern kitchen with island</li>
+                            <li>Master bedroom with ensuite bathroom</li>
+                            <li>Finished basement with extra living space</li>
+                            <li>Large backyard with deck</li>
+                            <li>Two-car garage</li>
+                        </ul>
+                        <p style="margin-top: 10px;">Located in a family-friendly neighborhood with parks and schools nearby. Available for long-term lease.</p>
+                    </div>
+                    
+                    <button class="detail-contact-btn" onclick="contactLandlord(5)">Contact Landlord</button>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <script>
+        // Property data for filtering
+        const properties = [
+            {
+                id: 1,
+                price: 15000,
+                location: 'cityville',
+                beds: 2,
+                baths: 1,
+                address: '123 Downtown St, Cityville',
+                description: 'Beautiful modern apartment in the heart of the city with great amenities and easy access to transportation.'
+            },
+            {
+                id: 2,
+                price: 25000,
+                location: 'townsville',
+                beds: 3,
+                baths: 2,
+                address: '456 Uptown Ave, Townsville',
+                description: 'Spacious luxury apartment with stunning views, modern appliances, and access to pool and gym facilities.'
+            },
+            {
+                id: 3,
+                price: 8500,
+                location: 'metro city',
+                beds: 1,
+                baths: 1,
+                address: '789 Center Lane, Metro City',
+                description: 'Cozy studio apartment perfect for students or young professionals. Recently renovated with new appliances.'
+            },
+            {
+                id: 4,
+                price: 12000,
+                location: 'cityville',
+                beds: 1,
+                baths: 1,
+                address: '321 Main St, Cityville',
+                description: 'Comfortable one-bedroom apartment in downtown Cityville with great natural light and updated kitchen.'
+            },
+            {
+                id: 5,
+                price: 35000,
+                location: 'suburbia',
+                beds: 4,
+                baths: 3,
+                address: '101 Oak Lane, Suburbia',
+                description: 'Spacious suburban home with large backyard, perfect for families. Quiet neighborhood with excellent schools.'
+            }
+        ];
+
+        // Filter functionality
+        document.getElementById('applyFilters').addEventListener('click', function() {
+            const locationSearch = document.getElementById('locationSearch').value.toLowerCase();
+            const priceFilter = document.getElementById('priceFilter').value;
+            
+            const propertyCards = document.querySelectorAll('.property-card');
+            let hasResults = false;
+            
+            propertyCards.forEach(card => {
+                const cardLocation = card.getAttribute('data-location');
+                const cardPrice = parseInt(card.getAttribute('data-price'));
+                let showCard = true;
+                
+                // Location filter
+                if (locationSearch && !cardLocation.includes(locationSearch)) {
+                    showCard = false;
+                }
+                
+                // Price filter
+                switch(priceFilter) {
+                    case 'under-10000':
+                        if (cardPrice >= 10000) showCard = false;
+                        break;
+                    case '10000-20000':
+                        if (cardPrice < 10000 || cardPrice > 20000) showCard = false;
+                        break;
+                    case '20000-30000':
+                        if (cardPrice < 20000 || cardPrice > 30000) showCard = false;
+                        break;
+                    case '30000-50000':
+                        if (cardPrice < 30000 || cardPrice > 50000) showCard = false;
+                        break;
+                    case 'over-50000':
+                        if (cardPrice <= 50000) showCard = false;
+                        break;
+                }
+                
+                if (showCard) {
+                    card.style.display = 'block';
+                    hasResults = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Show no results message if needed
+            const noResults = document.querySelector('.no-results');
+            if (!hasResults) {
+                if (!noResults) {
+                    const noResultsDiv = document.createElement('div');
+                    noResultsDiv.className = 'no-results';
+                    noResultsDiv.textContent = 'No properties match your search criteria. Try adjusting your filters.';
+                    document.getElementById('propertyGrid').appendChild(noResultsDiv);
+                }
+            } else if (noResults) {
+                noResults.remove();
+            }
+        });
+        
+        // Reset filters
+        document.getElementById('resetFilters').addEventListener('click', function() {
+            document.getElementById('locationSearch').value = '';
+            document.getElementById('priceFilter').value = 'any';
+            
+            const propertyCards = document.querySelectorAll('.property-card');
+            propertyCards.forEach(card => {
+                card.style.display = 'block';
+            });
+            
+            const noResults = document.querySelector('.no-results');
+            if (noResults) {
+                noResults.remove();
+            }
+        });
+
+        // Existing modal functions
         function showPropertyDetails(propertyId) {
             document.getElementById('propertyModal' + propertyId).style.display = 'block';
         }
@@ -560,27 +856,16 @@
         function contactLandlord(propertyId) {
             let propertyTitle, propertyPrice, propertyAddress;
             
-            switch(propertyId) {
-                case 1:
-                    propertyTitle = "Modern Downtown Apartment";
-                    propertyPrice = "₹15,000/month";
-                    propertyAddress = "123 Downtown St, Cityville";
-                    break;
-                case 2:
-                    propertyTitle = "Luxury Uptown Apartment";
-                    propertyPrice = "₹25,000/month";
-                    propertyAddress = "456 Uptown Ave, Townsville";
-                    break;
-                case 3:
-                    propertyTitle = "Cozy Studio Apartment";
-                    propertyPrice = "₹8,500/month";
-                    propertyAddress = "789 Center Lane, Metro City";
-                    break;
+            const property = properties.find(p => p.id === propertyId);
+            if (property) {
+                propertyTitle = document.querySelector(`#propertyModal${propertyId} .detail-title`).textContent;
+                propertyPrice = document.querySelector(`#propertyModal${propertyId} .detail-price`).textContent;
+                propertyAddress = property.address;
+                
+                const message = `Hello, I'm interested in the property:\n\n*${propertyTitle}*\n\nPrice: ${propertyPrice}\nAddress: ${propertyAddress}\n\nCould you please provide more information?`;
+                const encodedMessage = encodeURIComponent(message);
+                window.open(`https://wa.me/9170548739?text=${encodedMessage}`, '_blank');
             }
-            
-            const message = `Hello, I'm interested in the property:\n\n*${propertyTitle}*\n\nPrice: ${propertyPrice}\nAddress: ${propertyAddress}\n\nCould you please provide more information?`;
-            const encodedMessage = encodeURIComponent(message);
-            window.open(`https://wa.me/9170548739?text=${encodedMessage}`, '_blank');
         }
         
         // Close modal when clicking outside of it
