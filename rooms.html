@@ -375,7 +375,7 @@
                 </div>
             </div>
 
-            <!-- Property Card 4 (added for more filtering examples) -->
+            <!-- Property Card 4 -->
             <div class="property-card" data-location="cityville" data-price="12000" data-beds="1" data-baths="1">
                 <div class="property-image">
                     <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="City Apartment">
@@ -395,7 +395,7 @@
                 </div>
             </div>
 
-            <!-- Property Card 5 (added for more filtering examples) -->
+            <!-- Property Card 5 -->
             <div class="property-card" data-location="suburbia" data-price="35000" data-beds="4" data-baths="3">
                 <div class="property-image">
                     <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Suburban Home">
@@ -779,11 +779,14 @@
             
             propertyCards.forEach(card => {
                 const cardLocation = card.getAttribute('data-location');
+                const cardAddress = card.querySelector('.property-address').textContent.toLowerCase();
                 const cardPrice = parseInt(card.getAttribute('data-price'));
                 let showCard = true;
                 
-                // Location filter
-                if (locationSearch && !cardLocation.includes(locationSearch)) {
+                // Location filter - search in both location data attribute and address text
+                if (locationSearch && 
+                    !cardLocation.includes(locationSearch) && 
+                    !cardAddress.includes(locationSearch)) {
                     showCard = false;
                 }
                 
@@ -874,6 +877,13 @@
                 event.target.style.display = 'none';
             }
         }
+
+        // Make location search work on pressing Enter key
+        document.getElementById('locationSearch').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('applyFilters').click();
+            }
+        });
     </script>
 </body>
 </html>
