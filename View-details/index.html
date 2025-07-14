@@ -262,6 +262,7 @@
             "1": {
                 title: "2 BHK Apartment in Gomti Nagar",
                 price: 12000,
+                code: "STAYLOO-GOM-2BHK-001",
                 images: [
                     "/images/house.jpeg",
                     "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
@@ -288,6 +289,7 @@
             "2": {
                 title: "1 BHK in Saket",
                 price: 15000,
+                code: "STAYLOO-SAK-1BHK-002",
                 images: [
                     "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
                     "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
@@ -311,6 +313,7 @@
             "3": {
                 title: "3 BHK Villa in Whitefield",
                 price: 35000,
+                code: "STAYLOO-WHT-3BHK-003",
                 images: [
                     "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
                     "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
@@ -452,7 +455,7 @@
                     <div class="unlock-section">
                         <h3>Unlock Owner Contact Information</h3>
                         <p>Get direct access to the owner's contact details and more exclusive information about this property for just ₹${unlockPrice}/-.</p>
-                        <button class="unlock-btn" onclick="window.location.href='https://wa.me/919170548739?text=Hi%20StayLoo%2C%20I%27m%20interested%20in%20this%20property%20(${encodeURIComponent(property.title)}%20-%20₹${property.price}/month)%2C%20please%20share%20the%20owner%20contact%20details%20and%20additional%20info'">
+                        <button class="unlock-btn" onclick="window.location.href='https://wa.me/919170548739?text=Hi%20StayLoo%2C%20I%27m%20interested%20in%20this%20property%20(${encodeURIComponent(property.title)}%20-%20₹${property.price}/month)%20(Code:%20${property.code})%2C%20please%20share%20the%20owner%20contact%20details%20and%20additional%20info'">
                             Unlock Now for ₹${unlockPrice}/-
                         </button>
                     </div>
