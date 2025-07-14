@@ -186,6 +186,94 @@
             color: rgba(255,255,255,0.8);
         }
         
+      /* Filter Section Styles */
+        .filter-section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+        
+        .filter-title {
+            text-align: center;
+            color: #4a6bff;
+            margin-bottom: 25px;
+            font-size: 22px;
+        }
+        
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        
+        .filter-group {
+            margin-bottom: 15px;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: #4a6bff;
+            box-shadow: 0 0 0 2px rgba(74, 107, 255, 0.2);
+        }
+        
+        .price-range-inputs {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .price-range-inputs span {
+            color: #666;
+        }
+        
+        .filter-btn {
+            background-color: #4a6bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            margin: 20px auto 0;
+        }
+        
+        .filter-btn:hover {
+            background-color: #3a5bef;
+            box-shadow: 0 5px 15px rgba(58, 91, 239, 0.4);
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 18px;
+            display: none;
+        }
+        
+        
         /* Listings Section */
         .listings-section {
             padding: 40px 0;
@@ -396,7 +484,7 @@
         }
         
         .footer-logo .loo {
-            color: white;
+            color: #000;
         }
         
         .footer-links h3 {
@@ -482,6 +570,9 @@
     </style>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>    
 </head>
 <body>
     <header id="mainHeader">
@@ -563,6 +654,79 @@
                 </div>
             </div>
         </section>
+
+ <!-- Filter Section -->
+        <section class="filter-section animate-fade">
+            <h2 class="filter-title">Refine Your Search</h2>
+            <form id="filterForm">
+                <div class="filter-grid">
+                    <div class="filter-group">
+                        <label for="city">Select City</label>
+                        <select id="city" name="city">
+                            <option value="">All Cities</option>
+                            <option value="Lucknow">Lucknow</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Bangalore">Bangalore</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Pune">Pune</option>
+                            <option value="Kota">Kota</option>
+                            <option value="Hyderabad">Hyderabad</option>
+                            <option value="Chennai">Chennai</option>
+                            <option value="Noida">Noida</option>
+                            <option value="Gurgaon">Gurgaon</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="areaInfo">Area Information</label>
+                        <input type="text" id="areaInfo" name="areaInfo" placeholder="Enter area/sector/nearby">
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>Monthly Rent Range (₹)</label>
+                        <div class="price-range-inputs">
+                            <input type="number" id="minRent" name="minRent" placeholder="Min" min="0">
+                            <span>to</span>
+                            <input type="number" id="maxRent" name="maxRent" placeholder="Max" min="0">
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="propertyType">Property Type</label>
+                        <select id="propertyType" name="propertyType">
+                            <option value="">All Types</option>
+                            <option value="Flat">Flats/Apartments</option>
+                            <option value="House">Independent Houses</option>
+                            <option value="PG">PGs/Hostels</option>
+                            <option value="Room">Normal Rooms</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="bhkType">BHK Type</label>
+                        <select id="bhkType" name="bhkType">
+                            <option value="">All Types</option>
+                            <option value="1 BHK">1 BHK</option>
+                            <option value="2 BHK">2 BHK</option>
+                            <option value="3 BHK">3 BHK</option>
+                            <option value="4 BHK">4 BHK</option>
+                            <option value="4+ BHK">4+ BHK</option>
+                            <option value="Studio">Studio</option>
+                            <option value="Shared Room">Shared Room</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button type="button" class="filter-btn" id="applyFilters">Search by Filter</button>
+            </form>
+        </section>
+        
+        <!-- No Results Message -->
+        <div class="no-results" id="noResults">
+            <i class="fas fa-search" style="font-size: 40px; margin-bottom: 15px;"></i>
+            <p>No properties match your current filters.</p>
+            <p>Try adjusting your search criteria.</p>
+        </div>        
         
         <!-- Featured Listings Section -->
         <section class="listings-section">
@@ -728,6 +892,136 @@
     </footer>
 
     <script>
+
+// Firebase configuration (replace with your actual config)
+        const firebaseConfig = {
+             apiKey: "AIzaSyC62frfWfIEqz0tucqu4Ie5AvEzPmTx3qg",
+  authDomain: "stayloo-97012.firebaseapp.com",
+  databaseURL: "https://stayloo-97012-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "stayloo-97012",
+  storageBucket: "stayloo-97012.firebasestorage.app",
+  messagingSenderId: "134671320511",
+  appId: "1:134671320511:web:e0fde87479ff90a1c14d0a"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // DOM Elements
+        const applyFiltersBtn = document.getElementById('applyFilters');
+        const noResultsDiv = document.getElementById('noResults');
+        const listingsGrid = document.getElementById('listingsGrid');
+        
+        // Initialize with default listings
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load initial listings
+            fetchListings({});
+            
+            // Set up filter button
+            applyFiltersBtn.addEventListener('click', function() {
+                const filters = {
+                    city: document.getElementById('city').value,
+                    areaInfo: document.getElementById('areaInfo').value.toLowerCase(),
+                    minRent: parseInt(document.getElementById('minRent').value) || 0,
+                    maxRent: parseInt(document.getElementById('maxRent').value) || Infinity,
+                    propertyType: document.getElementById('propertyType').value,
+                    bhkType: document.getElementById('bhkType').value
+                };
+                
+                fetchListings(filters);
+            });
+            
+            // Set up header scroll effect
+            window.addEventListener('scroll', function() {
+                const header = document.getElementById('mainHeader');
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        });
+        
+        // Fetch listings from Firebase with filters
+        function fetchListings(filters) {
+            database.ref('listings').once('value', (snapshot) => {
+                const listings = snapshot.val();
+                const filteredListings = [];
+                
+                // Clear current listings
+                listingsGrid.innerHTML = '';
+                noResultsDiv.style.display = 'none';
+                
+                // Filter listings
+                for (const id in listings) {
+                    const listing = listings[id];
+                    
+                    // Check each filter condition
+                    const matchesCity = !filters.city || listing.city === filters.city;
+                    const matchesArea = !filters.areaInfo || 
+                                      (listing.areaInfo && listing.areaInfo.toLowerCase().includes(filters.areaInfo));
+                    const matchesRent = listing.monthlyRent >= filters.minRent && 
+                                      listing.monthlyRent <= filters.maxRent;
+                    const matchesPropertyType = !filters.propertyType || 
+                                             listing.propertyType === filters.propertyType;
+                    const matchesBhkType = !filters.bhkType || 
+                                         listing.bhkType === filters.bhkType;
+                    
+                    if (matchesCity && matchesArea && matchesRent && matchesPropertyType && matchesBhkType) {
+                        filteredListings.push(listing);
+                    }
+                }
+                
+                // Display results
+                if (filteredListings.length > 0) {
+                    displayListings(filteredListings);
+                } else {
+                    noResultsDiv.style.display = 'block';
+                }
+            });
+        }
+        
+        // Display listings in the grid
+        function displayListings(listings) {
+            listings.forEach(listing => {
+                const listingCard = createListingCard(listing);
+                listingsGrid.appendChild(listingCard);
+            });
+            
+            // Initialize animations for new cards
+            animateListings();
+        }
+        
+        // Create listing card HTML
+        function createListingCard(listing) {
+            const card = document.createElement('div');
+            card.className = 'listing-card';
+            
+            card.innerHTML = `
+                <div class="listing-image">
+                    <img src="${listing.image || 'https://via.placeholder.com/600x400?text=No+Image'}" alt="${listing.propertyTitle}">
+                    ${listing.badge ? `<div class="listing-badge">${listing.badge}</div>` : ''}
+                </div>
+                <div class="listing-details">
+                    <h3 class="listing-title">${listing.propertyTitle}</h3>
+                    <div class="listing-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>${listing.areaInfo}, ${listing.city}</span>
+                    </div>
+                    <p class="listing-description">${listing.propertyDetails}</p>
+                    <div class="listing-meta">
+                        <span>${listing.propertyType}</span>
+                        <span>${listing.bhkType}</span>
+                    </div>
+                    <div class="listing-price">₹${listing.monthlyRent}/month</div>
+                    <button class="listing-btn" onclick="viewListingDetails('${listing.id}')">View Details</button>
+                </div>
+            `;
+            
+            return card;
+        }
+        
         // Animate listing cards on scroll
         function animateOnScroll() {
             const listingCards = document.querySelectorAll('.listing-card');
