@@ -1038,6 +1038,12 @@
             });
         }
         
+        // View listing details (to be implemented)
+        function viewListingDetails(listingId) {
+            // Redirect to listing details page with the ID
+            window.location.href = `listing-details.html?id=${listingId}`;
+        }
+        
         // Header scroll effect
         window.addEventListener('scroll', function() {
             const header = document.getElementById('mainHeader');
