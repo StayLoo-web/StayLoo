@@ -478,6 +478,49 @@
             .city-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+        /* Add this new CSS for the new section */
+        .no-space-section {
+            background-color: #f8f9ff;
+            border-radius: 12px;
+            padding: 40px 20px;
+            margin: 40px 0;
+            text-align: center;
+            border: 1px solid #e0e4ff;
+        }
+        
+        .no-space-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .no-space-section h2 {
+            color: #4a6bff;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        
+        .no-space-section p {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+        
+        .action-btn {
+            background-color: #4a6bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .action-btn:hover {
+            background-color: #3a5bef;
+            box-shadow: 0 5px 15px rgba(58, 91, 239, 0.4);    
         }
     </style>
     <!-- Font Awesome for icons -->
@@ -688,6 +731,11 @@
                         <button class="listing-btn">View Details</button>
                     </div>
                 </div>
+               <section class="no-space-section animate-fade">
+            <div class="no-space-container">
+                <h2>What if you didn't get your space in your location?</h2>
+                <p>Don't worry! We can help you find alternatives or notify you when new spaces become available.</p>
+                <button class="action-btn" onclick="window.location.href='space-alternatives.html'">Click Here</button> 
             </div>
         </section>
     </main>
