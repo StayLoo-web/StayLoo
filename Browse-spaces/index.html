@@ -685,9 +685,9 @@
                     <div class="filter-group">
                         <label>Monthly Rent Range (₹)</label>
                         <div class="price-range-inputs">
-                            <input type="number" id="minRent" name="minRent" placeholder="Min" min="0">
+                            <input type="number" id="minRent" name="minRent" placeholder="Min" min="1000">
                             <span>to</span>
-                            <input type="number" id="maxRent" name="maxRent" placeholder="Max" min="0">
+                            <input type="number" id="maxRent" name="maxRent" placeholder="Max" min="2000">
                         </div>
                     </div>
                     
@@ -896,12 +896,12 @@
 // Firebase configuration (replace with your actual config)
         const firebaseConfig = {
              apiKey: "AIzaSyC62frfWfIEqz0tucqu4Ie5AvEzPmTx3qg",
-  authDomain: "stayloo-97012.firebaseapp.com",
-  databaseURL: "https://stayloo-97012-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "stayloo-97012",
-  storageBucket: "stayloo-97012.firebasestorage.app",
-  messagingSenderId: "134671320511",
-  appId: "1:134671320511:web:e0fde87479ff90a1c14d0a"
+            authDomain: "stayloo-97012.firebaseapp.com",
+            databaseURL: "https://stayloo-97012-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "stayloo-97012",
+            storageBucket: "stayloo-97012.firebasestorage.app",
+            messagingSenderId: "134671320511",
+           appId: "1:134671320511:web:e0fde87479ff90a1c14d0a"
         };
 
         // Initialize Firebase
@@ -961,14 +961,14 @@
                     const matchesCity = !filters.city || listing.city === filters.city;
                     const matchesArea = !filters.areaInfo || 
                                       (listing.areaInfo && listing.areaInfo.toLowerCase().includes(filters.areaInfo));
-                    const matchesRent = listing.monthlyRent >= filters.minRent && 
-                                      listing.monthlyRent <= filters.maxRent;
-                    const matchesPropertyType = !filters.propertyType || 
-                                             listing.propertyType === filters.propertyType;
-                    const matchesBhkType = !filters.bhkType || 
-                                         listing.bhkType === filters.bhkType;
+                    const matchesRent = listing.price >= filters.minRent && 
+                                      listing.price <= filters.maxRent;
+                    const matchesType = !filters.type || 
+                                     listing.type === filters.type;
+                    const matchesBhk = !filters.bhk || 
+                                    listing.bhk === filters.bhk;
                     
-                    if (matchesCity && matchesArea && matchesRent && matchesPropertyType && matchesBhkType) {
+                    if (matchesCity && matchesArea && matchesRent && matchesType && matchesBhk) {
                         filteredListings.push(listing);
                     }
                 }
@@ -999,22 +999,22 @@
             card.className = 'listing-card';
             
             card.innerHTML = `
-                <div class="listing-image">
-                    <img src="${listing.image || 'https://via.placeholder.com/600x400?text=No+Image'}" alt="${listing.propertyTitle}">
+                 <div class="listing-image">
+                    <img src="${listing.image || 'https://via.placeholder.com/600x400?text=No+Image'}" alt="${listing.title}">
                     ${listing.badge ? `<div class="listing-badge">${listing.badge}</div>` : ''}
                 </div>
                 <div class="listing-details">
-                    <h3 class="listing-title">${listing.propertyTitle}</h3>
+                    <h3 class="listing-title">${listing.title}</h3>
                     <div class="listing-location">
                         <i class="fas fa-map-marker-alt"></i>
-                        <span>${listing.areaInfo}, ${listing.city}</span>
+                        <span>${listing.location}</span>
                     </div>
-                    <p class="listing-description">${listing.propertyDetails}</p>
+                    <p class="listing-description">${listing.details}</p>
                     <div class="listing-meta">
-                        <span>${listing.propertyType}</span>
-                        <span>${listing.bhkType}</span>
+                        <span>${listing.type} • ${listing.bhk}</span>
+                        <span>${listing.bedrooms} Beds • ${listing.bathrooms} Baths</span>
                     </div>
-                    <div class="listing-price">₹${listing.monthlyRent}/month</div>
+                    <div class="listing-price">₹${listing.price}/month</div>
                     <button class="listing-btn" onclick="viewListingDetails('${listing.id}')">View Details</button>
                 </div>
             `;
