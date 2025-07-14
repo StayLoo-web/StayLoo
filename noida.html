@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucknow Spaces - StayLoo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        .logo .stay {
+            color: #4a6bff;
+        }
+        
+        .logo .loo {
+            color: #000;
+        }
+        
+        /* Main Title */
+        .main-title {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .main-title h1 {
+            font-size: 36px;
+            color: #4a6bff;
+            margin-bottom: 10px;
+        }
+        
+        .main-title p {
+            color: #666;
+            font-size: 18px;
+        }
+        
+        /* Filter Section */
+        .filter-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        .filter-row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .filter-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .filter-select, .filter-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: white;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .apply-btn {
+            background-color: #4a6bff;
+            color: white;
+        }
+        
+        .apply-btn:hover {
+            background-color: #3a5bef;
+        }
+        
+        .reset-btn {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+        
+        .reset-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        /* Listings Section */
+        .listings-section {
+            padding: 40px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            color: #4a6bff;
+            margin-bottom: 30px;
+        }
+        
+        .listings-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .listing-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .listing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .listing-image {
+            height: 200px;
+            background-color: #eee;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .listing-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .listing-card:hover .listing-image img {
+            transform: scale(1.05);
+        }
+        
+        .listing-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #4a6bff;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .listing-details {
+            padding: 20px;
+        }
+        
+        .listing-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .listing-location {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .listing-location i {
+            margin-right: 5px;
+            color: #4a6bff;
+        }
+        
+        .listing-description {
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .listing-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4a6bff;
+            margin-bottom: 15px;
+        }
+        
+        .listing-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #4a6bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .listing-btn:hover {
+            background-color: #3a5bef;
+        }
+        
+        /* Property Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 50px auto;
+            max-width: 900px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+        }
+        
+        .modal-header {
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #eee;
+            position: relative;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            color: #4a6bff;
+            margin-bottom: 5px;
+        }
+        
+        .modal-location {
+            color: #666;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .modal-location i {
+            margin-right: 8px;
+            color: #4a6bff;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: #333;
+        }
+        
+        .modal-body {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .modal-images {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+        }
+        
+        .modal-main-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .modal-thumbnails {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+        
+        .modal-thumbnail {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .modal-thumbnail:hover {
+            transform: scale(1.05);
+        }
+        
+        .modal-details {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+        }
+        
+        .modal-price {
+            font-size: 28px;
+            font-weight: bold;
+            color: #4a6bff;
+            margin-bottom: 15px;
+        }
+        
+        .modal-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            background-color: #f0f4ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4a6bff;
+        }
+        
+        .feature-text {
+            color: #555;
+        }
+        
+        .modal-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        
+        .modal-contact-btn {
+            padding: 12px 25px;
+            background-color: #4a6bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        
+        .modal-contact-btn:hover {
+            background-color: #3a5bef;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+        
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .footer-logo .stay {
+            color: #4a6bff;
+        }
+        
+        .footer-logo .loo {
+            color: white;
+        }
+        
+        .footer-links h3 {
+            color: #4a6bff;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #4a6bff;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .listings-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .main-title h1 {
+                font-size: 28px;
+            }
+            
+            .modal-body {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .listings-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .filter-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <span class="stay">Stay</span><span class="loo">Loo</span>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container">
+        <!-- Main Title -->
+        <div class="main-title">
+            <h1>Find Your Perfect Space in Lucknow</h1>
+            <p>Browse and filter through available properties</p>
+        </div>
+        
+        <!-- Filter Section -->
+        <section class="filter-section">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label class="filter-label" for="price-range">Price Range</label>
+                    <select class="filter-select" id="price-range">
+                        <option value="any">Any Price</option>
+                        <option value="0-5000">Under ₹5,000</option>
+                        <option value="5000-10000">₹5,000 - ₹10,000</option>
+                        <option value="10000-15000">₹10,000 - ₹15,000</option>
+                        <option value="15000-20000">₹15,000 - ₹20,000</option>
+                        <option value="20000-30000">₹20,000 - ₹30,000</option>
+                        <option value="30000-50000">₹30,000 - ₹50,000</option>
+                        <option value="50000-100000">Over ₹50,000</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label" for="area">Area</label>
+                    <select class="filter-select" id="area">
+                        <option value="any">Any Area</option>
+                        <option value="Gomti Nagar">Gomti Nagar</option>
+                        <option value="Hazratganj">Hazratganj</option>
+                        <option value="Indira Nagar">Indira Nagar</option>
+                        <option value="Ansal">Ansal</option>
+                        <option value="Aliganj">Aliganj</option>
+                        <option value="Vikas Nagar">Vikas Nagar</option>
+                        <option value="Chinhat">Chinhat</option>
+                        <option value="Aminabad">Aminabad</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label" for="bhk-type">BHK Type</label>
+                    <select class="filter-select" id="bhk-type">
+                        <option value="any">Any Type</option>
+                        <option value="1">1 BHK</option>
+                        <option value="2">2 BHK</option>
+                        <option value="3">3 BHK</option>
+                        <option value="4">4 BHK</option>
+                        <option value="studio">Studio</option>
+                        <option value="pg">PG</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn apply-btn" onclick="applyFilters()">Apply Filters</button>
+                <button class="filter-btn reset-btn" onclick="resetFilters()">Reset</button>
+            </div>
+        </section>
+        
+        <!-- Featured Listings Section -->
+        <section class="listings-section">
+            <h2 class="section-title">Available Spaces in Lucknow</h2>
+            
+            <div class="listings-grid" id="listings-container">
+                <!-- Listing cards will be populated by JavaScript -->
+            </div>
+        </section>
+    </main>
+    
+    <!-- Property Modal -->
+    <div id="propertyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Property Title</h2>
+                <div class="modal-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span id="modalLocation">Location</span>
+                </div>
+                <span class="close-modal" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="modal-images">
+                    <img id="modalMainImage" class="modal-main-image" src="" alt="Property Image">
+                    <div class="modal-thumbnails" id="modalThumbnails">
+                        <!-- Thumbnails will be added here -->
+                    </div>
+                </div>
+                <div class="modal-details">
+                    <div class="modal-price" id="modalPrice">₹0/month</div>
+                    
+                    <div class="modal-features" id="modalFeatures">
+                        <!-- Features will be added here -->
+                    </div>
+                    
+                    <div class="modal-description" id="modalDescription">
+                        Property description will be shown here.
+                    </div>
+                    
+                    <button class="modal-contact-btn" onclick="contactOwner()">
+                        <i class="fas fa-phone-alt"></i> Contact Owner
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-links">
+                    <div class="footer-logo">
+                        <span class="stay">Stay</span><span class="loo">Loo</span>
+                    </div>
+                    <p>Find your perfect living space in Lucknow with ease</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="lucknow.html">Lucknow Listings</a></li>
+                        <li><a href="list-your-space.html">List Your Space</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 StayLoo. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Property data
+        const properties = [
+            {
+                id: 1,
+                title: "2 BHK in Gomti Nagar",
+                location: "Gomti Nagar, Lucknow",
+                price: 12000,
+                type: "2",
+                area: "Gomti Nagar",
+                description: "Spacious 2 bedroom apartment with modern amenities, close to shopping mall and metro station. The apartment features a modular kitchen, wooden flooring in bedrooms, and a spacious balcony with city views. The building has 24/7 security, power backup, and a small gymnasium.",
+                images: [
+                    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+                ],
+                features: [
+                    { icon: "🛏️", text: "2 Bedrooms" },
+                    { icon: "🚿", text: "2 Bathrooms" },
+                    { icon: "📏", text: "950 sqft" },
+                    { icon: "🏢", text: "Apartment" },
+                    { icon: "🅿️", text: "Parking Available" },
+                    { icon: "🏋️", text: "Gym Access" }
+                ],
+                badge: "Featured"
+            },
+            {
+                id: 2,
+                title: "1 BHK in Hazratganj",
+                location: "Hazratganj, Lucknow",
+                price: 10500,
+                type: "1",
+                area: "Hazratganj",
+                description: "Fully furnished 1 BHK apartment with all modern amenities, suitable for working professionals. The apartment comes with a fully equipped kitchen, air conditioning in all rooms, and a comfortable living area. The building has 24/7 security and is located within walking distance of shopping areas and restaurants.",
+                images: [
+                    "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1484154218962-a197022b5858?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1556911220-bff31c812dba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+                ],
+                features: [
+                    { icon: "🛏️", text: "1 Bedroom" },
+                    { icon: "🚿", text: "1 Bathroom" },
+                    { icon: "📏", text: "650 sqft" },
+                    { icon: "🏢", text: "Apartment" },
+                    { icon: "🍽️", text: "Fully Furnished" },
+                    { icon: "🧹", text: "Housekeeping" }
+                ],
+                badge: "Verified"
+            },
+            {
+                id: 3,
+                title: "3 BHK in Indira Nagar",
+                location: "Indira Nagar, Lucknow",
+                price: 18000,
+                type: "3",
+                area: "Indira Nagar",
+                description: "Luxurious 3 BHK apartment with clubhouse, swimming pool and 24/7 security. This premium apartment features a spacious living room, modern kitchen with appliances, and three bedrooms with attached bathrooms. The society has excellent amenities including a swimming pool, gym, children's play area, and landscaped gardens.",
+                images: [
+                    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1560448205-17d3a46cdfde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1560448205-97abe7378152?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+                ],
+                features: [
+                    { icon: "🛏️", text: "3 Bedrooms" },
+                    { icon: "🚿", text: "3 Bathrooms" },
+                    { icon: "📏", text: "1500 sqft" },
+                    { icon: "🏊", text: "Swimming Pool" },
+                    { icon: "🏋️", text: "Gym Included" },
+                    { icon: "🚗", text: "2 Parking Spaces" }
+                ]
+            },
+            {
+                id: 4,
+                title: "PG for Girls in Aliganj",
+                location: "Aliganj, Lucknow",
+                price: 7000,
+                type: "pg",
+                area: "Aliganj",
+                description: "Safe and secure PG accommodation for working women with food and laundry facilities. The PG offers comfortable shared and private rooms with attached bathrooms, Wi-Fi, and 24/7 security. Nutritious home-cooked meals are provided three times a day, and laundry service is available twice a week.",
+                images: [
+                    "https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1556911220-bf31c812dbb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+                ],
+                features: [
+                    { icon: "👩", text: "Girls Only" },
+                    { icon: "🍽️", text: "Food Included" },
+                    { icon: "🧺", text: "Laundry Service" },
+                    { icon: "📶", text: "Wi-Fi" },
+                    { icon: "🔒", text: "24/7 Security" },
+                    { icon: "🚪", text: "Private Rooms" }
+                ],
+                badge: "Verified"
+            },
+            {
+                id: 5,
+                title: "Studio Apartment in Vikas Nagar",
+                location: "Vikas Nagar, Lucknow",
+                price: 8500,
+                type: "studio",
+                area: "Vikas Nagar",
+                description: "Compact studio apartment with smart furniture, ideal for singles or couples. The space-efficient design includes a kitchenette, sleeping area, and work space all in one room with a separate bathroom. Perfect for students or young professionals looking for affordable housing with all basic amenities.",
+                images: [
+                    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+                ],
+                features: [
+                    { icon: "🏠", text: "Studio" },
+                    { icon: "🚿", text: "1 Bathroom" },
+                    { icon: "📏", text: "400 sqft" },
+                    { icon: "🛋️", text: "Furnished" },
+                    { icon: "🍳", text: "Kitchenette" },
+                    { icon: "🧹", text: "Weekly Cleaning" }
+                ]
+            },
+            {
+                id: 6,
+                title: "1 BHK in Chinhat",
+                location: "Chinhat, Lucknow",
+                price: 9000,
+                type: "1",
+                area: "Chinhat",
+                description: "Well-maintained 1 BHK apartment with modular kitchen and parking space. The apartment has been recently painted and features ceramic tile flooring throughout. The building has 24-hour water supply and is located close to markets, schools, and public transportation.",
+                images: [
+                    "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1556910633-8b5a5c4b1e6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+                ],
+                features: [
+                    { icon: "🛏️", text: "1 Bedroom" },
+                    { icon: "🚿", text: "1 Bathroom" },
+                    { icon: "📏", text: "600 sqft" },
+                    { icon: "🍳", text: "Modular Kitchen" },
+                    { icon: "🅿️", text: "Parking Space" },
+                    { icon: "💧", text: "24/7 Water" }
+                ],
+                badge: "Featured"
+            }
+        ];
+
+        // Current filtered properties
+        let filteredProperties = [...properties];
+        let currentProperty = null;
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProperties(properties);
+        });
+
+        // Render properties to the page
+        function renderProperties(propertiesToRender) {
+            const container = document.getElementById('listings-container');
+            container.innerHTML = '';
+            
+            if (propertiesToRender.length === 0) {
+                container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 40px;">No properties match your search criteria. Try adjusting your filters.</p>';
+                return;
+            }
+            
+            propertiesToRender.forEach(property => {
+                const card = document.createElement('div');
+                card.className = 'listing-card';
+                card.dataset.id = property.id;
+                
+                let badge = '';
+                if (property.badge) {
+                    badge = `<div class="listing-badge">${property.badge}</div>`;
+                }
+                
+                card.innerHTML = `
+                    <div class="listing-image">
+                        <img src="${property.images[0]}" alt="${property.title}">
+                        ${badge}
+                    </div>
+                    <div class="listing-details">
+                        <h3 class="listing-title">${property.title}</h3>
+                        <div class="listing-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${property.location}</span>
+                        </div>
+                        <p class="listing-description">
+                            ${property.description.substring(0, 100)}...
+                        </p>
+                        <div class="listing-price">₹${property.price.toLocaleString()}/month</div>
+                        <button class="listing-btn" onclick="showPropertyDetails(${property.id})">View Details</button>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Filter functions
+        function applyFilters() {
+            const priceRange = document.getElementById('price-range').value;
+            const area = document.getElementById('area').value;
+            const bhkType = document.getElementById('bhk-type').value;
+            
+            filteredProperties = properties.filter(property => {
+                // Price filter
+                if (priceRange !== 'any') {
+                    const [min, max] = priceRange.split('-').map(Number);
+                    if (max && (property.price < min || property.price > max)) {
+                        return false;
+                    }
+                    if (!max && property.price < min) {
+                        return false;
+                    }
+                }
+                
+                // Area filter
+                if (area !== 'any' && !property.area.toLowerCase().includes(area.toLowerCase())) {
+                    return false;
+                }
+                
+                // BHK type filter
+                if (bhkType !== 'any') {
+                    if (bhkType === 'studio' && property.type !== 'studio') {
+                        return false;
+                    }
+                    if (bhkType === 'pg' && property.type !== 'pg') {
+                        return false;
+                    }
+                    if (!isNaN(bhkType)) {
+                        const typeNum = parseInt(bhkType);
+                        if (isNaN(property.type)) return false;
+                        if (parseInt(property.type) !== typeNum) {
+                            return false;
+                        }
+                    }
+                }
+                
+                return true;
+            });
+            
+            renderProperties(filteredProperties);
+        }
+
+        function resetFilters() {
+            document.getElementById('price-range').value = 'any';
+            document.getElementById('area').value = 'any';
+            document.getElementById('bhk-type').value = 'any';
+            
+            filteredProperties = [...properties];
+            renderProperties(filteredProperties);
+        }
+
+        // Property details modal
+        function showPropertyDetails(id) {
+            currentProperty = properties.find(p => p.id === id);
+            if (!currentProperty) return;
+            
+            document.getElementById('modalTitle').textContent = currentProperty.title;
+            document.getElementById('modalLocation').textContent = currentProperty.location;
+            document.getElementById('modalPrice').textContent = `₹${currentProperty.price.toLocaleString()}/month`;
+            document.getElementById('modalDescription').textContent = currentProperty.description;
+            
+            // Set main image
+            const mainImage = document.getElementById('modalMainImage');
+            mainImage.src = currentProperty.images[0];
+            mainImage.alt = currentProperty.title;
+            
+            // Set thumbnails
+            const thumbnailsContainer = document.getElementById('modalThumbnails');
+            thumbnailsContainer.innerHTML = '';
+            
+            currentProperty.images.forEach((img, index) => {
+                const thumbnail = document.createElement('img');
+                thumbnail.className = 'modal-thumbnail';
+                thumbnail.src = img;
+                thumbnail.alt = `${currentProperty.title} - Image ${index + 1}`;
+                thumbnail.onclick = () => {
+                    mainImage.src = img;
+                };
+                thumbnailsContainer.appendChild(thumbnail);
+            });
+            
+            // Set features
+            const featuresContainer = document.getElementById('modalFeatures');
+            featuresContainer.innerHTML = '';
+            
+            currentProperty.features.forEach(feature => {
+                const featureItem = document.createElement('div');
+                featureItem.className = 'feature-item';
+                featureItem.innerHTML = `
+                    <div class="feature-icon">${feature.icon}</div>
+                    <div class="feature-text">${feature.text}</div>
+                `;
+                featuresContainer.appendChild(featureItem);
+            });
+            
+            // Show modal
+            document.getElementById('propertyModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('propertyModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Contact owner function
+        function contactOwner() {
+            if (!currentProperty) return;
+            
+            const message = `Hello, I'm interested in your property:\n\n*${currentProperty.title}*\n\nPrice: ₹${currentProperty.price.toLocaleString()}/month\nLocation: ${currentProperty.location}\n\nCould you please provide more information?`;
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/9170548739?text=${encodedMessage}`, '_blank');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('propertyModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+    </script>
+</body>
+</html>
