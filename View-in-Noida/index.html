@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucknow Spaces - StayLoo</title>
+    <title>Noida Spaces - StayLoo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Global Styles */
@@ -157,6 +157,7 @@
             overflow: hidden;
             box-shadow: 0 2px 15px rgba(0,0,0,0.05);
             transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
         }
         
         .listing-card:hover {
@@ -192,6 +193,49 @@
             border-radius: 4px;
             font-size: 12px;
             font-weight: bold;
+            z-index: 2;
+        }
+        
+        .listing-badge.booked {
+            background-color: #ff4757;
+        }
+        
+        .listing-badge.verified {
+            background-color: #2ed573;
+        }
+        
+        .listing-badge.featured {
+            background-color: #ffa502;
+        }
+        
+        .medal-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+            z-index: 2;
+        }
+        
+        .medal {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .medal.gold {
+            background-color: #ffd700;
+            box-shadow: 0 0 5px #ffd700;
+        }
+        
+        .medal.silver {
+            background-color: #c0c0c0;
+            box-shadow: 0 0 5px #c0c0c0;
+        }
+        
+        .medal.bronze {
+            background-color: #cd7f32;
+            box-shadow: 0 0 5px #cd7f32;
         }
         
         .listing-details {
@@ -249,6 +293,11 @@
         
         .listing-btn:hover {
             background-color: #3a5bef;
+        }
+        
+        .listing-btn.booked {
+            background-color: #ff4757;
+            cursor: not-allowed;
         }
         
         /* Property Modal */
@@ -413,6 +462,46 @@
         
         .modal-contact-btn:hover {
             background-color: #3a5bef;
+        }
+        
+        .modal-contact-btn.booked {
+            background-color: #ff4757;
+            cursor: not-allowed;
+        }
+        
+        .property-code {
+            background-color: #f0f4ff;
+            color: #4a6bff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        
+        /* No Results Section */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            grid-column: 1 / -1;
+        }
+        
+        .no-results-icon {
+            font-size: 60px;
+            color: #4a6bff;
+            margin-bottom: 20px;
+        }
+        
+        .no-results h3 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .no-results p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 20px;
         }
         
         /* Footer */
@@ -604,6 +693,7 @@
                     </div>
                 </div>
                 <div class="modal-details">
+                    <div class="property-code" id="propertyCode">STAY-1001</div>
                     <div class="modal-price" id="modalPrice">₹0/month</div>
                     
                     <div class="modal-features" id="modalFeatures">
@@ -614,7 +704,7 @@
                         Property description will be shown here.
                     </div>
                     
-                    <button class="modal-contact-btn" onclick="contactOwner()">
+                    <button class="modal-contact-btn" id="modalContactBtn" onclick="contactOwner()">
                         <i class="fas fa-phone-alt"></i> Contact Owner
                     </button>
                 </div>
@@ -636,7 +726,7 @@
                     <h3>Quick Links</h3>
                     <ul>
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="lucknow.html">Lucknow Listings</a></li>
+                        <li><a href="noida.html">Noida Listings</a></li>
                         <li><a href="list-your-space.html">List Your Space</a></li>
                     </ul>
                 </div>
@@ -681,7 +771,9 @@
                     { icon: "🅿️", text: "Parking Available" },
                     { icon: "🏋️", text: "Gym Access" }
                 ],
-                badge: "Featured"
+                badge: "featured",
+                medals: ["gold", "silver"],
+                booked: false
             },
             {
                 id: 2,
@@ -704,7 +796,9 @@
                     { icon: "🍽️", text: "Fully Furnished" },
                     { icon: "🧹", text: "Housekeeping" }
                 ],
-                badge: "Verified"
+                badge: "verified",
+                medals: ["gold"],
+                booked: false
             },
             {
                 id: 3,
@@ -726,7 +820,9 @@
                     { icon: "🏊", text: "Swimming Pool" },
                     { icon: "🏋️", text: "Gym Included" },
                     { icon: "🚗", text: "2 Parking Spaces" }
-                ]
+                ],
+                medals: ["gold", "silver", "bronze"],
+                booked: false
             },
             {
                 id: 4,
@@ -749,7 +845,9 @@
                     { icon: "🔒", text: "24/7 Security" },
                     { icon: "🚪", text: "Private Rooms" }
                 ],
-                badge: "Verified"
+                badge: "verified",
+                medals: ["silver"],
+                booked: false
             },
             {
                 id: 5,
@@ -771,7 +869,9 @@
                     { icon: "🛋️", text: "Furnished" },
                     { icon: "🍳", text: "Kitchenette" },
                     { icon: "🧹", text: "Weekly Cleaning" }
-                ]
+                ],
+                medals: ["bronze"],
+                booked: false
             },
             {
                 id: 6,
@@ -794,7 +894,9 @@
                     { icon: "🅿️", text: "Parking Space" },
                     { icon: "💧", text: "24/7 Water" }
                 ],
-                badge: "Featured"
+                badge: "featured",
+                medals: ["gold", "bronze"],
+                booked: false
             }
         ];
 
@@ -813,7 +915,16 @@
             container.innerHTML = '';
             
             if (propertiesToRender.length === 0) {
-                container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 40px;">No properties match your search criteria. Try adjusting your filters.</p>';
+                container.innerHTML = `
+                    <div class="no-results">
+                        <div class="no-results-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <h3>No Properties Found</h3>
+                        <p>We couldn't find any properties matching your search criteria. We're constantly adding new properties in Noida to provide you with the best service.</p>
+                        <button class="filter-btn apply-btn" onclick="resetFilters()">Reset Filters</button>
+                    </div>
+                `;
                 return;
             }
             
@@ -824,13 +935,27 @@
                 
                 let badge = '';
                 if (property.badge) {
-                    badge = `<div class="listing-badge">${property.badge}</div>`;
+                    badge = `<div class="listing-badge ${property.badge}">${property.badge.charAt(0).toUpperCase() + property.badge.slice(1)}</div>`;
+                }
+                
+                if (property.booked) {
+                    badge += `<div class="listing-badge booked">Booked</div>`;
+                }
+                
+                let medals = '';
+                if (property.medals && property.medals.length > 0) {
+                    medals = `<div class="medal-badge">`;
+                    property.medals.forEach(medal => {
+                        medals += `<div class="medal ${medal}"></div>`;
+                    });
+                    medals += `</div>`;
                 }
                 
                 card.innerHTML = `
                     <div class="listing-image">
                         <img src="${property.images[0]}" alt="${property.title}">
                         ${badge}
+                        ${medals}
                     </div>
                     <div class="listing-details">
                         <h3 class="listing-title">${property.title}</h3>
@@ -842,7 +967,9 @@
                             ${property.description.substring(0, 100)}...
                         </p>
                         <div class="listing-price">₹${property.price.toLocaleString()}/month</div>
-                        <button class="listing-btn" onclick="showPropertyDetails(${property.id})">View Details</button>
+                        <button class="listing-btn ${property.booked ? 'booked' : ''}" onclick="showPropertyDetails(${property.id})" ${property.booked ? 'disabled' : ''}>
+                            ${property.booked ? 'Booked' : 'View Details'}
+                        </button>
                     </div>
                 `;
                 
@@ -914,6 +1041,7 @@
             document.getElementById('modalLocation').textContent = currentProperty.location;
             document.getElementById('modalPrice').textContent = `₹${currentProperty.price.toLocaleString()}/month`;
             document.getElementById('modalDescription').textContent = currentProperty.description;
+            document.getElementById('propertyCode').textContent = `STAY-100${currentProperty.id}`;
             
             // Set main image
             const mainImage = document.getElementById('modalMainImage');
@@ -949,6 +1077,18 @@
                 featuresContainer.appendChild(featureItem);
             });
             
+            // Set contact button
+            const contactBtn = document.getElementById('modalContactBtn');
+            if (currentProperty.booked) {
+                contactBtn.classList.add('booked');
+                contactBtn.innerHTML = '<i class="fas fa-times"></i> Already Booked';
+                contactBtn.onclick = null;
+            } else {
+                contactBtn.classList.remove('booked');
+                contactBtn.innerHTML = '<i class="fas fa-phone-alt"></i> Contact Owner';
+                contactBtn.onclick = contactOwner;
+            }
+            
             // Show modal
             document.getElementById('propertyModal').style.display = 'block';
             document.body.style.overflow = 'hidden';
@@ -963,8 +1103,41 @@
         function contactOwner() {
             if (!currentProperty) return;
             
-            const message = `Hello, I'm interested in your property:\n\n*${currentProperty.title}*\n\nPrice: ₹${currentProperty.price.toLocaleString()}/month\nLocation: ${currentProperty.location}\n\nCould you please provide more information?`;
+            const message = `Hello, I'm interested in your property:\n\n*${currentProperty.title}*\nProperty Code: STAY-100${currentProperty.id}\nPrice: ₹${currentProperty.price.toLocaleString()}/month\nLocation: ${currentProperty.location}\n\nCould you please provide more information?`;
             const encodedMessage = encodeURIComponent(message);
+            
+            // Mark as booked
+            currentProperty.booked = true;
+            const propertyIndex = properties.findIndex(p => p.id === currentProperty.id);
+            if (propertyIndex !== -1) {
+                properties[propertyIndex].booked = true;
+            }
+            
+            // Update the UI
+            const card = document.querySelector(`.listing-card[data-id="${currentProperty.id}"]`);
+            if (card) {
+                const btn = card.querySelector('.listing-btn');
+                btn.classList.add('booked');
+                btn.textContent = 'Booked';
+                btn.disabled = true;
+                
+                // Add booked badge
+                const badges = card.querySelector('.listing-image');
+                if (badges) {
+                    const bookedBadge = document.createElement('div');
+                    bookedBadge.className = 'listing-badge booked';
+                    bookedBadge.textContent = 'Booked';
+                    badges.appendChild(bookedBadge);
+                }
+            }
+            
+            // Update modal button
+            const contactBtn = document.getElementById('modalContactBtn');
+            contactBtn.classList.add('booked');
+            contactBtn.innerHTML = '<i class="fas fa-times"></i> Already Booked';
+            contactBtn.onclick = null;
+            
+            // Open WhatsApp
             window.open(`https://wa.me/9170548739?text=${encodedMessage}`, '_blank');
         }
 
