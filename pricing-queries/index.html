@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STAYLOO - Pricing & Queries</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #4a6bff;
@@ -16,6 +17,9 @@
             --success: #48bb78;
             --highlight: #ffd700;
             --whatsapp: #25D366;
+            --bronze: #cd7f32;
+            --silver: #c0c0c0;
+            --gold: #ffd700;
         }
         
         * {
@@ -563,6 +567,57 @@
             display: none;
         }
         
+        /* Medal styles */
+        .plan-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .medal {
+            font-size: 24px;
+            position: relative;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .bronze-medal {
+            color: var(--bronze);
+            text-shadow: 0 0 5px rgba(205, 127, 50, 0.5);
+        }
+        
+        .silver-medal {
+            color: var(--silver);
+            text-shadow: 0 0 5px rgba(192, 192, 192, 0.5);
+        }
+        
+        .gold-medal {
+            color: var(--gold);
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+        }
+        
+        .shine {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            filter: blur(5px);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translate(0, 0); opacity: 0; }
+            50% { transform: translate(30px, 30px); opacity: 0.8; }
+            100% { transform: translate(60px, 60px); opacity: 0; }
+        }
+        
         /* Keyframe animations */
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -697,53 +752,68 @@
             </div>
             
             <div class="payment-column subscription-card" style="animation: fadeInUp 0.8s ease-out forwards; animation-delay: 0.4s;">
-                <h3>Subscription Plans</h3><h4>Pricing Is On Monthly Basis</h4>
+                <h3>Subscription Plans</h3>
+                <h4>Pricing Is On Monthly Basis</h4>
 
-            <div class="price-point" style="animation: fadeInRight 0.5s ease-out forwards; animation-delay: 0.3s;">  
-                 <h4>Free</h4>
-                    <div class="price" style="padding: 10px 15px">₹0</div>     
-                </div>
-                <div class="subscription-feature">List 1 property</div>
-                <div class="subscription-feature">Basic listing visibility</div>
-                <div class="subscription-feature">Up to 4 photos </div>
-                 <div class="subscription-feature">Free listings remains active for 25 days on site</div>
-                 <div class="subscription-feature">Can extend your free listing visibility for 12 days more in 49/- [one time renewal]</div>    
-                
                 <div class="price-point" style="animation: fadeInRight 0.5s ease-out forwards; animation-delay: 0.3s;">  
-                 <h4>Starter</h4>
+                    <div class="plan-header">
+                        <div class="medal">
+                            <i class="fas fa-medal bronze-medal"></i>
+                            <div class="shine"></div>
+                        </div>
+                        <h4>Starter</h4>
+                    </div>
                     <div class="price" style="padding: 10px 15px">₹149</div>
-           <a href="/Starter-plan/">  <button style="margin-top: 10px; padding: 10px 15px; background-color: #3a5bef; color: white; border: none; border-radius: 6px; font-size: 0.9rem; cursor: pointer;">
-  Get This Plan
-</button> </a>      
+                    <a href="/Starter-plan/">  
+                        <button style="margin-top: 10px; padding: 10px 15px; background-color: #3a5bef; color: white; border: none; border-radius: 6px; font-size: 0.9rem; cursor: pointer;">
+                            Get This Plan
+                        </button> 
+                    </a>      
                 </div>
                 <div class="subscription-feature">Priority in search results(top-10)</div>
                 <div class="subscription-feature">2x more profile views</div>
-                <div class="subscription-feature">Up to 6 photos + 2-listings </div>
-                 <div class="subscription-feature">"Featured" badge</div>
-                 <div class="subscription-feature">5 featured days/month</div>
+                <div class="subscription-feature">Up to 6 photos + 2-listings</div>
+                <div class="subscription-feature">"Featured" badge</div>
+                <div class="subscription-feature">5 featured days/month</div>
 
-         <div class="price-point" style="animation: fadeInRight 0.5s ease-out forwards; animation-delay: 0.3s;">     
-                              <h4>Pro</h4>
+                <div class="price-point" style="animation: fadeInRight 0.5s ease-out forwards; animation-delay: 0.3s;">     
+                    <div class="plan-header">
+                        <div class="medal">
+                            <i class="fas fa-medal silver-medal"></i>
+                            <div class="shine"></div>
+                        </div>
+                        <h4>Pro</h4>
+                    </div>
                     <div class="price" style="padding: 10px 15px">₹249</div>
- <a href="/Pro-plan/">  <button style="margin-top: 10px; padding: 10px 15px; background-color: #3a5bef; color: white; border: none; border-radius: 6px; font-size: 0.9rem; cursor: pointer;">
-  Get This Plan
-</button> </a>  
+                    <a href="/Pro-plan/">  
+                        <button style="margin-top: 10px; padding: 10px 15px; background-color: #3a5bef; color: white; border: none; border-radius: 6px; font-size: 0.9rem; cursor: pointer;">
+                            Get This Plan
+                        </button> 
+                    </a>  
                 </div>
                 <div class="subscription-feature">Top placement in searches(top-5)</div>
                 <div class="subscription-feature">5x more profile views</div>
                 <div class="subscription-feature">Can list 3-properties</div>
                 <div class="subscription-feature">6-images + 3 listings</div>
-                 <div class="subscription-feature">"verified + featued" badges</div>
-                 <div class="subscription-feature">15 featured days/month</div>
-                 <div class="subscription-feature">Instant notifications</div>     
+                <div class="subscription-feature">"verified + featued" badges</div>
+                <div class="subscription-feature">15 featured days/month</div>
+                <div class="subscription-feature">Instant notifications</div>     
                 <div class="subscription-feature">Properties will add on 1 social media handle</div>
 
-           <div class="price-point" style="animation: fadeInRight 0.5s ease-out forwards; animation-delay: 0.3s;">         
-                                <h4>Premium</h4>
+                <div class="price-point" style="animation: fadeInRight 0.5s ease-out forwards; animation-delay: 0.3s;">         
+                    <div class="plan-header">
+                        <div class="medal">
+                            <i class="fas fa-medal gold-medal"></i>
+                            <div class="shine"></div>
+                        </div>
+                        <h4>Premium</h4>
+                    </div>
                     <div class="price" style="padding: 10px 15px">₹349</div>
-  <a href="/Premium-plan/">  <button style="margin-top: 10px; padding: 10px 15px; background-color: #3a5bef; color: white; border: none; border-radius: 6px; font-size: 0.9rem; cursor: pointer;">
-  Get This Plan
-</button> </a>                
+                    <a href="/Premium-plan/">  
+                        <button style="margin-top: 10px; padding: 10px 15px; background-color: #3a5bef; color: white; border: none; border-radius: 6px; font-size: 0.9rem; cursor: pointer;">
+                            Get This Plan
+                        </button> 
+                    </a>                
                 </div>
                 <div class="subscription-feature">Highest Priority in all search</div>
                 <div class="subscription-feature">10X more profile view</div>
@@ -753,12 +823,9 @@
                 <div class="subscription-feature">30 featured days/month</div>
                 <div class="subscription-feature">Instant Notification</div>
                 <div class="subscription-feature">Dedicated Support</div>
-             </div>
-
+            </div>
             
             <div class="payment-column commission-card" style="animation: fadeInUp 0.8s ease-out forwards; animation-delay: 0.6s;">
-
-                
                 <h3>For Property Owners</h3>
                 <div class="commission-rate">Zero Upfront Cost! On your first listing.</div>
                 <p style="text-align: center; margin-bottom: 1rem;">Pay 10% only after you get tenant for your property.</p>
@@ -769,7 +836,7 @@
                         <div class="percentage">8%</div>
                         <div class="label">If you are listing under Starter Plan</div>
                     </div>
-                      <div>
+                    <div>
                         <div class="percentage">7%</div>
                         <div class="label">If you are listing under Pro Plan</div>
                     </div>
@@ -880,7 +947,6 @@
             <div>📍 Lucknow, India</div>
         </div>
     </footer>
-       
     <!-- Question Modal -->
     <div id="questionModal" class="modal">
         <div class="modal-content">
