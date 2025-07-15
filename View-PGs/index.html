@@ -310,6 +310,14 @@
                 <option value="30000-50000">₹30,000 - ₹50,000</option>
                 <option value="over-50000">Over ₹50,000</option>
             </select>
+            <select id="bhkFilter">
+                <option value="any">Any BHK</option>
+                <option value="1">1 BHK</option>
+                <option value="2">2 BHK</option>
+                <option value="3">3 BHK</option>
+                <option value="4">4 BHK</option>
+                <option value="studio">Studio</option>
+            </select>
             <button class="filter-btn" id="applyFilters">Filter</button>
             <button class="filter-btn" id="resetFilters" style="background-color: #666;">Reset</button>
         </div>
@@ -472,7 +480,7 @@
                         <p style="margin-top: 10px;">Available for move-in immediately. Minimum 12-month lease preferred.</p>
                     </div>
                     
-                    <button class="detail-contact-btn" onclick="contactLandlord(1)">Contact Landlord</button>
+                    <button class="detail-contact-btn" onclick="contactLandlord(1)">Contact Us</button>
                 </div>
             </div>
         </div>
@@ -532,7 +540,7 @@
                         <p style="margin-top: 10px;">The unit features hardwood floors throughout, a gourmet kitchen with quartz countertops, and floor-to-ceiling windows. Perfect for professionals or small families.</p>
                     </div>
                     
-                    <button class="detail-contact-btn" onclick="contactLandlord(2)">Contact Landlord</button>
+                    <button class="detail-contact-btn" onclick="contactLandlord(2)">Contact Us</button>
                 </div>
             </div>
         </div>
@@ -592,7 +600,7 @@
                         <p style="margin-top: 10px;">Located in a vibrant neighborhood with cafes, restaurants, and shops just steps away. Utilities not included in rent.</p>
                     </div>
                     
-                    <button class="detail-contact-btn" onclick="contactLandlord(3)">Contact Landlord</button>
+                    <button class="detail-contact-btn" onclick="contactLandlord(3)">Contact Us</button>
                 </div>
             </div>
         </div>
@@ -653,7 +661,7 @@
                         <p style="margin-top: 10px;">Perfect for young professionals or couples. Available immediately.</p>
                     </div>
                     
-                    <button class="detail-contact-btn" onclick="contactLandlord(4)">Contact Landlord</button>
+                    <button class="detail-contact-btn" onclick="contactLandlord(4)">Contact Us</button>
                 </div>
             </div>
         </div>
@@ -713,7 +721,7 @@
                         <p style="margin-top: 10px;">Located in a family-friendly neighborhood with parks and schools nearby. Available for long-term lease.</p>
                     </div>
                     
-                    <button class="detail-contact-btn" onclick="contactLandlord(5)">Contact Landlord</button>
+                    <button class="detail-contact-btn" onclick="contactLandlord(5)">Contact Us</button>
                 </div>
             </div>
         </div>
@@ -773,6 +781,7 @@
         document.getElementById('applyFilters').addEventListener('click', function() {
             const locationSearch = document.getElementById('locationSearch').value.toLowerCase();
             const priceFilter = document.getElementById('priceFilter').value;
+            const bhkFilter = document.getElementById('bhkFilter').value;
             
             const propertyCards = document.querySelectorAll('.property-card');
             let hasResults = false;
@@ -781,6 +790,7 @@
                 const cardLocation = card.getAttribute('data-location');
                 const cardAddress = card.querySelector('.property-address').textContent.toLowerCase();
                 const cardPrice = parseInt(card.getAttribute('data-price'));
+                const cardBeds = card.getAttribute('data-beds');
                 let showCard = true;
                 
                 // Location filter - search in both location data attribute and address text
@@ -809,6 +819,19 @@
                         break;
                 }
                 
+                // BHK filter
+                if (bhkFilter !== 'any') {
+                    if (bhkFilter === 'studio') {
+                        if (cardBeds !== '1' || !card.querySelector('.property-features').textContent.includes('Studio')) {
+                            showCard = false;
+                        }
+                    } else {
+                        if (cardBeds !== bhkFilter) {
+                            showCard = false;
+                        }
+                    }
+                }
+                
                 if (showCard) {
                     card.style.display = 'block';
                     hasResults = true;
@@ -835,6 +858,7 @@
         document.getElementById('resetFilters').addEventListener('click', function() {
             document.getElementById('locationSearch').value = '';
             document.getElementById('priceFilter').value = 'any';
+            document.getElementById('bhkFilter').value = 'any';
             
             const propertyCards = document.querySelectorAll('.property-card');
             propertyCards.forEach(card => {
@@ -865,7 +889,8 @@
                 propertyPrice = document.querySelector(`#propertyModal${propertyId} .detail-price`).textContent;
                 propertyAddress = property.address;
                 
-                const message = `Hello, I'm interested in the property:\n\n*${propertyTitle}*\n\nPrice: ${propertyPrice}\nAddress: ${propertyAddress}\n\nCould you please provide more information?`;
+                const propertyCode = `STAY-100${propertyId}`;
+                const message = `Hello, I'm interested in the property:\n\n*${propertyTitle}*\nProperty Code: ${propertyCode}\nPrice: ${propertyPrice}\nAddress: ${propertyAddress}\n\nCould you please provide more information?`;
                 const encodedMessage = encodeURIComponent(message);
                 window.open(`https://wa.me/9170548739?text=${encodedMessage}`, '_blank');
             }
