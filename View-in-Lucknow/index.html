@@ -337,7 +337,7 @@
         }
         
         .listing-btn.booked {
-            background-color: #ff4757;
+            background-color: #ccc;
             cursor: not-allowed;
         }
         
@@ -510,7 +510,7 @@
         }
         
         .modal-contact-btn.booked {
-            background-color: #ff4757;
+            background-color: #ccc;
             cursor: not-allowed;
         }
         
@@ -937,87 +937,109 @@
                 description: "Well-maintained 1 BHK apartment with modular kitchen and parking space. The apartment has been recently painted and features ceramic tile flooring throughout. The building has 24-hour water supply and is located close to markets, schools, and public transportation.",
                 images: [
                     "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
-                    "https://images.unsplash.com/photo-1556911220-bf31c812dbb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1556910633-8b5a5c4b1e6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
                     "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
                 ],
                 features: [
                     { icon: "🛏️", text: "1 Bedroom" },
                     { icon: "🚿", text: "1 Bathroom" },
-                    { icon: "📏", text: "700 sqft" },
-                    { icon: "🏢", text: "Apartment" },
-                    { icon: "🅿️", text: "Parking Available" },
+                    { icon: "📏", text: "600 sqft" },
+                    { icon: "🍳", text: "Modular Kitchen" },
+                    { icon: "🅿️", text: "Parking Space" },
                     { icon: "💧", text: "24/7 Water" }
                 ],
-                badge: "verified",
+                badge: "featured",
+                medal: "gold",
                 booked: false,
                 bookedTime: null
             }
         ];
 
-        // DOM elements
-        const listingsContainer = document.getElementById('listings-container');
-        const propertyModal = document.getElementById('propertyModal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalLocation = document.getElementById('modalLocation');
-        const modalMainImage = document.getElementById('modalMainImage');
-        const modalThumbnails = document.getElementById('modalThumbnails');
-        const modalPrice = document.getElementById('modalPrice');
-        const modalFeatures = document.getElementById('modalFeatures');
-        const modalDescription = document.getElementById('modalDescription');
-        const modalContactBtn = document.getElementById('modalContactBtn');
-        const propertyCode = document.getElementById('propertyCode');
-
         // Current filtered properties
         let filteredProperties = [...properties];
+        let currentProperty = null;
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
-            renderListings(filteredProperties);
+            // Load booked properties from localStorage
+            const bookedProperties = JSON.parse(localStorage.getItem('bookedProperties')) || [];
+            
+            // Update properties with booked status and time
+            properties.forEach(property => {
+                const bookedProperty = bookedProperties.find(p => p.id === property.id);
+                if (bookedProperty) {
+                    property.booked = true;
+                    property.bookedTime = bookedProperty.time;
+                    
+                    // Check if 1.5 hours have passed since booking
+                    const now = new Date();
+                    const bookingTime = new Date(bookedProperty.time);
+                    const hoursPassed = (now - bookingTime) / (1000 * 60 * 60);
+                    
+                    if (hoursPassed >= 1.5) {
+                        property.booked = false;
+                        property.bookedTime = null;
+                        // Remove from localStorage
+                        const updatedBookedProperties = bookedProperties.filter(p => p.id !== property.id);
+                        localStorage.setItem('bookedProperties', JSON.stringify(updatedBookedProperties));
+                    }
+                }
+            });
+            
+            renderProperties(properties);
         });
 
-        // Render listings
-        function renderListings(propertiesToRender) {
-            listingsContainer.innerHTML = '';
+        // Render properties to the page
+        function renderProperties(propertiesToRender) {
+            const container = document.getElementById('listings-container');
+            container.innerHTML = '';
             
             if (propertiesToRender.length === 0) {
-                listingsContainer.innerHTML = `
+                container.innerHTML = `
                     <div class="no-results">
                         <div class="no-results-icon">
-                            <i class="fas fa-search"></i>
+                            <i class="fas fa-home"></i>
                         </div>
-                        <h3>No properties found</h3>
-                        <p>Try adjusting your filters to find more options.</p>
-                        <button class="filter-btn reset-btn" onclick="resetFilters()">Reset Filters</button>
+                        <h3>No Properties Found</h3>
+                        <p>We couldn't find any properties matching your search criteria. We're constantly adding new properties in Lucknow to provide you with the best service.</p>
+                        <button class="filter-btn apply-btn" onclick="resetFilters()">Reset Filters</button>
                     </div>
                 `;
                 return;
             }
             
             propertiesToRender.forEach(property => {
-                const listingCard = document.createElement('div');
-                listingCard.className = 'listing-card';
+                const card = document.createElement('div');
+                card.className = 'listing-card';
+                card.dataset.id = property.id;
                 
-                // Format price with commas
-                const formattedPrice = property.price.toLocaleString('en-IN');
-                
-                // Determine button class and text
-                let btnClass = '';
-                let btnText = 'Book Now';
-                if (property.booked) {
-                    btnClass = 'booked';
-                    btnText = 'Booked';
+                let badge = '';
+                if (property.badge) {
+                    badge = `<div class="listing-badge ${property.badge}">${property.badge.charAt(0).toUpperCase() + property.badge.slice(1)}</div>`;
                 }
                 
-                listingCard.innerHTML = `
+                let medal = '';
+                if (property.medal) {
+                    medal = `<div class="medal-badge">
+                        <div class="medal ${property.medal}"></div>
+                    </div>`;
+                }
+                
+                let buttonText = 'View Details';
+                let buttonClass = '';
+                let disabled = '';
+                
+                if (property.booked) {
+                    buttonText = 'Booked';
+                    buttonClass = 'booked';
+                    disabled = 'disabled';
+                }
+                
+                card.innerHTML = `
                     <div class="listing-image">
                         <img src="${property.images[0]}" alt="${property.title}">
-                        ${property.badge ? `<div class="listing-badge ${property.badge}">${property.badge.charAt(0).toUpperCase() + property.badge.slice(1)}</div>` : ''}
-                        ${property.medal ? `
-                        <div class="medal-badge">
-                            <div class="medal ${property.medal}">
-                                <i class="fas fa-medal"></i>
-                            </div>
-                        </div>` : ''}
+                        ${badge}
+                        ${medal}
                     </div>
                     <div class="listing-details">
                         <h3 class="listing-title">${property.title}</h3>
@@ -1025,123 +1047,55 @@
                             <i class="fas fa-map-marker-alt"></i>
                             <span>${property.location}</span>
                         </div>
-                        <p class="listing-description">${property.description.substring(0, 100)}...</p>
-                        <div class="listing-price">₹${formattedPrice}/month</div>
-                        <button class="listing-btn ${btnClass}" onclick="viewProperty(${property.id})">
-                            <i class="fas fa-eye"></i> View Details
+                        <p class="listing-description">
+                            ${property.description.substring(0, 100)}...
+                        </p>
+                        <div class="listing-price">₹${property.price.toLocaleString()}/month</div>
+                        <button class="listing-btn ${buttonClass}" onclick="showPropertyDetails(${property.id})" ${disabled}>
+                            ${buttonText}
                         </button>
                     </div>
                 `;
                 
-                listingsContainer.appendChild(listingCard);
+                container.appendChild(card);
             });
         }
 
-        // View property details
-        function viewProperty(id) {
-            const property = properties.find(p => p.id === id);
-            if (!property) return;
-            
-            // Format price with commas
-            const formattedPrice = property.price.toLocaleString('en-IN');
-            
-            // Set modal content
-            modalTitle.textContent = property.title;
-            modalLocation.textContent = property.location;
-            modalMainImage.src = property.images[0];
-            modalPrice.textContent = `₹${formattedPrice}/month`;
-            modalDescription.textContent = property.description;
-            propertyCode.textContent = `STAY-${property.id.toString().padStart(4, '0')}`;
-            
-            // Clear previous thumbnails
-            modalThumbnails.innerHTML = '';
-            
-            // Add thumbnails
-            property.images.forEach((image, index) => {
-                const thumbnail = document.createElement('img');
-                thumbnail.src = image;
-                thumbnail.className = 'modal-thumbnail';
-                thumbnail.alt = `Thumbnail ${index + 1}`;
-                thumbnail.onclick = () => {
-                    modalMainImage.src = image;
-                };
-                modalThumbnails.appendChild(thumbnail);
-            });
-            
-            // Clear previous features
-            modalFeatures.innerHTML = '';
-            
-            // Add features
-            property.features.forEach(feature => {
-                const featureItem = document.createElement('div');
-                featureItem.className = 'feature-item';
-                featureItem.innerHTML = `
-                    <div class="feature-icon">${feature.icon}</div>
-                    <div class="feature-text">${feature.text}</div>
-                `;
-                modalFeatures.appendChild(featureItem);
-            });
-            
-            // Set button state
-            modalContactBtn.className = 'modal-contact-btn';
-            if (property.booked) {
-                modalContactBtn.classList.add('booked');
-                modalContactBtn.innerHTML = '<i class="fas fa-times-circle"></i> Already Booked';
-            } else {
-                modalContactBtn.innerHTML = '<i class="fas fa-phone-alt"></i> Contact Owner';
-            }
-            
-            // Show modal
-            propertyModal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
-
-        // Close modal
-        function closeModal() {
-            propertyModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        // Contact owner
-        function contactOwner() {
-            const propertyId = parseInt(propertyCode.textContent.split('-')[1]);
-            const property = properties.find(p => p.id === propertyId);
-            
-            if (property && !property.booked) {
-                alert(`Contacting owner for property STAY-${property.id.toString().padStart(4, '0')}. Phone number: +91 XXXXXXX${Math.floor(Math.random() * 90 + 10)}`);
-            }
-        }
-
-        // Apply filters
+        // Filter functions
         function applyFilters() {
             const priceRange = document.getElementById('price-range').value;
             const area = document.getElementById('area').value;
             const bhkType = document.getElementById('bhk-type').value;
             
             filteredProperties = properties.filter(property => {
-                // Filter by price range
+                // Price filter
                 if (priceRange !== 'any') {
                     const [min, max] = priceRange.split('-').map(Number);
                     if (max && (property.price < min || property.price > max)) {
                         return false;
-                    } else if (!max && property.price < min) {
+                    }
+                    if (!max && property.price < min) {
                         return false;
                     }
                 }
                 
-                // Filter by area
-                if (area !== 'any' && property.area !== area) {
+                // Area filter
+                if (area !== 'any' && !property.area.toLowerCase().includes(area.toLowerCase())) {
                     return false;
                 }
                 
-                // Filter by BHK type
+                // BHK type filter
                 if (bhkType !== 'any') {
                     if (bhkType === 'studio' && property.type !== 'studio') {
                         return false;
-                    } else if (bhkType === 'pg' && property.type !== 'pg') {
+                    }
+                    if (bhkType === 'pg' && property.type !== 'pg') {
                         return false;
-                    } else if (!['studio', 'pg'].includes(bhkType) {
-                        if (property.type !== bhkType) {
+                    }
+                    if (!isNaN(bhkType)) {
+                        const typeNum = parseInt(bhkType);
+                        if (isNaN(property.type)) return false;
+                        if (parseInt(property.type) !== typeNum) {
                             return false;
                         }
                     }
@@ -1150,26 +1104,134 @@
                 return true;
             });
             
-            renderListings(filteredProperties);
+            renderProperties(filteredProperties);
         }
 
-        // Reset filters
         function resetFilters() {
             document.getElementById('price-range').value = 'any';
             document.getElementById('area').value = 'any';
             document.getElementById('bhk-type').value = 'any';
             
             filteredProperties = [...properties];
-            renderListings(filteredProperties);
+            renderProperties(filteredProperties);
+        }
+
+        // Property details modal
+        function showPropertyDetails(id) {
+            currentProperty = properties.find(p => p.id === id);
+            if (!currentProperty) return;
+            
+            document.getElementById('modalTitle').textContent = currentProperty.title;
+            document.getElementById('modalLocation').textContent = currentProperty.location;
+            document.getElementById('modalPrice').textContent = `₹${currentProperty.price.toLocaleString()}/month`;
+            document.getElementById('modalDescription').textContent = currentProperty.description;
+            document.getElementById('propertyCode').textContent = `STAY-100${currentProperty.id}`;
+            
+            // Set main image
+            const mainImage = document.getElementById('modalMainImage');
+            mainImage.src = currentProperty.images[0];
+            mainImage.alt = currentProperty.title;
+            
+            // Set thumbnails
+            const thumbnailsContainer = document.getElementById('modalThumbnails');
+            thumbnailsContainer.innerHTML = '';
+            
+            currentProperty.images.forEach((img, index) => {
+                const thumbnail = document.createElement('img');
+                thumbnail.className = 'modal-thumbnail';
+                thumbnail.src = img;
+                thumbnail.alt = `${currentProperty.title} - Image ${index + 1}`;
+                thumbnail.onclick = () => {
+                    mainImage.src = img;
+                };
+                thumbnailsContainer.appendChild(thumbnail);
+            });
+            
+            // Set features
+            const featuresContainer = document.getElementById('modalFeatures');
+            featuresContainer.innerHTML = '';
+            
+            currentProperty.features.forEach(feature => {
+                const featureItem = document.createElement('div');
+                featureItem.className = 'feature-item';
+                featureItem.innerHTML = `
+                    <div class="feature-icon">${feature.icon}</div>
+                    <div class="feature-text">${feature.text}</div>
+                `;
+                featuresContainer.appendChild(featureItem);
+            });
+            
+            // Set contact button
+            const contactBtn = document.getElementById('modalContactBtn');
+            if (currentProperty.booked) {
+                contactBtn.classList.add('booked');
+                contactBtn.innerHTML = '<i class="fas fa-times"></i> Already Booked';
+                contactBtn.onclick = null;
+            } else {
+                contactBtn.className = 'modal-contact-btn';
+                contactBtn.innerHTML = '<i class="fas fa-phone-alt"></i> Contact Owner';
+                contactBtn.onclick = contactOwner;
+            }
+            
+            // Show modal
+            document.getElementById('propertyModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('propertyModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Contact owner function
+        function contactOwner() {
+            if (!currentProperty) return;
+            
+            const message = `Hello, I'm interested in your property:\n\n*${currentProperty.title}*\nProperty Code: STAY-100${currentProperty.id}\nPrice: ₹${currentProperty.price.toLocaleString()}/month\nLocation: ${currentProperty.location}\n\nCould you please provide more information?`;
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Mark as booked with current time
+            currentProperty.booked = true;
+            currentProperty.bookedTime = new Date().toISOString();
+            
+            const propertyIndex = properties.findIndex(p => p.id === currentProperty.id);
+            if (propertyIndex !== -1) {
+                properties[propertyIndex].booked = true;
+                properties[propertyIndex].bookedTime = currentProperty.bookedTime;
+            }
+            
+            // Save to localStorage
+            const bookedProperties = JSON.parse(localStorage.getItem('bookedProperties')) || [];
+            const existingIndex = bookedProperties.findIndex(p => p.id === currentProperty.id);
+            
+            if (existingIndex === -1) {
+                bookedProperties.push({
+                    id: currentProperty.id,
+                    time: currentProperty.bookedTime
+                });
+                localStorage.setItem('bookedProperties', JSON.stringify(bookedProperties));
+            }
+            
+            // Update the UI
+            renderProperties(properties);
+            
+            // Update modal button
+            const contactBtn = document.getElementById('modalContactBtn');
+            contactBtn.classList.add('booked');
+            contactBtn.innerHTML = '<i class="fas fa-times"></i> Already Booked';
+            contactBtn.onclick = null;
+            
+            // Open WhatsApp
+            window.open(`https://wa.me/9170548739?text=${encodedMessage}`, '_blank');
         }
 
         // Close modal when clicking outside
         window.onclick = function(event) {
-            if (event.target === propertyModal) {
+            const modal = document.getElementById('propertyModal');
+            if (event.target === modal) {
                 closeModal();
             }
         };
     </script>
 </body>
 </html>
-
