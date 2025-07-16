@@ -212,30 +212,60 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            display: flex;
-            gap: 5px;
             z-index: 2;
         }
         
         .medal {
-            width: 12px;
-            height: 12px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             border-radius: 50%;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .medal::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0) 40%,
+                rgba(255,255,255,0.8) 50%,
+                rgba(255,255,255,0) 60%,
+                rgba(255,255,255,0) 100%
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            20% { transform: translateX(100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
         }
         
         .medal.gold {
-            background-color: #ffd700;
-            box-shadow: 0 0 5px #ffd700;
+            background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%);
         }
         
         .medal.silver {
-            background-color: #c0c0c0;
-            box-shadow: 0 0 5px #c0c0c0;
+            background: linear-gradient(135deg, #C0C0C0 0%, #A8A8A8 100%);
         }
         
         .medal.bronze {
-            background-color: #cd7f32;
-            box-shadow: 0 0 5px #cd7f32;
+            background: linear-gradient(135deg, #CD7F32 0%, #A97142 100%);
         }
         
         .listing-details {
@@ -772,7 +802,7 @@
                     { icon: "🏋️", text: "Gym Access" }
                 ],
                 badge: "featured",
-                medals: ["gold", "silver"],
+                medal: "gold", // Only one medal per property
                 booked: false
             },
             {
@@ -797,7 +827,7 @@
                     { icon: "🧹", text: "Housekeeping" }
                 ],
                 badge: "verified",
-                medals: ["gold"],
+                medal: "silver",
                 booked: false
             },
             {
@@ -821,7 +851,7 @@
                     { icon: "🏋️", text: "Gym Included" },
                     { icon: "🚗", text: "2 Parking Spaces" }
                 ],
-                medals: ["gold", "silver", "bronze"],
+                medal: "bronze",
                 booked: false
             },
             {
@@ -846,7 +876,7 @@
                     { icon: "🚪", text: "Private Rooms" }
                 ],
                 badge: "verified",
-                medals: ["silver"],
+                medal: "silver",
                 booked: false
             },
             {
@@ -870,7 +900,7 @@
                     { icon: "🍳", text: "Kitchenette" },
                     { icon: "🧹", text: "Weekly Cleaning" }
                 ],
-                medals: ["bronze"],
+                medal: "bronze",
                 booked: false
             },
             {
@@ -895,7 +925,7 @@
                     { icon: "💧", text: "24/7 Water" }
                 ],
                 badge: "featured",
-                medals: ["gold", "bronze"],
+                medal: "gold",
                 booked: false
             }
         ];
@@ -906,6 +936,16 @@
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
+            // Load booked properties from localStorage
+            const bookedProperties = JSON.parse(localStorage.getItem('bookedProperties')) || [];
+            
+            // Update properties with booked status
+            properties.forEach(property => {
+                if (bookedProperties.includes(property.id)) {
+                    property.booked = true;
+                }
+            });
+            
             renderProperties(properties);
         });
 
@@ -942,20 +982,18 @@
                     badge += `<div class="listing-badge booked">Booked</div>`;
                 }
                 
-                let medals = '';
-                if (property.medals && property.medals.length > 0) {
-                    medals = `<div class="medal-badge">`;
-                    property.medals.forEach(medal => {
-                        medals += `<div class="medal ${medal}"></div>`;
-                    });
-                    medals += `</div>`;
+                let medal = '';
+                if (property.medal) {
+                    medal = `<div class="medal-badge">
+                        <div class="medal ${property.medal}">${property.medal.charAt(0).toUpperCase()}</div>
+                    </div>`;
                 }
                 
                 card.innerHTML = `
                     <div class="listing-image">
                         <img src="${property.images[0]}" alt="${property.title}">
                         ${badge}
-                        ${medals}
+                        ${medal}
                     </div>
                     <div class="listing-details">
                         <h3 class="listing-title">${property.title}</h3>
@@ -1111,6 +1149,13 @@
             const propertyIndex = properties.findIndex(p => p.id === currentProperty.id);
             if (propertyIndex !== -1) {
                 properties[propertyIndex].booked = true;
+            }
+            
+            // Save to localStorage
+            const bookedProperties = JSON.parse(localStorage.getItem('bookedProperties')) || [];
+            if (!bookedProperties.includes(currentProperty.id)) {
+                bookedProperties.push(currentProperty.id);
+                localStorage.setItem('bookedProperties', JSON.stringify(bookedProperties));
             }
             
             // Update the UI
