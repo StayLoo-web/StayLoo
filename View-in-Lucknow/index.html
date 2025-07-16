@@ -198,6 +198,7 @@
         
         .listing-badge.booked {
             background-color: #ff4757;
+            display: none;
         }
         
         .listing-badge.verified {
@@ -216,21 +217,18 @@
         }
         
         .medal {
-            width: 30px;
-            height: 30px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
-            font-size: 14px;
-            font-weight: bold;
-            color: white;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
         
+        /* Medal shine animation */
         .medal::after {
             content: '';
             position: absolute;
@@ -256,16 +254,34 @@
             100% { transform: translateX(100%) rotate(30deg); }
         }
         
+        /* Medal colors matching StayLoo's pricing page */
         .medal.gold {
             background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%);
+            border: 2px solid #FFD700;
         }
         
         .medal.silver {
             background: linear-gradient(135deg, #C0C0C0 0%, #A8A8A8 100%);
+            border: 2px solid #C0C0C0;
         }
         
         .medal.bronze {
             background: linear-gradient(135deg, #CD7F32 0%, #A97142 100%);
+            border: 2px solid #CD7F32;
+        }
+        
+        /* Medal ribbon */
+        .medal::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 18px;
+            height: 10px;
+            background: #ff4757;
+            clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+            z-index: 1;
         }
         
         .listing-details {
@@ -328,6 +344,10 @@
         .listing-btn.booked {
             background-color: #ff4757;
             cursor: not-allowed;
+        }
+        
+        .listing-btn.contact {
+            background-color: #2ed573;
         }
         
         /* Property Modal */
@@ -497,6 +517,10 @@
         .modal-contact-btn.booked {
             background-color: #ff4757;
             cursor: not-allowed;
+        }
+        
+        .modal-contact-btn.contact {
+            background-color: #2ed573;
         }
         
         .property-code {
@@ -802,8 +826,9 @@
                     { icon: "🏋️", text: "Gym Access" }
                 ],
                 badge: "featured",
-                medal: "gold", // Only one medal per property
-                booked: false
+                medal: "gold",
+                booked: false,
+                bookedTime: null
             },
             {
                 id: 2,
@@ -828,7 +853,8 @@
                 ],
                 badge: "verified",
                 medal: "silver",
-                booked: false
+                booked: false,
+                bookedTime: null
             },
             {
                 id: 3,
@@ -852,7 +878,8 @@
                     { icon: "🚗", text: "2 Parking Spaces" }
                 ],
                 medal: "bronze",
-                booked: false
+                booked: false,
+                bookedTime: null
             },
             {
                 id: 4,
@@ -877,7 +904,8 @@
                 ],
                 badge: "verified",
                 medal: "silver",
-                booked: false
+                booked: false,
+                bookedTime: null
             },
             {
                 id: 5,
@@ -901,7 +929,8 @@
                     { icon: "🧹", text: "Weekly Cleaning" }
                 ],
                 medal: "bronze",
-                booked: false
+                booked: false,
+                bookedTime: null
             },
             {
                 id: 6,
@@ -926,7 +955,8 @@
                 ],
                 badge: "featured",
                 medal: "gold",
-                booked: false
+                booked: false,
+                bookedTime: null
             }
         ];
 
@@ -939,10 +969,25 @@
             // Load booked properties from localStorage
             const bookedProperties = JSON.parse(localStorage.getItem('bookedProperties')) || [];
             
-            // Update properties with booked status
+            // Update properties with booked status and time
             properties.forEach(property => {
-                if (bookedProperties.includes(property.id)) {
+                const bookedProperty = bookedProperties.find(p => p.id === property.id);
+                if (bookedProperty) {
                     property.booked = true;
+                    property.bookedTime = bookedProperty.time;
+                    
+                    // Check if 1.5 hours have passed since booking
+                    const now = new Date();
+                    const bookingTime = new Date(bookedProperty.time);
+                    const hoursPassed = (now - bookingTime) / (1000 * 60 * 60);
+                    
+                    if (hoursPassed >= 1.5) {
+                        property.booked = false;
+                        property.bookedTime = null;
+                        // Remove from localStorage
+                        const updatedBookedProperties = bookedProperties.filter(p => p.id !== property.id);
+                        localStorage.setItem('bookedProperties', JSON.stringify(updatedBookedProperties));
+                    }
                 }
             });
             
@@ -978,15 +1023,30 @@
                     badge = `<div class="listing-badge ${property.badge}">${property.badge.charAt(0).toUpperCase() + property.badge.slice(1)}</div>`;
                 }
                 
-                if (property.booked) {
-                    badge += `<div class="listing-badge booked">Booked</div>`;
-                }
-                
                 let medal = '';
                 if (property.medal) {
                     medal = `<div class="medal-badge">
-                        <div class="medal ${property.medal}">${property.medal.charAt(0).toUpperCase()}</div>
+                        <div class="medal ${property.medal}"></div>
                     </div>`;
+                }
+                
+                let buttonText = 'View Details';
+                let buttonClass = '';
+                let disabled = '';
+                
+                if (property.booked) {
+                    const now = new Date();
+                    const bookingTime = new Date(property.bookedTime);
+                    const hoursPassed = (now - bookingTime) / (1000 * 60 * 60);
+                    
+                    if (hoursPassed >= 1.5) {
+                        buttonText = 'Contact Us';
+                        buttonClass = 'contact';
+                    } else {
+                        buttonText = 'Booked';
+                        buttonClass = 'booked';
+                        disabled = 'disabled';
+                    }
                 }
                 
                 card.innerHTML = `
@@ -1005,8 +1065,8 @@
                             ${property.description.substring(0, 100)}...
                         </p>
                         <div class="listing-price">₹${property.price.toLocaleString()}/month</div>
-                        <button class="listing-btn ${property.booked ? 'booked' : ''}" onclick="showPropertyDetails(${property.id})" ${property.booked ? 'disabled' : ''}>
-                            ${property.booked ? 'Booked' : 'View Details'}
+                        <button class="listing-btn ${buttonClass}" onclick="showPropertyDetails(${property.id})" ${disabled}>
+                            ${buttonText}
                         </button>
                     </div>
                 `;
@@ -1118,11 +1178,21 @@
             // Set contact button
             const contactBtn = document.getElementById('modalContactBtn');
             if (currentProperty.booked) {
-                contactBtn.classList.add('booked');
-                contactBtn.innerHTML = '<i class="fas fa-times"></i> Already Booked';
-                contactBtn.onclick = null;
+                const now = new Date();
+                const bookingTime = new Date(currentProperty.bookedTime);
+                const hoursPassed = (now - bookingTime) / (1000 * 60 * 60);
+                
+                if (hoursPassed >= 1.5) {
+                    contactBtn.classList.add('contact');
+                    contactBtn.innerHTML = '<i class="fas fa-phone-alt"></i> Contact Us';
+                    contactBtn.onclick = contactOwner;
+                } else {
+                    contactBtn.classList.add('booked');
+                    contactBtn.innerHTML = '<i class="fas fa-times"></i> Already Booked';
+                    contactBtn.onclick = null;
+                }
             } else {
-                contactBtn.classList.remove('booked');
+                contactBtn.className = 'modal-contact-btn';
                 contactBtn.innerHTML = '<i class="fas fa-phone-alt"></i> Contact Owner';
                 contactBtn.onclick = contactOwner;
             }
@@ -1144,37 +1214,30 @@
             const message = `Hello, I'm interested in your property:\n\n*${currentProperty.title}*\nProperty Code: STAY-100${currentProperty.id}\nPrice: ₹${currentProperty.price.toLocaleString()}/month\nLocation: ${currentProperty.location}\n\nCould you please provide more information?`;
             const encodedMessage = encodeURIComponent(message);
             
-            // Mark as booked
+            // Mark as booked with current time
             currentProperty.booked = true;
+            currentProperty.bookedTime = new Date().toISOString();
+            
             const propertyIndex = properties.findIndex(p => p.id === currentProperty.id);
             if (propertyIndex !== -1) {
                 properties[propertyIndex].booked = true;
+                properties[propertyIndex].bookedTime = currentProperty.bookedTime;
             }
             
             // Save to localStorage
             const bookedProperties = JSON.parse(localStorage.getItem('bookedProperties')) || [];
-            if (!bookedProperties.includes(currentProperty.id)) {
-                bookedProperties.push(currentProperty.id);
+            const existingIndex = bookedProperties.findIndex(p => p.id === currentProperty.id);
+            
+            if (existingIndex === -1) {
+                bookedProperties.push({
+                    id: currentProperty.id,
+                    time: currentProperty.bookedTime
+                });
                 localStorage.setItem('bookedProperties', JSON.stringify(bookedProperties));
             }
             
             // Update the UI
-            const card = document.querySelector(`.listing-card[data-id="${currentProperty.id}"]`);
-            if (card) {
-                const btn = card.querySelector('.listing-btn');
-                btn.classList.add('booked');
-                btn.textContent = 'Booked';
-                btn.disabled = true;
-                
-                // Add booked badge
-                const badges = card.querySelector('.listing-image');
-                if (badges) {
-                    const bookedBadge = document.createElement('div');
-                    bookedBadge.className = 'listing-badge booked';
-                    bookedBadge.textContent = 'Booked';
-                    badges.appendChild(bookedBadge);
-                }
-            }
+            renderProperties(properties);
             
             // Update modal button
             const contactBtn = document.getElementById('modalContactBtn');
