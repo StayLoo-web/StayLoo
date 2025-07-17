@@ -337,7 +337,7 @@
         }
         
         .listing-btn.booked {
-            background-color: #ccc;
+            background-color: #ff4757;
             cursor: not-allowed;
         }
         
@@ -510,7 +510,7 @@
         }
         
         .modal-contact-btn.booked {
-            background-color: #ccc;
+            background-color: #ff4757;
             cursor: not-allowed;
         }
         
@@ -961,33 +961,30 @@
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
-            // Load booked properties from localStorage
-            const bookedProperties = JSON.parse(localStorage.getItem('bookedProperties')) || [];
-            
-            // Update properties with booked status and time
-            properties.forEach(property => {
-                const bookedProperty = bookedProperties.find(p => p.id === property.id);
-                if (bookedProperty) {
-                    property.booked = true;
-                    property.bookedTime = bookedProperty.time;
-                    
-                    // Check if 1.5 hours have passed since booking
-                    const now = new Date();
-                    const bookingTime = new Date(bookedProperty.time);
-                    const hoursPassed = (now - bookingTime) / (1000 * 60 * 60);
-                    
-                    if (hoursPassed >= 1.5) {
-                        property.booked = false;
-                        property.bookedTime = null;
-                        // Remove from localStorage
-                        const updatedBookedProperties = bookedProperties.filter(p => p.id !== property.id);
-                        localStorage.setItem('bookedProperties', JSON.stringify(updatedBookedProperties));
-                    }
-                }
-            });
-            
+            checkBookedProperties();
             renderProperties(properties);
         });
+
+        // Check booked properties and update status
+        function checkBookedProperties() {
+            const bookedProperties = JSON.parse(localStorage.getItem('bookedProperties')) || [];
+            const now = new Date();
+            
+            // First check if any booked properties have expired
+            const updatedBookedProperties = bookedProperties.filter(bookedProp => {
+                const bookingTime = new Date(bookedProp.time);
+                const hoursPassed = (now - bookingTime) / (1000 * 60 * 60);
+                return hoursPassed < 1.5; // Keep only those booked within last 1.5 hours
+            });
+            
+            // Update localStorage with only active bookings
+            localStorage.setItem('bookedProperties', JSON.stringify(updatedBookedProperties));
+            
+            // Update all properties' booked status
+            properties.forEach(property => {
+                property.booked = updatedBookedProperties.some(p => p.id === property.id);
+            });
+        }
 
         // Render properties to the page
         function renderProperties(propertiesToRender) {
@@ -1027,12 +1024,10 @@
                 
                 let buttonText = 'View Details';
                 let buttonClass = '';
-                let disabled = '';
                 
                 if (property.booked) {
                     buttonText = 'Booked';
                     buttonClass = 'booked';
-                    disabled = 'disabled';
                 }
                 
                 card.innerHTML = `
@@ -1051,7 +1046,7 @@
                             ${property.description.substring(0, 100)}...
                         </p>
                         <div class="listing-price">₹${property.price.toLocaleString()}/month</div>
-                        <button class="listing-btn ${buttonClass}" onclick="showPropertyDetails(${property.id})" ${disabled}>
+                        <button class="listing-btn ${buttonClass}" onclick="showPropertyDetails(${property.id})" ${property.booked ? 'disabled' : ''}>
                             ${buttonText}
                         </button>
                     </div>
@@ -1164,7 +1159,7 @@
             // Set contact button
             const contactBtn = document.getElementById('modalContactBtn');
             if (currentProperty.booked) {
-                contactBtn.classList.add('booked');
+                contactBtn.className = 'modal-contact-btn booked';
                 contactBtn.innerHTML = '<i class="fas fa-times"></i> Already Booked';
                 contactBtn.onclick = null;
             } else {
@@ -1185,39 +1180,38 @@
 
         // Contact owner function
         function contactOwner() {
-            if (!currentProperty) return;
+            if (!currentProperty || currentProperty.booked) return;
             
             const message = `Hello, I'm interested in your property:\n\n*${currentProperty.title}*\nProperty Code: STAY-100${currentProperty.id}\nPrice: ₹${currentProperty.price.toLocaleString()}/month\nLocation: ${currentProperty.location}\n\nCould you please provide more information?`;
             const encodedMessage = encodeURIComponent(message);
             
             // Mark as booked with current time
+            const bookedTime = new Date().toISOString();
             currentProperty.booked = true;
-            currentProperty.bookedTime = new Date().toISOString();
+            currentProperty.bookedTime = bookedTime;
             
-            const propertyIndex = properties.findIndex(p => p.id === currentProperty.id);
-            if (propertyIndex !== -1) {
-                properties[propertyIndex].booked = true;
-                properties[propertyIndex].bookedTime = currentProperty.bookedTime;
-            }
+            // Update all properties with this ID
+            properties.forEach(property => {
+                if (property.id === currentProperty.id) {
+                    property.booked = true;
+                    property.bookedTime = bookedTime;
+                }
+            });
             
             // Save to localStorage
             const bookedProperties = JSON.parse(localStorage.getItem('bookedProperties')) || [];
-            const existingIndex = bookedProperties.findIndex(p => p.id === currentProperty.id);
-            
-            if (existingIndex === -1) {
-                bookedProperties.push({
-                    id: currentProperty.id,
-                    time: currentProperty.bookedTime
-                });
-                localStorage.setItem('bookedProperties', JSON.stringify(bookedProperties));
-            }
+            bookedProperties.push({
+                id: currentProperty.id,
+                time: bookedTime
+            });
+            localStorage.setItem('bookedProperties', JSON.stringify(bookedProperties));
             
             // Update the UI
             renderProperties(properties);
             
             // Update modal button
             const contactBtn = document.getElementById('modalContactBtn');
-            contactBtn.classList.add('booked');
+            contactBtn.className = 'modal-contact-btn booked';
             contactBtn.innerHTML = '<i class="fas fa-times"></i> Already Booked';
             contactBtn.onclick = null;
             
