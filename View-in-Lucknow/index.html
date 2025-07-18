@@ -18,12 +18,16 @@
             background-color: #f8f9fa;
             color: #333;
             line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+            flex: 1;
         }
         
         /* Header Styles */
@@ -31,13 +35,17 @@
             background-color: white;
             padding: 20px 0;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         
         .logo {
             font-size: 32px;
             font-weight: bold;
             display: inline-block;
+            text-align: center;
+            width: 100%;
         }
         
         .logo .stay {
@@ -63,6 +71,8 @@
         .main-title p {
             color: #666;
             font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
         }
         
         /* Filter Section */
@@ -98,6 +108,7 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             background: white;
+            font-size: 14px;
         }
         
         .filter-buttons {
@@ -113,6 +124,7 @@
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s;
+            font-size: 14px;
         }
         
         .apply-btn {
@@ -147,7 +159,7 @@
         
         .listings-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
         }
         
@@ -158,6 +170,9 @@
             box-shadow: 0 2px 15px rgba(0,0,0,0.05);
             transition: transform 0.3s, box-shadow 0.3s;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
         
         .listing-card:hover {
@@ -183,25 +198,41 @@
             transform: scale(1.05);
         }
         
-        .listing-badge {
+        /* Badge Styles */
+        .badge-container {
             position: absolute;
             top: 10px;
             left: 10px;
-            background-color: #4a6bff;
-            color: white;
+            display: flex;
+            gap: 5px;
+            z-index: 2;
+        }
+        
+        .listing-badge {
             padding: 4px 8px;
             border-radius: 4px;
             font-size: 12px;
             font-weight: bold;
-            z-index: 2;
+            color: white;
         }
         
-        .listing-badge.verified {
+        .badge-verified {
             background-color: #2ed573;
         }
         
-        .listing-badge.featured {
+        .badge-featured {
             background-color: #ffa502;
+        }
+        
+        .badge-live {
+            background-color: #ff4757;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
         }
         
         .medal-badge {
@@ -249,7 +280,7 @@
             100% { transform: translateX(100%) rotate(30deg); }
         }
         
-        /* Medal colors matching StayLoo's pricing page */
+        /* Medal colors */
         .medal.gold {
             background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%);
             border: 2px solid #FFD700;
@@ -281,6 +312,9 @@
         
         .listing-details {
             padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
         
         .listing-title {
@@ -311,6 +345,7 @@
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            flex: 1;
         }
         
         .listing-price {
@@ -330,19 +365,102 @@
             font-weight: 500;
             cursor: pointer;
             transition: background-color 0.3s;
+            margin-top: auto;
         }
         
         .listing-btn:hover {
             background-color: #3a5bef;
         }
         
-        .listing-btn.booked {
-            background-color: #ff4757;
-            cursor: not-allowed;
+        /* No Results Section */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            grid-column: 1 / -1;
         }
         
-        .listing-btn.contact {
-            background-color: #2ed573;
+        .no-results-icon {
+            font-size: 60px;
+            color: #4a6bff;
+            margin-bottom: 20px;
+        }
+        
+        .no-results h3 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .no-results p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+        
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .footer-logo .stay {
+            color: #4a6bff;
+        }
+        
+        .footer-logo .loo {
+            color: white;
+        }
+        
+        .footer-links {
+            min-width: 150px;
+        }
+        
+        .footer-links h3 {
+            color: #4a6bff;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #4a6bff;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 14px;
         }
         
         /* Property Modal */
@@ -509,15 +627,6 @@
             background-color: #3a5bef;
         }
         
-        .modal-contact-btn.booked {
-            background-color: #ff4757;
-            cursor: not-allowed;
-        }
-        
-        .modal-contact-btn.contact {
-            background-color: #2ed573;
-        }
-        
         .property-code {
             background-color: #f0f4ff;
             color: #4a6bff;
@@ -528,96 +637,10 @@
             display: inline-block;
         }
         
-        /* No Results Section */
-        .no-results {
-            text-align: center;
-            padding: 60px 20px;
-            grid-column: 1 / -1;
-        }
-        
-        .no-results-icon {
-            font-size: 60px;
-            color: #4a6bff;
-            margin-bottom: 20px;
-        }
-        
-        .no-results h3 {
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 15px;
-        }
-        
-        .no-results p {
-            color: #666;
-            max-width: 600px;
-            margin: 0 auto 20px;
-        }
-        
-        /* Footer */
-        footer {
-            background-color: #333;
-            color: white;
-            padding: 40px 0;
-            margin-top: 60px;
-        }
-        
-        .footer-container {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-        
-        .footer-logo {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-        
-        .footer-logo .stay {
-            color: #4a6bff;
-        }
-        
-        .footer-logo .loo {
-            color: white;
-        }
-        
-        .footer-links h3 {
-            color: #4a6bff;
-            margin-bottom: 15px;
-            font-size: 18px;
-        }
-        
-        .footer-links ul {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-links a {
-            color: #ddd;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: #4a6bff;
-        }
-        
-        .copyright {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #444;
-            color: #aaa;
-            font-size: 14px;
-        }
-        
         /* Responsive Styles */
         @media (max-width: 768px) {
             .listings-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             }
             
             .main-title h1 {
@@ -630,17 +653,16 @@
         }
         
         @media (max-width: 576px) {
-            .listings-grid {
-                grid-template-columns: 1fr;
-            }
-            
             .footer-container {
                 flex-direction: column;
-                gap: 30px;
             }
             
             .filter-row {
                 flex-direction: column;
+            }
+            
+            .modal-main-image {
+                height: 200px;
             }
         }
     </style>
@@ -658,7 +680,7 @@
         <!-- Main Title -->
         <div class="main-title">
             <h1>Find Your Perfect Space in Lucknow</h1>
-            <p>Browse and filter through available properties</p>
+            <p>We’re excited to have you here! As we’re just getting started, we’ve added sample listings to show you how your property will look when you list with us. This way, you can explore the platform and see the potential for your own property.</p>
         </div>
         
         <!-- Filter Section -->
@@ -753,7 +775,7 @@
                         Property description will be shown here.
                     </div>
                     
-                    <button class="modal-contact-btn" id="modalContactBtn" onclick="contactOwner()">
+                    <button class="modal-contact-btn" onclick="contactOwner()">
                         <i class="fas fa-phone-alt"></i> Contact Owner
                     </button>
                 </div>
@@ -775,7 +797,7 @@
                     <h3>Quick Links</h3>
                     <ul>
                         <li><a href="/">Home</a></li>
-                        <li><a href="/Browse-spaces/">Browse More</a></li>
+                        <li><a href="/browse-spaces/">Browse More</a></li>
                         <li><a href="/list-space/">List Your Space</a></li>
                     </ul>
                 </div>
@@ -784,8 +806,8 @@
                     <h3>Support</h3>
                     <ul>
                         <li><a href="/contact-us/">Contact Us</a></li>
-                        <li><a href="/pricing-queries/">FAQ</a></li>
-                        <li><a href="/privacy-policies/">Privacy Policy</a></li>
+                        <li><a href="/faq/">FAQ</a></li>
+                        <li><a href="/privacy-policy/">Privacy Policy</a></li>
                     </ul>
                 </div>
             </div>
@@ -820,10 +842,8 @@
                     { icon: "🅿️", text: "Parking Available" },
                     { icon: "🏋️", text: "Gym Access" }
                 ],
-                badge: "featured",
-                medal: "gold",
-                booked: false,
-                bookedTime: null
+                badges: ["featured", "live"],
+                medal: "gold"
             },
             {
                 id: 2,
@@ -846,10 +866,8 @@
                     { icon: "🍽️", text: "Fully Furnished" },
                     { icon: "🧹", text: "Housekeeping" }
                 ],
-                badge: "verified",
-                medal: "silver",
-                booked: false,
-                bookedTime: null
+                badges: ["verified", "live"],
+                medal: "silver"
             },
             {
                 id: 3,
@@ -872,9 +890,8 @@
                     { icon: "🏋️", text: "Gym Included" },
                     { icon: "🚗", text: "2 Parking Spaces" }
                 ],
-                medal: "bronze",
-                booked: false,
-                bookedTime: null
+                badges: ["live"],
+                medal: "bronze"
             },
             {
                 id: 4,
@@ -897,10 +914,8 @@
                     { icon: "🔒", text: "24/7 Security" },
                     { icon: "🚪", text: "Private Rooms" }
                 ],
-                badge: "verified",
-                medal: "silver",
-                booked: false,
-                bookedTime: null
+                badges: ["verified"],
+                medal: "silver"
             },
             {
                 id: 5,
@@ -923,9 +938,7 @@
                     { icon: "🍳", text: "Kitchenette" },
                     { icon: "🧹", text: "Weekly Cleaning" }
                 ],
-                medal: "bronze",
-                booked: false,
-                bookedTime: null
+                medal: "bronze"
             },
             {
                 id: 6,
@@ -948,10 +961,8 @@
                     { icon: "🅿️", text: "Parking Space" },
                     { icon: "💧", text: "24/7 Water" }
                 ],
-                badge: "featured",
-                medal: "gold",
-                booked: false,
-                bookedTime: null
+                badges: ["featured"],
+                medal: "gold"
             }
         ];
 
@@ -961,30 +972,8 @@
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
-            checkBookedProperties();
             renderProperties(properties);
         });
-
-        // Check booked properties and update status
-        function checkBookedProperties() {
-            const bookedProperties = JSON.parse(localStorage.getItem('bookedProperties')) || [];
-            const now = new Date();
-            
-            // First check if any booked properties have expired
-            const updatedBookedProperties = bookedProperties.filter(bookedProp => {
-                const bookingTime = new Date(bookedProp.time);
-                const hoursPassed = (now - bookingTime) / (1000 * 60 * 60);
-                return hoursPassed < 1.5; // Keep only those booked within last 1.5 hours
-            });
-            
-            // Update localStorage with only active bookings
-            localStorage.setItem('bookedProperties', JSON.stringify(updatedBookedProperties));
-            
-            // Update all properties' booked status
-            properties.forEach(property => {
-                property.booked = updatedBookedProperties.some(p => p.id === property.id);
-            });
-        }
 
         // Render properties to the page
         function renderProperties(propertiesToRender) {
@@ -1010,11 +999,17 @@
                 card.className = 'listing-card';
                 card.dataset.id = property.id;
                 
-                let badge = '';
-                if (property.badge) {
-                    badge = `<div class="listing-badge ${property.badge}">${property.badge.charAt(0).toUpperCase() + property.badge.slice(1)}</div>`;
+                // Generate badges
+                let badges = '';
+                if (property.badges) {
+                    badges = `<div class="badge-container">`;
+                    property.badges.forEach(badge => {
+                        badges += `<div class="listing-badge badge-${badge}">${badge.charAt(0).toUpperCase() + badge.slice(1)}</div>`;
+                    });
+                    badges += `</div>`;
                 }
                 
+                // Generate medal if exists
                 let medal = '';
                 if (property.medal) {
                     medal = `<div class="medal-badge">
@@ -1022,18 +1017,10 @@
                     </div>`;
                 }
                 
-                let buttonText = 'View Details';
-                let buttonClass = '';
-                
-                if (property.booked) {
-                    buttonText = 'Booked';
-                    buttonClass = 'booked';
-                }
-                
                 card.innerHTML = `
                     <div class="listing-image">
                         <img src="${property.images[0]}" alt="${property.title}">
-                        ${badge}
+                        ${badges}
                         ${medal}
                     </div>
                     <div class="listing-details">
@@ -1046,8 +1033,8 @@
                             ${property.description.substring(0, 100)}...
                         </p>
                         <div class="listing-price">₹${property.price.toLocaleString()}/month</div>
-                        <button class="listing-btn ${buttonClass}" onclick="showPropertyDetails(${property.id})" ${property.booked ? 'disabled' : ''}>
-                            ${buttonText}
+                        <button class="listing-btn" onclick="showPropertyDetails(${property.id})">
+                            <i class="fas fa-phone-alt"></i> Contact Owner
                         </button>
                     </div>
                 `;
@@ -1156,18 +1143,6 @@
                 featuresContainer.appendChild(featureItem);
             });
             
-            // Set contact button
-            const contactBtn = document.getElementById('modalContactBtn');
-            if (currentProperty.booked) {
-                contactBtn.className = 'modal-contact-btn booked';
-                contactBtn.innerHTML = '<i class="fas fa-times"></i> Already Booked';
-                contactBtn.onclick = null;
-            } else {
-                contactBtn.className = 'modal-contact-btn';
-                contactBtn.innerHTML = '<i class="fas fa-phone-alt"></i> Contact Owner';
-                contactBtn.onclick = contactOwner;
-            }
-            
             // Show modal
             document.getElementById('propertyModal').style.display = 'block';
             document.body.style.overflow = 'hidden';
@@ -1180,40 +1155,10 @@
 
         // Contact owner function
         function contactOwner() {
-            if (!currentProperty || currentProperty.booked) return;
+            if (!currentProperty) return;
             
             const message = `Hello, I'm interested in your property:\n\n*${currentProperty.title}*\nProperty Code: STAY-100${currentProperty.id}\nPrice: ₹${currentProperty.price.toLocaleString()}/month\nLocation: ${currentProperty.location}\n\nCould you please provide more information?`;
             const encodedMessage = encodeURIComponent(message);
-            
-            // Mark as booked with current time
-            const bookedTime = new Date().toISOString();
-            currentProperty.booked = true;
-            currentProperty.bookedTime = bookedTime;
-            
-            // Update all properties with this ID
-            properties.forEach(property => {
-                if (property.id === currentProperty.id) {
-                    property.booked = true;
-                    property.bookedTime = bookedTime;
-                }
-            });
-            
-            // Save to localStorage
-            const bookedProperties = JSON.parse(localStorage.getItem('bookedProperties')) || [];
-            bookedProperties.push({
-                id: currentProperty.id,
-                time: bookedTime
-            });
-            localStorage.setItem('bookedProperties', JSON.stringify(bookedProperties));
-            
-            // Update the UI
-            renderProperties(properties);
-            
-            // Update modal button
-            const contactBtn = document.getElementById('modalContactBtn');
-            contactBtn.className = 'modal-contact-btn booked';
-            contactBtn.innerHTML = '<i class="fas fa-times"></i> Already Booked';
-            contactBtn.onclick = null;
             
             // Open WhatsApp
             window.open(`https://wa.me/9170548739?text=${encodedMessage}`, '_blank');
