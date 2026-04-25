@@ -80,69 +80,52 @@
         }    
 
         /* ===== Header Styles ===== */
-       .header {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 100;
-      background: transparent;
-      padding: 20px 0;
-    }
+       header {
+            background: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 10;
+            z-index: 1000;
+        }
 
-    .header-container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: left;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
 
-    /* Logo styling - clean and visible on dark background */
-    .logo {
-      font-size: 28px;
-      font-weight: 800;
-      letter-spacing: -0.3px;
-      color: #ffffff;
-      text-decoration: none;
-      cursor: default;
-      text-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-    .logo .stay {
-      font-weight: 800;
-      color: #ffffff;
-    }
-    .logo .loo {
-      font-weight: 600;
-      color: #000080;
-    }
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            cursor: default;
+            user-select: none;
+        }
 
-    /* Navigation links - transparent background, white text */
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      align-items: right;
-      flex-wrap: wrap;
-    }
+        .logo .Stay {
+            color: var(--primary);
+        }
+        
+      .logo .Loo {
+            color: #000000;
+        }
 
-    .nav-links a {
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 1rem;
-      color: #ffffff;
-      transition: all 0.2s ease;
-      padding: 6px 0;
-      border-bottom: transparent;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-    }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        .nav-links a {
+            font-weight: 600;
+            position: relative;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+        }
 
-    .nav-links a:hover,
+    /* .nav-links a:hover,
     .nav-links a.active {
       color: #FFB347;
-      border-bottom-color: #FFB347;
+      border-bottom-color: #FFB347; */
     }
         .menu-toggle {
             display: none;
