@@ -148,46 +148,207 @@
             cursor: pointer;
         }
 
-        /* ===== Hero Section ===== */
-        .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                        url('https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-            padding: 120px 0;
-            min-height: 80vh;
-            display: flex;
-            align-items: center;
-              cursor: default;
-            user-select: none;
-        }
+         /* ========== ENHANCED HERO SECTION (exactly like first image: GOOD VIBES ONLY, Trusted badge, no brokers etc) ========== */
+    .hero {
+      background: linear-gradient(105deg, #FEF9F0 0%, #FFFFFF 55%, #F7F3EC 100%);
+      padding: 56px 0 64px 0;
+      position: relative;
+      overflow: hidden;
+    }
 
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
+    /* decorative little blobs for "good vibes" atmosphere */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -30px;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(255,188,106,0.15) 0%, rgba(255,188,106,0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
 
-        .hero h1 {
-            font-size: 2.8rem;
-            margin-bottom: 20px;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -40px;
+      left: -20px;
+      width: 240px;
+      height: 240px;
+      background: radial-gradient(circle, rgba(81, 199, 172, 0.08) 0%, rgba(81,199,172,0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
 
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            opacity: 0.9;
-        }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 780px;
+      margin: 0 auto;
+      text-align: center;
+    }
 
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }   
+    /* Trust badge: 500+ users row */
+    .trust-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(2px);
+      padding: 6px 18px 6px 16px;
+      border-radius: 100px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02), 0 1px 0 rgba(0,0,0,0.02);
+      margin-bottom: 24px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: #2D4A5C;
+      border: 1px solid #FFE4C2;
+    }
+
+    .trust-badge span:first-child {
+      background: #2C7A4D20;
+      color: #1F6E43;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+    }
+
+    /* main heading combo */
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      background: linear-gradient(130deg, #1B3B4F, #2C5F7A, #F5A65B);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.01em;
+    }
+
+    .good-vibes {
+      display: inline-block;
+      background: #FFEAD0;
+      padding: 4px 18px;
+      border-radius: 60px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #C25100;
+      margin-bottom: 20px;
+      letter-spacing: 0.3px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    }
+
+    .tagline-big {
+      font-size: 1.35rem;
+      color: #2E5A6E;
+      font-weight: 500;
+      margin: 12px auto 20px;
+      max-width: 600px;
+      background: rgba(255,248,235,0.7);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 60px;
+      backdrop-filter: blur(2px);
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+      color: #335f6e;
+      max-width: 580px;
+      margin: 0 auto 28px;
+      font-weight: 450;
+      line-height: 1.4;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-top: 12px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 28px;
+      font-weight: 600;
+      border-radius: 60px;
+      text-decoration: none;
+      transition: 0.2s ease;
+      font-size: 1rem;
+      letter-spacing: 0.2px;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: #FF8A3C;
+      color: white;
+      box-shadow: 0 4px 12px rgba(255, 138, 60, 0.25);
+    }
+
+    .btn-primary:hover {
+      background: #E57224;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 138, 60, 0.3);
+    }
+
+    .btn-secondary {
+      background: white;
+      border: 1px solid #CFDDE5;
+      color: #2C5F74;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    }
+
+    .btn-secondary:hover {
+      background: #FFF6ED;
+      border-color: #FFB576;
+      transform: translateY(-2px);
+    }
+
+    /* verification & no-broker row (exactly like image 1) */
+    .features-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 12px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      max-width: 550px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #325f6e;
+      background: rgba(255, 255, 245, 0.7);
+      padding: 5px 14px;
+      border-radius: 60px;
+      backdrop-filter: blur(2px);
+    }
+
+    .feature-item svg {
+      width: 18px;
+      height: 18px;
+      stroke: #FF8A3C;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .feature-item .check-icon {
+      color: #2C9B6E;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
 
         /* ===== Features Section ===== */
         .features {
@@ -612,35 +773,49 @@ button:hover {
         </div>
     </header>
 
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Find Spaces Or List Yours</h1>
-                <p></p>
-               
-                <div class="hero-buttons">
-                    <a href="Browse-spaces/" class="btn btn-primary">Browse Spaces</a>
-                    <a href="list-space/" class="btn btn-secondary">List Your Space</a>
-                </div>
-                <!-- <div style="text-align: center; margin-top: 12px;">
-  <p style="font-weight: 600; font-size: 16px; color: #ffffff;">
-    <span style="color: #00ffc8;">⬆</span> 
-    <span style="color: #ffffff;">Get a tenant in</span> 
-    <span style="color: #00ffc8;">minimum 15–20 days</span> 
-    <span style="color: #ffffff;">with our</span> 
-    <span style="color: #ffd700;">Boost Plan</span><br>
-    <span style="color: #ffffff; font-size: 15px;">
-      or get your money <span style="color: #00ff99; font-weight: 700;">refunded*</span>
-    </span>
-  </p>
-   <p style="font-size: 7px; color: #cccccc; margin-top: 10px;">
-    *T&C Apply
-  </p>
-</div> -->
-            </div>
-        </div>
-    </section>
+   <section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <!-- Trust badge exactly like reference: 500+ users & good vibes only pill -->
+      <div class="trust-badge">
+        <span>⭐ 500+ Users</span>
+        <span>Trusted across India</span>
+      </div>
+      
+      <div class="good-vibes">
+        ✨ GOOD VIBES ONLY ✨
+      </div>
 
+      <h1>
+        No Brokers.<br>
+        Find Verified Rooms Easily.
+      </h1>
+      
+      <div class="tagline-big">
+        Browse trusted listings or list your space in minutes — fast, simple, and direct.
+      </div>
+
+      <div class="hero-buttons">
+        <a href="Browse-spaces/" class="btn btn-primary">🔍 Find a Room</a>
+        <a href="list-space/" class="btn btn-secondary">📂 List Your Property</a>
+      </div>
+
+      <!-- Verified Listings | No Brokerage | Quick Contact (exactly like first image lower row) -->
+      <div class="features-row">
+        <div class="feature-item">
+          <span class="check-icon">✓</span> Verified Listings
+        </div>
+        <div class="feature-item">
+          <span class="check-icon">✕</span> No Brokerage
+        </div>
+        <div class="feature-item">
+          <span class="check-icon">⚡</span> Quick Contact
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+    
     <section class="features">
         <div class="container">
             <h2 class="section-title">Why Choose StayLoo?</h2>
