@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>StayLoo | List Your Property – Professional Form</title>
-  <!-- Google Fonts + Font Awesome 6 (minimal usage, no stickers before StayLoo) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>StayLoo | List Your Property – Mobile Responsive</title>
+  <!-- Google Fonts + Font Awesome 6 -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -21,21 +21,28 @@
       line-height: 1.45;
     }
 
-    /* Blue & White Theme */
     .container {
       max-width: 1280px;
       margin: 0 auto;
       padding: 0 28px;
     }
 
-    /* Navigation - white background with blue accents */
-    .navbar {
-      background: #ffffff;
-      box-shadow: 0 4px 16px rgba(0, 35, 70, 0.05);
-      border-bottom: 1px solid #e2ecf5;
+    /* ========= HEADER with hide-on-scroll ========= */
+    .site-header {
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
+      background: #ffffff;
+      border-bottom: 1px solid #e2ecf5;
+      transition: transform 0.35s ease-in-out, box-shadow 0.2s;
+      transform: translateY(0);
+      box-shadow: 0 2px 12px rgba(0, 35, 70, 0.05);
+    }
+    .site-header.hide-header {
+      transform: translateY(-100%);
+    }
+    .navbar {
+      background: transparent;
     }
     .nav-flex {
       display: flex;
@@ -45,13 +52,14 @@
       padding: 1rem 0;
       gap: 1rem;
     }
-    /* Logo image container (no text stickers) */
+    /* Logo image (no stickers/text before StayLoo) */
     .logo-img {
       height: 48px;
       width: auto;
       display: block;
       object-fit: contain;
     }
+    /* Desktop navigation links */
     .nav-links {
       display: flex;
       gap: 2rem;
@@ -68,6 +76,87 @@
     .nav-links a:hover {
       color: #0f6b8c;
       border-bottom: 2px solid #2c7da0;
+    }
+
+    /* ========= MOBILE HAMBURGER MENU (hidden on desktop) ========= */
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 1100;
+      border-radius: 12px;
+      transition: background 0.2s;
+    }
+    .hamburger i {
+      font-size: 1.8rem;
+      color: #115a7a;
+    }
+    .hamburger:hover {
+      background: #eef3fc;
+    }
+    /* Mobile menu overlay / drawer */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 80%;
+      max-width: 300px;
+      height: 100%;
+      background: white;
+      box-shadow: 4px 0 24px rgba(0,0,0,0.1);
+      z-index: 2000;
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      border-right: 1px solid #e2ecf5;
+    }
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+    .mobile-menu a {
+      text-decoration: none;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #115a7a;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid #e9f0f5;
+      display: block;
+    }
+    .mobile-menu a:active {
+      background: #eef3fc;
+      border-radius: 12px;
+      padding-left: 8px;
+    }
+    .close-menu {
+      background: none;
+      border: none;
+      font-size: 1.6rem;
+      align-self: flex-end;
+      cursor: pointer;
+      color: #115a7a;
+      margin-bottom: 1rem;
+    }
+    .overlay-blur {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(2px);
+      z-index: 1500;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.2s;
+    }
+    .overlay-blur.active {
+      opacity: 1;
+      visibility: visible;
     }
 
     /* Hero Banner - blue & white */
@@ -91,7 +180,7 @@
       margin-top: 0.5rem;
     }
 
-    /* Form Cards - pure white with soft blue borders */
+    /* Form Cards */
     .form-card {
       background: #ffffff;
       border-radius: 32px;
@@ -99,7 +188,6 @@
       padding: 2rem 2rem;
       margin-bottom: 2rem;
       border: 1px solid #e2edf7;
-      transition: 0.2s;
     }
     .section-title {
       font-size: 1.6rem;
@@ -122,7 +210,6 @@
       border-radius: 4px;
     }
 
-    /* Grid and inputs */
     .form-grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -164,7 +251,6 @@
       min-height: 100px;
     }
 
-    /* Pricing & offer styling */
     .pricing-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -197,14 +283,12 @@
       padding: 1rem 1.2rem;
       border-radius: 24px;
       margin-top: 1rem;
-      transition: all 0.2s;
       border: 1px solid #d4e6f0;
     }
     .hidden {
       display: none;
     }
 
-    /* Submit button - blue gradient */
     .btn-submit-wrap {
       display: flex;
       justify-content: flex-end;
@@ -228,13 +312,8 @@
     .btn-submit:hover {
       transform: scale(1.01);
       background: linear-gradient(95deg, #0f5a78, #1f6e92);
-      box-shadow: 0 10px 22px rgba(22, 111, 146, 0.3);
-    }
-    .btn-submit i {
-      font-size: 1.1rem;
     }
 
-    /* Toast message */
     .toast-msg {
       position: fixed;
       bottom: 25px;
@@ -245,8 +324,7 @@
       border-radius: 60px;
       font-weight: 500;
       backdrop-filter: blur(8px);
-      background: rgba(17, 90, 122, 0.95);
-      z-index: 200;
+      z-index: 2100;
       opacity: 0;
       transform: translateY(12px);
       transition: 0.2s;
@@ -265,42 +343,81 @@
       padding: 2rem;
       color: #5f8da3;
       font-size: 0.8rem;
-      margin-top: 1rem;
       background: white;
-    }
-
-    @media (max-width: 750px) {
-      .form-grid-2, .pricing-row {
-        grid-template-columns: 1fr;
-        gap: 0.8rem;
-      }
-      .container {
-        padding: 0 18px;
-      }
-      .nav-flex {
-        flex-direction: column;
-        align-items: center;
-      }
     }
     .small-hint {
       font-size: 0.7rem;
       color: #6e9bb0;
       margin-top: 5px;
     }
+
+    /* ========= RESPONSIVE BREAKPOINTS ========= */
+    @media (max-width: 780px) {
+      .form-grid-2, .pricing-row {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
+      .container {
+        padding: 0 20px;
+      }
+      /* Hide desktop nav links, show hamburger */
+      .nav-links {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .hero-banner h1 {
+        font-size: 1.8rem;
+      }
+      .hero-banner {
+        padding: 1.5rem;
+      }
+      .form-card {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 550px) {
+      .radio-option {
+        display: block;
+        margin-bottom: 0.8rem;
+      }
+      .btn-submit {
+        width: 100%;
+        justify-content: center;
+      }
+      .btn-submit-wrap {
+        justify-content: stretch;
+      }
+    }
   </style>
 </head>
 <body>
 
-<div class="navbar">
+<!-- Mobile Overlay -->
+<div id="mobileOverlay" class="overlay-blur"></div>
+
+<!-- Mobile Drawer Menu -->
+<div id="mobileDrawer" class="mobile-menu">
+  <button class="close-menu" id="closeDrawerBtn"><i class="fas fa-times"></i></button>
+  <a href="#">Home</a>
+  <a href="#">Browse Listings</a>
+  <a href="#">Pricing & Queries</a>
+  <a href="#">Contact Us</a>
+</div>
+
+<!-- Sticky Header (hide on scroll down, appear on scroll up) -->
+<header id="mainHeader" class="site-header">
   <div class="container">
     <div class="nav-flex">
-      <!-- IMAGE LOGO: Replace 'logo-placeholder.png' with your actual image URL.
-           I'll use a data-uri placeholder that says "StayLoo" in a clean blue style, but you can replace with any image.
-           Make sure to update the src attribute with your own picture format logo (PNG, JPG, SVG). 
-           No text or sticker before StayLoo. -->
+      <!-- Logo image (no stickers / text before StayLoo) -->
       <img id="staylooLogo" class="logo-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60'%3E%3Crect width='200' height='60' fill='%23115a7a' rx='12'/%3E%3Ctext x='20' y='40' font-family='Arial, sans-serif' font-size='28' font-weight='bold' fill='white'%3EStayLoo%3C/text%3E%3C/svg%3E" alt="StayLoo Logo">
-      <!-- you can replace above src with your custom image file, e.g., "mylogo.png" or "/uploads/logo.svg" 
-           The image is clean, no extra icons/stickers before name. -->
+      <!-- Hamburger button (visible only on mobile) -->
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
+      <!-- Desktop links (hidden on mobile) -->
       <div class="nav-links">
         <a href="#">Home</a>
         <a href="#">Browse Listings</a>
@@ -309,7 +426,7 @@
       </div>
     </div>
   </div>
-</div>
+</header>
 
 <main class="container">
   <div class="hero-banner">
@@ -318,7 +435,7 @@
   </div>
 
   <form id="listingForm">
-    <!-- Property Details Block (matches screenshots) -->
+    <!-- Property Details Block -->
     <div class="form-card">
       <div class="section-title">
         <i class="fas fa-building"></i> 
@@ -379,7 +496,7 @@
       </div>
     </div>
 
-    <!-- Pricing Details section (exact fields, NO Boost Plan) -->
+    <!-- Pricing Details section (NO Boost Plan) -->
     <div class="form-card">
       <div class="section-title">
         <i class="fas fa-tags"></i>
@@ -398,7 +515,7 @@
         </div>
       </div>
 
-      <!-- Any Offers for Seekers? radio group -->
+      <!-- Any Offers for Seekers? radio -->
       <div class="offer-radio-group">
         <label style="font-weight: 700; margin-bottom: 12px; display: block;"><i class="fas fa-gift"></i> Any Offers for Seekers?</label>
         <label class="radio-option">
@@ -409,7 +526,7 @@
         </label>
       </div>
 
-      <!-- Dynamic offer fields: Offer Details + Valid Until -->
+      <!-- Dynamic offer fields -->
       <div id="dynamicOfferFields" class="dynamic-offer-fields hidden">
         <div class="form-group">
           <label>Offer Details <span class="required-star">*</span></label>
@@ -437,10 +554,64 @@
 
 <script>
   (function() {
-    const form = document.getElementById('listingForm');
-    const toast = document.getElementById('toastMsg');
+    // ========== 1. HIDE HEADER ON SCROLL DOWN / SHOW ON SCROLL UP ==========
+    const header = document.getElementById('mainHeader');
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    function handleScroll() {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        // scrolling down -> hide header
+        header.classList.add('hide-header');
+      } else if (currentScrollY < lastScrollY) {
+        // scrolling up -> show header
+        header.classList.remove('hide-header');
+      }
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(handleScroll);
+        ticking = true;
+      }
+    });
+    // initial state: visible
+    header.classList.remove('hide-header');
+
+    // ========== 2. MOBILE HAMBURGER MENU (three lines bar) ==========
+    const hamburger = document.getElementById('hamburgerBtn');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const overlay = document.getElementById('mobileOverlay');
+    const closeDrawerBtn = document.getElementById('closeDrawerBtn');
     
-    // Radio buttons for offer
+    function openMenu() {
+      mobileDrawer.classList.add('open');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden'; // prevent background scroll
+    }
+    function closeMenu() {
+      mobileDrawer.classList.remove('open');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    hamburger.addEventListener('click', openMenu);
+    closeDrawerBtn.addEventListener('click', closeMenu);
+    overlay.addEventListener('click', closeMenu);
+    // Close on any link inside mobile menu (smooth UX)
+    const mobileLinks = mobileDrawer.querySelectorAll('a');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        // Show what's coming soon toast
+        showToastMessage(`✨ ${link.innerText} section — coming soon!`, false);
+        closeMenu();
+      });
+    });
+
+    // ========== 3. Offer toggle logic ==========
     const radioNo = document.querySelector('input[value="no"]');
     const radioYes = document.querySelector('input[value="yes"]');
     const offerFieldsDiv = document.getElementById('dynamicOfferFields');
@@ -458,7 +629,9 @@
     radioYes.addEventListener('change', toggleOfferFields);
     toggleOfferFields();
 
+    // Toast helper
     function showToastMessage(msg, isError = false) {
+      const toast = document.getElementById('toastMsg');
       toast.textContent = msg;
       toast.style.background = isError ? "rgba(190, 65, 55, 0.95)" : "#115a7a";
       toast.classList.add('show');
@@ -467,7 +640,7 @@
       }, 3200);
     }
 
-    // Validate entire form (including conditional offer fields)
+    // Form validation
     function validateForm() {
       const propertyType = document.getElementById('propertyType').value;
       const bhkType = document.getElementById('bhkType').value;
@@ -495,7 +668,7 @@
         const offerDetails = offerDetailsInput.value.trim();
         const offerValidUntil = offerValidUntilInput.value;
         if (!offerDetails) {
-          showToastMessage("Please provide offer details (e.g., discount, free months)", true);
+          showToastMessage("Please provide offer details", true);
           offerDetailsInput.focus();
           return false;
         }
@@ -513,7 +686,7 @@
       return true;
     }
 
-    // Build WhatsApp message (neat, professional)
+    // Build WhatsApp message
     function buildWhatsAppMessage() {
       const propertyType = document.getElementById('propertyType').value;
       const bhkType = document.getElementById('bhkType').value;
@@ -535,7 +708,8 @@
         offerText = "❌ No current offers";
       }
 
-      const message = `🏡 *NEW PROPERTY LISTING - StayLoo* 🏡\n\n` +
+      return encodeURIComponent(
+        `🏡 *NEW PROPERTY LISTING - StayLoo* 🏡\n\n` +
         `*📌 Property Details*\n` +
         `• Property Type: ${propertyType}\n` +
         `• BHK Type: ${bhkType}\n` +
@@ -549,51 +723,37 @@
         `• Monthly Rent: ₹${monthlyRent}\n` +
         `• Security Deposit: ₹${securityDeposit}\n\n` +
         `*🎁 Offer Section*\n${offerText}\n\n` +
-        `🔗 _Interested seekers can contact owner directly via StayLoo._\n` +
-        `📅 Generated: ${new Date().toLocaleString()}`;
-      
-      return encodeURIComponent(message);
+        `🔗 Interested seekers can contact owner directly via StayLoo.\n` +
+        `📅 Generated: ${new Date().toLocaleString()}`
+      );
     }
 
-    // ============================================================
-    // IMPORTANT: Replace the WhatsApp number below with your own number
-    // Format: country code + mobile number (without '+' or spaces)
-    // Example for India: 919876543210
-    // ============================================================
-    const YOUR_WHATSAPP_NUMBER = "919876543210";   // <--- REPLACE WITH YOUR ACTUAL WHATSAPP NUMBER
+    // ========== WHATSAPP CONFIGURATION ==========
+    // ⚠️ REPLACE WITH YOUR ACTUAL WHATSAPP NUMBER (country code + number, no '+' or spaces)
+    const YOUR_WHATSAPP_NUMBER = "919876543210";   // <--- CHANGE THIS TO YOUR NUMBER
     
+    const form = document.getElementById('listingForm');
     form.addEventListener('submit', function(e) {
       e.preventDefault();
-      
       if (!validateForm()) return;
-      
       const whatsappMsg = buildWhatsAppMessage();
       const whatsappURL = `https://wa.me/${YOUR_WHATSAPP_NUMBER}?text=${whatsappMsg}`;
-      
       showToastMessage("Redirecting to WhatsApp...", false);
-      
       setTimeout(() => {
         window.open(whatsappURL, '_blank');
-      }, 500);
+      }, 400);
     });
 
-    // Numeric input sanitization
+    // sanitize numeric fields
     const bedInput = document.getElementById('bedrooms');
     const bathInput = document.getElementById('bathrooms');
     const rentInput = document.getElementById('monthlyRent');
     const depositInput = document.getElementById('securityDeposit');
-    
     [bedInput, bathInput, rentInput, depositInput].forEach(inp => {
       inp.addEventListener('input', function() {
         this.value = this.value.replace(/[^0-9]/g, '');
       });
     });
-
-    // Logo image replacement hint: If you want to replace the sample SVG logo with your own image file,
-    // simply change the src attribute of the <img id="staylooLogo"> to your image URL.
-    // For example: document.getElementById('staylooLogo').src = 'your-logo.png';
-    // Current logo is a clean blue rounded box with text "StayLoo" — no stickers or extra icons before name.
-    // You can also set it via external URL as needed.
   })();
 </script>
 </body>
