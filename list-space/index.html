@@ -1,1111 +1,600 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List Your Property - StayLoo</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>StayLoo | List Your Property – Professional Form</title>
+  <!-- Google Fonts + Font Awesome 6 (minimal usage, no stickers before StayLoo) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<!-- Add Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
-  
-    <style>  
-        /* Global Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #f8f9fa;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header Styles with Mobile Menu */
-        header {
-            background-color: white;
-            padding: 15px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #4a6bff;
-        }
-      
-      .logo .Stay {
-            color: var(--primary);
-        }
-        
-      .logo .Loo {
-            color: #000000;
-        }
-        
-        .logo a {
-            color: inherit;
-            text-decoration: none;
-        }
-        
-        /* Mobile Menu Button */
-        .mobile-menu-btn {
-            display: none;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 30px;
-            height: 21px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 101;
-        }
-        
-        .mobile-menu-btn span {
-            display: block;
-            width: 100%;
-            height: 3px;
-            background-color: #4a6bff;
-            border-radius: 3px;
-            transition: all 0.3s;
-        }
-        
-        /* Navigation */
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-        
-        nav ul li {
-            margin-left: 25px;
-        }
-        
-        nav ul li a {
-            color: #333;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-            padding: 5px 0;
-            position: relative;
-        }
-        
-        nav ul li a:hover {
-            color: #4a6bff;
-        }
-        
-        nav ul li a.active {
-            color: #4a6bff;
-            font-weight: 600;
-        }
-        
-        nav ul li a.active:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: #4a6bff;
-        }
-        
-        /* Main Content */
-        main {
-            padding: 40px 0;
-        }
-        
-        .page-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .page-header h1 {
-            color: #2c3e50;
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-        
-        .page-header p {
-            color: #666;
-            font-size: 16px;
-        }
-        
-        /* Form Styles */
-        .listing-form {
-            background-color: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-            margin-bottom: 40px;
-        }
-        
-        .form-section {
-            margin-bottom: 30px;
-        }
-        
-        .form-section h2 {
-            color: #4a6bff;
-            margin-bottom: 20px;
-            font-size: 20px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-        
-        .required:after {
-            content: " *";
-            color: #e53935;
-        }
-        
-        input[type="text"],
-        input[type="tel"],
-        input[type="email"],
-        input[type="number"],
-        input[type="date"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 16px;
-            transition: border 0.3s;
-        }
-        
-        input:focus,
-        select:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #4a6bff;
-            box-shadow: 0 0 0 2px rgba(74, 107, 255, 0.2);
-        }
-        
-        textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-        
-        .phone-note {
-            font-size: 13px;
-            color: #666;
-            margin-top: 5px;
-            font-style: italic;
-        }
-        
-        .two-columns {
-            display: flex;
-            gap: 20px;
-        }
-        
-        .two-columns .form-group {
-            flex: 1;
-        }
-        
-        /* Offers Section */
-        .offers-section {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #f8f9ff;
-            border: 1px solid #e0e4ff;
-            border-radius: 8px;
-        }
-        
-        .offers-section h3 {
-            color: #4a6bff;
-            margin-bottom: 15px;
-            font-size: 18px;
-        }
-        
-        .offer-options {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .offer-option {
-            flex: 1;
-        }
-        
-        .offer-option input {
-            display: none;
-        }
-        
-        .offer-option label {
-            display: block;
-            padding: 12px;
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.3s;
-        }
-        
-        .offer-option input:checked + label {
-            border-color: #4a6bff;
-            background-color: #f0f4ff;
-        }
-        
-        .offer-details {
-            display: none;
-            margin-top: 15px;
-        }
-        
-        .offer-details.active {
-            display: block;
-        }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f0f4fa;
+      color: #0a2b3e;
+      line-height: 1.45;
+    }
 
-      /* Boost Plan Section - Simplified */
-        .boost-section {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #f8f9ff;
-            border: 1px solid #e0e4ff;
-            border-radius: 8px;
-        }
-        
-        .boost-section h3 {
-            color: #4a6bff;
-            margin-bottom: 15px;
-            font-size: 18px;
-        }
-        
-        .boost-options {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .boost-option {
-            flex: 1;
-        }
-        
-        .boost-option input {
-            display: none;
-        }
-        
-        .boost-option label {
-            display: block;
-            padding: 12px;
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.3s;
-        }
-        
-        .boost-option input:checked + label {
-            border-color: #4a6bff;
-            background-color: #f0f4ff;
-        }
-        
-        .boost-message {
-            display: none;
-            padding: 10px;
-            background-color: #f0f4ff;
-            border-radius: 6px;
-            margin-top: 10px;
-            font-size: 14px;
-            color: #000;
-        }
-        
-        .boost-message.active {
-            display: block;
-        }
-        
-        /* Subscription Section */
-        .subscription-section {
-            margin: 40px 0;
-            padding: 25px;
-            border: 1px solid #e0e4ff;
-            border-radius: 8px;
-            background-color: #f8f9ff;
-        }
-        
-        .subscription-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin: 25px 0;
-        }
-        
-        .subscription-option {
-            flex: 1;
-            min-width: 200px;
-        }
-        
-        .subscription-option input {
-            display: none;
-        }
-        
-        .subscription-option label {
-            display: block;
-            padding: 20px;
-            background-color: white;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            height: 100%;
-        }
-        
-        .subscription-option input:checked + label {
-            border-color: #4a6bff;
-            background-color: #f0f4ff;
-            box-shadow: 0 2px 10px rgba(74, 107, 255, 0.1);
-        }
-        
-        .subscription-option .pack-name {
-            font-weight: bold;
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 5px;
-        }
-        
-        .subscription-option .pack-price {
-            color: #4a6bff;
-            font-size: 16px;
-            margin-bottom: 10px;
-        }
-        
-        .subscription-option .pack-features {
-            font-size: 14px;
-            color: #666;
-        }
-        
-        .subscription-option .pack-features ul {
-            list-style: none;
-        }
-        
-        .subscription-option .pack-features li {
-            margin-bottom: 8px;
-            position: relative;
-            padding-left: 20px;
-        }
-        
-        .subscription-option .pack-features li:before {
-            content: "✓";
-            color: #4a6bff;
-            position: absolute;
-            left: 0;
-        }
-        
-        /* Code Verification */
-        .code-verification {
-            margin-top: 25px;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            border: 1px dashed #ccc;
-            display: none;
-        }
-        
-        .code-input-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        #subscription-code {
-            flex: 1;
-            max-width: 300px;
-            padding: 12px 15px;
-            margin-right: 15px;
-        }
-        
-        #verify-code {
-            padding: 12px 20px;
-            background-color: #4a6bff;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background-color 0.3s;
-        }
-        
-        #verify-code:hover {
-            background-color: #3a5bef;
-        }
-        
-        #verification-icon {
-            margin-left: 15px;
-            font-size: 22px;
-        }
-        
-        .verification-message {
-            padding: 12px;
-            border-radius: 6px;
-            font-size: 14px;
-            display: none;
-        }
-        
-        .success {
-            background-color: #e8f5e9;
-            color: #2e7d32;
-            border: 1px solid #c8e6c9;
-            display: block;
-        }
-        
-        .error {
-            background-color: #ffebee;
-            color: #c62828;
-            border: 1px solid #ffcdd2;
-            display: block;
-        }
-        
-        /* Submit Button */
-        .submit-btn {
-            display: block;
-            width: 100%;
-            padding: 16px;
-            background-color: #4a6bff;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 30px;
-        }
-        
-        .submit-btn:hover {
-            background-color: #3a5bef;
-            box-shadow: 0 5px 15px rgba(74, 107, 255, 0.3);
-        }
-        
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 30px 0;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #eee;
-            margin-top: 50px;
-        }
-        
-        /* Mobile Styles */
-        @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: flex;
-            }
-            
-            nav {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 70%;
-                height: 100vh;
-                background-color: white;
-                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-                transition: right 0.3s ease;
-                padding: 80px 30px 30px;
-                z-index: 100;
-            }
-            
-            nav.active {
-                right: 0;
-            }
-            
-            nav ul {
-                flex-direction: column;
-            }
-            
-            nav ul li {
-                margin: 15px 0;
-            }
-            
-            nav ul li a {
-                font-size: 18px;
-            }
-            
-            .overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0,0,0,0.5);
-                z-index: 99;
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s;
-            }
-            
-            .overlay.active {
-                opacity: 1;
-                visibility: visible;
-            }
-            
-            .two-columns {
-                flex-direction: column;
-                gap: 0;
-            }
-            
-            .offer-options {
-                flex-direction: column;
-            }
-            
-            .subscription-options {
-                flex-direction: column;
-            }
-            
-            .code-input-group {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            #subscription-code {
-                max-width: 100%;
-                margin-right: 0;
-                margin-bottom: 15px;
-            }
-    </style>
+    /* Blue & White Theme */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    /* Navigation - white background with blue accents */
+    .navbar {
+      background: #ffffff;
+      box-shadow: 0 4px 16px rgba(0, 35, 70, 0.05);
+      border-bottom: 1px solid #e2ecf5;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 1rem 0;
+      gap: 1rem;
+    }
+    /* Logo image container (no text stickers) */
+    .logo-img {
+      height: 48px;
+      width: auto;
+      display: block;
+      object-fit: contain;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 500;
+      color: #1f4f6e;
+      transition: 0.2s ease;
+      font-size: 0.95rem;
+    }
+    .nav-links a:hover {
+      color: #0f6b8c;
+      border-bottom: 2px solid #2c7da0;
+    }
+
+    /* Hero Banner - blue & white */
+    .hero-banner {
+      background: linear-gradient(115deg, #ffffff 0%, #e9f2fa 100%);
+      border-radius: 2rem;
+      margin: 2rem 0 2rem;
+      padding: 2rem 2rem;
+      box-shadow: 0 8px 20px rgba(0, 40, 60, 0.06);
+      border: 1px solid #d9e6f2;
+    }
+    .hero-banner h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #0a4b6e;
+      letter-spacing: -0.3px;
+    }
+    .hero-banner p {
+      font-size: 1.1rem;
+      color: #2c6079;
+      margin-top: 0.5rem;
+    }
+
+    /* Form Cards - pure white with soft blue borders */
+    .form-card {
+      background: #ffffff;
+      border-radius: 32px;
+      box-shadow: 0 12px 28px rgba(0, 45, 70, 0.06);
+      padding: 2rem 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid #e2edf7;
+      transition: 0.2s;
+    }
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #115a7a;
+    }
+    .section-title i {
+      color: #2c7da0;
+      font-size: 1.4rem;
+    }
+    .divider-light {
+      height: 3px;
+      width: 70px;
+      background: #cfe3ef;
+      margin: 0.5rem 0 1.8rem 0;
+      border-radius: 4px;
+    }
+
+    /* Grid and inputs */
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .form-group {
+      margin-bottom: 1.4rem;
+    }
+    .form-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      color: #1a5572;
+    }
+    .required-star {
+      color: #e06c6c;
+      margin-left: 3px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border-radius: 18px;
+      border: 1.5px solid #dbeaf2;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      background: #ffffff;
+      transition: all 0.2s;
+      outline: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: #3b8db0;
+      box-shadow: 0 0 0 4px rgba(43, 112, 143, 0.12);
+    }
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    /* Pricing & offer styling */
+    .pricing-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.8rem;
+    }
+    .offer-radio-group {
+      background: #f6faff;
+      padding: 1rem 1.2rem;
+      border-radius: 28px;
+      border: 1px solid #cde3f0;
+      margin: 1rem 0 0.5rem 0;
+    }
+    .radio-option {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-right: 2rem;
+      cursor: pointer;
+      font-weight: 500;
+      color: #1a4f6e;
+    }
+    .radio-option input {
+      width: 18px;
+      height: 18px;
+      accent-color: #2c7da0;
+    }
+    .dynamic-offer-fields {
+      background: #f9fdff;
+      padding: 1rem 1.2rem;
+      border-radius: 24px;
+      margin-top: 1rem;
+      transition: all 0.2s;
+      border: 1px solid #d4e6f0;
+    }
+    .hidden {
+      display: none;
+    }
+
+    /* Submit button - blue gradient */
+    .btn-submit-wrap {
+      display: flex;
+      justify-content: flex-end;
+      margin: 0.5rem 0 2rem;
+    }
+    .btn-submit {
+      background: linear-gradient(95deg, #166f92, #2a7faa);
+      border: none;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 8px 18px rgba(22, 111, 146, 0.25);
+    }
+    .btn-submit:hover {
+      transform: scale(1.01);
+      background: linear-gradient(95deg, #0f5a78, #1f6e92);
+      box-shadow: 0 10px 22px rgba(22, 111, 146, 0.3);
+    }
+    .btn-submit i {
+      font-size: 1.1rem;
+    }
+
+    /* Toast message */
+    .toast-msg {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: #115a7a;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 60px;
+      font-weight: 500;
+      backdrop-filter: blur(8px);
+      background: rgba(17, 90, 122, 0.95);
+      z-index: 200;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: 0.2s;
+      pointer-events: none;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .toast-msg.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    footer {
+      text-align: center;
+      border-top: 1px solid #d4e2ec;
+      padding: 2rem;
+      color: #5f8da3;
+      font-size: 0.8rem;
+      margin-top: 1rem;
+      background: white;
+    }
+
+    @media (max-width: 750px) {
+      .form-grid-2, .pricing-row {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
+      .container {
+        padding: 0 18px;
+      }
+      .nav-flex {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+    .small-hint {
+      font-size: 0.7rem;
+      color: #6e9bb0;
+      margin-top: 5px;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="container header-container">
-            <div class="logo"><span class="stay">Stay</span><span class="Loo">Loo</span></div>
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <nav id="mainNav">
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/Browse-spaces/">Browse Listings</a></li>
-                    <li><a href="/pricing-queries/">Pricing & Queries</a></li>
-                    <li><a href="/contact-us/">Contact Us</a></li>
-                </ul>
-            </nav>
-            <div class="overlay" id="overlay"></div>
-        </div>
-    </header>
-    
-    <main class="container">
-        <div class="page-header">
-            <h1>List Your Property on StayLoo</h1>
-            <p>Connect with thousands of seekers looking for their perfect space</p>
-        </div>
-        
-        <form class="listing-form" id="staylooForm">
-            <!-- Owner Information Section -->
-            <div class="form-section">
-                <h2>Owner Information</h2>
-                
-                <div class="form-group">
-                    <label for="owner-name" class="required">Your Full Name</label>
-                    <input type="text" id="owner-name" placeholder="Enter your full name" minlength="3" required>
-                </div>
-                
-                <div class="two-columns">
-                    <div class="form-group">
-                        <label for="owner-phone" class="required">Phone Number</label>
-                        <input type="tel" id="owner-phone" placeholder="Enter 10-digit mobile number" pattern="[0-9]{10}" maxlength="10" required>
-                        <div class="phone-note">Your phone number is safe with us and will only be shared with verified seekers</div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="owner-email" class="required">Email Address</label>
-                        <input type="email" id="owner-email" placeholder="Enter your email address" required>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Property Information Section -->
-            <div class="form-section">
-                <h2>Property Details</h2>
-                
-                <div class="form-group">
-                    <label for="property-title" class="required">Property Title</label>
-                    <input type="text" id="property-title" placeholder="e.g. Spacious 2BHK Flat near Metro Station" minlength="10" required>
-                </div>
-                
-                <div class="two-columns">
-                    <div class="form-group">
-                        <label for="property-type" class="required">Property Type</label>
-                        <select id="property-type" required>
-                            <option value="">Select property type</option>
-                            <option value="flat">Flat/Apartment</option>
-                            <option value="house">Independent House</option>
-                            <option value="pg">PG/Hostel</option>
-                            <option value="villa">Normal rooms</option>
-                            <option value="farmhouse">other</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="bhk-type" class="required">BHK Type</label>
-                        <select id="bhk-type" required>
-                            <option value="">Select BHK</option>
-                            <option value="1">1 BHK</option>
-                            <option value="2">2 BHK</option>
-                            <option value="3">3 BHK</option>
-                            <option value="4">4 BHK</option>
-                            <option value="4+">4+ BHK</option>
-                            <option value="studio">Studio</option>
-                            <option value="shared">Shared Room</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="two-columns">
-                    <div class="form-group">
-                        <label for="bedrooms" class="required">Number of Bedrooms</label>
-                        <input type="number" id="bedrooms" min="1" placeholder="Enter total bedrooms" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="bathrooms" class="required">Number of Bathrooms</label>
-                        <input type="number" id="bathrooms" min="1" placeholder="Enter total bathrooms" required>
-                    </div>
-                </div>                            
 
-             <!-- New City and Area Info Fields -->
-    <div class="two-columns">
+<div class="navbar">
+  <div class="container">
+    <div class="nav-flex">
+      <!-- IMAGE LOGO: Replace 'logo-placeholder.png' with your actual image URL.
+           I'll use a data-uri placeholder that says "StayLoo" in a clean blue style, but you can replace with any image.
+           Make sure to update the src attribute with your own picture format logo (PNG, JPG, SVG). 
+           No text or sticker before StayLoo. -->
+      <img id="staylooLogo" class="logo-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60'%3E%3Crect width='200' height='60' fill='%23115a7a' rx='12'/%3E%3Ctext x='20' y='40' font-family='Arial, sans-serif' font-size='28' font-weight='bold' fill='white'%3EStayLoo%3C/text%3E%3C/svg%3E" alt="StayLoo Logo">
+      <!-- you can replace above src with your custom image file, e.g., "mylogo.png" or "/uploads/logo.svg" 
+           The image is clean, no extra icons/stickers before name. -->
+      <div class="nav-links">
+        <a href="#">Home</a>
+        <a href="#">Browse Listings</a>
+        <a href="#">Pricing & Queries</a>
+        <a href="#">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main class="container">
+  <div class="hero-banner">
+    <h1>List Your Property on StayLoo</h1>
+    <p>Premium listings • Verified seekers • Fast connect</p>
+  </div>
+
+  <form id="listingForm">
+    <!-- Property Details Block (matches screenshots) -->
+    <div class="form-card">
+      <div class="section-title">
+        <i class="fas fa-building"></i> 
+        <span>Property Details</span>
+      </div>
+      <div class="divider-light"></div>
+
+      <div class="form-grid-2">
         <div class="form-group">
-            <label for="city" class="required">Your City</label>
-            <input type="text" id="city" placeholder="Enter your city name" required>
+          <label><i class="fas fa-tag"></i> Property Type <span class="required-star">*</span></label>
+          <select id="propertyType" required>
+            <option value="" disabled selected>Select property type</option>
+            <option value="Apartment/Flat">Apartment / Flat</option>
+            <option value="Independent House">Independent House</option>
+            <option value="Studio/1RK">Studio / 1RK</option>
+            <option value="Villa">Villa</option>
+            <option value="Commercial Space">Commercial Space</option>
+          </select>
         </div>
-        
         <div class="form-group">
-            <label for="area-info" class="required">Area Information</label>
-            <input type="text" id="area-info" placeholder="Enter area/locality/sector name" required>
+          <label><i class="fas fa-door-open"></i> BHK Type <span class="required-star">*</span></label>
+          <select id="bhkType" required>
+            <option value="" disabled selected>Select BHK</option>
+            <option value="1 BHK">1 BHK</option>
+            <option value="2 BHK">2 BHK</option>
+            <option value="3 BHK">3 BHK</option>
+            <option value="4+ BHK">4+ BHK</option>
+            <option value="Studio/RK">Studio / RK</option>
+          </select>
         </div>
-    </div>  
-                
-                <div class="form-group">
-                    <label for="location" class="required">Full Property Address</label>
-                    <input type="text" id="location" placeholder="Enter complete address with landmark" minlength="10" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="property-details" class="required">Property Description</label>
-                    <textarea id="property-details" placeholder="Describe your property including amenities, furniture, nearby facilities, rules, etc." minlength="10" required></textarea>
-                </div>
-            </div>
-            
-            <!-- Pricing Section with Offers -->
-            <div class="form-section">
-                <h2>Pricing Details</h2>
-                
-                <div class="form-group">
-                    <label for="monthly-price" class="required">Monthly Rent (₹)</label>
-                    <input type="number" id="monthly-price" placeholder="Enter monthly rent amount" min="1000" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="security-deposit">Security Deposit (₹)</label>
-                    <input type="number" id="security-deposit" min="0" placeholder="Enter security deposit amount">
-                </div>
-                
-                <!-- Offers Section -->
-                <div class="offers-section">
-                    <h3>Any Offers for Seekers?</h3>
-                    
-                    <div class="offer-options">
-                        <div class="offer-option">
-                            <input type="radio" name="has-offer" id="no-offer" value="no" checked>
-                            <label for="no-offer">No Offers</label>
-                        </div>
-                        <div class="offer-option">
-                            <input type="radio" name="has-offer" id="has-offer" value="yes">
-                            <label for="has-offer">Yes, I have an offer</label>
-                        </div>
-                    </div>
-                    
-                    <div id="offer-details" class="offer-details">
-                        <div class="form-group">
-                            <label for="offer-title">Offer Title</label>
-                            <input type="text" id="offer-title" placeholder="e.g. Discount for long stay">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="offer-description">Offer Details</label>
-                            <textarea id="offer-description" placeholder="Describe your offer terms and conditions"></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="offer-validity">Offer Valid Until</label>
-                            <input type="date" id="offer-validity">
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="form-group">
+          <label><i class="fas fa-bed"></i> Number of Bedrooms <span class="required-star">*</span></label>
+          <input type="number" id="bedrooms" placeholder="Enter total bedrooms" required>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-bath"></i> Number of Bathrooms <span class="required-star">*</span></label>
+          <input type="number" id="bathrooms" placeholder="Enter total bathrooms" required>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-city"></i> Your City <span class="required-star">*</span></label>
+          <input type="text" id="city" placeholder="Enter your city name" required>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-map-marker-alt"></i> Area Information <span class="required-star">*</span></label>
+          <input type="text" id="areaInfo" placeholder="Enter area/locality/sector name" required>
+        </div>
+      </div>
 
-           <!-- Boost Plan Section - Simplified -->
-                <div class="boost-section">
-                    <h3>Activate Boost Plan</h3>
-                    
-                    <div class="boost-options">
-                        <div class="boost-option">
-                            <input type="radio" name="has-boost" id="activate-boost" value="yes" checked>
-                            <label for="activate-boost">Activate Plan</label>
-                        </div>
-                        <div class="boost-option">
-                            <input type="radio" name="has-boost" id="no-boost" value="no">
-                            <label for="no-boost">Don't Activate</label>
-                        </div>
-                    </div>
-                    
-                    <div id="boost-message" class="boost-message active">
-                        (By activating the Boost-Plan, you're eligible for a refund if a tenant isn't found in promised time frame under suitable terms and conditions)
-                      <a href="/Terms-conditions/#Boost-plan">Know more</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Subscription Section with 3 Paid Plans -->
-            <div class="form-section subscription-section">
-                <h2>Attract More</h2>
-                <p>Get more responses by featuring your listing prominently</p>
-                
-                <div class="subscription-options">
-                    <div class="subscription-option">
-                        <input type="radio" name="subscription" id="sub-basic" value="basic" checked>
-                        <label for="sub-basic">
-                            <div class="pack-name">Basic Listing</div>
-                            <div class="pack-price">FREE</div>
-                            <div class="pack-features"></div>
-                                <ul>
-                                    <li>List 1-property</li>
-                                    <li>Basic listing visibility</li>
-                                    <li>Up to 4 photos</li>
-                                    <li>Each free listing remains active for upto 25 days</li>
-                                   <li>Extend your listing for 12 more days at just 49/- (one-time renewal only)</li>
-                                </ul>
-                            </div>
-                        </label>
-                    </div>
-                    
-                    <div class="subscription-option">
-                        <input type="radio" name="subscription" id="sub-starter" value="starter">
-                        <label for="sub-starter">
-                            <div class="pack-name">Starter Pack</div>
-                            <div class="pack-price">₹149/month</div>
-                            <div class="pack-features">
-                                <ul>
-                                    <li>Priority in search results(top-10)</li>
-                                    <li>2x more profile views</li>
-                                    <li>Up to 6 photos + 2-listings</li>
-                                    <li>"Featured" badge</li>
-                                    <li>5 featured days/month</li>
-                                </ul>
-                            </div>
-                        </label>
-                    </div>
-                    
-                    <div class="subscription-option">
-                        <input type="radio" name="subscription" id="sub-pro" value="pro">
-                        <label for="sub-pro">
-                            <div class="pack-name">Pro Pack</div>
-                            <div class="pack-price">₹249/month</div>
-                            <div class="pack-features">
-                                <ul>
-                                    <li>Top placement in searches(top-5)</li>
-                                    <li>5x more profile views</li>
-                                    <li>Up to 8 photos + 3-listings</li>
-                                    <li>"verified + featured" badges</li>
-                                    <li>15 featured days/month</li>
-                                    <li>Instant notifications</li>
-                                   <li>Properties will show on 1 social media handle</li>
+      <div class="form-group">
+        <label><i class="fas fa-location-dot"></i> Full Property Address <span class="required-star">*</span></label>
+        <input type="text" id="fullAddress" placeholder="Enter complete address with landmark" required>
+        <div class="small-hint"><i class="fas fa-info-circle"></i> Include building name, street, landmark, pincode</div>
+      </div>
 
-                                </ul>
-                            </div>
-                        </label>
-                    </div>
-                    
-                    <div class="subscription-option">
-                        <input type="radio" name="subscription" id="sub-premium" value="premium">
-                        <label for="sub-premium">
-                            <div class="pack-name">Premium Pack</div>
-                            <div class="pack-price">₹349/month</div>
-                            <div class="pack-features">
-                                <ul>
-                                    <li>Highest priority in all searches</li>
-                                    <li>10x more profile views</li>
-                                    <li>Up to 10 photos + 5-listings</li>
-                                    <li>"Verified + featured + premium" badges</li>
-                                    <li>30 featured days/month</li>
-                                     <li>Properties will show on 2 social media handle</li>
-                                    <li>Instant notifications</li>
-                                    <li>Dedicated support</li>
-                                </ul>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-                
-                <div class="code-verification">
-                    <p><strong>Enter your subscription code</strong> If not then buy from pricing section of StayLoo:</p>
-                    <div class="code-input-group">
-                        <input type="text" id="subscription-code" placeholder="Enter 7-character code" maxlength="7">
-                        <button type="button" id="verify-code">Verify Code</button>
-                        <span id="verification-icon"></span>
-                    </div>
-                    <div id="verification-message" class="verification-message"></div>
-                </div>
-            </div>
-            
-            <button type="submit" class="submit-btn">Submit Listing</button>
-        </form>
-    </main>
+      <div class="form-group">
+        <label><i class="fas fa-file-alt"></i> Property Description <span class="required-star">*</span></label>
+        <textarea id="propertyDesc" placeholder="Describe your property including amenities, furniture, nearby facilities, rules, etc." required></textarea>
+      </div>
+    </div>
+
+    <!-- Pricing Details section (exact fields, NO Boost Plan) -->
+    <div class="form-card">
+      <div class="section-title">
+        <i class="fas fa-tags"></i>
+        <span>Pricing Details</span>
+      </div>
+      <div class="divider-light"></div>
+
+      <div class="pricing-row">
+        <div class="form-group">
+          <label><i class="fas fa-rupee-sign"></i> Monthly Rent (₹) <span class="required-star">*</span></label>
+          <input type="number" id="monthlyRent" placeholder="Enter monthly rent amount" required>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-shield-alt"></i> Security Deposit (₹) <span class="required-star">*</span></label>
+          <input type="number" id="securityDeposit" placeholder="Enter security deposit amount" required>
+        </div>
+      </div>
+
+      <!-- Any Offers for Seekers? radio group -->
+      <div class="offer-radio-group">
+        <label style="font-weight: 700; margin-bottom: 12px; display: block;"><i class="fas fa-gift"></i> Any Offers for Seekers?</label>
+        <label class="radio-option">
+          <input type="radio" name="offerChoice" value="no" checked> No Offers
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="offerChoice" value="yes"> Yes, I have an offer
+        </label>
+      </div>
+
+      <!-- Dynamic offer fields: Offer Details + Valid Until -->
+      <div id="dynamicOfferFields" class="dynamic-offer-fields hidden">
+        <div class="form-group">
+          <label>Offer Details <span class="required-star">*</span></label>
+          <input type="text" id="offerDetails" placeholder="e.g., 1 month rent free, 20% off on first 3 months">
+        </div>
+        <div class="form-group">
+          <label>Offer Valid Until <span class="required-star">*</span></label>
+          <input type="date" id="offerValidUntil">
+          <div class="small-hint">Specify expiration date</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-submit-wrap">
+      <button type="submit" class="btn-submit"><i class="fab fa-whatsapp"></i> Submit Listing via WhatsApp</button>
+    </div>
+  </form>
+</main>
+
+<footer>
+  <p><i class="far fa-copyright"></i> 2026 StayLoo — Blue & White trusted platform. Your property details sent directly via WhatsApp.</p>
+</footer>
+
+<div id="toastMsg" class="toast-msg"></div>
+
+<script>
+  (function() {
+    const form = document.getElementById('listingForm');
+    const toast = document.getElementById('toastMsg');
     
-    <footer>
-        <div class="container">
-            <p>&#9993; Listing deatils will collected via Whatsapp for smooth experience.</p>
-            <p>&#128172; Our team will connect you personally through it.</p>
-            <p>&copy; 2025 StayLoo. All rights reserved.</p>
-            <p></p>
-   
-        </div>
-    </footer>
+    // Radio buttons for offer
+    const radioNo = document.querySelector('input[value="no"]');
+    const radioYes = document.querySelector('input[value="yes"]');
+    const offerFieldsDiv = document.getElementById('dynamicOfferFields');
+    const offerDetailsInput = document.getElementById('offerDetails');
+    const offerValidUntilInput = document.getElementById('offerValidUntil');
 
-    <script>          
-    // Your web app's Firebase configuration
-        const firebaseConfig = {
-             apiKey: "AIzaSyC62frfWfIEqz0tucqu4Ie5AvEzPmTx3qg",
-             authDomain: "stayloo-97012.firebaseapp.com",
-             databaseURL: "https://stayloo-97012-default-rtdb.asia-southeast1.firebasedatabase.app",
-             projectId: "stayloo-97012",
-             storageBucket: "stayloo-97012.firebasestorage.app",
-             messagingSenderId: "134671320511",
-            appId: "1:134671320511:web:e0fde87479ff90a1c14d0a"
-        };
+    function toggleOfferFields() {
+      if (radioYes.checked) {
+        offerFieldsDiv.classList.remove('hidden');
+      } else {
+        offerFieldsDiv.classList.add('hidden');
+      }
+    }
+    radioNo.addEventListener('change', toggleOfferFields);
+    radioYes.addEventListener('change', toggleOfferFields);
+    toggleOfferFields();
 
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
+    function showToastMessage(msg, isError = false) {
+      toast.textContent = msg;
+      toast.style.background = isError ? "rgba(190, 65, 55, 0.95)" : "#115a7a";
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3200);
+    }
+
+    // Validate entire form (including conditional offer fields)
+    function validateForm() {
+      const propertyType = document.getElementById('propertyType').value;
+      const bhkType = document.getElementById('bhkType').value;
+      const bedrooms = document.getElementById('bedrooms').value.trim();
+      const bathrooms = document.getElementById('bathrooms').value.trim();
+      const city = document.getElementById('city').value.trim();
+      const areaInfo = document.getElementById('areaInfo').value.trim();
+      const fullAddress = document.getElementById('fullAddress').value.trim();
+      const propertyDesc = document.getElementById('propertyDesc').value.trim();
+      const monthlyRent = document.getElementById('monthlyRent').value.trim();
+      const securityDeposit = document.getElementById('securityDeposit').value.trim();
+
+      if (!propertyType) { showToastMessage("Please select Property Type", true); return false; }
+      if (!bhkType) { showToastMessage("Please select BHK Type", true); return false; }
+      if (!bedrooms || isNaN(bedrooms) || parseInt(bedrooms) <= 0) { showToastMessage("Enter valid number of bedrooms", true); return false; }
+      if (!bathrooms || isNaN(bathrooms) || parseInt(bathrooms) <= 0) { showToastMessage("Enter valid number of bathrooms", true); return false; }
+      if (!city) { showToastMessage("Please enter your city", true); return false; }
+      if (!areaInfo) { showToastMessage("Please enter area/locality/sector", true); return false; }
+      if (!fullAddress) { showToastMessage("Please enter full property address", true); return false; }
+      if (!propertyDesc) { showToastMessage("Property description is required", true); return false; }
+      if (!monthlyRent || parseInt(monthlyRent) <= 0) { showToastMessage("Please enter valid monthly rent", true); return false; }
+      if (securityDeposit === "" || parseInt(securityDeposit) < 0) { showToastMessage("Please enter security deposit amount", true); return false; }
+
+      if (radioYes.checked) {
+        const offerDetails = offerDetailsInput.value.trim();
+        const offerValidUntil = offerValidUntilInput.value;
+        if (!offerDetails) {
+          showToastMessage("Please provide offer details (e.g., discount, free months)", true);
+          offerDetailsInput.focus();
+          return false;
+        }
+        if (!offerValidUntil) {
+          showToastMessage("Please select 'Offer Valid Until' date", true);
+          offerValidUntilInput.focus();
+          return false;
+        }
+        const today = new Date().toISOString().split('T')[0];
+        if (offerValidUntil < today) {
+          showToastMessage("Offer valid until date should be today or future", true);
+          return false;
+        }
+      }
+      return true;
+    }
+
+    // Build WhatsApp message (neat, professional)
+    function buildWhatsAppMessage() {
+      const propertyType = document.getElementById('propertyType').value;
+      const bhkType = document.getElementById('bhkType').value;
+      const bedrooms = document.getElementById('bedrooms').value;
+      const bathrooms = document.getElementById('bathrooms').value;
+      const city = document.getElementById('city').value;
+      const areaInfo = document.getElementById('areaInfo').value;
+      const fullAddress = document.getElementById('fullAddress').value;
+      const propertyDesc = document.getElementById('propertyDesc').value;
+      const monthlyRent = document.getElementById('monthlyRent').value;
+      const securityDeposit = document.getElementById('securityDeposit').value;
+
+      let offerText = "No offers available";
+      if (radioYes.checked) {
+        const offerDetails = offerDetailsInput.value.trim();
+        const offerValidUntil = offerValidUntilInput.value;
+        offerText = `✅ Special Offer: ${offerDetails}\n📅 Valid until: ${offerValidUntil}`;
+      } else {
+        offerText = "❌ No current offers";
+      }
+
+      const message = `🏡 *NEW PROPERTY LISTING - StayLoo* 🏡\n\n` +
+        `*📌 Property Details*\n` +
+        `• Property Type: ${propertyType}\n` +
+        `• BHK Type: ${bhkType}\n` +
+        `• Bedrooms: ${bedrooms}\n` +
+        `• Bathrooms: ${bathrooms}\n` +
+        `• City: ${city}\n` +
+        `• Area/Locality: ${areaInfo}\n` +
+        `• Full Address: ${fullAddress}\n\n` +
+        `*📝 Description:*\n${propertyDesc}\n\n` +
+        `*💰 Pricing Details*\n` +
+        `• Monthly Rent: ₹${monthlyRent}\n` +
+        `• Security Deposit: ₹${securityDeposit}\n\n` +
+        `*🎁 Offer Section*\n${offerText}\n\n` +
+        `🔗 _Interested seekers can contact owner directly via StayLoo._\n` +
+        `📅 Generated: ${new Date().toLocaleString()}`;
       
-        // Mobile Menu Functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-            const mainNav = document.getElementById('mainNav');
-            const overlay = document.getElementById('overlay');
-            
-            if (mobileMenuBtn && mainNav && overlay) {
-                mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-                overlay.addEventListener('click', closeMobileMenu);
-                document.querySelectorAll('#mainNav a').forEach(link => {
-                    link.addEventListener('click', closeMobileMenu);
-                });
-            }
-            
-            function toggleMobileMenu() {
-                mobileMenuBtn.classList.toggle('active');
-                mainNav.classList.toggle('active');
-                overlay.classList.toggle('active');
-                
-                const spans = mobileMenuBtn.querySelectorAll('span');
-                if (mainNav.classList.contains('active')) {
-                    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-                    spans[1].style.opacity = '0';
-                    spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
-                } else {
-                    spans.forEach(span => {
-                        span.style.transform = '';
-                        span.style.opacity = '';
-                    });
-                }
-            }
-            
-            function closeMobileMenu() {
-                mobileMenuBtn.classList.remove('active');
-                mainNav.classList.remove('active');
-                overlay.classList.remove('active');
-                
-                const spans = mobileMenuBtn.querySelectorAll('span');
-                spans.forEach(span => {
-                    span.style.transform = '';
-                    span.style.opacity = '';
-                });
-            }
-            
-            // Offer Section Toggle
-            document.querySelectorAll('input[name="has-offer"]').forEach(radio => {
-                radio.addEventListener('change', function() {
-                    const offerDetails = document.getElementById('offer-details');
-                    if (this.value === 'yes') {
-                        offerDetails.classList.add('active');
-                    } else {
-                        offerDetails.classList.remove('active');
-                    }
-                });
-            });
+      return encodeURIComponent(message);
+    }
 
-           // Boost Plan Toggle - Simplified
-            document.querySelectorAll('input[name="has-boost"]').forEach(radio => {
-                radio.addEventListener('change', function() {
-                    const boostMessage = document.getElementById('boost-message');
-                    if (this.value === 'yes') {
-                        boostMessage.classList.add('active');
-                    } else {
-                        boostMessage.classList.remove('active');
-                    }
-                });
-            });
-            
-            // Subscription Code Verification
-            const subscriptionRadios = document.querySelectorAll('input[name="subscription"]');
-            const codeVerificationDiv = document.querySelector('.code-verification');
-            const subscriptionCodeInput = document.getElementById('subscription-code');
-            const verificationIcon = document.getElementById('verification-icon');
-            const verifyButton = document.getElementById('verify-code');
-            const verificationMessage = document.getElementById('verification-message');
-            
-            // Valid promo codes
-            const validCodes = [
-                "STAYLOO1", "PREMIUM7", "ADVANCE5", "PROPACK9", 
-                "STARTER3", "LOVEROO2", "HOLIDAY8", "WELCOME5", "NEWLIST7"
-            ];
-            
-            // Show/hide code verification when subscription is selected
-            subscriptionRadios.forEach(radio => {
-                radio.addEventListener('change', function() {
-                    if (this.value !== 'none') {
-                        codeVerificationDiv.style.display = 'block';
-                        subscriptionCodeInput.value = '';
-                        verificationIcon.innerHTML = '';
-                        verificationMessage.textContent = '';
-                        verificationMessage.className = 'verification-message';
-                    } else {
-                        codeVerificationDiv.style.display = 'none';
-                    }
-                });
-            });
-            
-            // Verify promo code
-            verifyButton.addEventListener('click', function() {
-                const enteredCode = subscriptionCodeInput.value.trim().toUpperCase();
-                
-                if (enteredCode.length !== 7) {
-                    verificationMessage.textContent = 'Promo code must be exactly 7 characters';
-                    verificationMessage.className = 'verification-message error';
-                    verificationIcon.innerHTML = '❌';
-                    return;
-                }
-                
-                if (validCodes.includes(enteredCode)) {
-                    verificationIcon.innerHTML = '✅';
-                    verificationMessage.textContent = 'Subscription code applied successfully! Your plan activated.';
-                    verificationMessage.className = 'verification-message success';
-                } else {
-                    verificationIcon.innerHTML = '❌';
-                    verificationMessage.textContent = 'Invalid code. Please check and try again.';
-                    verificationMessage.className = 'verification-message error';
-                }
-            });
-            
-            // Form submission to WhatsApp
-            const form = document.getElementById('staylooForm');
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Collect all form data
-                const formData = {
-                     name: document.getElementById('owner-name').value,
-                    phone: document.getElementById('owner-phone').value,
-                    email: document.getElementById('owner-email').value,
-                    title: document.getElementById('property-title').value,
-                    type: document.getElementById('property-type').value,
-                    bhk: document.getElementById('bhk-type').value,
-                    bedrooms: document.getElementById('bedrooms').value,
-                    bathrooms: document.getElementById('bathrooms').value,
-                    city: document.getElementById('city').value,
-                    areaInfo: document.getElementById('area-info').value,      
-                    location: document.getElementById('location').value,
-                    details: document.getElementById('property-details').value,
-                    price: document.getElementById('monthly-price').value,
-                    deposit: document.getElementById('security-deposit').value || 'Not specified',
-                    hasOffer: document.querySelector('input[name="has-offer"]:checked').value,
-                    offerTitle: document.getElementById('offer-title').value || 'None',
-                    offerDescription: document.getElementById('offer-description').value || 'None',
-                    offerValidity: document.getElementById('offer-validity').value || 'Not specified',
-                    hasBoost: document.querySelector('input[name="has-boost"]:checked').value,
-                    subscription: document.querySelector('input[name="subscription"]:checked').value,
-                    promoCode: subscriptionCodeInput.value || 'None'
-                };
+    // ============================================================
+    // IMPORTANT: Replace the WhatsApp number below with your own number
+    // Format: country code + mobile number (without '+' or spaces)
+    // Example for India: 919876543210
+    // ============================================================
+    const YOUR_WHATSAPP_NUMBER = "919876543210";   // <--- REPLACE WITH YOUR ACTUAL WHATSAPP NUMBER
+    
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      if (!validateForm()) return;
+      
+      const whatsappMsg = buildWhatsAppMessage();
+      const whatsappURL = `https://wa.me/${YOUR_WHATSAPP_NUMBER}?text=${whatsappMsg}`;
+      
+      showToastMessage("Redirecting to WhatsApp...", false);
+      
+      setTimeout(() => {
+        window.open(whatsappURL, '_blank');
+      }, 500);
+    });
 
-              // Push data to Firebase
-                database.ref('propertyListings').push(formData)
-                .then(() => {
-                    console.log('Data saved successfully');
-                })
-                .catch((error) => {
-                    console.error('Error saving data', error);
-                });
-                
-                // Format the WhatsApp message
-                const whatsappMessage = 
-                    `*NEW STAYLOO LISTING SUBMISSION*\n\n` +
-                    `*OWNER DETAILS*\n` +
-                    `👤 Name: ${formData.name}\n` +
-                    `📱 Phone: ${formData.phone}\n` +
-                    `✉️ Email: ${formData.email}\n\n` +
-                    `*PROPERTY DETAILS*\n` +
-                    `🏠 Title: ${formData.title}\n` +
-                    `🏡 Type: ${formData.type}\n` +
-                    `🛏️ BHK: ${formData.bhk}\n` +
-                    `🛌 Bedrooms: ${formData.bedrooms}\n` +
-                    `🚽 Bathrooms: ${formData.bathrooms}\n` +
-                   `🌆 City: ${formData.city}\n` +
-                   `🏙️ Area: ${formData.areaInfo}\n` +
-                    `📍 Location: ${formData.location}\n\n` +
-                    `*PRICING*\n` +
-                    `💰 Monthly Rent: ₹${formData.price}\n` +
-                    `🔒 Security Deposit: ₹${formData.deposit}\n\n` +
-                    `*OFFER DETAILS*\n` +
-                    `🎁 Has Offer: ${formData.hasOffer === 'yes' ? 'Yes' : 'No'}\n` +
-                    `🏷️ Offer Title: ${formData.offerTitle}\n` +
-                    `📝 Offer Details: ${formData.offerDescription}\n` +
-                    `📅 Valid Until: ${formData.offerValidity}\n\n` +
-                    `*BOOST PLAN*\n` +
-                    `🚀 Boost Activated: ${formData.hasBoost === 'yes' ? 'Yes' : 'No'}\n\n` +
-                    `*SUBSCRIPTION*\n` +
-                    `📢 Plan: ${formData.subscription.toUpperCase()}\n` +
-                    `🎟️ Promo Code: ${formData.promoCode}\n\n` +
-                    `*ADDITIONAL DETAILS*\n${formData.details}`;
-                
-                // Encode the message for URL
-                const encodedMessage = encodeURIComponent(whatsappMessage);
-                
-                // Replace with your WhatsApp number (with country code, remove any + or 0)
-                const whatsappNumber = "917311170545"; // Example: 91 for India + 9876543210
-                
-                // Open WhatsApp with the pre-filled message
-                window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
-            });
-        });
-    </script>
+    // Numeric input sanitization
+    const bedInput = document.getElementById('bedrooms');
+    const bathInput = document.getElementById('bathrooms');
+    const rentInput = document.getElementById('monthlyRent');
+    const depositInput = document.getElementById('securityDeposit');
+    
+    [bedInput, bathInput, rentInput, depositInput].forEach(inp => {
+      inp.addEventListener('input', function() {
+        this.value = this.value.replace(/[^0-9]/g, '');
+      });
+    });
+
+    // Logo image replacement hint: If you want to replace the sample SVG logo with your own image file,
+    // simply change the src attribute of the <img id="staylooLogo"> to your image URL.
+    // For example: document.getElementById('staylooLogo').src = 'your-logo.png';
+    // Current logo is a clean blue rounded box with text "StayLoo" — no stickers or extra icons before name.
+    // You can also set it via external URL as needed.
+  })();
+</script>
 </body>
 </html>
