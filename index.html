@@ -148,208 +148,267 @@
             cursor: pointer;
         }
 
-         /* ========== ENHANCED HERO SECTION (exactly like first image: GOOD VIBES ONLY, Trusted badge, no brokers etc) ========== */
+         /* ========== HERO SECTION with Background Image & Left Margin ========== */
     .hero {
-      background: linear-gradient(105deg, #FEF9F0 0%, #FFFFFF 55%, #F7F3EC 100%);
-      padding: 56px 0 64px 0;
       position: relative;
-      overflow: hidden;
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=2070&auto=format'); /* premium modern apartment building - vibrant but professional */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
-    /* decorative little blobs for "good vibes" atmosphere */
+    /* dark overlay for readability and "black fade surrounding" effect */
     .hero::before {
       content: '';
       position: absolute;
-      top: -50px;
-      right: -30px;
-      width: 280px;
-      height: 280px;
-      background: radial-gradient(circle, rgba(255,188,106,0.15) 0%, rgba(255,188,106,0) 70%);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-
-    .hero::after {
-      content: '';
-      position: absolute;
-      bottom: -40px;
-      left: -20px;
-      width: 240px;
-      height: 240px;
-      background: radial-gradient(circle, rgba(81, 199, 172, 0.08) 0%, rgba(81,199,172,0) 70%);
-      border-radius: 50%;
-      pointer-events: none;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(95deg, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.65) 50%, rgba(0, 0, 0, 0.55) 100%);
+      z-index: 1;
     }
 
     .hero-content {
       position: relative;
       z-index: 2;
       max-width: 780px;
-      margin: 0 auto;
-      text-align: center;
+      margin-left: 8%;         /* left margin as requested */
+      margin-right: 5%;
+      padding: 40px 24px;
+      animation: fadeInUp 0.6s ease-out;
     }
 
-    /* Trust badge: 500+ users row */
-    .trust-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(2px);
-      padding: 6px 18px 6px 16px;
-      border-radius: 100px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02), 0 1px 0 rgba(0,0,0,0.02);
-      margin-bottom: 24px;
-      font-weight: 500;
+    /* "Trusted by 500+ Users" - subtle premium look */
+    .trusted-line {
       font-size: 0.9rem;
-      color: #2D4A5C;
-      border: 1px solid #FFE4C2;
-    }
-
-    .trust-badge span:first-child {
-      background: #2C7A4D20;
-      color: #1F6E43;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 40px;
-      font-size: 0.8rem;
-    }
-
-    /* main heading combo */
-    .hero h1 {
-      font-size: 3.5rem;
-      font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 16px;
-      background: linear-gradient(130deg, #1B3B4F, #2C5F7A, #F5A65B);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      letter-spacing: -0.01em;
-    }
-
-    .good-vibes {
-      display: inline-block;
-      background: #FFEAD0;
-      padding: 4px 18px;
-      border-radius: 60px;
-      font-size: 1rem;
-      font-weight: 600;
-      color: #C25100;
-      margin-bottom: 20px;
-      letter-spacing: 0.3px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-    }
-
-    .tagline-big {
-      font-size: 1.35rem;
-      color: #2E5A6E;
       font-weight: 500;
-      margin: 12px auto 20px;
-      max-width: 600px;
-      background: rgba(255,248,235,0.7);
+      color: #d4e6f1;
+      margin-bottom: 28px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.1);
       display: inline-block;
       padding: 6px 18px;
-      border-radius: 60px;
-      backdrop-filter: blur(2px);
+      border-radius: 40px;
+      backdrop-filter: blur(4px);
+      border: 0.5px solid rgba(255,255,255,0.2);
     }
 
+    /* Main heading: No Brokers. Find Verified Rooms Easily. */
+    /* "Easily" turned into blue color */
+    .hero-headline {
+      margin-bottom: 28px;
+    }
+    .hero-headline .no-brokers {
+      font-size: 4rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+      display: block;
+      letter-spacing: -0.02em;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .hero-headline .find-verified {
+      font-size: 4rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+      display: inline-block;
+      letter-spacing: -0.02em;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .hero-headline .blue-easily {
+      font-size: 4rem;
+      font-weight: 800;
+      color: #3b82f6;        /* vibrant blue for "Easily" */
+      line-height: 1.2;
+      display: inline-block;
+      letter-spacing: -0.02em;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      margin-left: 8px;
+    }
+    /* make the whole sentence flow: "Find Verified Rooms" + space + "Easily." */
+    .headline-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      row-gap: 12px;
+    }
+
+    /* subheading: left margin aligned */
     .hero-description {
-      font-size: 1.1rem;
-      color: #335f6e;
+      font-size: 1.2rem;
+      color: #f0f6fa;
       max-width: 580px;
-      margin: 0 auto 28px;
+      margin: 0 0 36px 0;      /* left margin naturally from parent */
       font-weight: 450;
-      line-height: 1.4;
+      line-height: 1.5;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(2px);
+      display: inline-block;
+      padding: 6px 20px 6px 0;
+      border-radius: 12px;
     }
 
+    /* buttons with BLUE background */
     .hero-buttons {
       display: flex;
-      justify-content: center;
-      gap: 18px;
-      margin-top: 12px;
-      margin-bottom: 32px;
+      gap: 20px;
+      margin-bottom: 48px;
       flex-wrap: wrap;
     }
 
     .btn {
       display: inline-block;
-      padding: 12px 28px;
+      padding: 14px 34px;
       font-weight: 600;
       border-radius: 60px;
       text-decoration: none;
-      transition: 0.2s ease;
       font-size: 1rem;
-      letter-spacing: 0.2px;
-      border: 1px solid transparent;
+      font-family: inherit;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      text-align: center;
+      letter-spacing: 0.3px;
     }
 
     .btn-primary {
-      background: #FF8A3C;
+      background: #2563eb;    /* rich blue background */
       color: white;
-      box-shadow: 0 4px 12px rgba(255, 138, 60, 0.25);
+      border: none;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
     }
 
     .btn-primary:hover {
-      background: #E57224;
+      background: #1d4ed8;
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(255, 138, 60, 0.3);
+      box-shadow: 0 12px 24px rgba(37, 99, 235, 0.4);
     }
 
     .btn-secondary {
-      background: white;
-      border: 1px solid #CFDDE5;
-      color: #2C5F74;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.35);
+      color: white;
     }
 
     .btn-secondary:hover {
-      background: #FFF6ED;
-      border-color: #FFB576;
+      background: rgba(255,255,255,0.25);
+      border-color: rgba(255,255,255,0.6);
       transform: translateY(-2px);
     }
 
-    /* verification & no-broker row (exactly like image 1) */
-    .features-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 32px;
-      margin-top: 12px;
-      padding-top: 16px;
-      border-top: 1px solid rgba(0,0,0,0.05);
-      max-width: 550px;
-      margin-left: auto;
-      margin-right: auto;
+    /* advanced professional row: Verified Listings | No Brokerage | Quick Contact
+       with black fade surrounding and | symbol gap */
+    .features-professional {
+      margin-top: 20px;
+      width: 100%;
     }
-
+    .features-container {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 24px;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(12px);
+      padding: 14px 28px;
+      border-radius: 80px;
+      border: 0.5px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 10px 25px -8px rgba(0,0,0,0.4);
+    }
     .feature-item {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: #325f6e;
-      background: rgba(255, 255, 245, 0.7);
-      padding: 5px 14px;
-      border-radius: 60px;
-      backdrop-filter: blur(2px);
+      gap: 10px;
+      font-size: 0.95rem;
+      font-weight: 550;
+      color: #ffffff;
+      letter-spacing: 0.2px;
     }
-
-    .feature-item svg {
-      width: 18px;
-      height: 18px;
-      stroke: #FF8A3C;
-      stroke-width: 2;
-      fill: none;
-    }
-
-    .feature-item .check-icon {
-      color: #2C9B6E;
-      font-weight: bold;
+    .feature-icon {
+      font-weight: 700;
       font-size: 1.1rem;
+      color: #60a5fa;
+    }
+    .separator {
+      color: rgba(255,255,255,0.4);
+      font-size: 1.2rem;
+      font-weight: 300;
+      margin: 0 2px;
+    }
+    /* for small screens */
+    @media (max-width: 760px) {
+      .hero-content {
+        margin-left: 5%;
+        margin-right: 5%;
+        padding: 20px 16px;
+      }
+      .hero-headline .no-brokers,
+      .hero-headline .find-verified,
+      .hero-headline .blue-easily {
+        font-size: 2.4rem;
+      }
+      .hero-headline .blue-easily {
+        font-size: 2.4rem;
+        margin-left: 4px;
+      }
+      .hero-description {
+        font-size: 1rem;
+      }
+      .features-container {
+        padding: 10px 20px;
+        gap: 16px;
+        flex-wrap: wrap;
+        border-radius: 50px;
+      }
+      .separator {
+        display: none; /* to avoid awkward gaps, but we keep structure clean */
+      }
+      .features-container .separator {
+        display: inline-block;
+      }
+      @media (max-width: 550px) {
+        .features-container .separator {
+          display: none;
+        }
+        .features-container {
+          gap: 14px;
+          justify-content: center;
+        }
+      }
     }
 
+    @media (max-width: 550px) {
+      .hero-headline .no-brokers,
+      .hero-headline .find-verified,
+      .hero-headline .blue-easily {
+        font-size: 1.9rem;
+      }
+      .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+      }
+      .btn {
+        text-align: center;
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
         /* ===== Features Section ===== */
         .features {
             padding: 80px 0;
@@ -773,46 +832,53 @@ button:hover {
         </div>
     </header>
 
-   <section class="hero">
-  <div class="container">
-    <div class="hero-content">
-      <!-- Trust badge exactly like reference: 500+ users & good vibes only pill -->
-      <div class="trust-badge">
-        <span>⭐ 500+ Users</span>
-        <span>Trusted across India</span>
+ <section class="hero">
+  <div class="hero-content">
+    
+    <!-- "Trusted by 500+ Users" untouched text but styled with dark fade support -->
+    <div class="trusted-line">Trusted by 500+ Users</div>
+    
+    <!-- Main Heading: "No Brokers." on its own line, then "Find Verified Rooms" + blue "Easily." -->
+    <div class="hero-headline">
+      <span class="no-brokers">No Brokers.</span>
+      <div class="headline-group" style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px;">
+        <span class="find-verified">Find Verified Rooms</span>
+        <span class="blue-easily">Easily.</span>
       </div>
-      
-      <div class="good-vibes">
-        ✨ GOOD VIBES ONLY ✨
-      </div>
-
-      <h1>
-        No Brokers.<br>
-        Find Verified Rooms Easily.
-      </h1>
-      
-      <div class="tagline-big">
-        Browse trusted listings or list your space in minutes — fast, simple, and direct.
-      </div>
-
-      <div class="hero-buttons">
-        <a href="Browse-spaces/" class="btn btn-primary">🔍 Find a Room</a>
-        <a href="list-space/" class="btn btn-secondary">📂 List Your Property</a>
-      </div>
-
-      <!-- Verified Listings | No Brokerage | Quick Contact (exactly like first image lower row) -->
-      <div class="features-row">
+    </div>
+    
+    <!-- Subheading exactly as required but aligned to left margin -->
+    <div class="hero-description">
+      Browse trusted listings or list your space in minutes – fast, simple, and direct.
+    </div>
+    
+    <!-- Buttons with BLUE background (btn-primary) -->
+    <div class="hero-buttons">
+      <a href="#" class="btn btn-primary">Find a Room</a>
+      <a href="#" class="btn btn-secondary">List Your Property</a>
+    </div>
+    
+    <!-- Professional bottom row: Verified Listings | No Brokerage | Quick Contact 
+         black fade surrounding, | separator gap, modern glassmorphism -->
+    <div class="features-professional">
+      <div class="features-container">
         <div class="feature-item">
-          <span class="check-icon">✓</span> Verified Listings
+          <span class="feature-icon">✓</span>
+          <span>Verified Listings</span>
         </div>
+        <span class="separator">|</span>
         <div class="feature-item">
-          <span class="check-icon">✕</span> No Brokerage
+          <span class="feature-icon">✕</span>
+          <span>No Brokerage</span>
         </div>
+        <span class="separator">|</span>
         <div class="feature-item">
-          <span class="check-icon">⚡</span> Quick Contact
+          <span class="feature-icon">⚡</span>
+          <span>Quick Contact</span>
         </div>
       </div>
     </div>
+    
   </div>
 </section>
     
