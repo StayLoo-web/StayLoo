@@ -255,169 +255,143 @@
         
         /* Hero Section - City Selection */
         .hero {
-            background-color: #4a6bff;
-            color: white;
-            padding: 60px 0;
-            text-align: center;
-            margin-bottom: 40px;
-            border-radius: 10px;
-            margin-top: 30px;
-            background: linear-gradient(135deg, #4a6bff 0%, #2c67f2 100%);
-            animation: gradientShift 8s ease infinite;
-            background-size: 200% 200%;
-            cursor: default;
-            user-select: none;
-        }
-        
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        .hero h1 {
-            font-size: 36px;
-            margin-bottom: 20px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .city-selection {
-            max-width: 600px; /* Reduced width for better centering */
-            margin: 30px auto;
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
-        }
+      background: linear-gradient(135deg, #0a4b6e 0%, #1b6d8f 50%, #2a8aad 100%);
+      position: relative;
+      overflow: hidden;
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.06)" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') repeat-x bottom;
+      background-size: 1440px 80px;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    .hero-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 4rem 2rem 5rem;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(4px);
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: white;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.5px;
+    }
+    .hero h1 {
+      font-size: 3.8rem;
+      font-weight: 800;
+      color: white;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.92);
+      margin-bottom: 2.8rem;
+      max-width: 550px;
+    }
 
-        .city-selection h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 25px;
-            font-size: 22px;
-        }
-
-        .city-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* Fixed to 3 columns */
-            gap: 15px;
-        }
-
-        .city-card {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            transition: all 0.3s ease;
-            border: 1px solid #e0e4ff;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-
-        .city-card:hover {
-            box-shadow: 0 8px 15px rgba(74, 107, 255, 0.15);
-            background: #4a6bff;
-            color: white;
-            border-color: #4a6bff;
-        }
-
-        .city-card:hover .city-icon {
-            color: white;
-        }
-
-        .city-icon {
-            font-size: 24px;
-            color: #4a6bff;
-            margin-bottom: 10px;
-            transition: all 0.3s;
-        }
-
-        .city-name {
-            font-weight: 600;
-            font-size: 15px;
-            color: #333;
-            transition: all 0.3s;
-        }
-        
-        .city-card:hover .city-name {
-            color: white;
-        }
-
-        .expansion-message {
-            max-width: 600px;
-            margin: 20px auto 0;
-            padding: 15px;
-            text-align: center;
-            color: white;
-            font-size: 16px;
-            border-top: 2px solid rgba(255,255,255,0.3);
-            position: relative;
-        }
-        
-        .expansion-message::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: white;
-            border-radius: 3px;
-        }
-        
-        /* Listings Section */
-        .listings-section {
-            padding: 40px 0;
-            text-align: center;
-            cursor: default;
-            user-select: none;
-        }
-        
-        .section-title-container {
-            width: 100%;
-            margin-bottom: 30px;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 28px;
-            color: #4a6bff;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, #4a6bff 0%, rgba(74,107,255,0) 100%);
-            border-radius: 3px;
-        }
-        
-        .no-featured-message {
-            background-color: white;
-            border-radius: 10px;
-            padding: 40px 20px;
-            max-width: 800px;
-            margin: 0 auto;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-        }
-        
-        .no-featured-message h3 {
-            color: #4a6bff;
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-        
-        .no-featured-message p {
-            color: #666;
-            font-size: 16px;
-            margin-bottom: 20px;
-        }
+    /* City Buttons Section - Enhanced & Clickable */
+    .city-section {
+      margin-top: 0.5rem;
+    }
+    .city-label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      letter-spacing: 0.3px;
+    }
+    .city-label i {
+      font-size: 1.2rem;
+    }
+    .city-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    .city-btn {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      border: 1.5px solid rgba(255,255,255,0.35);
+      padding: 0.9rem 2.2rem;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: white;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .city-btn i {
+      font-size: 1.1rem;
+      transition: transform 0.2s;
+    }
+    .city-btn:hover {
+      background: white;
+      color: #1b6d8f;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+      border-color: white;
+    }
+    .city-btn:hover i {
+      transform: translateX(4px);
+      color: #1b6d8f;
+    }
+    .city-btn:active {
+      transform: translateY(-1px);
+    }
+    .expand-note {
+      margin-top: 1.8rem;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.8);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      background: rgba(0,0,0,0.2);
+      backdrop-filter: blur(4px);
+      padding: 0.7rem 1.2rem;
+      border-radius: 50px;
+      width: fit-content;
+    }
+    .expand-note i {
+      font-size: 0.9rem;
+    }
+    .pill-badge {
+      background: rgba(255,215,0,0.3);
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #ffec9f;
+    }
         
         /* Footer */
         footer {
@@ -613,34 +587,38 @@
     
     <main class="container">
         <!-- Hero Section with City Selection -->
-       <section class="hero animate-fade">
-            <h1>Find Your Perfect Space</h1>
-            <p>Browse available spaces in your city</p>
-            
-            <div class="city-selection">
-                <h2>Currently Available In</h2>
-                <div class="city-grid">
-                    <div class="city-card animate-fade animate-delay-1" onclick="window.location.href='/View-in-Lucknow/'">
-                        <div class="city-icon"><i class="fas fa-landmark"></i></div>
-                        <div class="city-name">Lucknow</div>
-                    </div>
-                    
-                    <div class="city-card animate-fade animate-delay-1" onclick="window.location.href='/View-in-Delhi/'">
-                        <div class="city-icon"><i class="fas fa-monument"></i></div>
-                        <div class="city-name">Delhi</div>
-                    </div>
-                    
-                    <div class="city-card animate-fade animate-delay-2" onclick="window.location.href='/View-in-Noida/'">
-                        <div class="city-icon"><i class="fas fa-building"></i></div>
-                        <div class="city-name">Noida</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="expansion-message animate-fade animate-delay-3">
-                We're expanding fast! More cities coming soon to serve you better.
-            </div>
-        </section>
+       <section class="hero">
+  <div class="hero-container">
+    <div class="hero-badge">
+      <i class="fas fa-check-circle"></i> Trusted by 1,000+ renters
+    </div>
+    <h1>Find Your Perfect Space</h1>
+    <div class="hero-subtitle">Browse available spaces in your city — zero brokerage, authentic listings.</div>
+
+    <div class="city-section">
+      <div class="city-label">
+        <i class="fas fa-map-marker-alt"></i> Currently Available In
+      </div>
+      <div class="city-buttons">
+        <!-- City buttons: each button will redirect to a dedicated city page -->
+        <button class="city-btn" data-city="lucknow" data-url="lucknow.html">
+          <i class="fas fa-city"></i> Lucknow
+        </button>
+        <button class="city-btn" data-city="delhi" data-url="delhi.html">
+          <i class="fas fa-building"></i> Delhi
+        </button>
+        <button class="city-btn" data-city="noida" data-url="noida.html">
+          <i class="fas fa-charging-station"></i> Noida
+        </button>
+      </div>
+      <div class="expand-note">
+        <i class="fas fa-rocket"></i> We're expanding fast! 
+        <span class="pill-badge">More cities coming soon</span>
+        <span style="margin-left: auto; font-size: 0.75rem; cursor: pointer;" id="notifyMe"><i class="far fa-bell"></i> Get notified</span>
+      </div>
+    </div>
+  </div>
+</section>
         
         <!-- Featured Listings Section -->
         <section class="listings-section">
@@ -713,6 +691,63 @@
       overlay.classList.add('active');
       document.body.style.overflow = 'hidden';
     }
+      // ========== CITY BUTTONS: REDIRECT TO RESPECTIVE CITY PAGE ==========
+    // Explanation: When user clicks on a city button, they will be taken to a dedicated page for that city.
+    // For each city, we create a simple mapping. You can replace 'lucknow.html', 'delhi.html', 'noida.html' 
+    // with the actual URLs where you will place the search area bar and listings.
+    
+    const cityButtons = document.querySelectorAll('.city-btn');
+    
+    cityButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        // Get the target URL from data-url attribute (you can customize)
+        let targetUrl = btn.getAttribute('data-url');
+        const cityName = btn.getAttribute('data-city') || btn.innerText.trim().toLowerCase();
+        
+        // If no data-url provided, generate a default slug (for flexibility)
+        if (!targetUrl) {
+          targetUrl = `${cityName}.html`;
+        }
+        
+        // Give a subtle click feedback and then redirect
+        btn.style.transform = 'scale(0.96)';
+        setTimeout(() => { btn.style.transform = ''; }, 120);
+        
+        // Optional: show a quick loading toast before redirect
+        showMessage(`✨ Loading ${btn.innerText.trim()} listings...`, true);
+        
+        // Small delay for smooth UX and to show the toast, then redirect
+        setTimeout(() => {
+          // Redirect to the city-specific page.
+          // You will create separate HTML files: lucknow.html, delhi.html, noida.html
+          // On those pages, you can add the search area bar and all property listings.
+          window.location.href = targetUrl;
+        }, 300);
+      });
+    });
+    
+    // Additional: 'Get Notified' for more cities (just demo interaction)
+    const notifySpan = document.getElementById('notifyMe');
+    if (notifySpan) {
+      notifySpan.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showMessage(`📢 We'll email you when new cities launch! Stay tuned.`, true);
+      });
+    }
+    
+    // Ensure that any existing nav links just close menu but no fake toasts
+    const desktopLinks = document.querySelectorAll('.nav-links a');
+    desktopLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        // do not interfere with natural navigation, just let the browser go to href
+        // but we also close mobile menu if it somehow stays open (safe)
+        closeMenu();
+      });
+    });
+    
+    console.log('Hero ready: City buttons redirect to dedicated pages (lucknow.html, delhi.html, noida.html)');
+  })()       
 
     // Function to close menu
     function closeMenu() {
