@@ -403,10 +403,10 @@
 <!-- Mobile Drawer Menu -->
 <div id="mobileDrawer" class="mobile-menu">
   <button class="close-menu" id="closeDrawerBtn"><i class="fas fa-times"></i></button>
-  <a href="#">Home</a>
-  <a href="#">Browse Listings</a>
-  <a href="#">Pricing & Queries</a>
-  <a href="#">Contact Us</a>
+  <a href="/">Home</a>
+  <a href="Browse-listings/">Browse Listings</a>
+  <a href="pricing-queries">Pricing & Queries</a>
+  <a href="contact-us/">Contact Us</a>
 </div>
 
 <!-- Sticky Header (hide on scroll down, appear on scroll up) -->
@@ -419,10 +419,10 @@
       <button class="hamburger" id="hamburgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
       <!-- Desktop links (hidden on mobile) -->
       <div class="nav-links">
-        <a href="#">Home</a>
-        <a href="#">Browse Listings</a>
-        <a href="#">Pricing & Queries</a>
-        <a href="#">Contact Us</a>
+        <a href="/">Home</a>
+        <a href="Browse-listings/">Browse Listings</a>
+        <a href="pricing-queries/">Pricing & Queries</a>
+        <a href="contact-us/">Contact Us</a>
       </div>
     </div>
   </div>
@@ -450,7 +450,7 @@
             <option value="" disabled selected>Select property type</option>
             <option value="Apartment/Flat">Apartment / Flat</option>
             <option value="Independent House">Independent House</option>
-            <option value="Studio/1RK">Studio / 1RK</option>
+            <option value="Studio/1RK">normal rooms</option>
             <option value="Villa">Villa</option>
             <option value="Commercial Space">Commercial Space</option>
           </select>
@@ -510,8 +510,8 @@
           <input type="number" id="monthlyRent" placeholder="Enter monthly rent amount" required>
         </div>
         <div class="form-group">
-          <label><i class="fas fa-shield-alt"></i> Security Deposit (₹) <span class="required-star">*</span></label>
-          <input type="number" id="securityDeposit" placeholder="Enter security deposit amount" required>
+          <label><i class="fas fa-shield-alt"></i> Security Deposit (₹)</label>
+          <input type="number" id="securityDeposit" placeholder="If any" required>
         </div>
       </div>
 
@@ -547,7 +547,7 @@
 </main>
 
 <footer>
-  <p><i class="far fa-copyright"></i> 2026 StayLoo — Blue & White trusted platform. Your property details sent directly via WhatsApp.</p>
+  <p><i class="far fa-copyright"></i> 2025 StayLoo — Move Easily. Your property details sent directly via WhatsApp.</p>
 </footer>
 
 <div id="toastMsg" class="toast-msg"></div>
@@ -730,7 +730,7 @@
 
     // ========== WHATSAPP CONFIGURATION ==========
     // ⚠️ REPLACE WITH YOUR ACTUAL WHATSAPP NUMBER (country code + number, no '+' or spaces)
-    const YOUR_WHATSAPP_NUMBER = "919876543210";   // <--- CHANGE THIS TO YOUR NUMBER
+    const YOUR_WHATSAPP_NUMBER = "916387834084";   // <--- CHANGE THIS TO YOUR NUMBER
     
     const form = document.getElementById('listingForm');
     form.addEventListener('submit', function(e) {
