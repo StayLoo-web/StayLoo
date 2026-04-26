@@ -1320,6 +1320,37 @@ button:hover {
     });
     // initial state: visible
     header.classList.remove('hide-header');
+
+    // ========== 2. MOBILE HAMBURGER MENU (three lines bar) ==========
+    const hamburger = document.getElementById('hamburgerBtn');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const overlay = document.getElementById('mobileOverlay');
+    const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+    
+    function openMenu() {
+      mobileDrawer.classList.add('open');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden'; // prevent background scroll
+    }
+    function closeMenu() {
+      mobileDrawer.classList.remove('open');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    hamburger.addEventListener('click', openMenu);
+    closeDrawerBtn.addEventListener('click', closeMenu);
+    overlay.addEventListener('click', closeMenu);
+    // Close on any link inside mobile menu (smooth UX)
+    const mobileLinks = mobileDrawer.querySelectorAll('a');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        // Show what's coming soon toast
+        showToastMessage(`✨ ${link.innerText} section — coming soon!`, false);
+        closeMenu();
+      });
+    });        
+            
     // Get elements
     const hamburger = document.getElementById('hamburgerBtn');
     const mobileDrawer = document.getElementById('mobileDrawer');
