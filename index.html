@@ -574,60 +574,110 @@
         transform: translateY(0);
       }
     }
-        /* ===== Features Section ===== */
-        .features {
-            padding: 80px 0;
-            background: white;
-              cursor: default;
-            user-select: none;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-            position: relative;
-        }
-
-        .section-title:after {
-            content: '';
-            position: absolute;
-            width: 80px;
-            height: 4px;
-            background: var(--primary);
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .feature-card {
-            background: var(--light);
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-
-        .feature-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-        }
+        /* ========== IMPROVED "WHY CHOOSE STAYLOO?" SECTION ========== */
+    .why-stayloo {
+      max-width: 1280px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .section-header h2 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #0a4b6e;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      position: relative;
+      display: inline-block;
+    }
+    .section-header h2:after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, #2c7da0, #5fa7c2);
+      border-radius: 4px;
+    }
+    .section-header p {
+      color: #5f8da3;
+      font-size: 1.1rem;
+      margin-top: 1.2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    .feature-card {
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+      border: 1px solid #e6f0f5;
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 30px -12px rgba(17, 90, 122, 0.15);
+      border-color: #cde3ef;
+    }
+    .feature-icon {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, #eef7fc, #e0f0f7);
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      transition: 0.2s;
+    }
+    .feature-card:hover .feature-icon {
+      background: linear-gradient(135deg, #2c7da0, #115a7a);
+    }
+    .feature-icon i {
+      font-size: 2rem;
+      color: #115a7a;
+      transition: 0.2s;
+    }
+    .feature-card:hover .feature-icon i {
+      color: white;
+    }
+    .feature-card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #1a5572;
+      margin-bottom: 0.75rem;
+    }
+    .feature-card p {
+      color: #5f7f92;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .feature-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(44, 125, 160, 0.1);
+      padding: 4px 10px;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #2c7da0;
+    }
 
         /* ===== Property Types Section ===== */
         .property-types {
@@ -1074,41 +1124,51 @@ button:hover {
   </div>
 </section>
     
-    <section class="features">
-        <div class="container">
-            <h2 class="section-title">Why Choose StayLoo?</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <h3>Verified Badges</h3>
-                    <p>Verified properties are personally verified to ensure quality and authenticity.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-map-marked-alt"></i>
-                    </div>
-                    <h3>Wide Selection</h3>
-                    <p>Thousands of options across multiple cities to fit your needs.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <h3>Secure Process</h3>
-                    <p>Safe and transparent rental process with verified owners.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3>24/7 Support</h3>
-                    <p>Our team is always ready to assist you with any queries.</p>
-                </div>
-            </div>
+    <section class="why-stayloo">
+    <div class="section-header">
+      <h2>Why Choose StayLoo?</h2>
+      <p>We make renting transparent, safe, and effortless</p>
+    </div>
+
+    <div class="features-grid">
+      <!-- Verified Badges -->
+      <div class="feature-card">
+        <div class="feature-badge">⭐ Trust</div>
+        <div class="feature-icon">
+          <i class="fas fa-shield-alt"></i>
         </div>
-    </section>
+        <h3>Verified Badges</h3>
+        <p>Verified properties are personally verified to ensure quality and authenticity.</p>
+      </div>
+      <!-- Wide Selection -->
+      <div class="feature-card">
+        <div class="feature-badge">📍 Reach</div>
+        <div class="feature-icon">
+          <i class="fas fa-globe-asia"></i>
+        </div>
+        <h3>Wide Selection</h3>
+        <p>Thousands of options across multiple cities to fit your needs.</p>
+      </div>
+      <!-- Secure Process -->
+      <div class="feature-card">
+        <div class="feature-badge">🔒 Safety</div>
+        <div class="feature-icon">
+          <i class="fas fa-handshake"></i>
+        </div>
+        <h3>Secure Process</h3>
+        <p>Safe and transparent rental process with verified owners.</p>
+      </div>
+      <!-- 24/7 Support -->
+      <div class="feature-card">
+        <div class="feature-badge">💬 Live</div>
+        <div class="feature-icon">
+          <i class="fas fa-headset"></i>
+        </div>
+        <h3>24/7 Support</h3>
+        <p>Our team is always ready to assist you with any queries.</p>
+      </div>
+    </div>
+  </section>
 
     <section class="property-types">
         <div class="container">
