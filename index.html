@@ -1293,6 +1293,61 @@ button:hover {
     </footer>
 
     <script>
+        (function() {
+    // Get elements
+    const hamburger = document.getElementById('hamburgerBtn');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const overlay = document.getElementById('mobileOverlay');
+    const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+
+    // Function to open menu
+    function openMenu() {
+      mobileDrawer.classList.add('open');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Function to close menu
+    function closeMenu() {
+      mobileDrawer.classList.remove('open');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Check if elements exist before adding event listeners
+    if (hamburger) {
+      hamburger.addEventListener('click', openMenu);
+      // Also add touchstart for better mobile response
+      hamburger.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        openMenu();
+      });
+    }
+
+    if (closeDrawerBtn) {
+      closeDrawerBtn.addEventListener('click', closeMenu);
+      closeDrawerBtn.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        closeMenu();
+      });
+    }
+
+    if (overlay) {
+      overlay.addEventListener('click', closeMenu);
+    }
+
+    // Close menu when clicking on any mobile link (but let navigation work)
+    const mobileLinks = document.querySelectorAll('.mobile-menu a');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        closeMenu();
+        // Navigation will happen naturally - no e.preventDefault()
+      });
+    });
+
+    // Debug: log to confirm script is running
+    console.log('Hamburger menu initialized - button exists:', !!hamburger);
+  })();
         // Mobile menu toggle
         document.getElementById('menuToggle').addEventListener('click', function() {
             document.getElementById('navLinks').classList.toggle('active');
