@@ -142,15 +142,19 @@
       padding: 8px;
       border-radius: 12px;
       transition: background 0.2s;
+      z-index: 1001;  
     }
     .hamburger i {
       font-size: 1.8rem;
       color: #115a7a;
+      pointer-events: none;  
     }
     .hamburger:hover {
       background: #eef3fc;
     }
-
+     .hamburger:active {
+      background: #e0eaf3;
+    }
     /* Mobile drawer menu */
     .mobile-menu {
       position: fixed;
@@ -227,6 +231,29 @@
         align-items: center;
         justify-content: center;
       }
+    }
+
+         /* Demo content styling */
+    .demo-content {
+      max-width: 1280px;
+      margin: 2rem auto;
+      padding: 2rem;
+      text-align: center;
+      background: white;
+      border-radius: 28px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+    .demo-content h2 {
+      font-size: 2rem;
+      color: #115a7a;
+    }
+    .badge {
+      background: #e9f2fa;
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      margin: 1rem 0;
     }
        /* header {
             background: white;
