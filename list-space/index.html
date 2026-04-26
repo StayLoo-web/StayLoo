@@ -604,9 +604,9 @@
     const mobileLinks = mobileDrawer.querySelectorAll('a');
     mobileLinks.forEach(link => {
       link.addEventListener('click', (e) => {
-        e.preventDefault();
-        // Show what's coming soon toast
-        showToastMessage(`✨ ${link.innerText} section — coming soon!`, false);
+        // e.preventDefault();
+        // // Show what's coming soon toast
+        // showToastMessage(`✨ ${link.innerText} section — coming soon!`, false);
         closeMenu();
       });
     });
