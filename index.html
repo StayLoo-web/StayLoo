@@ -1901,129 +1901,122 @@ button:hover {
 
     <script>
         (function() {     
-            // Get all elements
+            (function() {
+    // Get elements
     const track = document.getElementById('testimonialTrack');
     const slides = document.querySelectorAll('.testimonial-slide');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const dotsContainer = document.getElementById('dotsContainer');
     
-    let currentIndex = 0;
+    let currentGroup = 0;  // Which group of slides we're on
     let slidesToShow = 1;
     let totalSlides = slides.length;
+    let totalGroups = 1;
     
-    // Function to update how many slides to show based on screen width
+    // Function to update slidesToShow based on screen width
     function updateSlidesToShow() {
       if (window.innerWidth >= 1024) {
-        slidesToShow = 3;  // Desktop: show 3 cards
+        slidesToShow = 3;
       } else if (window.innerWidth >= 768) {
-        slidesToShow = 2;  // Tablet: show 2 cards
+        slidesToShow = 2;
       } else {
-        slidesToShow = 1;  // Mobile: show 1 card
+        slidesToShow = 1;
       }
-      updateSliderPosition();
-      updateDots();
-    }
-    
-    // Function to update slider position
-    function updateSliderPosition() {
-      // Set width of each slide
+      totalGroups = Math.ceil(totalSlides / slidesToShow);
+      
+      // Set slide widths
       const slideWidth = 100 / slidesToShow;
       slides.forEach(slide => {
         slide.style.flex = `0 0 ${slideWidth}%`;
       });
       
-      // Move the track
-      const newPosition = -(currentIndex * slideWidth);
-      track.style.transform = `translateX(${newPosition}%)`;
+      // Reset to first group if current group is out of range
+      if (currentGroup >= totalGroups) {
+        currentGroup = 0;
+      }
+      
+      updateSlider();
+      updateDots();
     }
     
-    // Function to update dots (pagination indicators)
+    // Update slider position
+    function updateSlider() {
+      const movePercent = -(currentGroup * 100);
+      track.style.transform = `translateX(${movePercent}%)`;
+      console.log('Moving to group:', currentGroup, 'Move percent:', movePercent);
+    }
+    
+    // Update dots
     function updateDots() {
-      const totalDots = Math.ceil(totalSlides / slidesToShow);
       dotsContainer.innerHTML = '';
-      
-      for (let i = 0; i < totalDots; i++) {
+      for (let i = 0; i < totalGroups; i++) {
         const dot = document.createElement('div');
         dot.classList.add('dot');
-        
-        // Calculate which dot should be active
-        const currentDotIndex = Math.floor(currentIndex / slidesToShow);
-        if (i === currentDotIndex) {
+        if (i === currentGroup) {
           dot.classList.add('active');
         }
-        
-        // Add click event to dot
-        dot.addEventListener('click', (function(dotIndex) {
+        dot.addEventListener('click', (function(index) {
           return function() {
-            currentIndex = dotIndex * slidesToShow;
-            // Don't go beyond last slide
-            if (currentIndex > totalSlides - slidesToShow) {
-              currentIndex = totalSlides - slidesToShow;
-            }
-            if (currentIndex < 0) currentIndex = 0;
-            updateSliderPosition();
+            currentGroup = index;
+            updateSlider();
             updateDots();
           };
         })(i));
-        
         dotsContainer.appendChild(dot);
       }
     }
     
-    // Next button click
+    // Next button
     function goToNext() {
-      const maxIndex = totalSlides - slidesToShow;
-      if (currentIndex + slidesToShow < totalSlides) {
-        currentIndex += slidesToShow;
-      } else {
-        currentIndex = maxIndex;
+      console.log('Next clicked - current group:', currentGroup, 'total groups:', totalGroups);
+      if (currentGroup + 1 < totalGroups) {
+        currentGroup++;
+        updateSlider();
+        updateDots();
+      } else if (currentGroup + 1 === totalGroups) {
+        // Loop back to first (optional - remove if you don't want loop)
+        // currentGroup = 0;
+        // updateSlider();
+        // updateDots();
+        console.log('Already at last group');
       }
-      if (currentIndex < 0) currentIndex = 0;
-      updateSliderPosition();
-      updateDots();
     }
     
-    // Previous button click
+    // Previous button
     function goToPrev() {
-      if (currentIndex - slidesToShow >= 0) {
-        currentIndex -= slidesToShow;
+      console.log('Prev clicked - current group:', currentGroup);
+      if (currentGroup - 1 >= 0) {
+        currentGroup--;
+        updateSlider();
+        updateDots();
       } else {
-        currentIndex = 0;
+        console.log('Already at first group');
       }
-      updateSliderPosition();
-      updateDots();
     }
     
-    // Add event listeners to buttons
+    // Add event listeners
     if (prevBtn) {
-      prevBtn.addEventListener('click', goToPrev);
-      // Touch support for mobile
-      prevBtn.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        goToPrev();
-      });
+      prevBtn.onclick = goToPrev;
+      prevBtn.ontouchstart = function(e) { e.preventDefault(); goToPrev(); };
     }
     
     if (nextBtn) {
-      nextBtn.addEventListener('click', goToNext);
-      nextBtn.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        goToNext();
-      });
+      nextBtn.onclick = goToNext;
+      nextBtn.ontouchstart = function(e) { e.preventDefault(); goToNext(); };
     }
     
-    // Handle window resize (responsive)
-    let resizeTimer;
+    // Handle resize
+    let resizeTimeout;
     window.addEventListener('resize', function() {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function() {
-        updateSlidesToShow();
-      }, 100);
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(updateSlidesToShow, 100);
     });
     
-    // Initialize the slider
+    // Initialize
     updateSlidesToShow();
+    
+    console.log('Slider initialized with', totalSlides, 'slides, showing', slidesToShow, 'at a time');
   })();
         
     // Get elements
