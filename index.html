@@ -718,7 +718,7 @@
     .property-cards {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 1.8rem;
+      gap: 1.5rem;
     }
 
     /* Modern card with image + hover animation */
@@ -1058,7 +1058,11 @@
     .property-chip:active {
       transform: scale(0.97);
     }
-
+      /* Touch feedback */
+    .card-link:active .card {
+      transform: scale(0.98);
+      transition: transform 0.05s;
+    }
         /* ===== Responsive Styles ===== */
         @media (max-width: 768px) {
             .navbar {
@@ -1290,55 +1294,61 @@ button:hover {
     </div>
   </section>
 
-   <section class="browse-section">
+  <section class="browse-section">
     <div class="section-title">
       <h2>Browse by Property Type</h2>
     </div>
     <div class="property-cards">
       
-      <!-- Card 1: Flats & Apartments -->
-    <a href="../View-flats/" class="card" style="text-decoration: none; display: block;">
-      <div class="card" data-type="flats">
-        <div class="card-badge"><i class="fas fa-building"></i> Popular</div>
-        <img class="card-img" src="https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&h=350&fit=crop" alt="Modern apartment interior" loading="lazy">
-        <div class="card-content">
-          <h3>Flats & Apartments</h3>
-          <p>Spacious, fully furnished & semi-furnished options</p>
+      <!-- Card 1: Flats & Apartments - CLICKABLE (change href to your actual page) -->
+      <a href="flats-and-apartments.html" class="card-link">
+        <div class="card">
+          <div class="card-badge"><i class="fas fa-building"></i> Popular</div>
+          <img class="card-img" src="https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&h=350&fit=crop" alt="Modern apartment" loading="lazy">
+          <div class="card-content">
+            <h3>Flats & Apartments</h3>
+            <p>Spacious, fully furnished & semi-furnished options</p>
+          </div>
         </div>
-      </div></a>
+      </a>
       
-      <!-- Card 2: Houses -->
-      <div class="card" data-type="houses">
-        <div class="card-badge"><i class="fas fa-tree"></i> Private</div>
-        <img class="card-img" src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=500&h=350&fit=crop" alt="Independent house" loading="lazy">
-        <div class="card-content">
-          <h3>Houses</h3>
-          <p>Independent homes with private yards & parking</p>
+      <!-- Card 2: Houses - CLICKABLE -->
+      <a href="houses.html" class="card-link">
+        <div class="card">
+          <div class="card-badge"><i class="fas fa-tree"></i> Private</div>
+          <img class="card-img" src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=500&h=350&fit=crop" alt="Independent house" loading="lazy">
+          <div class="card-content">
+            <h3>Houses</h3>
+            <p>Independent homes with private yards & parking</p>
+          </div>
         </div>
-      </div>
+      </a>
       
-      <!-- Card 3: PGs & Hostels -->
-      <div class="card" data-type="pg">
-        <div class="card-badge"><i class="fas fa-users"></i> Budget</div>
-        <img class="card-img" src="https://images.unsplash.com/photo-1554995207-c18c203602cb?w=500&h=350&fit=crop" alt="PG accommodation" loading="lazy">
-        <div class="card-content">
-          <h3>PGs & Hostels</h3>
-          <p>Affordable shared spaces with meals & amenities</p>
+      <!-- Card 3: PGs & Hostels - CLICKABLE -->
+      <a href="pgs-hostels.html" class="card-link">
+        <div class="card">
+          <div class="card-badge"><i class="fas fa-users"></i> Budget</div>
+          <img class="card-img" src="https://images.unsplash.com/photo-1554995207-c18c203602cb?w=500&h=350&fit=crop" alt="PG accommodation" loading="lazy">
+          <div class="card-content">
+            <h3>PGs & Hostels</h3>
+            <p>Affordable shared spaces with meals & amenities</p>
+          </div>
         </div>
-      </div>
+      </a>
       
-      <!-- Card 4: Normal Rooms -->
-      <div class="card" data-type="rooms">
-        <div class="card-badge"><i class="fas fa-door-open"></i> Flexible</div>
-        <img class="card-img" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500&h=350&fit=crop" alt="Cozy private room" loading="lazy">
-        <div class="card-content">
-          <h3>Normal Rooms</h3>
-          <p>Single occupancy, budget-friendly & ready to move in</p>
+      <!-- Card 4: Normal Rooms - CLICKABLE -->
+      <a href="normal-rooms.html" class="card-link">
+        <div class="card">
+          <div class="card-badge"><i class="fas fa-door-open"></i> Flexible</div>
+          <img class="card-img" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500&h=350&fit=crop" alt="Cozy private room" loading="lazy">
+          <div class="card-content">
+            <h3>Normal Rooms</h3>
+            <p>Single occupancy, budget-friendly & ready to move in</p>
+          </div>
         </div>
-      </div>
+      </a>
     </div>
   </section>
-
     <section class="reviews">
         <div class="container">
             <h2 class="section-title">What Our Customers Say</h2>
