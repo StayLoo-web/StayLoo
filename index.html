@@ -720,6 +720,23 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 1.5rem;
     }
+        /* Tablet screens */
+@media (max-width: 850px) {
+  .property-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+  }
+}
+
+/* Mobile screens */
+@media (max-width: 550px) {
+  .property-cards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    max-width: 350px;
+    margin: 0 auto;
+  }
+}
 
     /* Modern card with image + hover animation */
     .card {
@@ -1027,6 +1044,28 @@
         margin: 2rem auto;
       }
     }
+        .card-link:active .card {
+  transform: scale(0.98);
+  transition: transform 0.05s;
+}
+        /* Mobile image adjustment */
+@media (max-width: 550px) {
+  .card-img {
+    height: 160px;
+  }
+  
+  .card-content {
+    padding: 1rem;
+  }
+  
+  .card-content h3 {
+    font-size: 1.1rem;
+  }
+  
+  .card-content p {
+    font-size: 0.75rem;
+  }
+}
         /* Tablet layout (1024px and down) */
     @media (max-width: 1024px) {
       .features-grid {
