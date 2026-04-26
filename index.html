@@ -574,63 +574,68 @@
         transform: translateY(0);
       }
     }
-        /* ========== IMPROVED "WHY CHOOSE STAYLOO?" SECTION ========== */
+       /* ========= MAIN CONTENT: FULLY RESPONSIVE WHY CHOOSE STAYLOO ========= */
     .why-stayloo {
       max-width: 1280px;
-      margin: 4rem auto;
-      padding: 0 2rem;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
     }
     .section-header {
       text-align: center;
-      margin-bottom: 3rem;
+      margin-bottom: 2.5rem;
     }
     .section-header h2 {
-      font-size: 2.5rem;
+      font-size: clamp(1.8rem, 6vw, 2.5rem);
       font-weight: 800;
       color: #0a4b6e;
       letter-spacing: -0.02em;
-      margin-bottom: 1rem;
+      margin-bottom: 0.8rem;
       position: relative;
       display: inline-block;
     }
     .section-header h2:after {
       content: '';
       position: absolute;
-      bottom: -12px;
+      bottom: -10px;
       left: 50%;
       transform: translateX(-50%);
-      width: 80px;
-      height: 4px;
+      width: 70px;
+      height: 3px;
       background: linear-gradient(90deg, #2c7da0, #5fa7c2);
       border-radius: 4px;
     }
     .section-header p {
       color: #5f8da3;
-      font-size: 1.1rem;
+      font-size: clamp(0.9rem, 4vw, 1.1rem);
       margin-top: 1.2rem;
-      max-width: 600px;
+      max-width: 550px;
       margin-left: auto;
       margin-right: auto;
+      padding: 0 0.5rem;
     }
+
+    /* Responsive Grid: 4 columns -> 2 -> 1 on mobile */
     .features-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 2rem;
+      gap: 1.8rem;
       margin-bottom: 3rem;
     }
+
     .feature-card {
       background: #ffffff;
       border-radius: 28px;
-      padding: 2rem 1.5rem;
+      padding: 1.8rem 1.2rem;
       text-align: center;
       transition: all 0.3s ease;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
       border: 1px solid #e6f0f5;
       position: relative;
       overflow: hidden;
+      backdrop-filter: blur(2px);
     }
     .feature-card:hover {
-      transform: translateY(-8px);
+      transform: translateY(-6px);
       box-shadow: 0 20px 30px -12px rgba(17, 90, 122, 0.15);
       border-color: #cde3ef;
     }
@@ -642,7 +647,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 1.5rem;
+      margin: 0 auto 1.2rem;
       transition: 0.2s;
     }
     .feature-card:hover .feature-icon {
@@ -657,22 +662,23 @@
       color: white;
     }
     .feature-card h3 {
-      font-size: 1.3rem;
+      font-size: clamp(1.1rem, 4vw, 1.3rem);
       font-weight: 700;
       color: #1a5572;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.6rem;
     }
     .feature-card p {
       color: #5f7f92;
-      font-size: 0.9rem;
-      line-height: 1.5;
+      font-size: 0.85rem;
+      line-height: 1.45;
+      padding: 0 0.2rem;
     }
     .feature-badge {
       position: absolute;
-      top: 16px;
-      right: 16px;
-      background: rgba(44, 125, 160, 0.1);
-      padding: 4px 10px;
+      top: 14px;
+      right: 14px;
+      background: rgba(44, 125, 160, 0.12);
+      padding: 3px 10px;
       border-radius: 50px;
       font-size: 0.7rem;
       font-weight: 600;
@@ -938,6 +944,70 @@
             font-size: 14px;
             color: #d1d5db;
         }
+            /* Mobile (small screens): single column  */
+    @media (max-width: 550px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+      }
+      .feature-card {
+        padding: 1.3rem 1rem;
+      }
+      .feature-icon {
+        width: 60px;
+        height: 60px;
+      }
+      .feature-icon i {
+        font-size: 1.7rem;
+      }
+      .section-header {
+        margin-bottom: 1.8rem;
+      }
+      .property-type-title i {
+        font-size: 1.2rem;
+      }
+    }
+         /* Tablet to small desktop: 2 columns */
+    @media (max-width: 900px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+      .why-stayloo {
+        margin: 2rem auto;
+      }
+    }
+        /* Tablet layout (1024px and down) */
+    @media (max-width: 1024px) {
+      .features-grid {
+        gap: 1.2rem;
+      }
+      .feature-card {
+        padding: 1.5rem 1rem;
+      }
+    }
+         /* Extra small devices */
+    @media (max-width: 380px) {
+      .header-container {
+        padding: 0.6rem 1rem;
+      }
+      .logo-img {
+        height: 38px;
+      }
+      .feature-card h3 {
+        font-size: 1rem;
+      }
+      .feature-card p {
+        font-size: 0.8rem;
+      }
+    }
+         /* Smooth interactions */
+    .property-chip, .feature-card {
+      cursor: default;
+    }
+    .property-chip:active {
+      transform: scale(0.97);
+    }
 
         /* ===== Responsive Styles ===== */
         @media (max-width: 768px) {
@@ -1034,11 +1104,11 @@ button:hover {
     <img class="logo-img" src="../images/logo1.png" alt="logo">
     <!-- Desktop Navigation -->
     <div class="nav-links">
-      <a href="#">Home</a>
-      <a href="#">Pricing & Queries</a>
-      <a href="#">Contact Us</a>
-      <a href="#">About us</a>
-      <a href="#">Tell us</a>
+       <a href="/">Home</a>
+      <a href="pricing-queries/">Pricing & Queries</a>
+      <a href="contact-us/">Contact Us</a>
+      <a href="about-us/">About us</a>
+      <a href="Tell-us/">Tell us</a>
     </div>
     <!-- Mobile Hamburger Button -->
     <button class="hamburger" id="hamburgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
@@ -1124,10 +1194,10 @@ button:hover {
   </div>
 </section>
     
-    <section class="why-stayloo">
+   <section class="why-stayloo">
     <div class="section-header">
       <h2>Why Choose StayLoo?</h2>
-      <p>We make renting transparent, safe, and effortless</p>
+      <p>We make renting transparent, safe, and effortless — for every screen.</p>
     </div>
 
     <div class="features-grid">
