@@ -819,7 +819,7 @@
 
     .section-header {
       text-align: center;
-      margin-bottom: 3rem;
+      margin-bottom: 2.5rem;
     }
 
     .section-header h2 {
@@ -845,21 +845,30 @@
 
     .section-header p {
       color: #5f8da3;
-      font-size: 1rem;
+      font-size: 0.95rem;
       margin-top: 1.5rem;
-      max-width: 550px;
-      margin-left: auto;
-      margin-right: auto;
     }
 
-    /* Testimonial Grid - Responsive */
-    .testimonial-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
+    /* SLIDER CONTAINER */
+    .slider-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 32px;
+      padding: 0.5rem 0 1rem;
     }
 
-    /* Testimonial Card */
+    .testimonial-track {
+      display: flex;
+      transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      will-change: transform;
+    }
+
+    /* Testimonial Card - Slide Item */
+    .testimonial-slide {
+      flex: 0 0 100%;
+      padding: 0 0.5rem;
+    }
+
     .testimonial-card {
       background: #ffffff;
       border-radius: 28px;
@@ -868,15 +877,17 @@
       border: 1px solid #e6f0f5;
       transition: all 0.3s ease;
       position: relative;
+      height: 100%;
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
     }
 
     .testimonial-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 24px 36px -12px rgba(17, 90, 122, 0.12);
-      border-color: #cde3ef;
+      transform: translateY(-4px);
+      box-shadow: 0 20px 30px -10px rgba(17, 90, 122, 0.12);
     }
 
-    /* Quote Icon */
     .quote-icon {
       color: #2c7da0;
       font-size: 2rem;
@@ -885,30 +896,29 @@
       line-height: 1;
     }
 
-    /* Testimonial Text */
+    .rating {
+      margin-bottom: 1rem;
+      color: #f4b836;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+    }
+
     .testimonial-text {
       font-size: 0.95rem;
       line-height: 1.55;
       color: #2c4e66;
       margin-bottom: 1.5rem;
       font-weight: 500;
+      flex-grow: 1;
     }
 
-    /* Rating Stars */
-    .rating {
-      margin-bottom: 1.2rem;
-      color: #f4b836;
-      font-size: 0.85rem;
-      letter-spacing: 2px;
-    }
-
-    /* Customer Info */
     .customer-info {
       display: flex;
       align-items: center;
       gap: 0.8rem;
       border-top: 1px solid #eef2f8;
       padding-top: 1.2rem;
+      margin-top: auto;
     }
 
     .avatar {
@@ -921,7 +931,7 @@
       justify-content: center;
       color: white;
       font-weight: 700;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
 
     .customer-details h4 {
@@ -937,7 +947,6 @@
       font-weight: 500;
     }
 
-    /* Badge (optional) */
     .card-badge {
       position: absolute;
       top: 18px;
@@ -950,14 +959,84 @@
       color: #2c7da0;
     }
 
-    /* Responsive Breakpoints */
-    @media (max-width: 900px) {
-      .testimonial-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
+    /* Navigation Buttons */
+    .slider-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .nav-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: white;
+      border: 1px solid #d4e6f0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      color: #115a7a;
+      font-size: 1.2rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+
+    .nav-btn:hover {
+      background: #115a7a;
+      color: white;
+      border-color: #115a7a;
+      transform: scale(1.05);
+    }
+
+    .nav-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Dots Indicator */
+    .dots-container {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.2rem;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #cde3ef;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .dot.active {
+      width: 24px;
+      border-radius: 12px;
+      background: #2c7da0;
+    }
+
+    /* Hide scrollbar */
+    .testimonial-track {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .testimonial-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Responsive - Desktop: 3 cards, Tablet: 2 cards, Mobile: 1 card */
+    @media (min-width: 768px) {
+      .testimonial-slide {
+        flex: 0 0 50%;
       }
-      .testimonial-card {
-        padding: 1.5rem;
+    }
+
+    @media (min-width: 1024px) {
+      .testimonial-slide {
+        flex: 0 0 33.333%;
       }
     }
 
@@ -966,11 +1045,9 @@
         margin: 2.5rem auto;
         padding: 0 1rem;
       }
-      .testimonial-grid {
-        grid-template-columns: 1fr;
-        gap: 1.2rem;
-        max-width: 380px;
-        margin: 0 auto;
+      .testimonial-card {
+        padding: 1.5rem;
+        min-height: 360px;
       }
       .testimonial-text {
         font-size: 0.88rem;
@@ -980,9 +1057,14 @@
         height: 42px;
         font-size: 1rem;
       }
+      .nav-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
+      }
     }
 
-    /* Optional subtle animation on scroll */
+    /* Fade-in animation */
     @keyframes fadeUp {
       from {
         opacity: 0;
@@ -993,14 +1075,9 @@
         transform: translateY(0);
       }
     }
-
     .testimonial-card {
       animation: fadeUp 0.5s ease backwards;
     }
-
-    .testimonial-card:nth-child(1) { animation-delay: 0.1s; }
-    .testimonial-card:nth-child(2) { animation-delay: 0.2s; }
-    .testimonial-card:nth-child(3) { animation-delay: 0.3s; }
         /* .reviews {
             background: white;
             padding: 80px 0;
@@ -1585,64 +1662,103 @@ button:hover {
     <p>Trusted by thousands of renters & property owners across India</p>
   </div>
 
-  <div class="testimonial-grid">
-    
-    <!-- Testimonial 1 - Ram Sharma (Tenant) -->
-    <div class="testimonial-card">
-      <div class="card-badge"><i class="fas fa-check-circle"></i> Verified Tenant</div>
-      <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-      <div class="rating">
-        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+  <div class="slider-container">
+    <!-- Slider Track - All testimonials go here -->
+    <div class="testimonial-track" id="testimonialTrack">
+      
+      <!-- Testimonial 1 - Ram Sharma -->
+      <div class="testimonial-slide">
+        <div class="testimonial-card">
+          <div class="card-badge"><i class="fas fa-check-circle"></i> Verified Tenant</div>
+          <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+          <div class="rating">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <div class="testimonial-text">
+            "StayLoo made finding my perfect apartment so easy! The verified listings saved me so much time and the support team was incredibly helpful throughout the process."
+          </div>
+          <div class="customer-info">
+            <div class="avatar">RS</div>
+            <div class="customer-details">
+              <h4>Ram Sharma</h4>
+              <p>Tenant in Lucknow</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="testimonial-text">
-        "StayLoo made finding my perfect apartment so easy! The verified listings saved me so much time and the support team was incredibly helpful throughout the process."
+
+      <!-- Testimonial 2 - Rajesh Kumar -->
+      <div class="testimonial-slide">
+        <div class="testimonial-card">
+          <div class="card-badge"><i class="fas fa-home"></i> Property Owner</div>
+          <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+          <div class="rating">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <div class="testimonial-text">
+            "As a property owner, I was able to find a reliable tenant within just 2 weeks of listing. The platform is user-friendly and the verification process gives tenants confidence."
+          </div>
+          <div class="customer-info">
+            <div class="avatar">RK</div>
+            <div class="customer-details">
+              <h4>Rajesh Kumar</h4>
+              <p>Property Owner</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="customer-info">
-        <div class="avatar">RS</div>
-        <div class="customer-details">
-          <h4>Ram Sharma</h4>
-          <p>Tenant in Lucknow</p>
+
+      <!-- Testimonial 3 - Priya Sharma -->
+      <div class="testimonial-slide">
+        <div class="testimonial-card">
+          <div class="card-badge"><i class="fas fa-graduation-cap"></i> Student</div>
+          <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+          <div class="rating">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <div class="testimonial-text">
+            "The wide selection of PGs in my preferred location was impressive. I found exactly what I was looking for at a reasonable price. Highly recommended!"
+          </div>
+          <div class="customer-info">
+            <div class="avatar">PS</div>
+            <div class="customer-details">
+              <h4>Priya Sharma</h4>
+              <p>Student Tenant</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 4 - Additional Customer (Optional) -->
+      <div class="testimonial-slide">
+        <div class="testimonial-card">
+          <div class="card-badge"><i class="fas fa-building"></i> Premium User</div>
+          <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+          <div class="rating">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <div class="testimonial-text">
+            "One of the best rental platforms I've used. The interface is smooth, and the customer support responds within minutes. Highly recommended for everyone!"
+          </div>
+          <div class="customer-info">
+            <div class="avatar">AJ</div>
+            <div class="customer-details">
+              <h4>Anjali Mehta</h4>
+              <p>Verified Renter</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Testimonial 2 - Rajesh Kumar (Property Owner) -->
-    <div class="testimonial-card">
-      <div class="card-badge"><i class="fas fa-home"></i> Property Owner</div>
-      <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-      <div class="rating">
-        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-      </div>
-      <div class="testimonial-text">
-        "As a property owner, I was able to find a reliable tenant within just 2 weeks of listing. The platform is user-friendly and the verification process gives tenants confidence."
-      </div>
-      <div class="customer-info">
-        <div class="avatar">RK</div>
-        <div class="customer-details">
-          <h4>Rajesh Kumar</h4>
-          <p>Property Owner</p>
-        </div>
-      </div>
+    <!-- Navigation Buttons -->
+    <div class="slider-nav">
+      <button class="nav-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+      <button class="nav-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
     </div>
 
-    <!-- Testimonial 3 - Priya Sharma (Student Tenant) -->
-    <div class="testimonial-card">
-      <div class="card-badge"><i class="fas fa-graduation-cap"></i> Student</div>
-      <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-      <div class="rating">
-        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-      </div>
-      <div class="testimonial-text">
-        "The wide selection of PGs in my preferred location was impressive. I found exactly what I was looking for at a reasonable price. Highly recommended!"
-      </div>
-      <div class="customer-info">
-        <div class="avatar">PS</div>
-        <div class="customer-details">
-          <h4>Priya Sharma</h4>
-          <p>Student Tenant</p>
-        </div>
-      </div>
-    </div>
+    <!-- Dots Indicator -->
+    <div class="dots-container" id="dotsContainer"></div>
   </div>
 </section>
     <!-- <section class="reviews">
@@ -1785,6 +1901,130 @@ button:hover {
 
     <script>
         (function() {     
+            // Get all elements
+    const track = document.getElementById('testimonialTrack');
+    const slides = document.querySelectorAll('.testimonial-slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const dotsContainer = document.getElementById('dotsContainer');
+    
+    let currentIndex = 0;
+    let slidesToShow = 1;
+    let totalSlides = slides.length;
+    
+    // Function to update how many slides to show based on screen width
+    function updateSlidesToShow() {
+      if (window.innerWidth >= 1024) {
+        slidesToShow = 3;  // Desktop: show 3 cards
+      } else if (window.innerWidth >= 768) {
+        slidesToShow = 2;  // Tablet: show 2 cards
+      } else {
+        slidesToShow = 1;  // Mobile: show 1 card
+      }
+      updateSliderPosition();
+      updateDots();
+    }
+    
+    // Function to update slider position
+    function updateSliderPosition() {
+      // Set width of each slide
+      const slideWidth = 100 / slidesToShow;
+      slides.forEach(slide => {
+        slide.style.flex = `0 0 ${slideWidth}%`;
+      });
+      
+      // Move the track
+      const newPosition = -(currentIndex * slideWidth);
+      track.style.transform = `translateX(${newPosition}%)`;
+    }
+    
+    // Function to update dots (pagination indicators)
+    function updateDots() {
+      const totalDots = Math.ceil(totalSlides / slidesToShow);
+      dotsContainer.innerHTML = '';
+      
+      for (let i = 0; i < totalDots; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        
+        // Calculate which dot should be active
+        const currentDotIndex = Math.floor(currentIndex / slidesToShow);
+        if (i === currentDotIndex) {
+          dot.classList.add('active');
+        }
+        
+        // Add click event to dot
+        dot.addEventListener('click', (function(dotIndex) {
+          return function() {
+            currentIndex = dotIndex * slidesToShow;
+            // Don't go beyond last slide
+            if (currentIndex > totalSlides - slidesToShow) {
+              currentIndex = totalSlides - slidesToShow;
+            }
+            if (currentIndex < 0) currentIndex = 0;
+            updateSliderPosition();
+            updateDots();
+          };
+        })(i));
+        
+        dotsContainer.appendChild(dot);
+      }
+    }
+    
+    // Next button click
+    function goToNext() {
+      const maxIndex = totalSlides - slidesToShow;
+      if (currentIndex + slidesToShow < totalSlides) {
+        currentIndex += slidesToShow;
+      } else {
+        currentIndex = maxIndex;
+      }
+      if (currentIndex < 0) currentIndex = 0;
+      updateSliderPosition();
+      updateDots();
+    }
+    
+    // Previous button click
+    function goToPrev() {
+      if (currentIndex - slidesToShow >= 0) {
+        currentIndex -= slidesToShow;
+      } else {
+        currentIndex = 0;
+      }
+      updateSliderPosition();
+      updateDots();
+    }
+    
+    // Add event listeners to buttons
+    if (prevBtn) {
+      prevBtn.addEventListener('click', goToPrev);
+      // Touch support for mobile
+      prevBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        goToPrev();
+      });
+    }
+    
+    if (nextBtn) {
+      nextBtn.addEventListener('click', goToNext);
+      nextBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        goToNext();
+      });
+    }
+    
+    // Handle window resize (responsive)
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function() {
+        updateSlidesToShow();
+      }, 100);
+    });
+    
+    // Initialize the slider
+    updateSlidesToShow();
+  })();
     // Get elements
     const hamburger = document.getElementById('hamburgerBtn');
     const mobileDrawer = document.getElementById('mobileDrawer');
