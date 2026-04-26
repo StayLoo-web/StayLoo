@@ -810,7 +810,198 @@
     }
 
         /* ===== Reviews Section ===== */
-        .reviews {
+         /* ========= MODERN TESTIMONIAL SECTION (FULLY RESPONSIVE) ========= */
+    .testimonials-section {
+      max-width: 1280px;
+      margin: 4rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      font-weight: 800;
+      color: #0a4b6e;
+      letter-spacing: -0.02em;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-header h2:after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70px;
+      height: 3px;
+      background: linear-gradient(90deg, #2c7da0, #7fb4ca);
+      border-radius: 4px;
+    }
+
+    .section-header p {
+      color: #5f8da3;
+      font-size: 1rem;
+      margin-top: 1.5rem;
+      max-width: 550px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Testimonial Grid - Responsive */
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    /* Testimonial Card */
+    .testimonial-card {
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 2rem 1.8rem;
+      box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.06);
+      border: 1px solid #e6f0f5;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 36px -12px rgba(17, 90, 122, 0.12);
+      border-color: #cde3ef;
+    }
+
+    /* Quote Icon */
+    .quote-icon {
+      color: #2c7da0;
+      font-size: 2rem;
+      opacity: 0.3;
+      margin-bottom: 1rem;
+      line-height: 1;
+    }
+
+    /* Testimonial Text */
+    .testimonial-text {
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: #2c4e66;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    /* Rating Stars */
+    .rating {
+      margin-bottom: 1.2rem;
+      color: #f4b836;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+    }
+
+    /* Customer Info */
+    .customer-info {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      border-top: 1px solid #eef2f8;
+      padding-top: 1.2rem;
+    }
+
+    .avatar {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #2c7da0, #115a7a);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .customer-details h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #115a7a;
+      margin-bottom: 0.2rem;
+    }
+
+    .customer-details p {
+      font-size: 0.75rem;
+      color: #6f9bb0;
+      font-weight: 500;
+    }
+
+    /* Badge (optional) */
+    .card-badge {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: rgba(44, 125, 160, 0.1);
+      padding: 4px 10px;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #2c7da0;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 900px) {
+      .testimonial-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+      .testimonial-card {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .testimonials-section {
+        margin: 2.5rem auto;
+        padding: 0 1rem;
+      }
+      .testimonial-grid {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+        max-width: 380px;
+        margin: 0 auto;
+      }
+      .testimonial-text {
+        font-size: 0.88rem;
+      }
+      .avatar {
+        width: 42px;
+        height: 42px;
+        font-size: 1rem;
+      }
+    }
+
+    /* Optional subtle animation on scroll */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .testimonial-card {
+      animation: fadeUp 0.5s ease backwards;
+    }
+
+    .testimonial-card:nth-child(1) { animation-delay: 0.1s; }
+    .testimonial-card:nth-child(2) { animation-delay: 0.2s; }
+    .testimonial-card:nth-child(3) { animation-delay: 0.3s; }
+        /* .reviews {
             background: white;
             padding: 80px 0;
         }
@@ -916,7 +1107,7 @@
         .slider-dot.active {
             background: var(--primary);
             transform: scale(1.2);
-        }
+        } */
 
         /* ===== Footer ===== */
         footer {
@@ -1388,7 +1579,73 @@ button:hover {
       </a>
     </div>
   </section>
-    <section class="reviews">
+    <section class="testimonials-section">
+  <div class="section-header">
+    <h2>What Our Customers Say</h2>
+    <p>Trusted by thousands of renters & property owners across India</p>
+  </div>
+
+  <div class="testimonial-grid">
+    
+    <!-- Testimonial 1 - Ram Sharma (Tenant) -->
+    <div class="testimonial-card">
+      <div class="card-badge"><i class="fas fa-check-circle"></i> Verified Tenant</div>
+      <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+      <div class="rating">
+        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+      </div>
+      <div class="testimonial-text">
+        "StayLoo made finding my perfect apartment so easy! The verified listings saved me so much time and the support team was incredibly helpful throughout the process."
+      </div>
+      <div class="customer-info">
+        <div class="avatar">RS</div>
+        <div class="customer-details">
+          <h4>Ram Sharma</h4>
+          <p>Tenant in Lucknow</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Testimonial 2 - Rajesh Kumar (Property Owner) -->
+    <div class="testimonial-card">
+      <div class="card-badge"><i class="fas fa-home"></i> Property Owner</div>
+      <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+      <div class="rating">
+        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+      </div>
+      <div class="testimonial-text">
+        "As a property owner, I was able to find a reliable tenant within just 2 weeks of listing. The platform is user-friendly and the verification process gives tenants confidence."
+      </div>
+      <div class="customer-info">
+        <div class="avatar">RK</div>
+        <div class="customer-details">
+          <h4>Rajesh Kumar</h4>
+          <p>Property Owner</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Testimonial 3 - Priya Sharma (Student Tenant) -->
+    <div class="testimonial-card">
+      <div class="card-badge"><i class="fas fa-graduation-cap"></i> Student</div>
+      <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+      <div class="rating">
+        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+      </div>
+      <div class="testimonial-text">
+        "The wide selection of PGs in my preferred location was impressive. I found exactly what I was looking for at a reasonable price. Highly recommended!"
+      </div>
+      <div class="customer-info">
+        <div class="avatar">PS</div>
+        <div class="customer-details">
+          <h4>Priya Sharma</h4>
+          <p>Student Tenant</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+    <!-- <section class="reviews">
         <div class="container">
             <h2 class="section-title">What Our Customers Say</h2>
             <div class="reviews-container">
@@ -1474,7 +1731,7 @@ button:hover {
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <footer>
         <div class="container">
