@@ -89,14 +89,16 @@
             margin: 2rem 0 1.8rem 0;
         }
         .section-heading h2 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #0f2b3d, #1c6a8f);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            letter-spacing: -0.3px;
-        }
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1c6a8f;
+    display: inline-block;
+    padding: 12px 40px;
+    border: 2px solid #1c6a8f;
+    border-radius: 60px;
+    background: white;
+    box-shadow: 0 6px 14px rgba(28, 106, 143, 0.2);
+}
         .section-heading p {
             color: #4b6f8c;
             font-weight: 500;
@@ -365,6 +367,12 @@
             overflow: hidden;
             animation: fadeUp 0.25s;
         }
+        @media (max-width: 600px) {
+    .section-heading h2 {
+        font-size: 1.4rem;
+        padding: 8px 20px;
+    }
+}
         @keyframes fadeUp {
             from { transform: translateY(20px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
