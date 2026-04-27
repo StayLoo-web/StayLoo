@@ -2,295 +2,488 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | StayLoo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>StayLoo | About Us — Simplifying Rentals, Building Trust</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            background-color: white;
-            color: #333;
-            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            background: #fafcfd;
+            color: #0a2540;
+            line-height: 1.5;
         }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        header {
-            padding: 20px 0;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .logo span.stay {
-            color: #4a6bff;
-        }
-        .logo span.loo {
-            color: #000000; /* Black color for Loo */
-        }
-        
-        .btn {
-            background-color: #4a6bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background-color 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .btn:hover {
-            background-color: #3a5bef;
-        }
-        
-        /* Hero Section */
-        .hero {
-            background-color: #f8f9ff;
-            padding: 80px 0;
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .hero h1 {
-            font-size: 42px;
-            color: #4a6bff;
-            margin-bottom: 20px;
-        }
-        
-        .hero p {
-            font-size: 18px;
-            color: #666;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        /* Rest of your existing CSS remains the same */
-        /* About Content */
-        .about-content {
+
+        .page-wrapper {
             display: flex;
-            gap: 50px;
-            margin-bottom: 60px;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 2rem;
+        }
+
+        /* HEADER with centered logo */
+        .header-centered {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(44, 125, 160, 0.2);
+        }
+
+        .logo-centered {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: transparent;
+            padding: 0.25rem 1rem;
+        }
+
+        .logo-img {
+            height: 58px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.03));
+            background: transparent;
+        }
+
+        .logo-text {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0f2b3d, #1c6a8f);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .tagline {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #5e7f9e;
+            margin-top: 2px;
+        }
+
+        /* about hero section */
+        .about-hero {
+            background: linear-gradient(120deg, #ffffff 0%, #f1f7fc 100%);
+            border-radius: 2rem;
+            padding: 2.5rem 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.05);
+            border: 1px solid rgba(44,125,160,0.1);
+        }
+
+        .about-hero h1 {
+            font-size: 2.7rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1b4f6e, #135b7c);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .about-hero .lead {
+            font-size: 1.2rem;
+            color: #2c5a7a;
+            max-width: 85%;
+            border-left: 4px solid #1c6a8f;
+            padding-left: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        /* story grid */
+        .story-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 2rem 0 3rem;
             align-items: center;
         }
-        
-        .about-text {
-            flex: 1;
+
+        .story-text {
+            flex: 1.2;
         }
-        
-        .about-image {
-            flex: 1;
-            border-radius: 8px;
-            overflow: hidden;
+
+        .story-text h2 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #0f2b3d;
         }
-        
-        .about-image img {
-            width: 100%;
-            height: auto;
-            display: block;
+
+        .story-text p {
+            color: #345e7e;
+            margin-bottom: 1.2rem;
+            line-height: 1.6;
         }
-        
-        h2 {
-            font-size: 32px;
-            color: #4a6bff;
-            margin-bottom: 20px;
-        }
-        
-        p {
-            margin-bottom: 20px;
-            color: #555;
-        }
-        
-        /* Team Section */
-        .team-section {
-            margin-bottom: 60px;
-        }
-        
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .team-member {
+
+        .story-icon {
+            flex: 0.8;
             text-align: center;
+            background: #e8f2f9;
+            border-radius: 2rem;
+            padding: 2rem;
         }
-        
-        .team-member img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 20px;
-            border: 3px solid #4a6bff;
+
+        .story-icon i {
+            font-size: 5rem;
+            color: #1c6a8f;
+            opacity: 0.8;
         }
-        
-        .team-member h3 {
-            font-size: 20px;
-            margin-bottom: 5px;
-            color: #333;
+
+        /* core values cards */
+        .values-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            color: #0a2540;
         }
-        
-        .team-member p {
-            color: #777;
-        }
-        
-        /* Values Section */
-        .values-section {
-            background-color: #f8f9ff;
-            padding: 60px 0;
-            margin-bottom: 60px;
-        }
-        
+
         .values-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 2rem 0 3rem;
         }
-        
+
         .value-card {
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        
-        .value-card h3 {
-            color: #4a6bff;
-            margin-bottom: 15px;
-            font-size: 20px;
-        }
-        
-        /* CTA Section */
-        .cta-section {
+            flex: 1;
+            min-width: 250px;
+            background: white;
+            border-radius: 1.8rem;
+            padding: 2rem 1.5rem;
             text-align: center;
-            padding: 60px 0;
+            transition: all 0.25s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+            border: 1px solid #eef3f8;
         }
-        
+
+        .value-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.1);
+            border-color: #cde3ef;
+        }
+
+        .value-icon {
+            background: #eef4fa;
+            width: 80px;
+            height: 80px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.2rem;
+        }
+
+        .value-icon i {
+            font-size: 2.5rem;
+            color: #1c6a8f;
+        }
+
+        .value-card h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .value-card p {
+            color: #4d6f8e;
+            font-size: 0.95rem;
+        }
+
+        /* CTA section */
+        .cta-section {
+            background: linear-gradient(125deg, #0a1e2c 0%, #14455f 100%);
+            border-radius: 2rem;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 2rem 0 1rem;
+            color: white;
+        }
+
         .cta-section h2 {
-            margin-bottom: 20px;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
         }
-        
+
         .cta-section p {
             max-width: 600px;
-            margin: 0 auto 30px;
+            margin: 0 auto 1.8rem;
+            opacity: 0.9;
+            font-size: 1rem;
         }
-        
-        footer {
-            background-color: #f9f9f9;
-            padding: 30px 0;
-            text-align: center;
-            margin-top: 60px;
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .footer-links a {
-            color: #666;
+
+        .cta-button {
+            background: white;
+            color: #14455f;
+            border: none;
+            padding: 14px 34px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
             text-decoration: none;
+            font-family: inherit;
         }
-        
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 28px -8px rgba(0,0,0,0.3);
+            background: #f8fafc;
+        }
+
+        /* footer */
+        .main-footer {
+            background: #0a1e2c;
+            margin-top: 3rem;
+            padding: 2.5rem 1.5rem 1.8rem;
+            color: #cbdde9;
+        }
+
+        .footer-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .footer-col {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .footer-col h5 {
+            color: white;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-col a {
+            display: block;
+            color: #bdd3e6;
+            text-decoration: none;
+            margin-bottom: 0.6rem;
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+
+        .footer-col a:hover {
+            color: white;
+            text-decoration: underline;
+            transform: translateX(3px);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            font-size: 1.2rem;
+            margin-bottom: 0;
+        }
+
         .copyright {
-            color: #999;
+            text-align: center;
+            border-top: 1px solid #1f4057;
+            padding-top: 1.8rem;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #8da3b5;
         }
-        
-        @media (max-width: 768px) {
-            .about-content {
+
+        @media (max-width: 780px) {
+            .container {
+                padding: 1.2rem;
+            }
+            .about-hero h1 {
+                font-size: 2rem;
+            }
+            .about-hero .lead {
+                max-width: 100%;
+            }
+            .story-wrapper {
                 flex-direction: column;
             }
-            
-            .hero h1 {
-                font-size: 32px;
+            .values-grid {
+                flex-direction: column;
+            }
+            .cta-section h2 {
+                font-size: 1.7rem;
+            }
+            .logo-img {
+                height: 48px;
+            }
+            .logo-text {
+                font-size: 1.6rem;
+            }
+            .footer-inner {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-centered {
+                flex-direction: column;
+                gap: 6px;
+            }
+            .about-hero {
+                padding: 1.5rem;
+            }
+            .value-card {
+                padding: 1.3rem;
             }
         }
     </style>
 </head>
 <body>
-    <header>
+<div class="page-wrapper">
+    <div class="main-content">
         <div class="container">
-            <div class="logo"><span class="stay">Stay</span><span class="loo">Loo</span></div>
-        </div>
-    </header>
-    
-    <section class="hero">
-        <div class="container">
-            <h1>About <span class="stay">Stay</span><span class="loo">Loo</span></h1>
-            <p>Connecting property owners with tenants. Our mission is to make property rental simple, transparent, and stress-free for everyone involved.</p>
-        </div>
-    </section>
-    
-    <div class="container">
-        <section class="about-content">
-            <div class="about-text">
-                <h2>Our Story</h2>
-                <p>Stayloo was born from a simple yet powerful idea: everyone deserves a comfortable, hassle-free place to stay, whether for a night or a lifetime. Founded in 2025, we started as a small team of travel enthusiasts and real estate experts who saw firsthand how difficult it could be to find quality rentals that felt like home.</p>
-                <p>Frustrated by outdated booking processes, hidden fees, and impersonal stays, we set out to create a platform that puts people first. Today, Stayloo connects property owners with travelers and long-term renters through a seamless, transparent experience. From cozy city apartments to spacious vacation homes, we're committed to offering stays that inspire comfort, trust, and a sense of belonging.</p>
-                <p>Our journey is fueled by innovation and a passion for redefining rental experiences—one stay at a time.</p>
-                <a href="/list-space/" class="btn">List Your Property</a>
+            <!-- Header with centered logo (exactly like image but clean) -->
+            <div class="header-centered">
+                <div class="logo-centered">
+                    <!-- logo image (free, no border) — replace with your actual logo URL if needed -->
+                    <img class="logo-img" src="../images/logo1.png" alt="StayLoo Logo" style="background: transparent;">
+                    
+                </div>
             </div>
-            <div class="about-image">
-                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Our Office">
+
+            <!-- About Hero / Mission Statement -->
+            <div class="about-hero">
+                <h1>About StayLoo</h1>
+                <div class="lead">Connecting property owners with tenants. Our mission is to make property rental simple, transparent, and stress-free for everyone involved.</div>
             </div>
-        </section>
-        
-        <section class="values-section">
-            <h2 style="text-align: center;">Our Core Values</h2>
-            
+
+            <!-- Our Story section with icon -->
+            <div class="story-wrapper">
+                <div class="story-text">
+                    <h2><i class="fas fa-book-open" style="color:#1c6a8f; margin-right: 8px;"></i> Our Story</h2>
+                    <p>StayLoo was born from a simple yet powerful idea: everyone deserves a comfortable, hassle-free place to stay, whether for a night or a lifetime. Founded in 2025, we started as a small team of travel enthusiasts and real estate experts who saw firsthand how difficult it could be to find quality rentals that felt like home.</p>
+                    <p>Frustrated by outdated booking processes, hidden fees, and impersonal stays, we set out to create a platform that puts people first. Today, StayLoo connects property owners with tenants through a seamless, trusted process — built on transparency and mutual respect.</p>
+                </div>
+                <div class="story-icon">
+                    <i class="fas fa-handshake"></i>
+                    <p style="margin-top: 12px; font-weight: 500;">Built on trust</p>
+                </div>
+            </div>
+
+            <!-- Core Values Heading -->
+            <h2 class="values-title"><i class="fas fa-gem" style="color:#1c6a8f;"></i> Our Core Values</h2>
             <div class="values-grid">
                 <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-eye"></i></div>
                     <h3>Transparency</h3>
-                    <p>We believe in complete honesty about properties, pricing, and processes. No hidden fees, no surprises - just clear communication.</p>
+                    <p>We believe in complete honesty about properties, pricing, and processes. No hidden fees, no surprises — just clear communication and trust at every step.</p>
                 </div>
                 <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-mobile-alt"></i></div>
                     <h3>Convenience</h3>
-                    <p>Our platform is designed to save you time and hassle. From digital applications to online payments, we make renting easy.</p>
+                    <p>Our platform is designed to save you time and hassle. From digital applications to online payments, we make renting easy, fast, and intuitive.</p>
                 </div>
                 <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-heart"></i></div>
                     <h3>Customer Focus</h3>
-                    <p>Whether you're a property owner or tenant, your satisfaction is our top priority. Our team is always here to help.</p>
+                    <p>Whether you’re a property owner or tenant, your satisfaction is our top priority. Our dedicated support team is always here to help you succeed.</p>
                 </div>
             </div>
-        </section>
-        
-        <section class="cta-section">
-            <h2>Ready to Find Your Perfect Property?</h2>
-            <p>Join thousands of satisfied property owners and tenants who have made StayLoo their preferred rental platform.</p>
-            <a href="/Browse-spaces/" class="btn">Browse spaces</a>
-        </section>
-    </div>
-    
-    <footer>
-        <div class="container">
-            <div class="footer-links">
-                <a href="/">Home</a>
-                <a href="/list-space/">Listings</a>
-                <a href="/about-us/">About</a>
-                <a href="/contact-us/">Contact</a>
-                <a href="/privacy-policies/">Privacy Policy</a>
-            </div>
-            <div class="copyright">
-                &copy; 2025 <span class="stay">Stay</span><span class="loo">Loo</span>. All rights reserved.
+
+            <!-- Ready to Find Your Perfect Property? CTA Section -->
+            <div class="cta-section">
+                <h2>Ready to Find Your Perfect Property?</h2>
+                <p>Join thousands of satisfied property owners and tenants who have made StayLoo their preferred rental platform.</p>
+               <a href="../Browse-spaces/" class="cta-button" style="text-decoration: none; display: inline-flex; align-items: center; gap: 10px;"><i class="fas fa-search"></i> Browse spaces</a> 
             </div>
         </div>
+    </div>
+
+    <!-- Professional Footer with links & copyright -->
+    <footer class="main-footer">
+        <div class="footer-inner">
+            <div class="footer-col">
+                <h5>StayLoo</h5>
+                <a href="#">About Us</a>
+                <a href="#">How It Works</a>
+                <a href="#">Careers</a>
+                <a href="#">Press</a>
+            </div>
+            <div class="footer-col">
+                <h5>Explore</h5>
+                <a href="#">Browse Spaces</a>
+                <a href="#">List Your Property</a>
+                <a href="#">Pricing Plans</a>
+                <a href="#">Success Stories</a>
+            </div>
+            <div class="footer-col">
+                <h5>Support</h5>
+                <a href="#">Help Center</a>
+                <a href="#">Contact Us</a>
+                <a href="#">Safety Tips</a>
+                <a href="#">FAQs</a>
+            </div>
+            <div class="footer-col">
+                <h5>Legal</h5>
+                <a href="#">Terms of Service</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Cookie Preferences</a>
+                <a href="#">Refund Policy</a>
+            </div>
+            <div class="footer-col">
+                <h5>Connect</h5>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <a href="#" style="margin-top: 12px;">hello@stayloo.com</a>
+                <span style="display: block; font-size: 0.7rem; margin-top: 8px;">📞 +91 98765 43210</span>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2025 StayLoo — Move with ease. All rights reserved. | Built with <i class="fas fa-heart" style="color: #e07a5f;"></i> for transparent renting
+        </div>
     </footer>
+</div>
+
+<!-- Simple interactive for CTA button (optional, can redirect to browse page) -->
+<script>
+    const browseBtn = document.getElementById('browseCtaBtn');
+    if (browseBtn) {
+        browseBtn.addEventListener('click', () => {
+            alert("✨ Browse spaces feature — you can connect this to your listings page.\nStayLoo helps you find your next home effortlessly.");
+            // For actual navigation you can use: window.location.href = "/browse-spaces";
+        });
+    }
+</script>
 </body>
 </html>
