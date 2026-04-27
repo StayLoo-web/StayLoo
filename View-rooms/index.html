@@ -89,33 +89,6 @@
             white-space: nowrap;
         }
 
-        /* Add Property Button */
-        .add-property-section {
-            margin-bottom: 2rem;
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        .btn-add-property {
-            background: linear-gradient(135deg, #1c6a8f, #0f4b66);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 60px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
-            transition: 0.2s;
-        }
-
-        .btn-add-property:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 14px rgba(28,106,143,0.3);
-        }
-
         /* Filter Section */
         .filter-section {
             background: white;
@@ -393,30 +366,6 @@
             z-index: 10;
         }
 
-        /* Add Room Form Modal */
-        .form-group {
-            margin-bottom: 1.2rem;
-        }
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 6px;
-            font-size: 0.85rem;
-            color: #1c6a8f;
-        }
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            padding: 10px 14px;
-            border-radius: 16px;
-            border: 1px solid #cbdde9;
-            font-family: 'Inter', sans-serif;
-        }
-        .image-upload-hint {
-            font-size: 0.75rem;
-            color: #777;
-            margin-top: 4px;
-        }
-
         /* Footer */
         .main-footer {
             background: #0a1e2c;
@@ -521,13 +470,6 @@
                 padding: 10px 16px;
                 min-width: 120px;
             }
-            .add-property-section {
-                justify-content: center;
-            }
-            .btn-add-property {
-                width: auto;
-                justify-content: center;
-            }
             .properties-grid {
                 grid-template-columns: 1fr;
             }
@@ -602,11 +544,6 @@
                 </div>
             </div>
 
-            <!-- Add Room Button -->
-            <div class="add-property-section">
-                <button class="btn-add-property" id="openAddRoomModalBtn"><i class="fas fa-plus-circle"></i> List Your Room</button>
-            </div>
-
             <!-- Filters - buttons centered on mobile -->
             <div class="filter-section">
                 <div class="filter-grid">
@@ -679,64 +616,6 @@
     </div>
 </div>
 
-<!-- Modal for adding new Room -->
-<div id="addRoomModal" class="modal-overlay">
-    <div class="modal-container">
-        <button class="close-modal" id="closeAddModalBtn">&times;</button>
-        <div class="modal-body">
-            <h2 style="margin-bottom: 1rem;"><i class="fas fa-plus-circle"></i> List Your Room for Rent</h2>
-            <form id="addRoomForm">
-                <div class="form-group">
-                    <label>Room Title *</label>
-                    <input type="text" id="roomTitle" required placeholder="e.g., Cozy Single Room with Attached Bathroom">
-                </div>
-                <div class="form-group">
-                    <label>City *</label>
-                    <select id="roomCity" required>
-                        <option value="Lucknow">Lucknow</option>
-                        <option value="Delhi NCR">Delhi NCR</option>
-                        <option value="Mumbai">Mumbai</option>
-                        <option value="Bangalore">Bangalore</option>
-                        <option value="Pune">Pune</option>
-                        <option value="Chennai">Chennai</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Area / Locality *</label>
-                    <input type="text" id="roomArea" required placeholder="e.g., Hazratganj">
-                </div>
-                <div class="form-group">
-                    <label>Room Type *</label>
-                    <select id="roomType" required>
-                        <option value="Single Room">Single Room</option>
-                        <option value="Shared Room">Shared Room</option>
-                        <option value="Studio Room">Studio Room</option>
-                        <option value="Private Room">Private Room</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Monthly Rent (₹) *</label>
-                    <input type="number" id="roomPrice" required placeholder="e.g., 10000">
-                </div>
-                <div class="form-group">
-                    <label>Image URLs (comma separated) *</label>
-                    <input type="text" id="roomImages" required placeholder="https://example.com/room1.jpg, https://example.com/room2.jpg">
-                    <div class="image-upload-hint">👉 Paste image URLs separated by commas. Use free image hosting like Imgur or direct image links.</div>
-                </div>
-                <div class="form-group">
-                    <label>Description</label>
-                    <textarea id="roomDesc" rows="3" placeholder="Furnished, WiFi, AC, attached bathroom, etc."></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Features / Amenities</label>
-                    <input type="text" id="roomFeatures" placeholder="WiFi, AC, Geyser, Parking, Furnished">
-                </div>
-                <button type="submit" class="send-query-btn" style="background: #1c6a8f; margin-top: 0;"><i class="fas fa-save"></i> List Room Now</button>
-            </form>
-        </div>
-    </div>
-</div>
-
 <!-- Fullscreen image viewer -->
 <div id="fullscreenViewer" class="fullscreen-viewer">
     <button class="close-fullscreen">&times;</button>
@@ -744,7 +623,7 @@
 </div>
 
 <script>
-    // ========== ROOMS DATABASE (with unique IDs and custom image support) ==========
+    // ========== ROOMS DATABASE (with unique IDs) ==========
     let roomProperties = [
         { 
             id: "RM001", code: "RM-1001", city: "Lucknow", area: "Gomti Nagar", 
@@ -780,6 +659,13 @@
             images: ["https://picsum.photos/id/104/400/300", "https://picsum.photos/id/111/400/300", "https://picsum.photos/id/112/400/300"],
             desc: "Fully furnished single room with private bathroom, near IT parks.", 
             features: "AC, Geyser, WiFi, Parking, 24/7 water"
+        },
+        { 
+            id: "RM006", code: "RM-1006", city: "Chennai", area: "Velachery", 
+            title: "AC Private Room for Bachelor", roomType: "Private Room", price: 13000,
+            images: ["https://picsum.photos/id/115/400/300", "https://picsum.photos/id/116/400/300", "https://picsum.photos/id/117/400/300"],
+            desc: "AC private room with attached bathroom, near metro and IT parks.", 
+            features: "AC, WiFi, Geyser, Power backup, Parking"
         }
     ];
 
@@ -796,7 +682,7 @@
     function renderCards(filteredProps) {
         const grid = document.getElementById('propertiesGrid');
         if (!filteredProps.length) {
-            grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 3rem; background: white; border-radius: 1.5rem;"><i class="fas fa-door-open" style="font-size: 2rem; color: #1c6a8f;"></i><h3 style="margin: 1rem 0;">🏠 No rooms match your criteria.</h3><p>Try resetting filters or list your own room!</p></div>`;
+            grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 3rem; background: white; border-radius: 1.5rem;"><i class="fas fa-door-open" style="font-size: 2rem; color: #1c6a8f;"></i><h3 style="margin: 1rem 0;">🏠 No rooms match your criteria.</h3><p>Try resetting the filters to see all available rooms.</p></div>`;
             return;
         }
         grid.innerHTML = filteredProps.map(prop => `
@@ -896,52 +782,6 @@
             });
         }
     }
-
-    // Add Room functionality with custom images
-    const addModal = document.getElementById('addRoomModal');
-    const openAddBtn = document.getElementById('openAddRoomModalBtn');
-    const closeAddBtn = document.getElementById('closeAddModalBtn');
-    const addForm = document.getElementById('addRoomForm');
-
-    function generateUniqueId() { return 'RM' + Date.now() + Math.floor(Math.random() * 1000); }
-    function generateCode() { return 'RM-' + Math.floor(Math.random() * 9000 + 1000); }
-
-    openAddBtn.addEventListener('click', () => { addModal.classList.add('active'); document.body.style.overflow = 'hidden'; });
-    function closeAddModal() { addModal.classList.remove('active'); document.body.style.overflow = ''; }
-    closeAddBtn.addEventListener('click', closeAddModal);
-    addModal.addEventListener('click', (e) => { if(e.target === addModal) closeAddModal(); });
-
-    addForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const title = document.getElementById('roomTitle').value.trim();
-        const city = document.getElementById('roomCity').value;
-        const area = document.getElementById('roomArea').value.trim();
-        const roomType = document.getElementById('roomType').value;
-        const price = parseInt(document.getElementById('roomPrice').value);
-        const imagesRaw = document.getElementById('roomImages').value;
-        let images = imagesRaw.split(',').map(s => s.trim()).filter(s => s.length > 0);
-        if (images.length === 0) images = ["https://picsum.photos/id/106/400/300"];
-        const desc = document.getElementById('roomDesc').value || "Comfortable room with great amenities and prime location.";
-        const features = document.getElementById('roomFeatures').value || "WiFi, Furnished, Secure Building";
-        
-        const newRoom = {
-            id: generateUniqueId(),
-            code: generateCode(),
-            city: city,
-            area: area,
-            title: title,
-            roomType: roomType,
-            price: price,
-            images: images,
-            desc: desc,
-            features: features
-        };
-        roomProperties.push(newRoom);
-        applyFilters();
-        closeAddModal();
-        addForm.reset();
-        alert(`✅ Room "${title}" added successfully! Room Code: ${newRoom.code}`);
-    });
 
     // Modal close handlers
     const modal = document.getElementById('propertyModal');
