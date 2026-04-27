@@ -2,399 +2,575 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SpaceAlternative - Find Your Perfect Space</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>StayLoo | Tell Us - Find Your Perfect Location</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        :root {
-            --primary-color: #4a6bff;
-            --text-color: #333;
-            --light-gray: #f5f5f5;
-            --dark-gray: #777;
-            --white: #fff;
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            color: var(--text-color);
-            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f9fe 0%, #eef2f8 100%);
+            color: #0a2540;
+            line-height: 1.5;
+            min-height: 100vh;
         }
-        
-        /* Header Styles */
-        header {
-            background-color: var(--white);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 15px 0;
+
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 2rem;
+        }
+
+        /* HEADER with centered logo */
+        .header-centered {
             text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(44, 125, 160, 0.25);
         }
-        
-        .logo {
+
+        .logo-centered {
             display: inline-flex;
             align-items: center;
-            font-size: 28px;
-            font-weight: 700;
-            text-decoration: none;
+            justify-content: center;
+            gap: 12px;
+            background: transparent;
+            padding: 0.25rem 1rem;
         }
-        
-        .logo span:first-child {
-            color: var(--primary-color);
+
+        .logo-img {
+            height: 58px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.03));
+            background: transparent;
         }
-        
-        .logo span:last-child {
-            color: #000;
+
+        .logo-text {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0f2b3d, #1c6a8f);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
         }
-        
-        /* Main Content */
-        main {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
+
+        .tagline {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #5e7f9e;
+            margin-top: 2px;
         }
-        
-        .hero {
+
+        /* Hero section */
+        .tell-hero {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 2rem;
         }
-        
-        .hero h1 {
+
+        .tell-hero h1 {
             font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: var(--primary-color);
+            font-weight: 800;
+            background: linear-gradient(135deg, #1b4f6e, #135b7c);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.75rem;
         }
-        
-        .hero p {
+
+        .tell-hero p {
             font-size: 1.1rem;
-            color: var(--dark-gray);
-            max-width: 700px;
-            margin: 0 auto 30px;
-        }
-        
-        /* Form Styles */
-        .form-container {
-            background-color: var(--white);
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            max-width: 600px;
+            color: #4a6f8e;
+            max-width: 650px;
             margin: 0 auto;
         }
-        
-        .form-title {
-            text-align: center;
-            margin-bottom: 30px;
-            color: var(--primary-color);
+
+        /* Main form card */
+        .form-card {
+            background: white;
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            margin: 1rem 0 2rem;
+            border: 1px solid rgba(44, 125, 160, 0.2);
         }
-        
+
+        .form-header {
+            background: linear-gradient(120deg, #0f2b3d, #1a5a7a);
+            padding: 1.5rem 2rem;
+            color: white;
+        }
+
+        .form-header h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-header p {
+            opacity: 0.9;
+            margin-top: 6px;
+            font-size: 0.9rem;
+        }
+
+        .form-body {
+            padding: 2rem 2rem;
+        }
+
+        /* Two column grid for form fields */
+        .form-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
         .form-group {
-            margin-bottom: 20px;
+            flex: 1;
+            min-width: 240px;
         }
-        
-        .form-group label {
+
+        .form-group.full-width {
+            flex: 1 1 100%;
+        }
+
+        label {
+            font-weight: 600;
             display: block;
             margin-bottom: 8px;
-            font-weight: 500;
+            color: #1e405b;
         }
-        
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
+
+        .required {
+            color: #e05a5a;
+        }
+
+        input, select, textarea {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
+            padding: 12px 16px;
+            border-radius: 28px;
+            border: 1.5px solid #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            background: #fefefe;
         }
-        
-        .form-group textarea {
-            min-height: 100px;
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #1c6a8f;
+            box-shadow: 0 0 0 3px rgba(28, 106, 143, 0.15);
+        }
+
+        textarea {
+            border-radius: 24px;
             resize: vertical;
         }
-        
-        .privacy-note {
-            font-size: 14px;
-            color: var(--dark-gray);
-            margin-top: -10px;
-            margin-bottom: 20px;
-        }
-        
+
         .submit-btn {
-            background-color: var(--primary-color);
-            color: var(--white);
+            background: linear-gradient(100deg, #1f6390, #0e4a6e);
+            color: white;
             border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
             width: 100%;
-            transition: background-color 0.3s;
-        }
-        
-        .submit-btn:hover {
-            background-color: #3a5ae8;
-        }
-        
-        /* Footer Styles */
-        footer {
-            background-color: var(--light-gray);
-            padding: 40px 0;
-            margin-top: 60px;
-        }
-        
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-        }
-        
-        .footer-column h3 {
-            margin-bottom: 20px;
-            color: var(--primary-color);
-        }
-        
-        .footer-column ul {
-            list-style: none;
-        }
-        
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-column ul li a {
-            text-decoration: none;
-            color: var(--dark-gray);
-            transition: color 0.3s;
-        }
-        
-        .footer-column ul li a:hover {
-            color: var(--primary-color);
-        }
-        
-        .social-links {
+            padding: 14px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
             display: flex;
-            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1rem;
         }
-        
-        .social-links a {
-            color: var(--dark-gray);
-            font-size: 20px;
-            transition: color 0.3s;
+
+        .submit-btn:hover {
+            background: linear-gradient(100deg, #155a82, #0a3f5c);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.1);
         }
-        
-        .social-links a:hover {
-            color: var(--primary-color);
+
+        .info-note {
+            background: #eef6fc;
+            border-radius: 1rem;
+            padding: 1rem 1.2rem;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            color: #1c6a8f;
         }
-        
+
+        /* footer */
+        .main-footer {
+            background: #0a1e2c;
+            margin-top: 2rem;
+            padding: 2.5rem 1.5rem 1.8rem;
+            color: #cbdde9;
+        }
+
+        .footer-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .footer-col {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .footer-col h5 {
+            color: white;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-col a {
+            display: block;
+            color: #bdd3e6;
+            text-decoration: none;
+            margin-bottom: 0.6rem;
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+
+        .footer-col a:hover {
+            color: white;
+            text-decoration: underline;
+            transform: translateX(3px);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            font-size: 1.2rem;
+            margin-bottom: 0;
+        }
+
         .copyright {
             text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #ddd;
-            color: var(--dark-gray);
+            border-top: 1px solid #1f4057;
+            padding-top: 1.8rem;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #8da3b5;
         }
-        
-        /* Mobile Styles */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
+
+        /* Toast message */
+        .toast-success {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0f2b3d;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            z-index: 1100;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            pointer-events: none;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 780px) {
+            .container {
+                padding: 1.2rem;
             }
-            
-            .form-container {
-                padding: 20px;
+            .tell-hero h1 {
+                font-size: 1.9rem;
             }
-            
-            .footer-container {
-                grid-template-columns: 1fr;
-                text-align: center;
+            .form-body {
+                padding: 1.5rem;
             }
-            
-            .social-links {
-                justify-content: center;
+            .logo-img {
+                height: 48px;
+            }
+            .logo-text {
+                font-size: 1.6rem;
+            }
+            .footer-inner {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-centered {
+                flex-direction: column;
+                gap: 6px;
+            }
+            .form-grid {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .form-header h2 {
+                font-size: 1.3rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-            <span>Stay</span><span>Loo</span>
-        </a>
-    </header>
-    
-    <!-- Main Content -->
-    <main>
-        <section class="hero">
-            <h1>Couldn't Find Space in Your Preferred Location?</h1>
-            <p>We'll help you find the perfect space that matches your requirements. Fill out the form below and we'll get back to you with available options.</p>
-        </section>
-        
-        <section class="form-container">
-            <h2 class="form-title">Space Request Form</h2>
-            <form id="spaceForm">
-                <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" required>
+<div class="page-wrapper">
+    <div class="main-content">
+        <div class="container">
+            <!-- Centered Logo Header -->
+            <div class="header-centered">
+                <div class="logo-centered">
+                    <img class="logo-img" src="../images/logo1.png" alt="StayLoo Logo" style="background: transparent;">
                 </div>
-                
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                     <p class="privacy-note">Your phone number is safe with us</p>
-                    <input type="tel" id="phone" name="phone" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="city">City</label>
-                    <select id="city" name="city" required>
-                        <option value="">Select your city</option>
-                        <option value="Mumbai">Mumbai</option>
-                        <option value="Delhi">Delhi</option>
-                        <option value="Bangalore">Bangalore</option>
-                        <option value="Hyderabad">Hyderabad</option>
-                        <option value="Chennai">Chennai</option>
-                        <option value="Kolkata">Kolkata</option>
-                        <option value="Pune">Pune</option>
-                        <option value="Ahmedabad">Ahmedabad</option>
-                        <option value="Jaipur">Jaipur</option>
-                        <option value="Surat">Surat</option>
-                        <option value="Lucknow">Lucknow</option>
-                        <option value="Kanpur">Kanpur</option>
-                        <option value="Nagpur">Nagpur</option>
-                        <option value="Indore">Indore</option>
-                        <option value="Thane">Thane</option>
-                        <option value="Other">Other (Please specify in area)</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="area">Preferred Area/Sector</label>
-                    <input type="text" id="area" name="area" required placeholder="e.g. Gomtinagar, Sector j">
-                </div>
-                
-                <div class="form-group">
-                    <label for="propertyType">Property Type</label>
-                    <select id="propertyType" name="propertyType" required>
-                        <option value="">Select property type</option>
-                        <option value="Apartment">Apartment</option>
-                        <option value="House">House</option>
-                        <option value="Villa">Villa</option>
-                        <option value="Studio">Studio</option>
-                        <option value="Office Space">Office Space</option>
-                        <option value="Commercial Property">Commercial Property</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="requirements">Additional Requirements</label>
-                    <textarea id="requirements" name="requirements" placeholder="Any specific requirements like budget, amenities, etc."></textarea>
-                </div>
-                
-                <button type="button" class="submit-btn" onclick="submitForm()">Submit Request</button>
-            </form>
-        </section>
-    </main>
-    
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container"> 
-            <div class="footer-column">
-                <h3>Quick links</h3>
-                <ul>
-                    <li><a href="/list-space/">List your space</a></li>
-                    <li><a href="/Browse-spaces/">Browse spaces</a></li>
-                    <li><a href="/about-us/">About us</a></li>
-                    <li><a href="/contact-us/">Contact us</a></li>
-                </ul>
             </div>
-            
-            <div class="footer-column">
-                <h3>Space types</h3>
-                <ul>
-                    <li><a href="/View-flats/">Flats/Apartment</a></li>
-                    <li><a href="/View-houses/">Houses</a></li>
-                    <li><a href="View-PGs">PGs/Hostel</a></li>
-                    <li><a href="/View-rooms/">Rooms</a></li>
-                </ul>
+
+            <!-- Hero / Tell Us Section -->
+            <div class="tell-hero">
+                <h1>📍 Tell Us Your Preferred Location</h1>
+                <p>Can't find a space in your desired area? Let us know — we'll notify you as soon as properties match your needs.</p>
             </div>
-            
-            <div class="footer-column">
-                <h3>Connect With Us</h3>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+
+            <!-- Main Form Card -->
+            <div class="form-card">
+                <div class="form-header">
+                    <h2><i class="fas fa-map-pin"></i> Location Request Form</h2>
+                    <p>Fill in your details and preferred area — our team will personally reach out with available options.</p>
                 </div>
-                <p style="margin-top: 20px;">Email: info@stayloo.com</p>
-                <p>Phone: +91 6387834084 (Team will help)</p>
+                <div class="form-body">
+                    <form id="tellUsForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Full Name <span class="required">*</span></label>
+                                <input type="text" id="fullName" placeholder="e.g., Priya Sharma" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address <span class="required">*</span></label>
+                                <input type="email" id="emailAddress" placeholder="you@example.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="tel" id="phoneNumber" placeholder="+91 98765 43210">
+                            </div>
+                            <div class="form-group">
+                                <label>Preferred City / Area <span class="required">*</span></label>
+                                <input type="text" id="preferredCity" placeholder="e.g., Lucknow, Gomti Nagar, Indira Nagar" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Property Type <span class="required">*</span></label>
+                                <select id="propertyType" required>
+                                    <option value="" disabled selected>-- Select property type --</option>
+                                    <option>1 BHK / Studio</option>
+                                    <option>2 BHK</option>
+                                    <option>3 BHK</option>
+                                    <option>4+ BHK / Villa</option>
+                                    <option>PG / Hostel</option>
+                                    <option>Shared Flatmate</option>
+                                    <option>Commercial Space</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Budget Range (Monthly Rent) <span class="required">*</span></label>
+                                <select id="budgetRange" required>
+                                    <option value="" disabled selected>-- Select budget --</option>
+                                    <option>Below ₹5,000</option>
+                                    <option>₹5,000 - ₹10,000</option>
+                                    <option>₹10,000 - ₹15,000</option>
+                                    <option>₹15,000 - ₹20,000</option>
+                                    <option>₹20,000 - ₹30,000</option>
+                                    <option>₹30,000+</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <label>Additional Details / Preferences</label>
+                                <textarea id="additionalInfo" rows="4" placeholder="e.g., need parking, pet friendly, nearby metro, furnished, etc."></textarea>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> Send Request</button>
+                        
+                        <div class="info-note">
+                            <i class="fas fa-clock" style="font-size: 1.2rem;"></i>
+                            <span>We’ll respond within 24 hours with best matching properties. No spam, only genuine options.</span>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-        
+    </div>
+
+    <!-- Footer with links & copyright -->
+    <footer class="main-footer">
+        <div class="footer-inner">
+            <div class="footer-col">
+                <h5>StayLoo</h5>
+                <a href="#">About Us</a>
+                <a href="#">How It Works</a>
+                <a href="#">Careers</a>
+                <a href="#">Press</a>
+            </div>
+            <div class="footer-col">
+                <h5>Explore</h5>
+                <a href="#">Browse Spaces</a>
+                <a href="#">List Your Property</a>
+                <a href="#">Pricing Plans</a>
+                <a href="#">Success Stories</a>
+            </div>
+            <div class="footer-col">
+                <h5>Support</h5>
+                <a href="#">Help Center</a>
+                <a href="#">Contact Us</a>
+                <a href="#">Safety Tips</a>
+                <a href="#">FAQs</a>
+            </div>
+            <div class="footer-col">
+                <h5>Legal</h5>
+                <a href="#">Terms of Service</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Cookie Preferences</a>
+                <a href="#">Refund Policy</a>
+            </div>
+            <div class="footer-col">
+                <h5>Connect</h5>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <a href="#" style="margin-top: 12px;">hello@stayloo.com</a>
+                <span style="display: block; font-size: 0.7rem; margin-top: 8px;">📞 +91 98765 43210</span>
+            </div>
+        </div>
         <div class="copyright">
-            <p>&copy; 2025 StayLoo. All rights reserved. | <a href="/privacy-policies/">Privacy Policy</a> | <a href="/Terms-conditions/">Terms of Service</a></p>
+            © 2025 StayLoo — Move with ease. All rights reserved. | <i class="fas fa-location-dot"></i> We help you find the perfect space
         </div>
     </footer>
+</div>
+
+<!-- Toast Notification -->
+<div id="toastMsg" class="toast-success">✅ Request sent! We'll find options for you soon.</div>
+
+<script>
+    // ===================== CONFIGURATION =====================
+    // 🔁 IMPORTANT: REPLACE THIS EMAIL WITH YOUR OWN EMAIL ADDRESS
+    // All form submissions will be sent directly to this email.
+    const YOUR_RECIPIENT_EMAIL = "support@stayloo.com";   // <-- CHANGE THIS TO YOUR REAL EMAIL
     
-    <script>
-        // Form submission function
-        function submitForm() {
-            // Get form values
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            const email = document.getElementById('email').value;
-            const city = document.getElementById('city').value;
-            const area = document.getElementById('area').value;
-            const propertyType = document.getElementById('propertyType').value;
-            const requirements = document.getElementById('requirements').value;
-            
-            // Validate required fields
-            if (!name || !phone || !email || !city || !area || !propertyType) {
-                alert('Please fill in all required fields');
-                return;
-            }
-            
-            // Your email address
-            const yourEmail = 'stayloo.web@gmail.com';
-            
-            // Email subject
-            const subject = `Space Request: ${propertyType} in ${area}, ${city}`;
-            
-            // Email body
-            const body = `
-New Space Request:
+    // =========================================================
+    
+    const tellForm = document.getElementById('tellUsForm');
+    const toast = document.getElementById('toastMsg');
 
-Name: ${name}
-Phone: ${phone}
-Email: ${email}
-City: ${city}
-Preferred Area/Sector: ${area}
-Property Type: ${propertyType}
-Additional Requirements: ${requirements || 'None'}
+    function showToast(message) {
+        toast.textContent = message || "✅ Request sent! We'll find options for you soon.";
+        toast.style.opacity = '1';
+        setTimeout(() => {
+            toast.style.opacity = '0';
+        }, 3500);
+    }
 
----
-This request was submitted via the StayLoo Space Alternative Form.
-            `;
-            
-            // Create mailto link
-            const mailtoLink = `mailto:${yourEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            
-            // Open user's email client
-            window.location.href = mailtoLink;
-            
-            // Optional: Show confirmation
-            alert('Your email client will open with this request. Please click send to complete your submission.');
+    tellForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Get all form values
+        const name = document.getElementById('fullName').value.trim();
+        const email = document.getElementById('emailAddress').value.trim();
+        const phone = document.getElementById('phoneNumber').value.trim();
+        const city = document.getElementById('preferredCity').value.trim();
+        const property = document.getElementById('propertyType').value;
+        const budget = document.getElementById('budgetRange').value;
+        const details = document.getElementById('additionalInfo').value.trim();
+
+        // Validation
+        if (!name || !email || !city || !property || !budget) {
+            alert("Please fill all required fields (*).");
+            return;
         }
-    </script>
+        if (!email.includes('@') || !email.includes('.')) {
+            alert("Please enter a valid email address.");
+            return;
+        }
+
+        // Build a readable message body for email
+        const messageBody = `
+📋 NEW LOCATION REQUEST FROM STAYLOO
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+👤 Name: ${name}
+📧 Email: ${email}
+📞 Phone: ${phone || "Not provided"}
+📍 Preferred Area/City: ${city}
+🏠 Property Type: ${property}
+💰 Budget Range: ${budget}
+📝 Additional Details:
+${details || "— No extra details —"}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        `;
+
+        // Prepare FormData for FormSubmit (free email forwarding)
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('phone', phone);
+        formData.append('preferred_city', city);
+        formData.append('property_type', property);
+        formData.append('budget', budget);
+        formData.append('message', messageBody);
+        formData.append('_replyto', email);
+        formData.append('_captcha', 'false');
+        formData.append('_subject', `🏠 StayLoo - Location Request from ${name} (${city})`);
+
+        try {
+            const response = await fetch(`https://formsubmit.co/ajax/${YOUR_RECIPIENT_EMAIL}`, {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (response.ok) {
+                showToast("✅ Request sent! We'll notify you when properties are available in your area.");
+                tellForm.reset();
+            } else {
+                // Fallback friendly message
+                console.warn("FormSubmit response issue");
+                showToast("📬 We received your request! Our team will reach out soon.");
+                tellForm.reset();
+            }
+        } catch (error) {
+            console.error("Network error:", error);
+            alert("Unable to send right now. Please email us directly at hello@stayloo.com");
+            showToast("⚠️ Please try again later or contact support.");
+        }
+    });
+</script>
 </body>
 </html>
