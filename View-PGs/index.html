@@ -2,914 +2,817 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Property Listings | StayLoo</title>
-    <link rel="icon" type="image/png" href="../images/FEVICON.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>StayLoo | PG Accommodations — Verified Listings for Bachelors & Working Professionals</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            background-color: white;
-            color: #333;
-        }
-        
-        .container {
-            padding: 40px 5%;
-        }
-        
-        .page-header {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-        
-        .page-title {
-            font-size: 28px;
-            color: #4a6bff;
-            text-align: center;
-        }
-        
-        .filter-section {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        .filter-section select, .filter-section input {
-            padding: 10px 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            min-width: 180px;
-        }
-        
-        .filter-btn {
-            background-color: #4a6bff;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background-color 0.3s;
-        }
-        
-        .filter-btn:hover {
-            background-color: #3a5bef;
-        }
-        
-        .property-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-        }
-        
-        .property-card {
-            border: 1px solid #eee;
-            border-radius: 8px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .property-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        
-        .property-image {
-            height: 200px;
-            background-color: #f5f5f5;
-            overflow: hidden;
-        }
-        
-        .property-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .property-details {
-            padding: 20px;
-        }
-        
-        .property-price {
-            font-size: 22px;
-            font-weight: bold;
-            color: #4a6bff;
-            margin-bottom: 5px;
-        }
-        
-        .property-address {
-            color: #666;
-            margin-bottom: 10px;
-        }
-        
-        .property-features {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-            color: #555;
-        }
-        
-        .property-features span {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .property-description {
-            color: #666;
-            margin-bottom: 15px;
+            font-family: 'Inter', sans-serif;
+            background: #f5f9fe;
+            color: #0a2540;
             line-height: 1.5;
         }
-        
-        .btn {
-            background-color: #4a6bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background-color 0.3s;
-            width: 100%;
-        }
-        
-        .btn:hover {
-            background-color: #3a5bef;
-        }
-        
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.8);
-        }
-        
-        .modal-content {
-            background-color: white;
-            margin: 5% auto;
-            padding: 30px;
-            border-radius: 8px;
-            width: 80%;
-            max-width: 900px;
-            position: relative;
-        }
-        
-        .close {
-            position: absolute;
-            right: 25px;
-            top: 15px;
-            color: #aaa;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        .close:hover {
-            color: #333;
-        }
-        
-        .property-detail-container {
+
+        .page-wrapper {
             display: flex;
-            gap: 30px;
+            flex-direction: column;
+            min-height: 100vh;
         }
-        
-        .property-detail-images {
+
+        .main-content {
             flex: 1;
         }
-        
-        .property-detail-images img {
-            width: 100%;
-            border-radius: 8px;
-            margin-bottom: 15px;
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 2rem;
         }
-        
-        .property-detail-info {
-            flex: 1;
+
+        /* Header styles - Logo LEFT, Title RIGHT on ALL screens */
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(44, 125, 160, 0.25);
         }
-        
-        .detail-title {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #4a6bff;
-        }
-        
-        .detail-price {
-            font-size: 28px;
-            font-weight: bold;
-            color: #4a6bff;
-            margin-bottom: 10px;
-        }
-        
-        .detail-address {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 20px;
-        }
-        
-        .detail-features {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .feature-item {
+
+        .logo-left {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            flex-shrink: 0;
         }
-        
-        .feature-icon {
-            width: 24px;
-            height: 24px;
-            background-color: #f0f4ff;
-            border-radius: 50%;
+
+        .logo-img {
+            height: 52px;
+            width: auto;
+            object-fit: contain;
+            background: transparent;
+        }
+
+        .logo-text-fallback {
+            font-size: 1.9rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0f2b3d, #1c6a8f);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: none;
+        }
+
+        .page-title-right {
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .page-tagline {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1c6a8f;
+            background: #eef2f8;
+            padding: 6px 20px;
+            border-radius: 40px;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        /* Filter Section - FULL WIDTH and CENTERED buttons */
+        .filter-section {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            border: 1px solid #eef2f8;
+        }
+
+        .filter-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: flex-end;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .filter-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #2c5a7a;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 60px;
+            border: 1px solid #cbdde9;
+            background: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            border-color: #1c6a8f;
+            box-shadow: 0 0 0 2px rgba(28,106,143,0.2);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .btn-filter, .btn-reset {
+            padding: 10px 24px;
+            border-radius: 60px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: 0.2s;
+            font-size: 0.85rem;
+        }
+
+        .btn-filter {
+            background: #1c6a8f;
+            color: white;
+        }
+
+        .btn-filter:hover {
+            background: #0f4b66;
+        }
+
+        .btn-reset {
+            background: #eef2f8;
+            color: #1e405b;
+        }
+
+        .btn-reset:hover {
+            background: #e2e8f0;
+        }
+
+        /* Properties Grid */
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.8rem;
+            margin-top: 1rem;
+        }
+
+        .property-card {
+            background: white;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .property-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .card-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .property-code-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0,0,0,0.75);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-family: monospace;
+            font-weight: 600;
+        }
+
+        .card-content {
+            padding: 1.2rem;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .card-location {
+            color: #1c6a8f;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+
+        .card-details {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: #5c7c9a;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+
+        .price {
+            font-weight: 800;
+            color: #0f2b3d;
+            font-size: 1.2rem;
+        }
+
+        .view-details {
+            margin-top: 12px;
+            background: #eef2f8;
+            padding: 8px;
+            text-align: center;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #1c6a8f;
+        }
+
+        /* Modal Popup */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #4a6bff;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
         }
-        
-        .feature-text {
-            color: #555;
+
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
         }
-        
-        .detail-description {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 25px;
+
+        .modal-container {
+            background: white;
+            max-width: 750px;
+            width: 90%;
+            max-height: 85vh;
+            border-radius: 2rem;
+            overflow-y: auto;
+            position: relative;
         }
-        
-        .detail-contact-btn {
-            background-color: #4a6bff;
+
+        .modal-img-gallery {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 1.2rem;
+            background: #f8fafc;
+        }
+
+        .modal-img {
+            width: 200px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 1rem;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .modal-img:hover {
+            transform: scale(1.03);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-property-code {
+            background: #eef2f8;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .send-query-btn {
+            background: #25D366;
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 5px;
+            width: 100%;
+            padding: 14px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1rem;
             cursor: pointer;
-            font-weight: 600;
-            font-size: 16px;
-            transition: background-color 0.3s;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
-        
-        .detail-contact-btn:hover {
-            background-color: #3a5bef;
+
+        .send-query-btn:hover {
+            background: #128C7E;
         }
-        
-        @media (max-width: 768px) {
-            .property-detail-container {
-                flex-direction: column;
+
+        .close-modal {
+            position: sticky;
+            top: 10px;
+            right: 20px;
+            float: right;
+            background: white;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        /* Footer */
+        .main-footer {
+            background: #0a1e2c;
+            margin-top: 3rem;
+            padding: 2rem 1.5rem 1.5rem;
+            color: #cbdde9;
+        }
+
+        .footer-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .footer-col {
+            flex: 1;
+            min-width: 130px;
+        }
+
+        .footer-col h5 {
+            color: white;
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col a {
+            display: block;
+            color: #bdd3e6;
+            text-decoration: none;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .copyright {
+            text-align: center;
+            border-top: 1px solid #1f4057;
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+            font-size: 0.75rem;
+        }
+
+        /* ========== RESPONSIVE FIXES ========== */
+        /* Header: Force logo left + title right on ALL screens */
+        @media (max-width: 700px) {
+            .header-flex {
+                flex-direction: row !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                flex-wrap: nowrap !important;
             }
-            
-            .filter-section {
-                flex-direction: column;
+            .logo-left {
+                flex-shrink: 0;
             }
-            
-            .filter-section select, .filter-section input {
-                width: 100%;
+            .logo-img {
+                height: 40px;
+            }
+            .page-title-right {
+                flex-shrink: 0;
+                text-align: right;
+            }
+            .page-tagline {
+                font-size: 0.75rem;
+                padding: 4px 12px;
+                white-space: nowrap;
             }
         }
 
-        /* Added for no results message */
-        .no-results {
-            text-align: center;
-            grid-column: 1 / -1;
-            padding: 40px;
-            color: #666;
-            font-size: 18px;
+        @media (max-width: 480px) {
+            .page-tagline {
+                font-size: 0.7rem;
+                padding: 3px 8px;
+            }
+            .logo-img {
+                height: 35px;
+            }
         }
+
+        /* Filter buttons alignment fix for small screens */
+        @media (max-width: 700px) {
+            .filter-grid {
+                flex-direction: column;
+                width: 100%;
+            }
+            .filter-group {
+                width: 100%;
+                min-width: auto;
+            }
+            .filter-buttons {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                gap: 12px;
+                margin-top: 8px;
+                width: 100%;
+            }
+            .btn-filter, .btn-reset {
+                flex: 1;
+                text-align: center;
+                justify-content: center;
+                padding: 10px 16px;
+                min-width: 120px;
+            }
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+            .modal-img {
+                width: 150px;
+                height: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .filter-buttons {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .btn-filter, .btn-reset {
+                width: 100%;
+                min-width: auto;
+            }
+        }
+
+        /* Fullscreen image viewer */
+        .fullscreen-viewer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .fullscreen-viewer.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .fullscreen-img {
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+        }
+        .close-fullscreen {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="page-header">
-            <h1 class="page-title">Available Properties</h1>
-        </div>
-        
-        <div class="filter-section">
-            <input type="text" id="locationSearch" placeholder="Search by location...">
-            <select id="priceFilter">
-                <option value="any">Any Price</option>
-                <option value="under-10000">Under ₹10,000</option>
-                <option value="10000-20000">₹10,000 - ₹20,000</option>
-                <option value="20000-30000">₹20,000 - ₹30,000</option>
-                <option value="30000-50000">₹30,000 - ₹50,000</option>
-                <option value="over-50000">Over ₹50,000</option>
-            </select>
-            <select id="bhkFilter">
-                <option value="any">Any BHK</option>
-                <option value="1">1 BHK</option>
-                <option value="2">2 BHK</option>
-                <option value="3">3 BHK</option>
-                <option value="4">4 BHK</option>
-                <option value="studio">Studio</option>
-            </select>
-            <button class="filter-btn" id="applyFilters">Filter</button>
-            <button class="filter-btn" id="resetFilters" style="background-color: #666;">Reset</button>
-        </div>
-        
-        <div class="property-grid" id="propertyGrid">
-            <!-- Property Card 1 -->
-            <div class="property-card" data-location="cityville" data-price="15000" data-beds="2" data-baths="1">
-                <div class="property-image">
-                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Modern Apartment">
+<div class="page-wrapper">
+    <div class="main-content">
+        <div class="container">
+            <!-- Header: Logo LEFT, "PG Accommodations" RIGHT - both sides always -->
+            <div class="header-flex">
+                <div class="logo-left">
+                    <img class="logo-img" src="../images/logo1.png" alt="StayLoo Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div class="logo-text-fallback">StayLoo</div>
                 </div>
-                <div class="property-details">
-                    <div class="property-price">₹15,000/month</div>
-                    <div class="property-address">123 Downtown St, Cityville</div>
-                    <div class="property-features">
-                        <span>2 Beds</span>
-                        <span>1 Bath</span>
-                        <span>850 sqft</span>
-                    </div>
-                    <div class="property-description">
-                        Beautiful modern apartment in the heart of the city with great amenities and easy access to transportation.
-                    </div>
-                    <button class="btn" onclick="showPropertyDetails(1)">View Details</button>
-                </div>
-            </div>
-            
-            <!-- Property Card 2 -->
-            <div class="property-card" data-location="townsville" data-price="25000" data-beds="3" data-baths="2">
-                <div class="property-image">
-                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Luxury Apartment">
-                </div>
-                <div class="property-details">
-                    <div class="property-price">₹25,000/month</div>
-                    <div class="property-address">456 Uptown Ave, Townsville</div>
-                    <div class="property-features">
-                        <span>3 Beds</span>
-                        <span>2 Baths</span>
-                        <span>1,200 sqft</span>
-                    </div>
-                    <div class="property-description">
-                        Spacious luxury apartment with stunning views, modern appliances, and access to pool and gym facilities.
-                    </div>
-                    <button class="btn" onclick="showPropertyDetails(2)">View Details</button>
-                </div>
-            </div>
-            
-            <!-- Property Card 3 -->
-            <div class="property-card" data-location="metro city" data-price="8500" data-beds="1" data-baths="1">
-                <div class="property-image">
-                    <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Cozy Studio">
-                </div>
-                <div class="property-details">
-                    <div class="property-price">₹8,500/month</div>
-                    <div class="property-address">789 Center Lane, Metro City</div>
-                    <div class="property-features">
-                        <span>Studio</span>
-                        <span>1 Bath</span>
-                        <span>500 sqft</span>
-                    </div>
-                    <div class="property-description">
-                        Cozy studio apartment perfect for students or young professionals. Recently renovated with new appliances.
-                    </div>
-                    <button class="btn" onclick="showPropertyDetails(3)">View Details</button>
+                <div class="page-title-right">
+                    <div class="page-tagline"><i class="fas fa-bed"></i> PG Accommodations</div>
                 </div>
             </div>
 
-            <!-- Property Card 4 -->
-            <div class="property-card" data-location="cityville" data-price="12000" data-beds="1" data-baths="1">
-                <div class="property-image">
-                    <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="City Apartment">
-                </div>
-                <div class="property-details">
-                    <div class="property-price">₹12,000/month</div>
-                    <div class="property-address">321 Main St, Cityville</div>
-                    <div class="property-features">
-                        <span>1 Bed</span>
-                        <span>1 Bath</span>
-                        <span>700 sqft</span>
+            <!-- Filters - buttons centered on mobile, aligned left on desktop -->
+            <div class="filter-section">
+                <div class="filter-grid">
+                    <div class="filter-group">
+                        <label>🏙️ City</label>
+                        <select id="cityFilter">
+                            <option value="all">All Cities</option>
+                            <option value="Lucknow">Lucknow</option>
+                            <option value="Delhi NCR">Delhi NCR</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Bangalore">Bangalore</option>
+                            <option value="Pune">Pune</option>
+                        </select>
                     </div>
-                    <div class="property-description">
-                        Comfortable one-bedroom apartment in downtown Cityville with great natural light and updated kitchen.
+                    <div class="filter-group">
+                        <label>📍 Area / Locality</label>
+                        <input type="text" id="areaFilter" placeholder="e.g., Gomti Nagar">
                     </div>
-                    <button class="btn" onclick="showPropertyDetails(4)">View Details</button>
+                    <div class="filter-group">
+                        <label>💰 Max Rent (₹)</label>
+                        <select id="budgetFilter">
+                            <option value="any">Any</option>
+                            <option value="8000">Up to ₹8,000</option>
+                            <option value="12000">Up to ₹12,000</option>
+                            <option value="18000">Up to ₹18,000</option>
+                            <option value="25000">Up to ₹25,000</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>👥 Sharing Type</label>
+                        <select id="sharingFilter">
+                            <option value="all">All</option>
+                            <option value="Single">Single Room</option>
+                            <option value="Double">Double Sharing</option>
+                            <option value="Triple">Triple Sharing</option>
+                            <option value="Dorm">Dormitory</option>
+                        </select>
+                    </div>
+                    <div class="filter-buttons">
+                        <button class="btn-filter" id="applyFilterBtn"><i class="fas fa-sliders-h"></i> Apply Filter</button>
+                        <button class="btn-reset" id="resetFilterBtn"><i class="fas fa-undo-alt"></i> Reset</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Property Card 5 -->
-            <div class="property-card" data-location="suburbia" data-price="35000" data-beds="4" data-baths="3">
-                <div class="property-image">
-                    <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Suburban Home">
-                </div>
-                <div class="property-details">
-                    <div class="property-price">₹35,000/month</div>
-                    <div class="property-address">101 Oak Lane, Suburbia</div>
-                    <div class="property-features">
-                        <span>4 Beds</span>
-                        <span>3 Baths</span>
-                        <span>2,000 sqft</span>
-                    </div>
-                    <div class="property-description">
-                        Spacious suburban home with large backyard, perfect for families. Quiet neighborhood with excellent schools.
-                    </div>
-                    <button class="btn" onclick="showPropertyDetails(5)">View Details</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Property Detail Modals -->
-    <div id="propertyModal1" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('propertyModal1')">&times;</span>
-            <div class="property-detail-container">
-                <div class="property-detail-images">
-                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Modern Apartment">
-                    <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Living Room">
-                    <img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Kitchen">
-                </div>
-                <div class="property-detail-info">
-                    <h2 class="detail-title">Modern Downtown Apartment</h2>
-                    <div class="detail-price">₹15,000/month</div>
-                    <div class="detail-address">123 Downtown St, Cityville</div>
-                    
-                    <div class="detail-features">
-                        <div class="feature-item">
-                            <div class="feature-icon">🛏️</div>
-                            <div class="feature-text">2 Bedrooms</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">🚿</div>
-                            <div class="feature-text">1 Bathroom</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">📏</div>
-                            <div class="feature-text">850 sqft</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">🏢</div>
-                            <div class="feature-text">Apartment</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">🅿️</div>
-                            <div class="feature-text">Parking Available</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">🏋️</div>
-                            <div class="feature-text">Gym Access</div>
-                        </div>
-                    </div>
-                    
-                    <div class="detail-description">
-                        <p>This beautiful modern apartment is located in the heart of the city with great amenities and easy access to transportation. The unit features:</p>
-                        <ul style="margin-top: 10px; margin-left: 20px;">
-                            <li>Open-concept living area with large windows</li>
-                            <li>Modern kitchen with stainless steel appliances</li>
-                            <li>Spacious master bedroom with walk-in closet</li>
-                            <li>In-unit laundry</li>
-                            <li>24/7 security and concierge</li>
-                            <li>Rooftop terrace with city views</li>
-                        </ul>
-                        <p style="margin-top: 10px;">Available for move-in immediately. Minimum 12-month lease preferred.</p>
-                    </div>
-                    
-                    <button class="detail-contact-btn" onclick="contactLandlord(1)">Contact Us</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div id="propertyModal2" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('propertyModal2')">&times;</span>
-            <div class="property-detail-container">
-                <div class="property-detail-images">
-                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Luxury Apartment">
-                    <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Living Area">
-                    <img src="https://images.unsplash.com/photo-1556911220-bff31c812dba?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Kitchen">
-                </div>
-                <div class="property-detail-info">
-                    <h2 class="detail-title">Luxury Uptown Apartment</h2>
-                    <div class="detail-price">₹25,000/month</div>
-                    <div class="detail-address">456 Uptown Ave, Townsville</div>
-                    
-                    <div class="detail-features">
-                        <div class="feature-item">
-                            <div class="feature-icon">🛏️</div>
-                            <div class="feature-text">3 Bedrooms</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">🚿</div>
-                            <div class="feature-text">2 Bathrooms</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">📏</div>
-                            <div class="feature-text">1,200 sqft</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">🏢</div>
-                            <div class="feature-text">Apartment</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">🏊</div>
-                            <div class="feature-text">Pool Access</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">🏋️</div>
-                            <div class="feature-text">Gym Included</div>
-                        </div>
-                    </div>
-                    
-                    <div class="detail-description">
-                        <p>This spacious luxury apartment offers stunning city views, modern appliances, and access to premium amenities including:</p>
-                        <ul style="margin-top: 10px; margin-left: 20px;">
-                            <li>Resort-style swimming pool</li>
-                            <li>State-of-the-art fitness center</li>
-                            <li>Community lounge with coworking spaces</li>
-                            <li>Pet-friendly with dog park</li>
-                            <li>Underground parking available</li>
-                            <li>24-hour maintenance</li>
-                        </ul>
-                        <p style="margin-top: 10px;">The unit features hardwood floors throughout, a gourmet kitchen with quartz countertops, and floor-to-ceiling windows. Perfect for professionals or small families.</p>
-                    </div>
-                    
-                    <button class="detail-contact-btn" onclick="contactLandlord(2)">Contact Us</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div id="propertyModal3" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('propertyModal3')">&times;</span>
-            <div class="property-detail-container">
-                <div class="property-detail-images">
-                    <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Cozy Studio">
-                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Living Space">
-                    <img src="https://images.unsplash.com/photo-1556911220-bf31c812dbb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Kitchenette">
-                </div>
-                <div class="property-detail-info">
-                    <h2 class="detail-title">Cozy Studio Apartment</h2>
-                    <div class="detail-price">₹8,500/month</div>
-                    <div class="detail-address">789 Center Lane, Metro City</div>
-                    
-                    <div class="detail-features">
-                        <div class="feature-item">
-                            <div class="feature-icon">🛏️</div>
-                            <div class="feature-text">Studio</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">🚿</div>
-                            <div class="feature-text">1 Bathroom</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">📏</div>
-                            <div class="feature-text">500 sqft</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">🏢</div>
-                            <div class="feature-text">Apartment</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">🚲</div>
-                            <div class="feature-text">Bike Storage</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">🏪</div>
-                            <div class="feature-text">Walk Score: 92</div>
-                        </div>
-                    </div>
-                    
-                    <div class="detail-description">
-                        <p>This recently renovated studio apartment is perfect for students or young professionals. Features include:</p>
-                        <ul style="margin-top: 10px; margin-left: 20px;">
-                            <li>Efficient layout with separate sleeping and living areas</li>
-                            <li>Brand new kitchen appliances</li>
-                            <li>Hardwood floors</li>
-                            <li>Large closet space</li>
-                            <li>In-building laundry facilities</li>
-                            <li>Excellent public transportation access</li>
-                        </ul>
-                        <p style="margin-top: 10px;">Located in a vibrant neighborhood with cafes, restaurants, and shops just steps away. Utilities not included in rent.</p>
-                    </div>
-                    
-                    <button class="detail-contact-btn" onclick="contactLandlord(3)">Contact Us</button>
-                </div>
-            </div>
+            <!-- Properties Grid -->
+            <div id="propertiesGrid" class="properties-grid"></div>
         </div>
     </div>
 
-    <!-- Added modals for the new properties -->
-    <div id="propertyModal4" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('propertyModal4')">&times;</span>
-            <div class="property-detail-container">
-                <div class="property-detail-images">
-                    <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="City Apartment">
-                    <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Living Room">
-                    <img src="https://images.unsplash.com/photo-1556910633-8b5a5c4b1e6e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Bedroom">
-                </div>
-                <div class="property-detail-info">
-                    <h2 class="detail-title">Cityville Apartment</h2>
-                    <div class="detail-price">₹12,000/month</div>
-                    <div class="detail-address">321 Main St, Cityville</div>
-                    
-                    <div class="detail-features">
-                        <div class="feature-item">
-                            <div class="feature-icon">🛏️</div>
-                            <div class="feature-text">1 Bedroom</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">🚿</div>
-                            <div class="feature-text">1 Bathroom</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">📏</div>
-                            <div class="feature-text">700 sqft</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">🏢</div>
-                            <div class="feature-text">Apartment</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">🌞</div>
-                            <div class="feature-text">South Facing</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">🏪</div>
-                            <div class="feature-text">Walk Score: 87</div>
-                        </div>
-                    </div>
-                    
-                    <div class="detail-description">
-                        <p>Comfortable one-bedroom apartment in downtown Cityville with great natural light and updated kitchen. Features include:</p>
-                        <ul style="margin-top: 10px; margin-left: 20px;">
-                            <li>Bright living room with large windows</li>
-                            <li>Updated kitchen with new appliances</li>
-                            <li>Spacious bedroom with closet</li>
-                            <li>Hardwood floors throughout</li>
-                            <li>Secure building with intercom</li>
-                            <li>Close to public transportation</li>
-                        </ul>
-                        <p style="margin-top: 10px;">Perfect for young professionals or couples. Available immediately.</p>
-                    </div>
-                    
-                    <button class="detail-contact-btn" onclick="contactLandlord(4)">Contact Us</button>
-                </div>
-            </div>
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-inner">
+            <div class="footer-col"><h5>StayLoo</h5><a href="#">About Us</a><a href="#">Contact</a><a href="#">Careers</a></div>
+            <div class="footer-col"><h5>Explore</h5><a href="#">PG Accommodations</a><a href="#">Independent Houses</a><a href="#">List Property</a></div>
+            <div class="footer-col"><h5>Support</h5><a href="#">FAQs</a><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div>
+            <div class="footer-col"><h5>Connect</h5><a href="#"><i class="fab fa-whatsapp"></i> WhatsApp</a><a href="#"><i class="fab fa-instagram"></i> Instagram</a></div>
         </div>
-    </div>
+        <div class="copyright">© 2025 StayLoo — Move with ease. Verified PG accommodations.</div>
+    </footer>
+</div>
 
-    <div id="propertyModal5" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('propertyModal5')">&times;</span>
-            <div class="property-detail-container">
-                <div class="property-detail-images">
-                    <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Suburban Home">
-                    <img src="https://images.unsplash.com/photo-1560448205-17d3a46cdfde?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Living Room">
-                    <img src="https://images.unsplash.com/photo-1560448205-97abe7378152?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Backyard">
+<!-- Modal for property details -->
+<div id="propertyModal" class="modal-overlay">
+    <div class="modal-container">
+        <button class="close-modal" id="closeModalBtn">&times;</button>
+        <div id="modalContent"></div>
+    </div>
+</div>
+
+<!-- Fullscreen image viewer -->
+<div id="fullscreenViewer" class="fullscreen-viewer">
+    <button class="close-fullscreen">&times;</button>
+    <img class="fullscreen-img" src="" alt="Full Screen View">
+</div>
+
+<script>
+    // ========== PG ACCOMMODATIONS DATABASE (with unique IDs) ==========
+    let pgProperties = [
+        { 
+            id: "PG001", code: "PG-1001", city: "Lucknow", area: "Gomti Nagar", 
+            title: "Zolo Stellar PG", sharing: "Double", price: 12000,
+            images: ["https://picsum.photos/id/106/400/300", "https://picsum.photos/id/107/400/300", "https://picsum.photos/id/108/400/300"],
+            desc: "Premium PG for working professionals, includes meals, WiFi, AC, geyser.", 
+            features: "Meals included, WiFi, AC, Power backup, Housekeeping"
+        },
+        { 
+            id: "PG002", code: "PG-1002", city: "Bangalore", area: "Koramangala", 
+            title: "Kora Men's PG", sharing: "Single", price: 18000,
+            images: ["https://picsum.photos/id/1/400/300", "https://picsum.photos/id/2/400/300", "https://picsum.photos/id/3/400/300"],
+            desc: "Executive single room PG near tech parks, fully furnished.", 
+            features: "Attached bathroom, WiFi, TV, Gym access"
+        },
+        { 
+            id: "PG003", code: "PG-1003", city: "Delhi NCR", area: "Dwarka", 
+            title: "Dwarka Elite PG", sharing: "Triple", price: 9000,
+            images: ["https://picsum.photos/id/20/400/300", "https://picsum.photos/id/21/400/300", "https://picsum.photos/id/22/400/300"],
+            desc: "Budget-friendly triple sharing PG with homely food.", 
+            features: "Food included, WiFi, Parking, CCTV"
+        },
+        { 
+            id: "PG004", code: "PG-1004", city: "Mumbai", area: "Andheri", 
+            title: "Andheri Comfort PG", sharing: "Double", price: 15000,
+            images: ["https://picsum.photos/id/29/400/300", "https://picsum.photos/id/30/400/300", "https://picsum.photos/id/31/400/300"],
+            desc: "Near metro station, double sharing for bachelors.", 
+            features: "AC, WiFi, Laundry, Meals optional"
+        },
+        { 
+            id: "PG005", code: "PG-1005", city: "Pune", area: "Hinjewadi", 
+            title: "Hinjewadi Elite PG", sharing: "Single", price: 14000,
+            images: ["https://picsum.photos/id/104/400/300", "https://picsum.photos/id/111/400/300", "https://picsum.photos/id/112/400/300"],
+            desc: "Premium single room PG with attached washroom, near IT park.", 
+            features: "AC, WiFi, Meals, Gym, Power Backup"
+        },
+        { 
+            id: "PG006", code: "PG-1006", city: "Lucknow", area: "Indira Nagar", 
+            title: "Indira Nagar Ladies PG", sharing: "Double", price: 10000,
+            images: ["https://picsum.photos/id/115/400/300", "https://picsum.photos/id/116/400/300", "https://picsum.photos/id/117/400/300"],
+            desc: "Safe and secure PG for working women, homely environment.", 
+            features: "Food included, CCTV, Women only, WiFi"
+        }
+    ];
+
+    function escapeHtml(str) { 
+        if (!str) return ''; 
+        return str.replace(/[&<>]/g, function(m) { 
+            if (m === '&') return '&amp;'; 
+            if (m === '<') return '&lt;'; 
+            if (m === '>') return '&gt;'; 
+            return m; 
+        }); 
+    }
+
+    function renderCards(filteredProps) {
+        const grid = document.getElementById('propertiesGrid');
+        if (!filteredProps.length) {
+            grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 3rem; background: white; border-radius: 1.5rem;"><i class="fas fa-bed" style="font-size: 2rem; color: #1c6a8f;"></i><h3 style="margin: 1rem 0;">🏠 No PG accommodations match your criteria.</h3><p>Try resetting the filters to see all listings.</p></div>`;
+            return;
+        }
+        grid.innerHTML = filteredProps.map(prop => `
+            <div class="property-card" data-id="${prop.id}" onclick="openModal('${prop.id}')">
+                <div class="card-img" style="background-image: url('${prop.images[0]}'); background-size: cover; background-position: center;">
+                    <span class="property-code-badge">📌 ${prop.code}</span>
                 </div>
-                <div class="property-detail-info">
-                    <h2 class="detail-title">Suburban Family Home</h2>
-                    <div class="detail-price">₹35,000/month</div>
-                    <div class="detail-address">101 Oak Lane, Suburbia</div>
-                    
-                    <div class="detail-features">
-                        <div class="feature-item">
-                            <div class="feature-icon">🛏️</div>
-                            <div class="feature-text">4 Bedrooms</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">🚿</div>
-                            <div class="feature-text">3 Bathrooms</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">📏</div>
-                            <div class="feature-text">2,000 sqft</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">🏠</div>
-                            <div class="feature-text">House</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">🌳</div>
-                            <div class="feature-text">Large Backyard</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">🚗</div>
-                            <div class="feature-text">2 Parking Spaces</div>
-                        </div>
-                    </div>
-                    
-                    <div class="detail-description">
-                        <p>Spacious suburban home with large backyard, perfect for families. Quiet neighborhood with excellent schools. Features include:</p>
-                        <ul style="margin-top: 10px; margin-left: 20px;">
-                            <li>Open concept living and dining area</li>
-                            <li>Modern kitchen with island</li>
-                            <li>Master bedroom with ensuite bathroom</li>
-                            <li>Finished basement with extra living space</li>
-                            <li>Large backyard with deck</li>
-                            <li>Two-car garage</li>
-                        </ul>
-                        <p style="margin-top: 10px;">Located in a family-friendly neighborhood with parks and schools nearby. Available for long-term lease.</p>
-                    </div>
-                    
-                    <button class="detail-contact-btn" onclick="contactLandlord(5)">Contact Us</button>
+                <div class="card-content">
+                    <div class="card-title">${escapeHtml(prop.title)}</div>
+                    <div class="card-location"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(prop.area)}, ${escapeHtml(prop.city)}</div>
+                    <div class="card-details"><span>👥 ${prop.sharing}</span><span>💰 ₹${prop.price.toLocaleString()}/month</span></div>
+                    <div class="price">₹${prop.price.toLocaleString()}/month</div>
+                    <div class="view-details"><i class="fas fa-eye"></i> View Details</div>
                 </div>
             </div>
-        </div>
-    </div>
-    
-    <script>
-        // Property data for filtering
-        const properties = [
-            {
-                id: 1,
-                price: 15000,
-                location: 'cityville',
-                beds: 2,
-                baths: 1,
-                address: '123 Downtown St, Cityville',
-                description: 'Beautiful modern apartment in the heart of the city with great amenities and easy access to transportation.'
-            },
-            {
-                id: 2,
-                price: 25000,
-                location: 'townsville',
-                beds: 3,
-                baths: 2,
-                address: '456 Uptown Ave, Townsville',
-                description: 'Spacious luxury apartment with stunning views, modern appliances, and access to pool and gym facilities.'
-            },
-            {
-                id: 3,
-                price: 8500,
-                location: 'metro city',
-                beds: 1,
-                baths: 1,
-                address: '789 Center Lane, Metro City',
-                description: 'Cozy studio apartment perfect for students or young professionals. Recently renovated with new appliances.'
-            },
-            {
-                id: 4,
-                price: 12000,
-                location: 'cityville',
-                beds: 1,
-                baths: 1,
-                address: '321 Main St, Cityville',
-                description: 'Comfortable one-bedroom apartment in downtown Cityville with great natural light and updated kitchen.'
-            },
-            {
-                id: 5,
-                price: 35000,
-                location: 'suburbia',
-                beds: 4,
-                baths: 3,
-                address: '101 Oak Lane, Suburbia',
-                description: 'Spacious suburban home with large backyard, perfect for families. Quiet neighborhood with excellent schools.'
+        `).join('');
+    }
+
+    function getFilteredProperties() {
+        const city = document.getElementById('cityFilter').value;
+        const areaQuery = document.getElementById('areaFilter').value.toLowerCase().trim();
+        const budgetVal = document.getElementById('budgetFilter').value;
+        const sharing = document.getElementById('sharingFilter').value;
+        return pgProperties.filter(prop => {
+            if (city !== 'all' && prop.city !== city) return false;
+            if (areaQuery && !prop.area.toLowerCase().includes(areaQuery)) return false;
+            if (sharing !== 'all' && prop.sharing !== sharing) return false;
+            if (budgetVal !== 'any') { 
+                const maxBudget = parseInt(budgetVal); 
+                if (prop.price > maxBudget) return false; 
             }
-        ];
+            return true;
+        });
+    }
 
-        // Filter functionality
-        document.getElementById('applyFilters').addEventListener('click', function() {
-            const locationSearch = document.getElementById('locationSearch').value.toLowerCase();
-            const priceFilter = document.getElementById('priceFilter').value;
-            const bhkFilter = document.getElementById('bhkFilter').value;
-            
-            const propertyCards = document.querySelectorAll('.property-card');
-            let hasResults = false;
-            
-            propertyCards.forEach(card => {
-                const cardLocation = card.getAttribute('data-location');
-                const cardAddress = card.querySelector('.property-address').textContent.toLowerCase();
-                const cardPrice = parseInt(card.getAttribute('data-price'));
-                const cardBeds = card.getAttribute('data-beds');
-                let showCard = true;
-                
-                // Location filter - search in both location data attribute and address text
-                if (locationSearch && 
-                    !cardLocation.includes(locationSearch) && 
-                    !cardAddress.includes(locationSearch)) {
-                    showCard = false;
-                }
-                
-                // Price filter
-                switch(priceFilter) {
-                    case 'under-10000':
-                        if (cardPrice >= 10000) showCard = false;
-                        break;
-                    case '10000-20000':
-                        if (cardPrice < 10000 || cardPrice > 20000) showCard = false;
-                        break;
-                    case '20000-30000':
-                        if (cardPrice < 20000 || cardPrice > 30000) showCard = false;
-                        break;
-                    case '30000-50000':
-                        if (cardPrice < 30000 || cardPrice > 50000) showCard = false;
-                        break;
-                    case 'over-50000':
-                        if (cardPrice <= 50000) showCard = false;
-                        break;
-                }
-                
-                // BHK filter
-                if (bhkFilter !== 'any') {
-                    if (bhkFilter === 'studio') {
-                        if (cardBeds !== '1' || !card.querySelector('.property-features').textContent.includes('Studio')) {
-                            showCard = false;
-                        }
-                    } else {
-                        if (cardBeds !== bhkFilter) {
-                            showCard = false;
-                        }
-                    }
-                }
-                
-                if (showCard) {
-                    card.style.display = 'block';
-                    hasResults = true;
-                } else {
-                    card.style.display = 'none';
-                }
+    function applyFilters() { renderCards(getFilteredProperties()); }
+    function resetFilters() {
+        document.getElementById('cityFilter').value = 'all';
+        document.getElementById('areaFilter').value = '';
+        document.getElementById('budgetFilter').value = 'any';
+        document.getElementById('sharingFilter').value = 'all';
+        applyFilters();
+    }
+
+    // Fullscreen logic
+    const fullscreenDiv = document.getElementById('fullscreenViewer');
+    const fullscreenImg = fullscreenDiv.querySelector('.fullscreen-img');
+    const closeFullscreen = fullscreenDiv.querySelector('.close-fullscreen');
+    function openFullscreen(src) { 
+        fullscreenImg.src = src; 
+        fullscreenDiv.classList.add('active'); 
+        document.body.style.overflow = 'hidden'; 
+    }
+    function closeFullscreenFunc() { 
+        fullscreenDiv.classList.remove('active'); 
+        document.body.style.overflow = ''; 
+        fullscreenImg.src = '';
+    }
+    closeFullscreen.addEventListener('click', closeFullscreenFunc);
+    fullscreenDiv.addEventListener('click', (e) => { if(e.target === fullscreenDiv) closeFullscreenFunc(); });
+    window.openFullscreen = openFullscreen;
+
+    // Modal for PG details
+    let currentPG = null;
+    function openModal(propertyId) {
+        const prop = pgProperties.find(p => p.id === propertyId);
+        if (!prop) return;
+        currentPG = prop;
+        const modal = document.getElementById('propertyModal');
+        const modalContent = document.getElementById('modalContent');
+        const galleryHtml = prop.images.map(img => `<img class="modal-img" src="${img}" alt="PG view" loading="lazy" onclick="openFullscreen('${img}')" onerror="this.src='https://picsum.photos/id/20/400/300'">`).join('');
+        modalContent.innerHTML = `
+            <div class="modal-img-gallery">${galleryHtml || '<div style="padding:30px">No images available</div>'}</div>
+            <div class="modal-body">
+                <span class="modal-property-code"><i class="fas fa-tag"></i> PG Code: <strong>${escapeHtml(prop.code)}</strong> (ID: ${prop.id})</span>
+                <h2 style="margin: 12px 0 8px">${escapeHtml(prop.title)}</h2>
+                <p><i class="fas fa-location-dot"></i> ${escapeHtml(prop.area)}, ${escapeHtml(prop.city)}</p>
+                <div style="display: flex; gap: 1rem; margin: 12px 0; flex-wrap: wrap;">
+                    <span><i class="fas fa-users"></i> ${prop.sharing}</span>
+                    <span><i class="fas fa-rupee-sign"></i> ₹${prop.price.toLocaleString()}/month</span>
+                </div>
+                <div style="background: #f0f7fb; padding: 14px; border-radius: 16px; margin: 12px 0;">
+                    <strong>📝 Description:</strong><br> ${escapeHtml(prop.desc) || 'Comfortable PG with all amenities.'}<br><br>
+                    <strong>✨ Features:</strong><br> ${escapeHtml(prop.features) || 'WiFi, Food, Housekeeping'}
+                </div>
+                <button id="sendWhatsAppBtn" class="send-query-btn"><i class="fab fa-whatsapp"></i> Send Query on WhatsApp</button>
+            </div>
+        `;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        const whatsBtn = document.getElementById('sendWhatsAppBtn');
+        if (whatsBtn) {
+            whatsBtn.addEventListener('click', () => {
+                const YOUR_WHATSAPP = "917311170545";
+                const msg = `🏠 *PG Accommodation Inquiry*%0A%0APG: ${currentPG.title}%0ACode: ${currentPG.code}%0ALocation: ${currentPG.area}, ${currentPG.city}%0ASharing: ${currentPG.sharing}%0ARent: ₹${currentPG.price}%0A%0AI'm interested. Please share more details.`;
+                window.open(`https://wa.me/${YOUR_WHATSAPP}?text=${msg}`, '_blank');
             });
-            
-            // Show no results message if needed
-            const noResults = document.querySelector('.no-results');
-            if (!hasResults) {
-                if (!noResults) {
-                    const noResultsDiv = document.createElement('div');
-                    noResultsDiv.className = 'no-results';
-                    noResultsDiv.textContent = 'No properties match your search criteria. Try adjusting your filters.';
-                    document.getElementById('propertyGrid').appendChild(noResultsDiv);
-                }
-            } else if (noResults) {
-                noResults.remove();
-            }
-        });
-        
-        // Reset filters
-        document.getElementById('resetFilters').addEventListener('click', function() {
-            document.getElementById('locationSearch').value = '';
-            document.getElementById('priceFilter').value = 'any';
-            document.getElementById('bhkFilter').value = 'any';
-            
-            const propertyCards = document.querySelectorAll('.property-card');
-            propertyCards.forEach(card => {
-                card.style.display = 'block';
-            });
-            
-            const noResults = document.querySelector('.no-results');
-            if (noResults) {
-                noResults.remove();
-            }
-        });
+        }
+    }
 
-        // Existing modal functions
-        function showPropertyDetails(propertyId) {
-            document.getElementById('propertyModal' + propertyId).style.display = 'block';
-        }
-        
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-        
-        function contactLandlord(propertyId) {
-            let propertyTitle, propertyPrice, propertyAddress;
-            
-            const property = properties.find(p => p.id === propertyId);
-            if (property) {
-                propertyTitle = document.querySelector(`#propertyModal${propertyId} .detail-title`).textContent;
-                propertyPrice = document.querySelector(`#propertyModal${propertyId} .detail-price`).textContent;
-                propertyAddress = property.address;
-                
-                const propertyCode = `STAY-100${propertyId}`;
-                const message = `Hello, I'm interested in the property:\n\n*${propertyTitle}*\nProperty Code: ${propertyCode}\nPrice: ${propertyPrice}\nAddress: ${propertyAddress}\n\nCould you please provide more information?`;
-                const encodedMessage = encodeURIComponent(message);
-                window.open(`https://wa.me/9170548739?text=${encodedMessage}`, '_blank');
-            }
-        }
-        
-        // Close modal when clicking outside of it
-        window.onclick = function(event) {
-            if (event.target.className === 'modal') {
-                event.target.style.display = 'none';
-            }
-        }
+    // Modal close handlers
+    const modal = document.getElementById('propertyModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    function closeModalFunc() { 
+        modal.classList.remove('active'); 
+        document.body.style.overflow = ''; 
+    }
+    closeModalBtn.addEventListener('click', closeModalFunc);
+    modal.addEventListener('click', (e) => { if(e.target === modal) closeModalFunc(); });
+    window.openModal = openModal;
 
-        // Make location search work on pressing Enter key
-        document.getElementById('locationSearch').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                document.getElementById('applyFilters').click();
-            }
-        });
-    </script>
+    // Event listeners for filters
+    document.getElementById('applyFilterBtn').addEventListener('click', applyFilters);
+    document.getElementById('resetFilterBtn').addEventListener('click', resetFilters);
+    
+    // Initial render
+    window.addEventListener('DOMContentLoaded', () => { 
+        renderCards(pgProperties); 
+        // Fix logo fallback
+        const logoImg = document.querySelector('.logo-img');
+        if(logoImg && logoImg.complete && logoImg.naturalWidth === 0) {
+            logoImg.style.display = 'none';
+            const fallback = document.querySelector('.logo-text-fallback');
+            if(fallback) fallback.style.display = 'block';
+        } else if(logoImg) {
+            logoImg.onerror = function() {
+                this.style.display = 'none';
+                const fallback = document.querySelector('.logo-text-fallback');
+                if(fallback) fallback.style.display = 'block';
+            };
+        }
+    });
+</script>
 </body>
 </html>
