@@ -601,7 +601,12 @@
                     <div class="page-tagline"><i class="fas fa-door-open"></i> Rooms for Rent</div>
                 </div>
             </div>
-            
+
+            <!-- Add Room Button -->
+            <!-- <div class="add-property-section">
+                <button class="btn-add-property" id="openAddRoomModalBtn"><i class="fas fa-plus-circle"></i> List Your Room</button>
+            </div> -->
+
             <!-- Filters - buttons centered on mobile -->
             <div class="filter-section">
                 <div class="filter-grid">
@@ -893,10 +898,10 @@
     }
 
     // Add Room functionality with custom images
-    // const addModal = document.getElementById('addRoomModal');
-    // const openAddBtn = document.getElementById('openAddRoomModalBtn');
-    // const closeAddBtn = document.getElementById('closeAddModalBtn');
-    // const addForm = document.getElementById('addRoomForm');
+    const addModal = document.getElementById('addRoomModal');
+    const openAddBtn = document.getElementById('openAddRoomModalBtn');
+    const closeAddBtn = document.getElementById('closeAddModalBtn');
+    const addForm = document.getElementById('addRoomForm');
 
     function generateUniqueId() { return 'RM' + Date.now() + Math.floor(Math.random() * 1000); }
     function generateCode() { return 'RM-' + Math.floor(Math.random() * 9000 + 1000); }
