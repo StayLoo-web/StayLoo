@@ -106,43 +106,53 @@
         padding: 4px 12px;
     }
 }
-        /* .header-centered {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid rgba(44, 125, 160, 0.25);
-        }
+      /* ===== REMOVE BLUE TAP HIGHLIGHT ON MOBILE ===== */
+* {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -moz-tap-highlight-color: transparent;
+}
 
-        .logo-centered {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            background: transparent;
-            padding: 0.25rem 1rem;
-        }
+/* All clickable elements */
+button,
+a,
+.property-card,
+.view-details,
+.btn-filter,
+.btn-reset,
+.close-modal,
+.send-query-btn,
+.modal-img,
+.cta-button,
+.filter-group select,
+.filter-group input,
+.card-content {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+}
 
-        .logo-img {
-            height: 52px;
-            width: auto;
-            object-fit: contain;
-            background: transparent;
-        }
+/* Subtle feedback on tap (no blue, just slight transparency) */
+.property-card:active {
+    transform: scale(0.98);
+    transition: transform 0.05s ease;
+}
 
-        .logo-text {
-            font-size: 1.9rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #0f2b3d, #1c6a8f);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-        }
+.btn-filter:active,
+.btn-reset:active,
+.send-query-btn:active {
+    transform: scale(0.97);
+    opacity: 0.8;
+}
 
-        .tagline {
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: #5e7f9e;
-        } */
+.view-details:active {
+    background: #dce5ed;
+    transform: scale(0.98);
+}
+
+.modal-img:active {
+    transform: scale(0.96);
+}
 
         /* Filter Section */
        .filter-section {
