@@ -34,7 +34,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             gap: 1rem;
             margin-bottom: 2rem;
             padding-bottom: 1rem;
@@ -387,6 +387,19 @@
             background: #0f2b3d; color: white; padding: 10px 20px; border-radius: 40px;
             z-index: 1100; opacity: 0; transition: 0.2s; pointer-events: none; font-size: 0.85rem;
         }
+        @media (max-width: 600px) {
+    .header-flex {
+        gap: 0.5rem;
+    }
+    .logo-img {
+        height: 40px;
+    }
+    .ask-btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+        white-space: nowrap;
+    }
+}
         @media (max-width: 720px) {
             .container { padding: 1rem; }
             .header-flex { flex-direction: row; flex-wrap: wrap; justify-content: space-between; }
