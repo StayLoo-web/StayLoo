@@ -681,57 +681,103 @@
         </div>
     </footer>
 
-    <script>
-        (function() {
+   <script>
+  (function() {
     // Get elements
     const hamburger = document.getElementById('hamburgerBtn');
     const mobileDrawer = document.getElementById('mobileDrawer');
     const overlay = document.getElementById('mobileOverlay');
     const closeDrawerBtn = document.getElementById('closeDrawerBtn');
-
+    
+    // Toast message function (if you have it)
+    function showMessage(msg, isSuccess) {
+      console.log(msg);
+      // You can uncomment this if you have a toast element
+      // const toast = document.getElementById('toastMsg');
+      // if (toast) {
+      //   toast.textContent = msg;
+      //   toast.classList.add('show');
+      //   setTimeout(() => toast.classList.remove('show'), 2000);
+      // }
+    }
+    
     // Function to open menu
     function openMenu() {
-      mobileDrawer.classList.add('open');
-      overlay.classList.add('active');
+      if (mobileDrawer) mobileDrawer.classList.add('open');
+      if (overlay) overlay.classList.add('active');
       document.body.style.overflow = 'hidden';
+      console.log('Menu opened');
     }
-      // ========== CITY BUTTONS: REDIRECT TO RESPECTIVE CITY PAGE ==========
-    // Explanation: When user clicks on a city button, they will be taken to a dedicated page for that city.
-    // For each city, we create a simple mapping. You can replace 'lucknow.html', 'delhi.html', 'noida.html' 
-    // with the actual URLs where you will place the search area bar and listings.
     
+    // Function to close menu
+    function closeMenu() {
+      if (mobileDrawer) mobileDrawer.classList.remove('open');
+      if (overlay) overlay.classList.remove('active');
+      document.body.style.overflow = '';
+      console.log('Menu closed');
+    }
+    
+    // ========== HAMBURGER MENU EVENT LISTENERS ==========
+    if (hamburger) {
+      hamburger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        openMenu();
+      });
+      hamburger.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        openMenu();
+      });
+      console.log('✅ Hamburger button found and ready');
+    } else {
+      console.error('❌ Hamburger button NOT found! Check ID: hamburgerBtn');
+    }
+    
+    if (closeDrawerBtn) {
+      closeDrawerBtn.addEventListener('click', closeMenu);
+      closeDrawerBtn.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        closeMenu();
+      });
+    }
+    
+    if (overlay) {
+      overlay.addEventListener('click', closeMenu);
+    }
+    
+    // Close menu when clicking on any mobile link
+    const mobileLinks = document.querySelectorAll('.mobile-menu a');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        closeMenu();
+      });
+    });
+    
+    // ========== CITY BUTTONS: REDIRECT TO RESPECTIVE CITY PAGE ==========
     const cityButtons = document.querySelectorAll('.city-btn');
     
     cityButtons.forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
-        // Get the target URL from data-url attribute (you can customize)
         let targetUrl = btn.getAttribute('data-url');
         const cityName = btn.getAttribute('data-city') || btn.innerText.trim().toLowerCase();
         
-        // If no data-url provided, generate a default slug (for flexibility)
         if (!targetUrl) {
           targetUrl = `${cityName}.html`;
         }
         
-        // Give a subtle click feedback and then redirect
         btn.style.transform = 'scale(0.96)';
         setTimeout(() => { btn.style.transform = ''; }, 120);
         
-        // Optional: show a quick loading toast before redirect
         showMessage(`✨ Loading ${btn.innerText.trim()} listings...`, true);
         
-        // Small delay for smooth UX and to show the toast, then redirect
         setTimeout(() => {
-          // Redirect to the city-specific page.
-          // You will create separate HTML files: lucknow.html, delhi.html, noida.html
-          // On those pages, you can add the search area bar and all property listings.
           window.location.href = targetUrl;
         }, 300);
       });
     });
     
-    // Additional: 'Get Notified' for more cities (just demo interaction)
+    // Get Notified button
     const notifySpan = document.getElementById('notifyMe');
     if (notifySpan) {
       notifySpan.addEventListener('click', (e) => {
@@ -740,78 +786,28 @@
       });
     }
     
-    // Ensure that any existing nav links just close menu but no fake toasts
+    // Desktop nav links - just close menu if open
     const desktopLinks = document.querySelectorAll('.nav-links a');
     desktopLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        // do not interfere with natural navigation, just let the browser go to href
-        // but we also close mobile menu if it somehow stays open (safe)
+      link.addEventListener('click', () => {
         closeMenu();
       });
     });
     
-    console.log('Hero ready: City buttons redirect to dedicated pages (lucknow.html, delhi.html, noida.html)');
-  })()       
-
-    // Function to close menu
-    function closeMenu() {
-      mobileDrawer.classList.remove('open');
-      overlay.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    // Check if elements exist before adding event listeners
-    if (hamburger) {
-      hamburger.addEventListener('click', openMenu);
-      // Also add touchstart for better mobile response
-      hamburger.addEventListener('touchstart', function(e) {
-        e.preventDefault();
-        openMenu();
+    // Header scroll effect
+    const header = document.getElementById('mainHeader');
+    if (header) {
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
       });
     }
-
-    if (closeDrawerBtn) {
-      closeDrawerBtn.addEventListener('click', closeMenu);
-      closeDrawerBtn.addEventListener('touchstart', function(e) {
-        e.preventDefault();
-        closeMenu();
-      });
-    }
-
-    if (overlay) {
-      overlay.addEventListener('click', closeMenu);
-    }
-
-    // Close menu when clicking on any mobile link (but let navigation work)
-    const mobileLinks = document.querySelectorAll('.mobile-menu a');
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', function() {
-        closeMenu();
-        // Navigation will happen naturally - no e.preventDefault()
-      });
-    });
-
-    // Debug: log to confirm script is running
-    console.log('Hamburger menu initialized - button exists:', !!hamburger);
+    
+    console.log('✅ All scripts initialized - Hamburger should work now!');
   })();
-        // Header scroll effect
-        window.addEventListener('scroll', function() {
-            const header = document.getElementById('mainHeader');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-        
-        // Initialize animations on load
-        document.addEventListener('DOMContentLoaded', function() {
-            // Animate elements with the animate-fade class
-            const animatedElements = document.querySelectorAll('.animate-fade');
-            animatedElements.forEach((element, index) => {
-                element.style.animationDelay = `${index * 0.2}s`;
-            });
-        });
-    </script>
+</script>
 </body>
 </html>
