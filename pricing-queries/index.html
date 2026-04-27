@@ -10,6 +10,12 @@
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Remove blue tap highlight on mobile */
+        * {
+           -webkit-tap-highlight-color: transparent !important;
+          }
+       a, button, [onclick] { text-decoration: none !important; outline: none !important; -webkit-tap-highlight-color: transparent !important; }
+        
         * {
             margin: 0;
             padding: 0;
