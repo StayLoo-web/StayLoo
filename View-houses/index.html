@@ -43,7 +43,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: nowrap;
+            flex-wrap: wrap;
             gap: 1rem;
             margin-bottom: 2rem;
             padding-bottom: 1rem;
@@ -404,6 +404,56 @@
             margin-top: 1.5rem;
             font-size: 0.75rem;
         }
+        /* MOBILE FIX - Add this specific media query */
+@media (max-width: 700px) {
+    .header-flex {
+        flex-direction: row !important;  /* Force row layout on mobile */
+        justify-content: space-between !important;
+        align-items: center !important;
+        flex-wrap: nowrap !important;  /* Prevent wrapping */
+    }
+    
+    .logo-left {
+        flex-shrink: 0;  /* Prevent logo from shrinking */
+    }
+    
+    .logo-img {
+        height: 40px;  /* Slightly smaller on mobile but still visible */
+        width: auto;
+    }
+    
+    .logo-text-fallback {
+        font-size: 1.2rem;
+    }
+    
+    .page-title-right {
+        flex-shrink: 0;  /* Prevent heading from shrinking */
+        text-align: right;
+    }
+    
+    .page-tagline {
+        font-size: 0.75rem;
+        padding: 4px 12px;
+        white-space: nowrap;  /* Prevent text from wrapping */
+    }
+    
+    /* Rest of your mobile styles... */
+    .filter-grid {
+        flex-direction: column;
+    }
+    /* ... other existing mobile styles ... */
+}
+
+/* For very small screens (below 400px) */
+@media (max-width: 480px) {
+    .page-tagline {
+        font-size: 0.7rem;
+        padding: 3px 8px;
+    }
+    
+    .logo-img {
+        height: 35px;
+    }
 
         /* Responsive Styles */
         @media (max-width: 700px) {
