@@ -39,7 +39,74 @@
         }
 
         /* Header */
-        .header-centered {
+        /* Header with logo left and text right */
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(44, 125, 160, 0.25);
+    flex-wrap: nowrap;
+}
+
+.logo-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-img {
+    height: 52px;
+    width: auto;
+    object-fit: contain;
+    background: transparent;
+}
+
+.logo-text {
+    font-size: 1.9rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #0f2b3d, #1c6a8f);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.page-title-right {
+    text-align: right;
+}
+
+.tagline-right {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1c6a8f;
+    background: #eef2f8;
+    padding: 6px 16px;
+    border-radius: 40px;
+    display: inline-block;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+    .header-flex {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
+    .logo-text {
+        font-size: 1.3rem;
+    }
+    
+    .logo-img {
+        height: 40px;
+    }
+    
+    .tagline-right {
+        font-size: 0.8rem;
+        padding: 4px 12px;
+    }
+}
+        /* .header-centered {
             text-align: center;
             margin-bottom: 2rem;
             padding-bottom: 1rem;
@@ -75,7 +142,7 @@
             font-size: 0.75rem;
             font-weight: 500;
             color: #5e7f9e;
-        }
+        } */
 
         /* Filter Section */
        .filter-section {
@@ -454,14 +521,15 @@
     <div class="main-content">
         <div class="container">
             <!-- Header -->
-            <div class="header-centered">
-                <div class="logo-left">
-                    <img class="logo-img" src="../images/logo1.png" alt="StayLoo Logo">
-                    <div>
-                        <div class="paper-title-right">Flats/Apartments</div>
-                    </div>
-                </div>
-            </div>
+            <div class="header-flex">
+    <div class="logo-left">
+        <img class="logo-img" src="../images/logo1.png" alt="StayLoo Logo">
+        <div class="logo-text">StayLoo</div>
+    </div>
+    <div class="page-title-right">
+        <div class="tagline-right">Flats & Apartments</div>
+    </div>
+</div>
 
             <!-- Filters -->
             <div class="filter-section">
