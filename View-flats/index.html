@@ -988,7 +988,7 @@ const galleryHtml = prop.images.map(img => `<img class="modal-img" src="${img}" 
             whatsBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 // YOUR WHATSAPP NUMBER - CHANGE THIS
-                const YOUR_WHATSAPP_NUMBER = "919170548739"; // Replace with your number (country code without +)
+                const YOUR_WHATSAPP_NUMBER = "917311170545"; // Replace with your number (country code without +)
                 const message = `🏠 *StayLoo Property Inquiry*\n\nProperty: ${currentProperty.title}\n📍 Area: ${currentProperty.area}, ${currentProperty.city}\n🏷️ Property Code: ${currentProperty.code}\n🏠 Type: ${currentProperty.bhk}\n💰 Rent: ₹${currentProperty.price}\n\nI'm interested in this property. Please share more details and schedule a visit.`;
                 const encodedMsg = encodeURIComponent(message);
                 window.open(`https://wa.me/${YOUR_WHATSAPP_NUMBER}?text=${encodedMsg}`, '_blank');
