@@ -499,6 +499,52 @@
         height: 120px;
         }
        }
+        /* Full Screen Image Viewer */
+.fullscreen-img-viewer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.fullscreen-img-viewer.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.fullscreen-img {
+    max-width: 95%;
+    max-height: 95%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+}
+
+.close-fullscreen {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    z-index: 2001;
+}
+
+.close-fullscreen:hover {
+    color: #ddd;
+}
 
         @media (max-width: 700px) {
             .filter-grid {
@@ -823,6 +869,40 @@
             </div>
         `).join('');
     }
+    // Full Screen Image Viewer
+const fullscreenViewer = document.createElement('div');
+fullscreenViewer.className = 'fullscreen-img-viewer';
+fullscreenViewer.innerHTML = `
+    <button class="close-fullscreen">&times;</button>
+    <img class="fullscreen-img" src="" alt="Full Screen View">
+`;
+document.body.appendChild(fullscreenViewer);
+
+const fullscreenImg = fullscreenViewer.querySelector('.fullscreen-img');
+const closeFullscreen = fullscreenViewer.querySelector('.close-fullscreen');
+
+function openFullScreen(imgSrc) {
+    fullscreenImg.src = imgSrc;
+    fullscreenViewer.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeFullScreen() {
+    fullscreenViewer.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+closeFullscreen.addEventListener('click', closeFullScreen);
+fullscreenViewer.addEventListener('click', (e) => {
+    if (e.target === fullscreenViewer) closeFullScreen();
+});
+
+// Also close with Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && fullscreenViewer.classList.contains('active')) {
+        closeFullScreen();
+    }
+});
 
     // Filter logic
     function getFilteredProperties() {
@@ -865,8 +945,7 @@
         const modal = document.getElementById('propertyModal');
         const modalContent = document.getElementById('modalContent');
         
-        const galleryHtml = prop.images.map(img => `<img class="modal-img" src="${img}" alt="property view">`).join('');
-        
+const galleryHtml = prop.images.map(img => `<img class="modal-img" src="${img}" alt="property view" onclick="openFullScreen('${img}')">`).join('');        
         modalContent.innerHTML = `
             <div class="modal-img-gallery">${galleryHtml}</div>
             <div class="modal-body">
@@ -917,6 +996,8 @@
     modal.addEventListener('click', (e) => {
         if (e.target === modal) closeModalFunc();
     });
+    // Make openFullScreen available globally
+    window.openFullScreen = openFullScreen;
     
     // Event Listeners
     document.getElementById('applyFilterBtn').addEventListener('click', applyFilters);
