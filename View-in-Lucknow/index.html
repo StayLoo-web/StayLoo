@@ -18,13 +18,13 @@
             background: #f8fafc;
             color: #0f172a;
             line-height: 1.5;
-            padding-top: 70px;
+            padding-top: 85px;
         }
 
-        /* Header - Sticky with hide/show on scroll */
+        /* Header - LARGER VERSION with image logo support */
         .header {
             background: white;
-            padding: 0.8rem 2rem;
+            padding: 1rem 2rem;
             box-shadow: 0 4px 20px rgba(0,0,0,0.05);
             position: fixed;
             top: 0;
@@ -47,18 +47,20 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             flex-shrink: 0;
+            text-decoration: none;
         }
-        .logo-icon {
-            font-size: 1.8rem;
-            background: linear-gradient(135deg, #8b5cf6, #6366f1);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
+        /* Logo image styling - you can replace src with your actual logo */
+        .logo-img {
+            height: 48px;
+            width: auto;
+            object-fit: contain;
+            border-radius: 12px;
         }
-        .logo-text {
-            font-size: 1.5rem;
+        /* Fallback text logo in case image doesn't load (optional) */
+        .logo-text-fallback {
+            font-size: 1.6rem;
             font-weight: 800;
             background: linear-gradient(135deg, #8b5cf6, #6366f1);
             background-clip: text;
@@ -67,10 +69,10 @@
         }
         .city-selector {
             background: #f1f5f9;
-            padding: 0.5rem 1.2rem;
+            padding: 0.6rem 1.4rem;
             border-radius: 40px;
-            font-weight: 500;
-            font-size: 0.9rem;
+            font-weight: 600;
+            font-size: 0.95rem;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -78,25 +80,24 @@
             white-space: nowrap;
         }
         @media (max-width: 640px) {
-            body { padding-top: 60px; }
-            .header { padding: 0.6rem 1rem; }
-            .logo-text { font-size: 1.2rem; }
-            .logo-icon { font-size: 1.4rem; }
-            .city-selector { padding: 0.4rem 0.8rem; font-size: 0.7rem; }
+            body { padding-top: 70px; }
+            .header { padding: 0.75rem 1rem; }
+            .logo-img { height: 38px; }
+            .city-selector { padding: 0.4rem 0.9rem; font-size: 0.75rem; }
         }
 
-        /* Hero Section */
+        /* Hero Section - also slightly bigger */
         .hero {
             position: relative;
             background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.65)), 
                         url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
             background-size: cover;
             background-position: center 30%;
-            padding: 5rem 2rem;
+            padding: 6rem 2rem;
             text-align: center;
         }
         .hero-content h1 {
-            font-size: 3rem;
+            font-size: 3.2rem;
             font-weight: 800;
             color: white;
             text-shadow: 0 2px 12px rgba(0,0,0,0.3);
@@ -120,14 +121,14 @@
             border-radius: 4px;
         }
         .hero-content p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: #f1f5f9;
             margin-top: 1rem;
             font-weight: 500;
         }
         @media (max-width: 768px) {
-            .hero { padding: 3rem 1rem; }
-            .hero-content h1 { font-size: 2rem; }
+            .hero { padding: 4rem 1rem; }
+            .hero-content h1 { font-size: 2.2rem; }
             .hero-content p { font-size: 1rem; }
         }
 
@@ -279,11 +280,13 @@
             transition: 0.2s;
         }
 
-        /* Load More / View Less Container */
+        /* Load More / View Less Container - CENTERED */
         .load-more-container {
             text-align: center;
             margin-top: 2.5rem;
             margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
         }
         .load-more-btn {
             background: linear-gradient(95deg, #8b5cf6, #6366f1);
@@ -296,6 +299,7 @@
             cursor: pointer;
             transition: all 0.2s;
             box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+            display: inline-block;
         }
         .load-more-btn:hover {
             transform: translateY(-2px);
@@ -307,7 +311,6 @@
         }
         .view-less-btn:hover {
             background: linear-gradient(95deg, #334155, #1e293b);
-            transform: translateY(-2px);
         }
 
         /* Modal Styles */
@@ -425,35 +428,78 @@
             cursor: pointer;
         }
 
-        /* Footer */
+        /* Footer - HORIZONTAL LINKS for all screen sizes */
         .footer {
             background: #0f172a;
             color: #cbd5e1;
-            padding: 2.5rem 2rem 1rem;
+            padding: 2.5rem 2rem 1.5rem;
             margin-top: 3rem;
         }
         .footer-grid {
             max-width: 1280px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
             gap: 2rem;
         }
-        .footer a {
+        .footer-col {
+            flex: 1;
+            min-width: 140px;
+        }
+        .footer-col h4 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .footer-col p {
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .footer-links a {
             color: #94a3b8;
             text-decoration: none;
             font-size: 0.85rem;
-            display: block;
-            margin-bottom: 0.5rem;
+            transition: color 0.2s;
+            display: inline-block;
         }
-        .footer a:hover {
+        .footer-links a:hover {
             color: white;
+        }
+        /* For smaller screens, keep horizontal arrangement but wrap gracefully */
+        @media (max-width: 768px) {
+            .footer-grid {
+                flex-wrap: wrap;
+                gap: 1.5rem;
+            }
+            .footer-col {
+                flex: 1 1 auto;
+                min-width: 150px;
+            }
+        }
+        /* For very small phones still horizontal-ish but stacked if needed? Actually we want horizontal: so flex wrap but each column side by side */
+        @media (max-width: 550px) {
+            .footer-grid {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+            .footer-col {
+                flex: 0 0 auto;
+                width: 45%;
+            }
         }
         .copyright {
             text-align: center;
             border-top: 1px solid #1e293b;
             padding-top: 1.5rem;
-            margin-top: 1.5rem;
+            margin-top: 2rem;
             font-size: 0.7rem;
         }
         @media (max-width: 640px) {
@@ -466,8 +512,10 @@
 <header class="header" id="mainHeader">
     <div class="header-container">
         <div class="logo">
-    <img src="../images/logo1.png" alt="StayLoo Logo" style="height: 40px; width: auto;">
-         </div>
+            <!-- REPLACE THIS SRC WITH YOUR ACTUAL LOGO IMAGE URL -->
+            <img class="logo-img" src="../images/logo1.png" alt="StayLoo Logo">
+            <!-- Optional fallback text (hidden if image loads, but kept for semantic) -->
+        </div>
         <div class="city-selector">
             <i class="fas fa-map-marker-alt" style="color:#8b5cf6;"></i> Lucknow Spaces
         </div>
@@ -529,20 +577,51 @@
     <h2 class="section-title">Spaces for you in Lucknow</h2>
     <div class="grid" id="propertiesGrid"></div>
     
-    <!-- Load More / View Less Button Container -->
+    <!-- Load More / View Less Button Container - Centered -->
     <div class="load-more-container" id="loadMoreContainer">
         <button class="load-more-btn" id="loadMoreBtn">+ Load More Spaces</button>
     </div>
 </section>
 
-<!-- Footer -->
+<!-- Footer with HORIZONTAL links (inline / flex row) -->
 <footer class="footer">
     <div class="footer-grid">
-        <div><h3 style="color:white; margin-bottom:0.8rem;">StayLoo</h3><p style="font-size:0.8rem;">Find your perfect space in Lucknow.</p></div>
-        <div><h4 style="color:white;">Company</h4><a href="#">About Us</a><a href="#">Careers</a><a href="#">Blog</a></div>
-        <div><h4 style="color:white;">Explore</h4><a href="#">PG in Lucknow</a><a href="#">Flats for Rent</a><a href="#">Rooms</a></div>
-        <div><h4 style="color:white;">For Owners</h4><a href="#">List Property</a><a href="#">Owner Dashboard</a><a href="#">Pricing</a></div>
-        <div><h4 style="color:white;">Support</h4><a href="#">Contact Us</a><a href="#">FAQs</a><a href="#">Privacy Policy</a></div>
+        <div class="footer-col">
+            <h4>StayLoo</h4>
+            <p style="font-size:0.8rem;">Find your perfect space in Lucknow.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Company</h4>
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Careers</a>
+                <a href="#">Blog</a>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4>Explore</h4>
+            <div class="footer-links">
+                <a href="#">PG in Lucknow</a>
+                <a href="#">Flats for Rent</a>
+                <a href="#">Rooms</a>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4>For Owners</h4>
+            <div class="footer-links">
+                <a href="#">List Property</a>
+                <a href="#">Owner Dashboard</a>
+                <a href="#">Pricing</a>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4>Support</h4>
+            <div class="footer-links">
+                <a href="#">Contact Us</a>
+                <a href="#">FAQs</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+        </div>
     </div>
     <div class="copyright">© 2025 StayLoo — Find Spaces in Lucknow. All rights reserved.</div>
 </footer>
@@ -562,7 +641,7 @@
 </div>
 
 <script>
-    // ========== PROPERTIES DATA (Expanded with more items for demonstration) ==========
+    // ========== PROPERTIES DATA (Expanded for demo) ==========
     const properties = [
         { id: 1, code: "STL-LKO-001", type: "PG", title: "Elite PG for Boys & Girls", location: "Gomti Nagar", price: 8500, forGender: "Anyone",
           images: ["https://picsum.photos/id/152/500/350", "https://picsum.photos/id/155/500/350", "https://picsum.photos/id/159/500/350", "https://picsum.photos/id/158/500/350"],
@@ -582,7 +661,6 @@
         { id: 6, code: "STL-LKO-006", type: "Room", title: "Co-living Space for Girls", location: "Gomti Nagar", price: 9500, forGender: "Girls",
           images: ["https://picsum.photos/id/15/500/350", "https://picsum.photos/id/16/500/350", "https://picsum.photos/id/17/500/350", "https://picsum.photos/id/18/500/350"],
           desc: "Safe and vibrant co-living space for girls. Includes meals, WiFi.", bedrooms: "Single + Double", bathrooms: "Attached", amenities: "WiFi, Meals, CCTV, AC", size: "220 sqft" },
-        // Additional properties to demonstrate load more functionality (future expansion)
         { id: 7, code: "STL-LKO-007", type: "PG", title: "Zolo Divine PG", location: "Jankipuram", price: 11000, forGender: "Boys",
           images: ["https://picsum.photos/id/20/500/350", "https://picsum.photos/id/21/500/350", "https://picsum.photos/id/22/500/350", "https://picsum.photos/id/23/500/350"],
           desc: "Modern PG with high-speed WiFi, gym, and recreational area.", bedrooms: "1/2 sharing", bathrooms: "Common", amenities: "WiFi, Gym, AC, Power Backup", size: "280 sqft" },
@@ -591,21 +669,12 @@
           desc: "Compact studio with modular kitchen & smart TV. Perfect for singles/couples.", bedrooms: "Studio", bathrooms: "1", amenities: "Smart TV, AC, WiFi", size: "450 sqft" },
         { id: 9, code: "STL-LKO-009", type: "Room", title: "Fully Furnished Private Room", location: "Aliganj", price: 6800, forGender: "Boys",
           images: ["https://picsum.photos/id/32/500/350", "https://picsum.photos/id/33/500/350", "https://picsum.photos/id/34/500/350", "https://picsum.photos/id/35/500/350"],
-          desc: "Attached bathroom, large cupboard, prime location near market.", bedrooms: "Single", bathrooms: "Attached", amenities: "AC, WiFi, Laundry", size: "200 sqft" },
-        { id: 10, code: "STL-LKO-010", type: "PG", title: "Hyderabad Style PG", location: "Indira Nagar", price: 9500, forGender: "Anyone",
-          images: ["https://picsum.photos/id/36/500/350", "https://picsum.photos/id/37/500/350", "https://picsum.photos/id/38/500/350", "https://picsum.photos/id/39/500/350"],
-          desc: "Home-style meals, AC rooms, 24/7 water and electricity backup.", bedrooms: "Twin sharing", bathrooms: "Common + Private", amenities: "Meals, WiFi, Parking", size: "260 sqft" },
-        { id: 11, code: "STL-LKO-011", type: "Flat", title: "Luxury 2 BHK with Balcony", location: "Hazratganj", price: 32000, forGender: "Anyone",
-          images: ["https://picsum.photos/id/40/500/350", "https://picsum.photos/id/41/500/350", "https://picsum.photos/id/42/500/350", "https://picsum.photos/id/43/500/350"],
-          desc: "High-end apartment with city view, modular kitchen.", bedrooms: "2 BHK", bathrooms: "2", amenities: "AC, WiFi, Gym, Swimming Pool", size: "1300 sqft" }
+          desc: "Attached bathroom, large cupboard, prime location near market.", bedrooms: "Single", bathrooms: "Attached", amenities: "AC, WiFi, Laundry", size: "200 sqft" }
     ];
 
-    // ========== PAGINATION / LOAD MORE LOGIC ==========
-    let visibleCount = 6;        // Initially show 6 cards
-    let currentFilteredList = []; // Stores currently filtered properties (full list)
-    let isViewLessMode = false;   // Not needed now, we handle dynamic button
+    let visibleCount = 6;
+    let currentFilteredList = [];
 
-    // Helper: Render cards based on current visibleCount and filtered list
     function renderCards(propertiesToShow) {
         const grid = document.getElementById('propertiesGrid');
         if (!propertiesToShow.length) {
@@ -626,8 +695,6 @@
                 </div>
             </div>
         `).join('');
-
-        // Attach modal open events
         document.querySelectorAll('.view-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const id = parseInt(btn.getAttribute('data-id'));
@@ -637,13 +704,11 @@
         });
     }
 
-    // Apply current filters and update the full filtered list, then reset visibleCount to 6
     function applyFilters() {
         const type = document.getElementById('propTypeFilter').value;
         const budget = document.getElementById('budgetFilter').value;
         const locationQuery = document.getElementById('locationFilter').value.toLowerCase().trim();
         const gender = document.getElementById('genderFilter').value;
-
         currentFilteredList = properties.filter(prop => {
             if (type !== 'all' && prop.type !== type) return false;
             if (gender !== 'Anyone' && prop.forGender !== 'Anyone' && prop.forGender !== gender) return false;
@@ -654,110 +719,76 @@
             }
             return true;
         });
-        
-        // Reset to showing first 6 after any filter action
         visibleCount = 6;
         renderCards(currentFilteredList.slice(0, visibleCount));
         updateButtonState();
     }
 
-    // Reset filters to default
     function resetFilters() {
         document.getElementById('propTypeFilter').value = 'all';
         document.getElementById('budgetFilter').value = 'any';
         document.getElementById('locationFilter').value = '';
         document.getElementById('genderFilter').value = 'Anyone';
-        applyFilters(); // re-apply filter logic, which resets visibleCount to 6
+        applyFilters();
     }
 
-    // Load More: increases visibleCount by 4 (or remaining count)
     function loadMoreProperties() {
         const total = currentFilteredList.length;
         if (visibleCount < total) {
-            const increment = 4;
-            visibleCount = Math.min(visibleCount + increment, total);
+            visibleCount = Math.min(visibleCount + 4, total);
             renderCards(currentFilteredList.slice(0, visibleCount));
             updateButtonState();
         }
     }
     
-    // View Less: reduces visibleCount back to 6 (or initial limit)
     function viewLessProperties() {
         visibleCount = 6;
         renderCards(currentFilteredList.slice(0, visibleCount));
         updateButtonState();
     }
 
-    // Dynamically update button text and behavior based on current visibleCount vs total filtered items
     function updateButtonState() {
         const loadMoreBtn = document.getElementById('loadMoreBtn');
         const total = currentFilteredList.length;
-        
         if (!loadMoreBtn) return;
-        
-        // If no items or only 6 items or less than or equal to 6
-        if (total === 0) {
-            loadMoreBtn.style.display = 'none';
-            return;
-        }
-        
-        loadMoreBtn.style.display = 'block';
-        
-        // Case: we have more items to load AND currently visibleCount is less than total
+        if (total === 0) { loadMoreBtn.style.display = 'none'; return; }
+        loadMoreBtn.style.display = 'inline-block';
         if (visibleCount < total) {
             loadMoreBtn.textContent = `+ Load More Spaces (${total - visibleCount} left)`;
             loadMoreBtn.classList.remove('view-less-btn');
-            // Replace click handler: load more
             const newBtn = loadMoreBtn.cloneNode(true);
             loadMoreBtn.parentNode.replaceChild(newBtn, loadMoreBtn);
             newBtn.addEventListener('click', loadMoreProperties);
-        } 
-        // If visibleCount >= total but total is greater than initial 6, show "View Less" option
-        else if (visibleCount >= total && total > 6) {
+        } else if (visibleCount >= total && total > 6) {
             loadMoreBtn.textContent = `− View Less (Show first 6)`;
             loadMoreBtn.classList.add('view-less-btn');
             const newBtn = loadMoreBtn.cloneNode(true);
             loadMoreBtn.parentNode.replaceChild(newBtn, loadMoreBtn);
             newBtn.addEventListener('click', viewLessProperties);
-        } 
-        // total <= 6: no need for load more or view less, hide button or keep disabled style
-        else if (total <= 6) {
-            loadMoreBtn.style.display = 'none';
         } else {
-            // Fallback: if no conditions met, hide
             loadMoreBtn.style.display = 'none';
         }
     }
 
-    // ========== HEADER HIDE/SHOW ON SCROLL ==========
+    // Header scroll hide/show
     let lastScrollY = window.scrollY;
     const header = document.getElementById('mainHeader');
     window.addEventListener('scroll', () => {
-        if (window.scrollY > lastScrollY && window.scrollY > 80) {
-            header.classList.add('hide');
-        } else {
-            header.classList.remove('hide');
-        }
+        if (window.scrollY > lastScrollY && window.scrollY > 80) header.classList.add('hide');
+        else header.classList.remove('hide');
         lastScrollY = window.scrollY;
     });
 
-    // ========== FULLSCREEN LOGIC ==========
+    // Fullscreen logic
     const fsViewer = document.getElementById('fsViewer');
     const fsImage = document.getElementById('fsImage');
     const closeFs = document.getElementById('closeFsBtn');
-    window.openFullscreen = (src) => {
-        fsImage.src = src;
-        fsViewer.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    };
-    function closeFullscreen() {
-        fsViewer.classList.remove('active');
-        document.body.style.overflow = '';
-    }
+    window.openFullscreen = (src) => { fsImage.src = src; fsViewer.classList.add('active'); document.body.style.overflow = 'hidden'; };
+    function closeFullscreen() { fsViewer.classList.remove('active'); document.body.style.overflow = ''; }
     closeFs.addEventListener('click', closeFullscreen);
     fsViewer.addEventListener('click', (e) => { if (e.target === fsViewer) closeFullscreen(); });
 
-    // ========== MODAL WITH WHATSAPP ==========
+    // Modal logic
     let currentProperty = null;
     function openModal(prop) {
         currentProperty = prop;
@@ -767,23 +798,11 @@
         modalContent.innerHTML = `
             <div class="modal-gallery">${galleryHtml}</div>
             <div class="modal-body">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-                    <h2>${prop.title}</h2>
-                    <span style="background:#eef2ff; padding:4px 12px; border-radius:40px; font-size:0.7rem;">${prop.type}</span>
-                </div>
+                <div style="display:flex; justify-content:space-between;"><h2>${prop.title}</h2><span style="background:#eef2ff; padding:4px 12px; border-radius:40px;">${prop.type}</span></div>
                 <p><i class="fas fa-map-marker-alt"></i> ${prop.location}, Lucknow</p>
-                <div style="background:#f1f5f9; padding:8px 12px; border-radius:40px; display:inline-block; margin:10px 0; font-size:0.75rem;">
-                    <i class="fas fa-tag"></i> Property Code: <strong>${prop.code}</strong>
-                </div>
-                <div style="display:flex; gap:1rem; margin:12px 0; flex-wrap:wrap;">
-                    <span><i class="fas fa-bed"></i> ${prop.bedrooms}</span>
-                    <span><i class="fas fa-bath"></i> ${prop.bathrooms}</span>
-                    <span><i class="fas fa-arrows-alt"></i> ${prop.size}</span>
-                </div>
-                <div style="background:#f8fafc; padding:1rem; border-radius:1rem; margin:12px 0;">
-                    <strong>📝 Description</strong><br>${prop.desc}<br><br>
-                    <strong>✨ Amenities</strong><br>${prop.amenities}
-                </div>
+                <div style="background:#f1f5f9; padding:8px 12px; border-radius:40px; display:inline-block; margin:10px 0;"><i class="fas fa-tag"></i> ${prop.code}</div>
+                <div style="display:flex; gap:1rem;"><span><i class="fas fa-bed"></i> ${prop.bedrooms}</span><span><i class="fas fa-bath"></i> ${prop.bathrooms}</span><span><i class="fas fa-arrows-alt"></i> ${prop.size}</span></div>
+                <div style="background:#f8fafc; padding:1rem; border-radius:1rem; margin:12px 0;"><strong>📝 Description</strong><br>${prop.desc}<br><br><strong>✨ Amenities</strong><br>${prop.amenities}</div>
                 <div class="price" style="font-size:1.8rem;">₹${prop.price.toLocaleString()}<span style="font-size:0.9rem;">/month</span></div>
                 <button id="sendWhatsappBtn" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Send Query on WhatsApp</button>
             </div>
@@ -791,26 +810,18 @@
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
         const waBtn = document.getElementById('sendWhatsappBtn');
-        if (waBtn) {
-            waBtn.addEventListener('click', () => {
-                const YOUR_WHATSAPP = "919170548739";
-                const message = `🏠 *StayLoo Property Inquiry*%0A%0A📌 Property Code: ${currentProperty.code}%0A🏷️ Title: ${currentProperty.title}%0A📍 Location: ${currentProperty.location}, Lucknow%0A🏠 Type: ${currentProperty.type}%0A💰 Rent: ₹${currentProperty.price}/month%0A🔑 ID: ${currentProperty.id}%0A%0AI'm interested. Please share details.`;
-                window.open(`https://wa.me/${YOUR_WHATSAPP}?text=${message}`, '_blank');
-            });
-        }
+        if (waBtn) waBtn.addEventListener('click', () => {
+            const YOUR_WHATSAPP = "919170548739";
+            const message = `🏠 StayLoo Inquiry%0A%0ACode: ${currentProperty.code}%0A${currentProperty.title}%0ALocation: ${currentProperty.location}%0ARent: ₹${currentProperty.price}%0AI'm interested.`;
+            window.open(`https://wa.me/${YOUR_WHATSAPP}?text=${message}`, '_blank');
+        });
     }
-
-    // Modal close handlers
     const modalEl = document.getElementById('propertyModal');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    closeModalBtn.addEventListener('click', () => { modalEl.classList.remove('active'); document.body.style.overflow = ''; });
+    document.getElementById('closeModalBtn').addEventListener('click', () => { modalEl.classList.remove('active'); document.body.style.overflow = ''; });
     modalEl.addEventListener('click', (e) => { if (e.target === modalEl) { modalEl.classList.remove('active'); document.body.style.overflow = ''; } });
 
-    // ========== EVENT LISTENERS ==========
     document.getElementById('applyFiltersBtn').addEventListener('click', applyFilters);
     document.getElementById('resetFiltersBtn').addEventListener('click', resetFilters);
-    
-    // Initial call to build UI
     applyFilters();
 </script>
 </body>
