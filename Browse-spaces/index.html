@@ -763,9 +763,9 @@
         let targetUrl = btn.getAttribute('data-url');
         const cityName = btn.getAttribute('data-city') || btn.innerText.trim().toLowerCase();
         
-        if (!targetUrl) {
-          targetUrl = `/${cityName}/`;
-        }
+        // if (!targetUrl) {
+        //   targetUrl = `/${cityName}/`;
+        // }
         
         btn.style.transform = 'scale(0.96)';
         setTimeout(() => { btn.style.transform = ''; }, 120);
