@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>StayLoo | Flats & Apartments - Find Your Dream Home</title>
     <link rel="icon" type="image/png" href="../images/FEVICON.png">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -81,15 +79,9 @@
                 flex-direction: row;
                 justify-content: space-between;
             }
-            
-            .logo-text {
-                font-size: 1.3rem;
-            }
-            
             .logo-img {
                 height: 40px;
             }
-            
             .tagline-right {
                 font-size: 0.8rem;
                 padding: 4px 12px;
@@ -121,16 +113,13 @@
                 flex-direction: column;
                 align-items: stretch;
             }
-            
             .filter-group {
                 width: 100%;
             }
-            
             .filter-group select,
             .filter-group input {
                 width: 100%;
             }
-            
             .filter-buttons {
                 display: flex;
                 flex-direction: row;
@@ -138,7 +127,6 @@
                 gap: 12px;
                 margin-top: 10px;
             }
-            
             .btn-filter, .btn-reset {
                 flex: 1;
                 text-align: center;
@@ -498,12 +486,6 @@
             border: none;
             z-index: 2001;
         }
-
-        @media (max-width: 700px) {
-            .properties-grid {
-                grid-template-columns: 1fr;
-            }
-        }
     </style>
 </head>
 <body>
@@ -590,85 +572,57 @@
 
 <script>
     // ============================================================
-    // GLOBAL VISITOR COUNTER - FAST & RELIABLE
-    // Shows counts to EVERYONE in the world
-    // Updates in background - NO DELAYS!
+    // GLOBAL VISITOR COUNTER - Using Google Sheets (FREE & RELIABLE)
+    // Counts visible to EVERYONE in the world
     // ============================================================
     
-    // Use a free public API for global storage (Sheet.best - free, no signup)
-    // This stores data in Google Sheets behind the scenes - completely free and fast!
-    const API_URL = 'https://sheet.best/api/sheets/4b7e8a2d-1c3f-4a5e-8b9c-0d1e2f3a4b5c';
+    // 🔴 IMPORTANT: REPLACE THIS URL WITH YOUR GOOGLE APPS SCRIPT URL 🔴
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxUnlskd0YcORu8g98FUKIO0nuYQ8NrMs0nirIit6-IhtE8koJJ1IGMglRB3mBdv-_Q/exec";
     
-    // Local cache for instant display
     let globalViewCounts = {};
-    let updateInProgress = false;
     
-    // Load counts from cloud (happens in background - no delay to UI)
+    // Load counts from Google Sheets
     async function loadGlobalCounts() {
         try {
-            const response = await fetch(API_URL);
+            const response = await fetch(GOOGLE_SCRIPT_URL);
             if (response.ok) {
                 const data = await response.json();
-                if (data && data.length) {
-                    // Convert array to object
-                    const newCounts = {};
-                    data.forEach(row => {
-                        if (row.property_id && row.view_count) {
-                            newCounts[row.property_id] = parseInt(row.view_count) || 0;
+                if (Array.isArray(data)) {
+                    data.forEach(item => {
+                        if (item.property_id) {
+                            globalViewCounts[item.property_id] = parseInt(item.view_count) || 0;
                         }
                     });
-                    globalViewCounts = newCounts;
                 }
             }
         } catch (error) {
-            console.log('Background load failed, using cache');
+            console.log("Error loading counts:", error);
         }
     }
     
-    // Save a single view increment to cloud (async, doesn't block UI)
+    // Save increment to Google Sheets
     async function saveViewToCloud(propertyId, newCount) {
         try {
-            // First try to update existing record
-            const updateResponse = await fetch(`${API_URL}/property_id/${propertyId}`, {
-                method: 'PATCH',
+            await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ view_count: newCount })
+                body: JSON.stringify({ property_id: propertyId, view_count: newCount })
             });
-            
-            if (!updateResponse.ok) {
-                // If no record exists, create one
-                await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify([{ property_id: propertyId, view_count: newCount }])
-                });
-            }
         } catch (error) {
-            console.log('Background save failed, will retry later');
-            // Store in localStorage to retry later
-            localStorage.setItem(`pending_view_${propertyId}`, newCount);
+            console.log("Error saving:", error);
         }
     }
     
-    // Get current count (instant, from local cache)
     function getViewCount(propertyId) {
         return globalViewCounts[propertyId] || 0;
     }
     
-    // Increment and sync (instant UI update, background cloud save)
     function incrementAndSync(propertyId) {
-        const currentCount = getViewCount(propertyId);
-        const newCount = currentCount + 1;
-        
-        // Update local cache instantly
+        const newCount = (globalViewCounts[propertyId] || 0) + 1;
         globalViewCounts[propertyId] = newCount;
-        
-        // Update UI instantly
         updateViewCounterInDOM(propertyId, newCount);
-        
-        // Save to cloud in background (doesn't block UI)
         saveViewToCloud(propertyId, newCount);
-        
         return newCount;
     }
     
@@ -762,10 +716,6 @@
         if (e.target === fullscreenViewer) closeFullScreen();
     });
     
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && fullscreenViewer.classList.contains('active')) closeFullScreen();
-    });
-    
     function getFilteredProperties() {
         const city = document.getElementById('cityFilter').value;
         const areaQuery = document.getElementById('areaFilter').value.toLowerCase().trim();
@@ -801,7 +751,6 @@
         const prop = properties.find(p => p.id === propertyId);
         if (!prop) return;
         
-        // Increment instantly (no waiting)
         const newCount = incrementAndSync(prop.id);
         currentProperty = prop;
         
@@ -866,7 +815,7 @@
     document.getElementById('applyFilterBtn').addEventListener('click', applyFilters);
     document.getElementById('resetFilterBtn').addEventListener('click', resetFilters);
     
-    // Load page: Show cards instantly, load global counts in background
+    // Initialize: Show cards first, then load counts (no visible delay)
     window.addEventListener('DOMContentLoaded', async () => {
         renderCards(properties.slice(0, 5));
         await loadGlobalCounts();
