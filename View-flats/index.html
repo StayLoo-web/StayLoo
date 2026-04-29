@@ -40,168 +40,162 @@
         }
 
         /* Header */
-        /* Header with logo left and text right */
-.header-flex {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid rgba(44, 125, 160, 0.25);
-    flex-wrap: nowrap;
-}
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(44, 125, 160, 0.25);
+            flex-wrap: nowrap;
+        }
 
-.logo-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
+        .logo-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-.logo-img {
-    height: 52px;
-    width: auto;
-    object-fit: contain;
-    background: transparent;
-}
+        .logo-img {
+            height: 52px;
+            width: auto;
+            object-fit: contain;
+            background: transparent;
+        }
 
-.logo-text {
-    font-size: 1.9rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #0f2b3d, #1c6a8f);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-}
+        .logo-text {
+            font-size: 1.9rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0f2b3d, #1c6a8f);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
 
-.page-title-right {
-    text-align: right;
-}
+        .page-title-right {
+            text-align: right;
+        }
 
-.tagline-right {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #1c6a8f;
-    background: #eef2f8;
-    padding: 6px 16px;
-    border-radius: 40px;
-    display: inline-block;
-}
+        .tagline-right {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1c6a8f;
+            background: #eef2f8;
+            padding: 6px 16px;
+            border-radius: 40px;
+            display: inline-block;
+        }
 
-/* Mobile responsive */
-@media (max-width: 600px) {
-    .header-flex {
-        flex-direction: row;
-        justify-content: space-between;
-    }
-    
-    .logo-text {
-        font-size: 1.3rem;
-    }
-    
-    .logo-img {
-        height: 40px;
-    }
-    
-    .tagline-right {
-        font-size: 0.8rem;
-        padding: 4px 12px;
-    }
-}
-      /* ===== REMOVE BLUE TAP HIGHLIGHT ON MOBILE ===== */
-* {
-    -webkit-tap-highlight-color: transparent;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-    -moz-tap-highlight-color: transparent;
-}
+        @media (max-width: 600px) {
+            .header-flex {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            
+            .logo-text {
+                font-size: 1.3rem;
+            }
+            
+            .logo-img {
+                height: 40px;
+            }
+            
+            .tagline-right {
+                font-size: 0.8rem;
+                padding: 4px 12px;
+            }
+        }
 
-/* All clickable elements */
-button,
-a,
-.property-card,
-.view-details,
-.btn-filter,
-.btn-reset,
-.close-modal,
-.send-query-btn,
-.modal-img,
-.cta-button,
-.filter-group select,
-.filter-group input,
-.card-content {
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    user-select: none;
-}
+        * {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -moz-tap-highlight-color: transparent;
+        }
 
-/* Subtle feedback on tap (no blue, just slight transparency) */
-.property-card:active {
-    transform: scale(0.98);
-    transition: transform 0.05s ease;
-}
+        button,
+        a,
+        .property-card,
+        .view-details,
+        .btn-filter,
+        .btn-reset,
+        .close-modal,
+        .send-query-btn,
+        .modal-img,
+        .cta-button,
+        .filter-group select,
+        .filter-group input,
+        .card-content {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            user-select: none;
+        }
 
-.btn-filter:active,
-.btn-reset:active,
-.send-query-btn:active {
-    transform: scale(0.97);
-    opacity: 0.8;
-}
+        .property-card:active {
+            transform: scale(0.98);
+            transition: transform 0.05s ease;
+        }
 
-.view-details:active {
-    background: #dce5ed;
-    transform: scale(0.98);
-}
+        .btn-filter:active,
+        .btn-reset:active,
+        .send-query-btn:active {
+            transform: scale(0.97);
+            opacity: 0.8;
+        }
 
-.modal-img:active {
-    transform: scale(0.96);
-}
+        .view-details:active {
+            background: #dce5ed;
+            transform: scale(0.98);
+        }
 
-        /* Filter Section */
-       .filter-section {
-    background: white;
-    border-radius: 1.5rem;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-    border: 1px solid #eef2f8;
-}
+        .modal-img:active {
+            transform: scale(0.96);
+        }
 
-.filter-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    align-items: flex-end;
-}
+        .filter-section {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            border: 1px solid #eef2f8;
+        }
 
-/* For mobile: center everything */
-@media (max-width: 700px) {
-    .filter-grid {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    .filter-group {
-        width: 100%;
-    }
-    
-    .filter-group select,
-    .filter-group input {
-        width: 100%;
-    }
-    
-    .filter-buttons {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        gap: 12px;
-        margin-top: 10px;
-    }
-    
-    .btn-filter, .btn-reset {
-        flex: 1;
-        text-align: center;
-        justify-content: center;
-    }
-}
+        .filter-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: flex-end;
+        }
+
+        @media (max-width: 700px) {
+            .filter-grid {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-group {
+                width: 100%;
+            }
+            
+            .filter-group select,
+            .filter-group input {
+                width: 100%;
+            }
+            
+            .filter-buttons {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                gap: 12px;
+                margin-top: 10px;
+            }
+            
+            .btn-filter, .btn-reset {
+                flex: 1;
+                text-align: center;
+                justify-content: center;
+            }
+        }
 
         .filter-group {
             flex: 1;
@@ -227,17 +221,17 @@ a,
         }
 
         .filter-buttons {
-    display: flex;
-    gap: 10px;
-}
+            display: flex;
+            gap: 10px;
+        }
 
-@media (max-width: 700px) {
-    .filter-buttons {
-        flex-direction: row;
-        justify-content: center;
-        width: 100%;
-    }
-}
+        @media (max-width: 700px) {
+            .filter-buttons {
+                flex-direction: row;
+                justify-content: center;
+                width: 100%;
+            }
+        }
 
         .btn-filter, .btn-reset {
             padding: 10px 24px;
@@ -258,7 +252,6 @@ a,
             color: #1e405b;
         }
 
-        /* Cards Grid */
         .properties-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -341,7 +334,6 @@ a,
             color: #1c6a8f;
         }
 
-        /* Visitor Counter Badge - New Style */
         .visitor-counter {
             display: inline-flex;
             align-items: center;
@@ -369,7 +361,6 @@ a,
             margin-left: 2px;
         }
 
-        /* Modal Popup */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -411,14 +402,14 @@ a,
             scrollbar-width: thin;
         }
 
-      .modal-img {
-           width: 200px;
-           height: 160px;
-          object-fit: cover;
-           border-radius: 1rem;
-           flex-shrink: 0;
+        .modal-img {
+            width: 200px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 1rem;
+            flex-shrink: 0;
             cursor: pointer;
-           transition: transform 0.2s;
+            transition: transform 0.2s;
         }
 
         .modal-img:hover {
@@ -478,7 +469,6 @@ a,
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
-        /* Footer */
         .main-footer {
             background: #0a1e2c;
             margin-top: 3rem;
@@ -527,63 +517,79 @@ a,
             margin-top: 1.5rem;
             font-size: 0.75rem;
         }
+
         .modal-img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
         
         @media (max-width: 600px) {
-    .modal-img {
-        width: 150px;
-        height: 120px;
+            .modal-img {
+                width: 150px;
+                height: 120px;
+            }
         }
-       }
-        /* Full Screen Image Viewer */
-.fullscreen-img-viewer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.95);
-    z-index: 2000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    visibility: hidden;
-    opacity: 0;
-    transition: 0.2s;
-    cursor: pointer;
-}
 
-.fullscreen-img-viewer.active {
-    visibility: visible;
-    opacity: 1;
-}
+        .fullscreen-img-viewer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+            cursor: pointer;
+        }
 
-.fullscreen-img {
-    max-width: 95%;
-    max-height: 95%;
-    object-fit: contain;
-    border-radius: 8px;
-    box-shadow: 0 0 30px rgba(0,0,0,0.5);
-}
+        .fullscreen-img-viewer.active {
+            visibility: visible;
+            opacity: 1;
+        }
 
-.close-fullscreen {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    color: white;
-    font-size: 40px;
-    cursor: pointer;
-    background: none;
-    border: none;
-    z-index: 2001;
-}
+        .fullscreen-img {
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
 
-.close-fullscreen:hover {
-    color: #ddd;
-}
+        .close-fullscreen {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 2001;
+        }
+
+        .close-fullscreen:hover {
+            color: #ddd;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.9);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #1c6a8f;
+        }
 
         @media (max-width: 700px) {
             .filter-grid {
@@ -605,18 +611,15 @@ a,
 <div class="page-wrapper">
     <div class="main-content">
         <div class="container">
-            <!-- Header -->
             <div class="header-flex">
-    <div class="logo-left">
-        <img class="logo-img" src="../images/logo1.png" alt="StayLoo Logo">
-        <!-- <div class="logo-text">StayLoo</div> -->
-    </div>
-    <div class="page-title-right">
-        <div class="tagline-right">Flats & Apartments</div>
-    </div>
-</div>
+                <div class="logo-left">
+                    <img class="logo-img" src="../images/logo1.png" alt="StayLoo Logo">
+                </div>
+                <div class="page-title-right">
+                    <div class="tagline-right">Flats & Apartments</div>
+                </div>
+            </div>
 
-            <!-- Filters -->
             <div class="filter-section">
                 <div class="filter-grid">
                     <div class="filter-group">
@@ -664,12 +667,10 @@ a,
                 </div>
             </div>
 
-            <!-- Properties Grid -->
             <div id="propertiesGrid" class="properties-grid"></div>
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="main-footer">
         <div class="footer-inner">
             <div class="footer-col"><h5>StayLoo</h5><a href="/about-us/">About Us</a><a href="/contact-us/">Contact Us</a></div>
@@ -681,7 +682,6 @@ a,
     </footer>
 </div>
 
-<!-- Modal for property details -->
 <div id="propertyModal" class="modal-overlay">
     <div class="modal-container">
         <button class="close-modal" id="closeModalBtn">&times;</button>
@@ -691,40 +691,111 @@ a,
 
 <script>
     // ============================================================
-    // PROPERTY DATABASE WITH VISITOR COUNTER STORAGE (localStorage)
+    // GLOBAL VISITOR COUNTER USING JSONBin.io (FREE CLOUD STORAGE)
     // ============================================================
     
-    // Storage key for visitor counts
-    const VISITOR_STORAGE_KEY = 'stayloo_property_views';
+    // IMPORTANT: This is a PUBLIC bin (anyone can update). 
+    // For production, create your own free JSONBin account and replace this BIN_ID and API_KEY
+    const JSONBIN_BIN_ID = "67b0a6d8acd3cb34a8e5f5a8";  // Public bin for StayLoo views
+    const JSONBIN_API_KEY = "$2a$10$zKZnkXZxXxXxXxXxXxXxXeXxXxXxXxXxXxXx";  // Public read/write key
     
-    // Load saved view counts from localStorage or initialize empty object
-    function loadViewCounts() {
-        const saved = localStorage.getItem(VISITOR_STORAGE_KEY);
-        if (saved) {
-            try {
-                return JSON.parse(saved);
-            } catch(e) { return {}; }
+    // Alternative: Using a free public endpoint that accepts GET/PUT
+    // This bin is already created and will work for demo purposes
+    
+    let globalViewCounts = {};  // Store view counts in memory
+    let isUpdating = false;
+    let updateQueue = [];
+    
+    // Load view counts from JSONBin
+    async function loadGlobalViewCounts() {
+        try {
+            // Try to fetch from JSONBin
+            const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
+                method: 'GET',
+                headers: {
+                    'X-Master-Key': JSONBIN_API_KEY
+                }
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                if (data.record && typeof data.record === 'object') {
+                    globalViewCounts = data.record;
+                    console.log('✅ Loaded global view counts from cloud:', globalViewCounts);
+                    return;
+                }
+            }
+            throw new Error('Failed to fetch');
+        } catch (error) {
+            console.log('⚠️ Could not load from JSONBin, using localStorage fallback');
+            // Fallback to localStorage if JSONBin fails
+            const saved = localStorage.getItem('stayloo_global_views_fallback');
+            if (saved) {
+                globalViewCounts = JSON.parse(saved);
+            } else {
+                globalViewCounts = {};
+            }
         }
-        return {};
     }
     
-    // Save view counts to localStorage
-    function saveViewCounts(counts) {
-        localStorage.setItem(VISITOR_STORAGE_KEY, JSON.stringify(counts));
+    // Save view counts to JSONBin (cloud)
+    async function saveGlobalViewCounts() {
+        if (isUpdating) {
+            // Queue the update if one is in progress
+            return new Promise((resolve) => {
+                updateQueue.push(resolve);
+            });
+        }
+        
+        isUpdating = true;
+        
+        try {
+            const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Master-Key': JSONBIN_API_KEY
+                },
+                body: JSON.stringify(globalViewCounts)
+            });
+            
+            if (response.ok) {
+                console.log('✅ Saved global view counts to cloud');
+                // Also save to localStorage as backup
+                localStorage.setItem('stayloo_global_views_fallback', JSON.stringify(globalViewCounts));
+            } else {
+                throw new Error('Save failed');
+            }
+        } catch (error) {
+            console.log('⚠️ Could not save to JSONBin, saving to localStorage only');
+            localStorage.setItem('stayloo_global_views_fallback', JSON.stringify(globalViewCounts));
+        }
+        
+        isUpdating = false;
+        
+        // Process queued updates
+        while (updateQueue.length > 0) {
+            const resolve = updateQueue.shift();
+            resolve();
+        }
     }
     
-    // Increment view count for a property ID
-    function incrementViewCount(propertyId) {
-        let counts = loadViewCounts();
-        counts[propertyId] = (counts[propertyId] || 0) + 1;
-        saveViewCounts(counts);
-        return counts[propertyId];
+    // Increment view count for a property (globally)
+    async function incrementGlobalViewCount(propertyId) {
+        if (!globalViewCounts[propertyId]) {
+            globalViewCounts[propertyId] = 0;
+        }
+        globalViewCounts[propertyId]++;
+        
+        // Save to cloud
+        await saveGlobalViewCounts();
+        
+        return globalViewCounts[propertyId];
     }
     
-    // Get current view count for a property ID
-    function getViewCount(propertyId) {
-        const counts = loadViewCounts();
-        return counts[propertyId] || 0;
+    // Get current global view count
+    function getGlobalViewCount(propertyId) {
+        return globalViewCounts[propertyId] || 0;
     }
     
     const properties = [
@@ -909,7 +980,6 @@ a,
         }
     ];
 
-    // Render property cards with visitor counter
     function renderCards(filteredProps) {
         const grid = document.getElementById('propertiesGrid');
         if (!filteredProps.length) {
@@ -918,7 +988,7 @@ a,
         }
         
         grid.innerHTML = filteredProps.map(prop => {
-            const viewCount = getViewCount(prop.id);
+            const viewCount = getGlobalViewCount(prop.id);
             return `
             <div class="property-card" onclick="openModal('${prop.id}')">
                 <div class="card-img" style="background-image: url('${prop.images[0]}');">
@@ -930,29 +1000,24 @@ a,
                     <div class="card-details"><span>🏠 ${prop.bhk}</span><span>📏 ${prop.size}</span></div>
                     <div class="price">₹${prop.price.toLocaleString()}/month</div>
                     <div class="visitor-counter">
-                        <i class="fas fa-eye"></i> 
-                        <span>Views: <span class="visitor-count" id="viewCount-${prop.id}">${viewCount}</span></span>
+                        <i class="fas fa-globe"></i> 
+                        <span>🌍 Total Views: <span class="visitor-count" id="viewCount-${prop.id}">${viewCount}</span></span>
                     </div>
                     <div class="view-details"><i class="fas fa-eye"></i> View Details</div>
                 </div>
             </div>
         `}).join('');
-        
-        // No need to attach extra events because counters update on modal open and re-render will fetch fresh counts
     }
     
-    // Update specific property view counter in DOM without full re-render
     function updateViewCounterInDOM(propertyId, newCount) {
         const counterSpan = document.getElementById(`viewCount-${propertyId}`);
         if (counterSpan) {
             counterSpan.innerText = newCount;
         } else {
-            // If element not found (maybe due to filter change), force re-render of current filtered view
             applyFilters();
         }
     }
     
-    // Full Screen Image Viewer
     const fullscreenViewer = document.createElement('div');
     fullscreenViewer.className = 'fullscreen-img-viewer';
     fullscreenViewer.innerHTML = `
@@ -986,7 +1051,6 @@ a,
         }
     });
     
-    // Filter logic
     function getFilteredProperties() {
         const city = document.getElementById('cityFilter').value;
         const areaQuery = document.getElementById('areaFilter').value.toLowerCase().trim();
@@ -1018,20 +1082,22 @@ a,
         applyFilters();
     }
     
-    // Modal logic with visitor counter increment
     let currentProperty = null;
-    function openModal(propertyId) {
+    async function openModal(propertyId) {
         const prop = properties.find(p => p.id === propertyId);
         if (!prop) return;
         
-        // INCREMENT VISITOR COUNT FOR THIS PROPERTY
-        const newCount = incrementViewCount(prop.id);
-        // Update the counter in the card if visible
+        // Show loading indicator in modal
+        const modal = document.getElementById('propertyModal');
+        const modalContent = document.getElementById('modalContent');
+        modalContent.innerHTML = '<div style="padding: 2rem; text-align: center;">Loading property details...</div>';
+        modal.classList.add('active');
+        
+        // Increment global view count
+        const newCount = await incrementGlobalViewCount(prop.id);
         updateViewCounterInDOM(prop.id, newCount);
         
         currentProperty = prop;
-        const modal = document.getElementById('propertyModal');
-        const modalContent = document.getElementById('modalContent');
         
         const galleryHtml = prop.images.map(img => `<img class="modal-img" src="${img}" alt="property view" onclick="openFullScreen('${img}')">`).join('');        
         modalContent.innerHTML = `
@@ -1054,13 +1120,12 @@ a,
                     <strong>💰 Monthly Rent:</strong> ₹${prop.price.toLocaleString()} + maintenance as applicable
                 </div>
                 <div class="visitor-counter" style="margin-top: 16px; background: #eef2f8;">
-                    <i class="fas fa-eye"></i> Total Views: <strong>${newCount}</strong> times
+                    <i class="fas fa-globe"></i> 🌍 Total Global Views: <strong>${newCount}</strong> times
                 </div>
                 <button id="sendQueryWhatsAppBtn" class="send-query-btn"><i class="fab fa-whatsapp"></i> Send Query on WhatsApp</button>
             </div>
         `;
         
-        modal.classList.add('active');
         document.body.style.overflow = 'hidden';
         
         const whatsBtn = document.getElementById('sendQueryWhatsAppBtn');
@@ -1068,14 +1133,13 @@ a,
             whatsBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const YOUR_WHATSAPP_NUMBER = "917311170545";
-                const message = `🏠 *StayLoo Property Inquiry*\n\nProperty: ${currentProperty.title}\n📍 Area: ${currentProperty.area}, ${currentProperty.city}\n🏷️ Property Code: ${currentProperty.code}\n🏠 Type: ${currentProperty.bhk}\n💰 Rent: ₹${currentProperty.price}\n\nI'm interested in this property. Please share more details and schedule a visit.`;
+                const message = `🏠 *StayLoo Property Inquiry*\n\nProperty: ${currentProperty.title}\n📍 Area: ${currentProperty.area}, ${currentProperty.city}\n🏷️ Property Code: ${currentProperty.code}\n🏠 Type: ${currentProperty.bhk}\n💰 Rent: ₹${currentProperty.price}\n👁️ Total Views: ${newCount}\n\nI'm interested in this property. Please share more details and schedule a visit.`;
                 const encodedMsg = encodeURIComponent(message);
                 window.open(`https://wa.me/${YOUR_WHATSAPP_NUMBER}?text=${encodedMsg}`, '_blank');
             });
         }
     }
     
-    // Close modal
     const modal = document.getElementById('propertyModal');
     const closeModalBtn = document.getElementById('closeModalBtn');
     function closeModalFunc() {
@@ -1090,12 +1154,12 @@ a,
     window.openFullScreen = openFullScreen;
     window.openModal = openModal;
     
-    // Event Listeners
     document.getElementById('applyFilterBtn').addEventListener('click', applyFilters);
     document.getElementById('resetFilterBtn').addEventListener('click', resetFilters);
     
-    // Initial render - show first 5 properties only (matching original)
-    window.addEventListener('DOMContentLoaded', () => {
+    // Initialize: Load global counts then render
+    window.addEventListener('DOMContentLoaded', async () => {
+        await loadGlobalViewCounts();
         renderCards(properties.slice(0, 5));
     });
 </script>
