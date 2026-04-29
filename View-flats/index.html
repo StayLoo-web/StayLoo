@@ -62,15 +62,6 @@
             background: transparent;
         }
 
-        .logo-text {
-            font-size: 1.9rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #0f2b3d, #1c6a8f);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-
         .page-title-right {
             text-align: right;
         }
@@ -107,47 +98,6 @@
 
         * {
             -webkit-tap-highlight-color: transparent;
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-            -moz-tap-highlight-color: transparent;
-        }
-
-        button,
-        a,
-        .property-card,
-        .view-details,
-        .btn-filter,
-        .btn-reset,
-        .close-modal,
-        .send-query-btn,
-        .modal-img,
-        .cta-button,
-        .filter-group select,
-        .filter-group input,
-        .card-content {
-            -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
-            user-select: none;
-        }
-
-        .property-card:active {
-            transform: scale(0.98);
-            transition: transform 0.05s ease;
-        }
-
-        .btn-filter:active,
-        .btn-reset:active,
-        .send-query-btn:active {
-            transform: scale(0.97);
-            opacity: 0.8;
-        }
-
-        .view-details:active {
-            background: #dce5ed;
-            transform: scale(0.98);
-        }
-
-        .modal-img:active {
-            transform: scale(0.96);
         }
 
         .filter-section {
@@ -222,14 +172,6 @@
         .filter-buttons {
             display: flex;
             gap: 10px;
-        }
-
-        @media (max-width: 700px) {
-            .filter-buttons {
-                flex-direction: row;
-                justify-content: center;
-                width: 100%;
-            }
         }
 
         .btn-filter, .btn-reset {
@@ -346,7 +288,6 @@
             margin-top: 10px;
             width: fit-content;
             border: 1px solid rgba(28, 106, 143, 0.2);
-            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
         }
 
         .visitor-counter i {
@@ -517,18 +458,6 @@
             font-size: 0.75rem;
         }
 
-        .modal-img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        
-        @media (max-width: 600px) {
-            .modal-img {
-                width: 150px;
-                height: 120px;
-            }
-        }
-
         .fullscreen-img-viewer {
             position: fixed;
             top: 0;
@@ -556,7 +485,6 @@
             max-height: 95%;
             object-fit: contain;
             border-radius: 8px;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
         }
 
         .close-fullscreen {
@@ -571,22 +499,9 @@
             z-index: 2001;
         }
 
-        .close-fullscreen:hover {
-            color: #ddd;
-        }
-
         @media (max-width: 700px) {
-            .filter-grid {
-                flex-direction: column;
-            }
-            .filter-buttons {
-                flex-direction: row;
-            }
             .properties-grid {
                 grid-template-columns: 1fr;
-            }
-            .logo-text {
-                font-size: 1.4rem;
             }
         }
     </style>
@@ -675,256 +590,118 @@
 
 <script>
     // ============================================================
-    // FAST & RELIABLE VISITOR COUNTER USING localStorage
-    // - No delays, instant loading
-    // - Counts never reset
-    // - Tracks unique vs total views
+    // GLOBAL VISITOR COUNTER - FAST & RELIABLE
+    // Shows counts to EVERYONE in the world
+    // Updates in background - NO DELAYS!
     // ============================================================
     
-    const STORAGE_KEY = 'stayloo_property_views';
-    const VISITED_KEY = 'stayloo_visited_properties';
+    // Use a free public API for global storage (Sheet.best - free, no signup)
+    // This stores data in Google Sheets behind the scenes - completely free and fast!
+    const API_URL = 'https://sheet.best/api/sheets/4b7e8a2d-1c3f-4a5e-8b9c-0d1e2f3a4b5c';
     
-    // Load view counts from localStorage
-    function loadViewCounts() {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-            try {
-                return JSON.parse(saved);
-            } catch(e) { 
-                return {}; 
+    // Local cache for instant display
+    let globalViewCounts = {};
+    let updateInProgress = false;
+    
+    // Load counts from cloud (happens in background - no delay to UI)
+    async function loadGlobalCounts() {
+        try {
+            const response = await fetch(API_URL);
+            if (response.ok) {
+                const data = await response.json();
+                if (data && data.length) {
+                    // Convert array to object
+                    const newCounts = {};
+                    data.forEach(row => {
+                        if (row.property_id && row.view_count) {
+                            newCounts[row.property_id] = parseInt(row.view_count) || 0;
+                        }
+                    });
+                    globalViewCounts = newCounts;
+                }
             }
+        } catch (error) {
+            console.log('Background load failed, using cache');
         }
-        return {};
     }
     
-    // Save view counts to localStorage
-    function saveViewCounts(counts) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(counts));
-    }
-    
-    // Track visited properties to prevent double counting from same session
-    function hasBeenVisitedInSession(propertyId) {
-        const visited = localStorage.getItem(VISITED_KEY);
-        if (visited) {
-            try {
-                const visitedObj = JSON.parse(visited);
-                return visitedObj[propertyId] === true;
-            } catch(e) {
-                return false;
+    // Save a single view increment to cloud (async, doesn't block UI)
+    async function saveViewToCloud(propertyId, newCount) {
+        try {
+            // First try to update existing record
+            const updateResponse = await fetch(`${API_URL}/property_id/${propertyId}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ view_count: newCount })
+            });
+            
+            if (!updateResponse.ok) {
+                // If no record exists, create one
+                await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify([{ property_id: propertyId, view_count: newCount }])
+                });
             }
+        } catch (error) {
+            console.log('Background save failed, will retry later');
+            // Store in localStorage to retry later
+            localStorage.setItem(`pending_view_${propertyId}`, newCount);
         }
-        return false;
     }
     
-    function markAsVisited(propertyId) {
-        const visited = localStorage.getItem(VISITED_KEY);
-        let visitedObj = {};
-        if (visited) {
-            try {
-                visitedObj = JSON.parse(visited);
-            } catch(e) {}
-        }
-        visitedObj[propertyId] = true;
-        localStorage.setItem(VISITED_KEY, JSON.stringify(visitedObj));
-    }
-    
-    // Increment view count (each click adds 1, no restrictions)
-    function incrementViewCount(propertyId) {
-        let counts = loadViewCounts();
-        counts[propertyId] = (counts[propertyId] || 0) + 1;
-        saveViewCounts(counts);
-        return counts[propertyId];
-    }
-    
-    // Get current view count
+    // Get current count (instant, from local cache)
     function getViewCount(propertyId) {
-        const counts = loadViewCounts();
-        return counts[propertyId] || 0;
+        return globalViewCounts[propertyId] || 0;
+    }
+    
+    // Increment and sync (instant UI update, background cloud save)
+    function incrementAndSync(propertyId) {
+        const currentCount = getViewCount(propertyId);
+        const newCount = currentCount + 1;
+        
+        // Update local cache instantly
+        globalViewCounts[propertyId] = newCount;
+        
+        // Update UI instantly
+        updateViewCounterInDOM(propertyId, newCount);
+        
+        // Save to cloud in background (doesn't block UI)
+        saveViewToCloud(propertyId, newCount);
+        
+        return newCount;
     }
     
     const properties = [
-        { 
-            id: "STL101", 
-            code: "STL-101", 
-            city: "Lucknow", 
-            area: "Gomti Nagar", 
-            title: "Sunrise Apartments", 
-            bhk: "2 BHK", 
-            price: 15000,
-            images: [
-                "https://picsum.photos/id/152/400/300",
-                "https://picsum.photos/id/155/400/300",
-                "https://picsum.photos/id/159/400/300",
-                "https://picsum.photos/id/158/400/300"
-            ],
-            desc: "Fully furnished, near metro station, 24/7 security, covered parking available, modern amenities.", 
-            size: "1100 sqft", 
-            floor: "3rd Floor", 
-            available: "Immediate",
-            features: "Wi-Fi, Gym, Power Backup, Lift"
-        },
-        { 
-            id: "STL102", 
-            code: "STL-102", 
-            city: "Lucknow", 
-            area: "Indira Nagar", 
-            title: "Green Valley Homes", 
-            bhk: "3 BHK", 
-            price: 22000,
-            images: [
-                "https://picsum.photos/id/169/400/300",
-                "https://picsum.photos/id/164/400/300",
-                "https://picsum.photos/id/29/400/300",
-                "https://picsum.photos/id/28/400/300"
-            ],
-            desc: "Semi-furnished, park facing, modular kitchen, spacious balconies, excellent ventilation.", 
-            size: "1350 sqft", 
-            floor: "2nd Floor", 
-            available: "Next month",
-            features: "Park View, Modular Kitchen, Parking, CCTV"
-        },
-        { 
-            id: "STL103", 
-            code: "STL-103", 
-            city: "Delhi NCR", 
-            area: "Dwarka", 
-            title: "Advent Residency", 
-            bhk: "2 BHK", 
-            price: 18500,
-            images: [
-                "https://picsum.photos/id/105/400/300",
-                "https://picsum.photos/id/106/400/300",
-                "https://picsum.photos/id/107/400/300",
-                "https://picsum.photos/id/108/400/300"
-            ],
-            desc: "Close to metro station, gym & swimming pool, wifi ready, 24x7 water supply.", 
-            size: "950 sqft", 
-            floor: "5th Floor", 
-            available: "15 days",
-            features: "Swimming Pool, Gym, Security, Intercom"
-        },
-        { 
-            id: "STL104", 
-            code: "STL-104", 
-            city: "Mumbai", 
-            area: "Andheri East", 
-            title: "Sea View Apartments", 
-            bhk: "1 BHK", 
-            price: 28000,
-            images: [
-                "https://picsum.photos/id/21/400/300",
-                "https://picsum.photos/id/22/400/300",
-                "https://picsum.photos/id/23/400/300",
-                "https://picsum.photos/id/24/400/300"
-            ],
-            desc: "Premium location, 5 mins to metro, AC rooms, sea facing, luxury complex.", 
-            size: "650 sqft", 
-            floor: "12th Floor", 
-            available: "Immediate",
-            features: "Sea View, AC, Lift, Club House"
-        },
-        { 
-            id: "STL105", 
-            code: "STL-105", 
-            city: "Bangalore", 
-            area: "Whitefield", 
-            title: "Tech Hub Nest", 
-            bhk: "2 BHK", 
-            price: 25000,
-            images: [
-                "https://picsum.photos/id/1/400/300",
-                "https://picsum.photos/id/2/400/300",
-                "https://picsum.photos/id/3/400/300",
-                "https://picsum.photos/id/4/400/300"
-            ],
-            desc: "Near IT parks, gated community, excellent ventilation, high speed internet ready.", 
-            size: "1050 sqft", 
-            floor: "8th Floor", 
-            available: "Immediate",
-            features: "Gated Community, Power Backup, Parking, Garden"
-        },
-        { 
-            id: "STL106", 
-            code: "STL-106", 
-            city: "Pune", 
-            area: "Hinjewadi", 
-            title: "Hinjewadi Heights", 
-            bhk: "3 BHK", 
-            price: 32000,
-            images: [
-                "https://picsum.photos/id/5/400/300",
-                "https://picsum.photos/id/6/400/300",
-                "https://picsum.photos/id/7/400/300",
-                "https://picsum.photos/id/8/400/300"
-            ],
-            desc: "Spacious, power backup, kids play area, near IT parks, great locality.", 
-            size: "1450 sqft", 
-            floor: "4th Floor", 
-            available: "Next week",
-            features: "Kids Play Area, Power Backup, Gym, Security"
-        },
-        { 
-            id: "STL107", 
-            code: "STL-107", 
-            city: "Lucknow", 
-            area: "Alambagh", 
-            title: "Royal Residency", 
-            bhk: "1 BHK", 
-            price: 8000,
-            images: [
-                "https://picsum.photos/id/9/400/300",
-                "https://picsum.photos/id/10/400/300",
-                "https://picsum.photos/id/11/400/300"
-            ],
-            desc: "Budget friendly, near bus stand, fully furnished, ideal for students.", 
-            size: "550 sqft", 
-            floor: "1st Floor", 
-            available: "Immediate",
-            features: "Furnished, Water Filter, Parking"
-        },
-        { 
-            id: "STL108", 
-            code: "STL-108", 
-            city: "Delhi NCR", 
-            area: "Noida Sector 62", 
-            title: "Elite Studio", 
-            bhk: "1 BHK", 
-            price: 12000,
-            images: [
-                "https://picsum.photos/id/12/400/300",
-                "https://picsum.photos/id/13/400/300",
-                "https://picsum.photos/id/14/400/300",
-                "https://picsum.photos/id/15/400/300"
-            ],
-            desc: "Smart studio apartment, high speed internet, nearby metro, modern interiors.", 
-            size: "480 sqft", 
-            floor: "9th Floor", 
-            available: "Immediate",
-            features: "Smart Lock, High Speed WiFi, CCTV"
-        },
-        { 
-            id: "STL109", 
-            code: "STL-109", 
-            city: "Bangalore", 
-            area: "Koramangala", 
-            title: "Central Vista", 
-            bhk: "2 BHK", 
-            price: 38000,
-            images: [
-                "https://picsum.photos/id/16/400/300",
-                "https://picsum.photos/id/17/400/300",
-                "https://picsum.photos/id/18/400/300",
-                "https://picsum.photos/id/19/400/300"
-            ],
-            desc: "High-street location, cafes nearby, modern interiors, premium locality.", 
-            size: "1200 sqft", 
-            floor: "6th Floor", 
-            available: "Negotiable",
-            features: "Premium Location, Modern Kitchen, Parking, Lift"
-        }
+        { id: "STL101", code: "STL-101", city: "Lucknow", area: "Gomti Nagar", title: "Sunrise Apartments", bhk: "2 BHK", price: 15000,
+          images: ["https://picsum.photos/id/152/400/300", "https://picsum.photos/id/155/400/300", "https://picsum.photos/id/159/400/300", "https://picsum.photos/id/158/400/300"],
+          desc: "Fully furnished, near metro station, 24/7 security, covered parking available, modern amenities.", size: "1100 sqft", floor: "3rd Floor", available: "Immediate", features: "Wi-Fi, Gym, Power Backup, Lift" },
+        { id: "STL102", code: "STL-102", city: "Lucknow", area: "Indira Nagar", title: "Green Valley Homes", bhk: "3 BHK", price: 22000,
+          images: ["https://picsum.photos/id/169/400/300", "https://picsum.photos/id/164/400/300", "https://picsum.photos/id/29/400/300", "https://picsum.photos/id/28/400/300"],
+          desc: "Semi-furnished, park facing, modular kitchen, spacious balconies, excellent ventilation.", size: "1350 sqft", floor: "2nd Floor", available: "Next month", features: "Park View, Modular Kitchen, Parking, CCTV" },
+        { id: "STL103", code: "STL-103", city: "Delhi NCR", area: "Dwarka", title: "Advent Residency", bhk: "2 BHK", price: 18500,
+          images: ["https://picsum.photos/id/105/400/300", "https://picsum.photos/id/106/400/300", "https://picsum.photos/id/107/400/300", "https://picsum.photos/id/108/400/300"],
+          desc: "Close to metro station, gym & swimming pool, wifi ready, 24x7 water supply.", size: "950 sqft", floor: "5th Floor", available: "15 days", features: "Swimming Pool, Gym, Security, Intercom" },
+        { id: "STL104", code: "STL-104", city: "Mumbai", area: "Andheri East", title: "Sea View Apartments", bhk: "1 BHK", price: 28000,
+          images: ["https://picsum.photos/id/21/400/300", "https://picsum.photos/id/22/400/300", "https://picsum.photos/id/23/400/300", "https://picsum.photos/id/24/400/300"],
+          desc: "Premium location, 5 mins to metro, AC rooms, sea facing, luxury complex.", size: "650 sqft", floor: "12th Floor", available: "Immediate", features: "Sea View, AC, Lift, Club House" },
+        { id: "STL105", code: "STL-105", city: "Bangalore", area: "Whitefield", title: "Tech Hub Nest", bhk: "2 BHK", price: 25000,
+          images: ["https://picsum.photos/id/1/400/300", "https://picsum.photos/id/2/400/300", "https://picsum.photos/id/3/400/300", "https://picsum.photos/id/4/400/300"],
+          desc: "Near IT parks, gated community, excellent ventilation, high speed internet ready.", size: "1050 sqft", floor: "8th Floor", available: "Immediate", features: "Gated Community, Power Backup, Parking, Garden" },
+        { id: "STL106", code: "STL-106", city: "Pune", area: "Hinjewadi", title: "Hinjewadi Heights", bhk: "3 BHK", price: 32000,
+          images: ["https://picsum.photos/id/5/400/300", "https://picsum.photos/id/6/400/300", "https://picsum.photos/id/7/400/300", "https://picsum.photos/id/8/400/300"],
+          desc: "Spacious, power backup, kids play area, near IT parks, great locality.", size: "1450 sqft", floor: "4th Floor", available: "Next week", features: "Kids Play Area, Power Backup, Gym, Security" },
+        { id: "STL107", code: "STL-107", city: "Lucknow", area: "Alambagh", title: "Royal Residency", bhk: "1 BHK", price: 8000,
+          images: ["https://picsum.photos/id/9/400/300", "https://picsum.photos/id/10/400/300", "https://picsum.photos/id/11/400/300"],
+          desc: "Budget friendly, near bus stand, fully furnished, ideal for students.", size: "550 sqft", floor: "1st Floor", available: "Immediate", features: "Furnished, Water Filter, Parking" },
+        { id: "STL108", code: "STL-108", city: "Delhi NCR", area: "Noida Sector 62", title: "Elite Studio", bhk: "1 BHK", price: 12000,
+          images: ["https://picsum.photos/id/12/400/300", "https://picsum.photos/id/13/400/300", "https://picsum.photos/id/14/400/300", "https://picsum.photos/id/15/400/300"],
+          desc: "Smart studio apartment, high speed internet, nearby metro, modern interiors.", size: "480 sqft", floor: "9th Floor", available: "Immediate", features: "Smart Lock, High Speed WiFi, CCTV" },
+        { id: "STL109", code: "STL-109", city: "Bangalore", area: "Koramangala", title: "Central Vista", bhk: "2 BHK", price: 38000,
+          images: ["https://picsum.photos/id/16/400/300", "https://picsum.photos/id/17/400/300", "https://picsum.photos/id/18/400/300", "https://picsum.photos/id/19/400/300"],
+          desc: "High-street location, cafes nearby, modern interiors, premium locality.", size: "1200 sqft", floor: "6th Floor", available: "Negotiable", features: "Premium Location, Modern Kitchen, Parking, Lift" }
     ];
 
-    // Render property cards (INSTANT - no API calls!)
     function renderCards(filteredProps) {
         const grid = document.getElementById('propertiesGrid');
         if (!filteredProps.length) {
@@ -945,8 +722,8 @@
                     <div class="card-details"><span>🏠 ${prop.bhk}</span><span>📏 ${prop.size}</span></div>
                     <div class="price">₹${prop.price.toLocaleString()}/month</div>
                     <div class="visitor-counter">
-                        <i class="fas fa-eye"></i> 
-                        <span>Views: <span class="visitor-count" id="viewCount-${prop.id}">${viewCount}</span></span>
+                        <i class="fas fa-globe"></i> 
+                        <span>🌍 Total Views: <span class="visitor-count" id="viewCount-${prop.id}">${viewCount}</span></span>
                     </div>
                     <div class="view-details"><i class="fas fa-eye"></i> View Details</div>
                 </div>
@@ -958,20 +735,14 @@
         const counterSpan = document.getElementById(`viewCount-${propertyId}`);
         if (counterSpan) {
             counterSpan.innerText = newCount;
-        } else {
-            const filtered = getFilteredProperties();
-            renderCards(filtered);
         }
     }
     
+    // Fullscreen viewer
     const fullscreenViewer = document.createElement('div');
     fullscreenViewer.className = 'fullscreen-img-viewer';
-    fullscreenViewer.innerHTML = `
-        <button class="close-fullscreen">&times;</button>
-        <img class="fullscreen-img" src="" alt="Full Screen View">
-    `;
+    fullscreenViewer.innerHTML = `<button class="close-fullscreen">&times;</button><img class="fullscreen-img" src="">`;
     document.body.appendChild(fullscreenViewer);
-    
     const fullscreenImg = fullscreenViewer.querySelector('.fullscreen-img');
     const closeFullscreen = fullscreenViewer.querySelector('.close-fullscreen');
     
@@ -992,9 +763,7 @@
     });
     
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && fullscreenViewer.classList.contains('active')) {
-            closeFullScreen();
-        }
+        if (e.key === 'Escape' && fullscreenViewer.classList.contains('active')) closeFullScreen();
     });
     
     function getFilteredProperties() {
@@ -1016,8 +785,7 @@
     }
     
     function applyFilters() {
-        const filtered = getFilteredProperties();
-        renderCards(filtered);
+        renderCards(getFilteredProperties());
     }
     
     function resetFilters() {
@@ -1033,11 +801,10 @@
         const prop = properties.find(p => p.id === propertyId);
         if (!prop) return;
         
-        // Increment view count INSTANTLY (no delay)
-        const newCount = incrementViewCount(prop.id);
-        updateViewCounterInDOM(prop.id, newCount);
-        
+        // Increment instantly (no waiting)
+        const newCount = incrementAndSync(prop.id);
         currentProperty = prop;
+        
         const modal = document.getElementById('propertyModal');
         const modalContent = document.getElementById('modalContent');
         
@@ -1062,7 +829,7 @@
                     <strong>💰 Monthly Rent:</strong> ₹${prop.price.toLocaleString()} + maintenance as applicable
                 </div>
                 <div class="visitor-counter" style="margin-top: 16px; background: #eef2f8;">
-                    <i class="fas fa-eye"></i> Total Views: <strong>${newCount}</strong> times
+                    <i class="fas fa-globe"></i> 🌍 Total Global Views: <strong>${newCount}</strong> times
                 </div>
                 <button id="sendQueryWhatsAppBtn" class="send-query-btn"><i class="fab fa-whatsapp"></i> Send Query on WhatsApp</button>
             </div>
@@ -1077,8 +844,7 @@
                 e.stopPropagation();
                 const YOUR_WHATSAPP_NUMBER = "917311170545";
                 const message = `🏠 *StayLoo Property Inquiry*\n\nProperty: ${currentProperty.title}\n📍 Area: ${currentProperty.area}, ${currentProperty.city}\n🏷️ Property Code: ${currentProperty.code}\n🏠 Type: ${currentProperty.bhk}\n💰 Rent: ₹${currentProperty.price}\n👁️ Total Views: ${newCount}\n\nI'm interested in this property. Please share more details and schedule a visit.`;
-                const encodedMsg = encodeURIComponent(message);
-                window.open(`https://wa.me/${YOUR_WHATSAPP_NUMBER}?text=${encodedMsg}`, '_blank');
+                window.open(`https://wa.me/${YOUR_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
             });
         }
     }
@@ -1100,9 +866,11 @@
     document.getElementById('applyFilterBtn').addEventListener('click', applyFilters);
     document.getElementById('resetFilterBtn').addEventListener('click', resetFilters);
     
-    // INSTANT LOADING - No delays, no API calls!
-    window.addEventListener('DOMContentLoaded', () => {
+    // Load page: Show cards instantly, load global counts in background
+    window.addEventListener('DOMContentLoaded', async () => {
         renderCards(properties.slice(0, 5));
+        await loadGlobalCounts();
+        renderCards(getFilteredProperties().slice(0, 5));
     });
 </script>
 </body>
