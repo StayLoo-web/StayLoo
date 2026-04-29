@@ -572,8 +572,7 @@
 
 <script>
     // ============================================================
-    // GLOBAL VISITOR COUNTER - Using Google Sheets (FREE & RELIABLE)
-    // Counts visible to EVERYONE in the world
+    // GLOBAL VISITOR COUNTER - Working Version!
     // ============================================================
     
     // 🔴 IMPORTANT: REPLACE THIS URL WITH YOUR GOOGLE APPS SCRIPT URL 🔴
@@ -584,7 +583,7 @@
     // Load counts from Google Sheets
     async function loadGlobalCounts() {
         try {
-            const response = await fetch(GOOGLE_SCRIPT_URL);
+            const response = await fetch(GOOGLE_SCRIPT_URL + "?action=get");
             if (response.ok) {
                 const data = await response.json();
                 if (Array.isArray(data)) {
@@ -603,12 +602,17 @@
     // Save increment to Google Sheets
     async function saveViewToCloud(propertyId, newCount) {
         try {
-            await fetch(GOOGLE_SCRIPT_URL, {
+            const response = await fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ property_id: propertyId, view_count: newCount })
+                body: JSON.stringify({ 
+                    action: 'update',
+                    property_id: propertyId, 
+                    view_count: newCount 
+                })
             });
+            const result = await response.json();
+            console.log("Save result:", result);
         } catch (error) {
             console.log("Error saving:", error);
         }
@@ -815,7 +819,7 @@
     document.getElementById('applyFilterBtn').addEventListener('click', applyFilters);
     document.getElementById('resetFilterBtn').addEventListener('click', resetFilters);
     
-    // Initialize: Show cards first, then load counts (no visible delay)
+    // Initialize
     window.addEventListener('DOMContentLoaded', async () => {
         renderCards(properties.slice(0, 5));
         await loadGlobalCounts();
