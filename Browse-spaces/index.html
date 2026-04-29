@@ -90,6 +90,7 @@
       transition: 0.2s ease;
       font-size: 0.95rem;
       font-family: 'Outfit', sans-serif;
+      cursor: pointer;
     }
     .nav-links a:hover {
       color: #1f7b9e;
@@ -160,6 +161,7 @@
       border-bottom: 1px solid #e9f0f5;
       display: block;
       font-family: 'Outfit', sans-serif;
+      cursor: pointer;
     }
     .mobile-menu a:active {
       background: #eef3fc;
@@ -193,12 +195,11 @@
       visibility: visible;
     }
 
-    /* ========= HERO SECTION - SLIGHTLY DARKER BUT PREMIUM ========= */
+    /* ========= HERO SECTION ========= */
     .hero {
       position: relative;
       padding: 100px 0 110px;
       margin: 20px 0 40px;
-      /* Darker gradient overlay for better depth - still light enough but richer */
       background: linear-gradient(125deg, rgba(30, 50, 65, 0.65), rgba(45, 70, 85, 0.7)), url('https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=1600');
       background-size: cover;
       background-position: center 35%;
@@ -221,9 +222,6 @@
       margin-bottom: 20px;
       color: white;
       text-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
-      background: none;
-      -webkit-background-clip: unset;
-      background-clip: unset;
     }
 
     .hero p {
@@ -296,7 +294,7 @@
       margin-bottom: 60px;
     }
 
-    /* Property Card - premium soft shadows */
+    /* Property Card */
     .property-card {
       background: white;
       border-radius: 28px;
@@ -396,7 +394,7 @@
       color: white;
     }
 
-    /* Tell Us Section - slightly darker background */
+    /* Tell Us Section */
     .tell-section {
       background: #eef2f8;
       border-radius: 48px;
@@ -451,6 +449,7 @@
       margin: 8px 0;
       transition: color 0.2s;
       font-weight: 500;
+      cursor: pointer;
     }
 
     .footer-col a:hover {
@@ -660,11 +659,11 @@
 <!-- Mobile Drawer Menu -->
 <div id="mobileDrawer" class="mobile-menu">
   <button class="close-menu" id="closeDrawerBtn"><i class="fas fa-times"></i></button>
-  <a href="list-space/" data-page="browse">List Your Space</a>
-  <a href="pricing-queries/" data-page="tell">Pricing & Queries</a>
-  <a href="contact-us/" data-page="about">Contact Us</a>
-  <a href="about-us/" data-page="contact">About Us</a>
-  <a href="Tell-us/" data-page="list">Tell Us</a>
+  <a href="list-space/">List Your Space</a>
+  <a href="pricing-queries/">Pricing & Queries</a>
+  <a href="contact-us/">Contact Us</a>
+  <a href="about-us/">About Us</a>
+  <a href="Tell-us/">Tell Us</a>
 </div>
 
 <!-- Sticky Header -->
@@ -676,10 +675,10 @@
       </div>
       <button class="hamburger" id="hamburgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
       <div class="nav-links">
-       <a href="list-space/" data-page="browse">List Your Space</a>
-      <a href="pricing-queries/" data-page="tell">Pricing & Queries</a>
-      <a href="contact-us/" data-page="about">Contact Us</a>
-      <a href="about-us/" data-page="contact">About Us</a>
+        <a href="list-space/">List Your Space</a>
+        <a href="pricing-queries/">Pricing & Queries</a>
+        <a href="contact-us/">Contact Us</a>
+        <a href="about-us/">About Us</a>
         <button class="cta-list" id="listSpaceBtn">List Your Space</button>
       </div>
     </div>
@@ -687,16 +686,14 @@
 </header>
 
 <main>
-  <!-- Hero Section - broader, richer darker theme -->
+  <!-- Hero Section -->
   <div class="container">
     <section class="hero">
       <div class="hero-content">
         <h1>Find your perfect space</h1>
         <p>Verified listings. Zero brokerage. Direct owner contact.</p>
         <div class="cities-available">
-          <!-- <a href="#" class="city-badge" data-city="lucknow">📍 Lucknow</a> -->
-          <a href="#" class="city-badge" data-city="lucknow">📍 Delhi NCR</a>
-          <!-- <a href="#" class="city-badge" data-city="mumbai">📍 Mumbai</a> -->
+          <a href="#" class="city-badge" data-city="delhi">📍 Delhi NCR</a>
         </div>
         <div class="badge-expand">
           <i class="fas fa-rocket"></i> Expanding fast – more cities coming soon
@@ -730,15 +727,15 @@
       </div>
       <div class="footer-col">
         <h4 style="color:#1f4a60;">Quick Links</h4>
-        <a href="#" data-page="browse">Browse Spaces</a>
-        <a href="#" data-page="tell">Tell Us</a>
-        <a href="#" data-page="trending">Trending</a>
+        <a href="list-space/">List Your Space</a>
+        <a href="Tell-us/">Tell Us</a>
+        <a href="#">Trending</a>
       </div>
       <div class="footer-col">
         <h4 style="color:#1f4a60;">Company</h4>
-        <a href="#" data-page="about">About StayLoo</a>
-        <a href="#" data-page="contact">Contact</a>
-        <a href="#" data-page="list">List Your Space</a>
+        <a href="about-us/">About StayLoo</a>
+        <a href="contact-us/">Contact</a>
+        <a href="list-space/">List Your Space</a>
       </div>
     </div>
     <div class="copyright">© 2025 StayLoo — Zero brokerage rental platform</div>
@@ -785,31 +782,102 @@
     });
     header.classList.remove('hide-header');
 
-    // Mobile menu
+    // Mobile menu functionality
     const hamburger = document.getElementById('hamburgerBtn');
     const mobileDrawer = document.getElementById('mobileDrawer');
     const overlay = document.getElementById('mobileOverlay');
     const closeDrawerBtn = document.getElementById('closeDrawerBtn');
-    function openMenu() { mobileDrawer.classList.add('open'); overlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
-    function closeMenu() { mobileDrawer.classList.remove('open'); overlay.classList.remove('active'); document.body.style.overflow = ''; }
+    
+    function openMenu() { 
+      mobileDrawer.classList.add('open'); 
+      overlay.classList.add('active'); 
+      document.body.style.overflow = 'hidden'; 
+    }
+    
+    function closeMenu() { 
+      mobileDrawer.classList.remove('open'); 
+      overlay.classList.remove('active'); 
+      document.body.style.overflow = ''; 
+    }
+    
     hamburger.addEventListener('click', openMenu);
     closeDrawerBtn.addEventListener('click', closeMenu);
     overlay.addEventListener('click', closeMenu);
+    
+    // Close mobile menu when clicking any link inside it
     document.querySelectorAll('.mobile-menu a').forEach(link => link.addEventListener('click', closeMenu));
 
-    // Navigation helper
-    function navigateTo(page) {
-      const pageUrls = {
-        'browse': '/browse-spaces.html', 'tell': '/tell-us-requirement.html', 'about': '/about.html',
-        'contact': '/contact.html', 'list': '/list-your-space.html', 'trending': '/trending.html',
-        'lucknow': '/cities/lucknow.html', 'delhi': '/cities/delhi-ncr.html', 'mumbai': '/cities/mumbai.html'
-      };
-      const url = pageUrls[page] || '/';
-      alert(`🔁 Navigating to: ${url}\n(Real website would redirect here)`);
-      // window.location.href = url;
+    // ========== PAGE NAVIGATION - ALL BUTTONS WORK ==========
+    // Function to navigate to different pages
+    function navigateTo(url) {
+      if (url && url !== '#' && url !== '') {
+        window.location.href = url;
+      }
     }
 
-    // Properties array
+    // Desktop navigation links
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const href = link.getAttribute('href');
+        if (href && href !== '#') {
+          navigateTo(href);
+        }
+      });
+    });
+
+    // Mobile menu links
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href && href !== '#') {
+          navigateTo(href);
+        }
+      });
+    });
+
+    // Footer links
+    document.querySelectorAll('.footer-col a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const href = link.getAttribute('href');
+        if (href && href !== '#') {
+          navigateTo(href);
+        }
+      });
+    });
+
+    // City badges navigation
+    document.querySelectorAll('.city-badge').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const city = btn.getAttribute('data-city');
+        if (city === 'delhi') {
+          navigateTo('/delhi-ncr');
+        } else {
+          alert(`📍 ${city.toUpperCase()} page coming soon!`);
+        }
+      });
+    });
+
+    // Tell Us Requirement Button
+    const tellRequirementBtn = document.getElementById('tellRequirementBtn');
+    if (tellRequirementBtn) {
+      tellRequirementBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        navigateTo('Tell-us/');
+      });
+    }
+
+    // List Your Space Button (Top Right CTA)
+    const listSpaceBtn = document.getElementById('listSpaceBtn');
+    if (listSpaceBtn) {
+      listSpaceBtn.addEventListener('click', () => {
+        navigateTo('list-space/');
+      });
+    }
+
+    // ========== PROPERTIES DATA ==========
     const properties = [
       { id: "STL101", title: "1BHK Flat", location: "Gomti Nagar, Lucknow", price: 12000, images: ["https://picsum.photos/id/152/600/400", "https://picsum.photos/id/169/600/400", "https://picsum.photos/id/175/600/400"], tags: ["Verified", "Popular"], bedrooms: 1, bathroom: 1, furnishing: "Semi-furnished", nearby: "Metro, Food Plaza", description: "Spacious 1BHK with power backup & parking. Close to shopping malls." },
       { id: "STL202", title: "2BHK Premium", location: "Hazratganj, Lucknow", price: 22000, images: ["https://picsum.photos/id/20/600/400", "https://picsum.photos/id/26/600/400", "https://picsum.photos/id/28/600/400"], tags: ["New", "Popular"], bedrooms: 2, bathroom: 2, furnishing: "Fully furnished", nearby: "Restaurants, Mall", description: "Luxury interiors, modular kitchen, prime location." },
@@ -823,6 +891,7 @@
 
     function renderCards() {
       const grid = document.getElementById('cardsGrid');
+      if (!grid) return;
       grid.innerHTML = '';
       properties.forEach(prop => {
         const card = document.createElement('div');
@@ -873,22 +942,20 @@
     function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
     function openFullscreen(imgSrc) { const viewer = document.getElementById('fullscreenViewer'); document.getElementById('fullscreenImg').src = imgSrc; viewer.classList.add('active'); }
     function closeFullscreen() { document.getElementById('fullscreenViewer').classList.remove('active'); }
+    
     function sendWhatsAppQuery(property) {
       if (!property) return;
       window.open(`https://wa.me/918840586267?text=${encodeURIComponent(`Hi StayLoo, I'm interested in property "${property.title}" (Unique Code: ${property.id}) located at ${property.location}. Please share more details.`)}`, '_blank');
     }
 
-    // Attach navigation
-    document.querySelectorAll('[data-page]').forEach(link => link.addEventListener('click', (e) => { e.preventDefault(); navigateTo(link.getAttribute('data-page')); }));
-    document.querySelectorAll('.city-badge').forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); navigateTo(btn.getAttribute('data-city')); }));
-    document.getElementById('tellRequirementBtn')?.addEventListener('click', (e) => { e.preventDefault(); navigateTo('tell'); });
-    document.getElementById('listSpaceBtn')?.addEventListener('click', () => navigateTo('list'));
+    // Modal event listeners
     document.getElementById('closeModalBtn')?.addEventListener('click', closeModal);
     document.getElementById('sendQueryBtn')?.addEventListener('click', () => currentProperty && sendWhatsAppQuery(currentProperty));
     document.getElementById('modalOverlay')?.addEventListener('click', (e) => { if (e.target === document.getElementById('modalOverlay')) closeModal(); });
     document.getElementById('closeFullscreen')?.addEventListener('click', closeFullscreen);
     document.getElementById('fullscreenViewer')?.addEventListener('click', (e) => { if (e.target === document.getElementById('fullscreenViewer')) closeFullscreen(); });
 
+    // Initialize cards
     renderCards();
   })();
 </script>
