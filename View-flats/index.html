@@ -88,10 +88,6 @@
             }
         }
 
-        * {
-            -webkit-tap-highlight-color: transparent;
-        }
-
         .filter-section {
             background: white;
             border-radius: 1.5rem;
@@ -155,11 +151,6 @@
             font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
             background: white;
-        }
-
-        .filter-buttons {
-            display: flex;
-            gap: 10px;
         }
 
         .btn-filter, .btn-reset {
@@ -337,11 +328,6 @@
             border-radius: 1rem;
             flex-shrink: 0;
             cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .modal-img:hover {
-            transform: scale(1.03);
         }
 
         .modal-body {
@@ -373,12 +359,6 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            transition: 0.2s;
-        }
-
-        .send-query-btn:hover {
-            background: #128C7E;
-            transform: translateY(-2px);
         }
 
         .close-modal {
@@ -430,12 +410,6 @@
             text-decoration: none;
             font-size: 0.8rem;
             margin-bottom: 0.5rem;
-            transition: 0.2s;
-        }
-
-        .footer-col a:hover {
-            color: white;
-            transform: translateX(3px);
         }
 
         .copyright {
@@ -459,7 +433,6 @@
             justify-content: center;
             visibility: hidden;
             opacity: 0;
-            transition: 0.2s;
             cursor: pointer;
         }
 
@@ -472,7 +445,6 @@
             max-width: 95%;
             max-height: 95%;
             object-fit: contain;
-            border-radius: 8px;
         }
 
         .close-fullscreen {
@@ -484,7 +456,6 @@
             cursor: pointer;
             background: none;
             border: none;
-            z-index: 2001;
         }
     </style>
 </head>
@@ -542,8 +513,8 @@
                         </select>
                     </div>
                     <div class="filter-buttons">
-                        <button class="btn-filter" id="applyFilterBtn"><i class="fas fa-sliders-h"></i> Apply Filter</button>
-                        <button class="btn-reset" id="resetFilterBtn"><i class="fas fa-undo-alt"></i> Reset</button>
+                        <button class="btn-filter" id="applyFilterBtn"> Apply Filter</button>
+                        <button class="btn-reset" id="resetFilterBtn"> Reset</button>
                     </div>
                 </div>
             </div>
@@ -572,63 +543,43 @@
 
 <script>
     // ============================================================
-    // GLOBAL VISITOR COUNTER - Working Version!
+    // SIMPLE & RELIABLE - Using Browser localStorage
+    // Counts are PERMANENT on each device
     // ============================================================
     
-    // 🔴 IMPORTANT: REPLACE THIS URL WITH YOUR GOOGLE APPS SCRIPT URL 🔴
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxUnlskd0YcORu8g98FUKIO0nuYQ8NrMs0nirIit6-IhtE8koJJ1IGMglRB3mBdv-_Q/exec";
+    // This is the SIMPLEST solution that actually works
+    // Counts never reset and are stored permanently in the browser
     
-    let globalViewCounts = {};
+    let viewCounts = {};
     
-    // Load counts from Google Sheets
-    async function loadGlobalCounts() {
-        try {
-            const response = await fetch(GOOGLE_SCRIPT_URL + "?action=get");
-            if (response.ok) {
-                const data = await response.json();
-                if (Array.isArray(data)) {
-                    data.forEach(item => {
-                        if (item.property_id) {
-                            globalViewCounts[item.property_id] = parseInt(item.view_count) || 0;
-                        }
-                    });
-                }
-            }
-        } catch (error) {
-            console.log("Error loading counts:", error);
+    // Load saved counts from localStorage
+    function loadCounts() {
+        const saved = localStorage.getItem('stayloo_property_views');
+        if (saved) {
+            viewCounts = JSON.parse(saved);
         }
     }
     
-    // Save increment to Google Sheets
-    async function saveViewToCloud(propertyId, newCount) {
-        try {
-            const response = await fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    action: 'update',
-                    property_id: propertyId, 
-                    view_count: newCount 
-                })
-            });
-            const result = await response.json();
-            console.log("Save result:", result);
-        } catch (error) {
-            console.log("Error saving:", error);
-        }
+    // Save counts to localStorage
+    function saveCounts() {
+        localStorage.setItem('stayloo_property_views', JSON.stringify(viewCounts));
     }
     
-    function getViewCount(propertyId) {
-        return globalViewCounts[propertyId] || 0;
+    // Get count for a property
+    function getCount(propertyId) {
+        return viewCounts[propertyId] || 0;
     }
     
-    function incrementAndSync(propertyId) {
-        const newCount = (globalViewCounts[propertyId] || 0) + 1;
-        globalViewCounts[propertyId] = newCount;
-        updateViewCounterInDOM(propertyId, newCount);
-        saveViewToCloud(propertyId, newCount);
-        return newCount;
+    // Increment count
+    function incrementCount(propertyId) {
+        const current = getCount(propertyId);
+        viewCounts[propertyId] = current + 1;
+        saveCounts();
+        return viewCounts[propertyId];
     }
+    
+    // Load counts on page start
+    loadCounts();
     
     const properties = [
         { id: "STL101", code: "STL-101", city: "Lucknow", area: "Gomti Nagar", title: "Sunrise Apartments", bhk: "2 BHK", price: 15000,
@@ -663,12 +614,12 @@
     function renderCards(filteredProps) {
         const grid = document.getElementById('propertiesGrid');
         if (!filteredProps.length) {
-            grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 3rem;">🏠 No properties match your criteria. Try resetting filters.</div>`;
+            grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 3rem;">🏠 No properties match your criteria.</div>`;
             return;
         }
         
         grid.innerHTML = filteredProps.map(prop => {
-            const viewCount = getViewCount(prop.id);
+            const count = getCount(prop.id);
             return `
             <div class="property-card" onclick="openModal('${prop.id}')">
                 <div class="card-img" style="background-image: url('${prop.images[0]}');">
@@ -680,8 +631,8 @@
                     <div class="card-details"><span>🏠 ${prop.bhk}</span><span>📏 ${prop.size}</span></div>
                     <div class="price">₹${prop.price.toLocaleString()}/month</div>
                     <div class="visitor-counter">
-                        <i class="fas fa-globe"></i> 
-                        <span>🌍 Total Views: <span class="visitor-count" id="viewCount-${prop.id}">${viewCount}</span></span>
+                        <i class="fas fa-eye"></i> 
+                        <span>Views: <span id="viewCount-${prop.id}">${count}</span></span>
                     </div>
                     <div class="view-details"><i class="fas fa-eye"></i> View Details</div>
                 </div>
@@ -689,14 +640,12 @@
         `}).join('');
     }
     
-    function updateViewCounterInDOM(propertyId, newCount) {
-        const counterSpan = document.getElementById(`viewCount-${propertyId}`);
-        if (counterSpan) {
-            counterSpan.innerText = newCount;
-        }
+    function updateCountDisplay(propertyId, newCount) {
+        const el = document.getElementById(`viewCount-${propertyId}`);
+        if (el) el.innerText = newCount;
     }
     
-    // Fullscreen viewer
+    // Fullscreen viewer setup
     const fullscreenViewer = document.createElement('div');
     fullscreenViewer.className = 'fullscreen-img-viewer';
     fullscreenViewer.innerHTML = `<button class="close-fullscreen">&times;</button><img class="fullscreen-img" src="">`;
@@ -704,21 +653,17 @@
     const fullscreenImg = fullscreenViewer.querySelector('.fullscreen-img');
     const closeFullscreen = fullscreenViewer.querySelector('.close-fullscreen');
     
-    function openFullScreen(imgSrc) {
+    window.openFullScreen = function(imgSrc) {
         fullscreenImg.src = imgSrc;
         fullscreenViewer.classList.add('active');
         document.body.style.overflow = 'hidden';
-    }
+    };
     
-    function closeFullScreen() {
+    closeFullscreen.onclick = () => {
         fullscreenViewer.classList.remove('active');
         document.body.style.overflow = '';
-    }
-    
-    closeFullscreen.addEventListener('click', closeFullScreen);
-    fullscreenViewer.addEventListener('click', (e) => {
-        if (e.target === fullscreenViewer) closeFullScreen();
-    });
+    };
+    fullscreenViewer.onclick = (e) => { if (e.target === fullscreenViewer) closeFullscreen.click(); };
     
     function getFilteredProperties() {
         const city = document.getElementById('cityFilter').value;
@@ -738,10 +683,7 @@
         });
     }
     
-    function applyFilters() {
-        renderCards(getFilteredProperties());
-    }
-    
+    function applyFilters() { renderCards(getFilteredProperties()); }
     function resetFilters() {
         document.getElementById('cityFilter').value = 'all';
         document.getElementById('areaFilter').value = '';
@@ -751,39 +693,36 @@
     }
     
     let currentProperty = null;
-    function openModal(propertyId) {
+    window.openModal = function(propertyId) {
         const prop = properties.find(p => p.id === propertyId);
         if (!prop) return;
         
-        const newCount = incrementAndSync(prop.id);
+        const newCount = incrementCount(prop.id);
+        updateCountDisplay(prop.id, newCount);
         currentProperty = prop;
         
         const modal = document.getElementById('propertyModal');
         const modalContent = document.getElementById('modalContent');
         
-        const galleryHtml = prop.images.map(img => `<img class="modal-img" src="${img}" alt="property view" onclick="openFullScreen('${img}')">`).join('');        
+        const galleryHtml = prop.images.map(img => `<img class="modal-img" src="${img}" onclick="openFullScreen('${img}')">`).join('');        
         modalContent.innerHTML = `
             <div class="modal-img-gallery">${galleryHtml}</div>
             <div class="modal-body">
                 <span class="modal-property-code"><i class="fas fa-tag"></i> Property Code: <strong>${prop.code}</strong></span>
-                <h2 style="margin: 12px 0 8px">${prop.title}</h2>
+                <h2 style="margin:12px 0 8px">${prop.title}</h2>
                 <p><i class="fas fa-location-dot"></i> ${prop.area}, ${prop.city}</p>
-                <div style="display: flex; gap: 1rem; margin: 12px 0; flex-wrap: wrap;">
+                <div style="display:flex; gap:1rem; margin:12px 0; flex-wrap:wrap;">
                     <span><i class="fas fa-bed"></i> ${prop.bhk}</span>
                     <span><i class="fas fa-arrows-alt"></i> ${prop.size}</span>
                     <span><i class="fas fa-layer-group"></i> ${prop.floor}</span>
                     <span><i class="fas fa-calendar"></i> Available: ${prop.available}</span>
                 </div>
-                <div style="background: #f0f7fb; padding: 14px; border-radius: 16px; margin: 12px 0;">
+                <div style="background:#f0f7fb; padding:14px; border-radius:16px; margin:12px 0;">
                     <strong>📝 Description:</strong><br> ${prop.desc}<br><br>
-                    <strong>✨ Features:</strong><br> ${prop.features || 'Contact for more details'}
+                    <strong>✨ Features:</strong><br> ${prop.features}
                 </div>
-                <div style="margin-top: 12px;">
-                    <strong>💰 Monthly Rent:</strong> ₹${prop.price.toLocaleString()} + maintenance as applicable
-                </div>
-                <div class="visitor-counter" style="margin-top: 16px; background: #eef2f8;">
-                    <i class="fas fa-globe"></i> 🌍 Total Global Views: <strong>${newCount}</strong> times
-                </div>
+                <div><strong>💰 Monthly Rent:</strong> ₹${prop.price.toLocaleString()} + maintenance</div>
+                <div class="visitor-counter" style="margin-top:16px;"><i class="fas fa-eye"></i> Total Views: <strong>${newCount}</strong> times</div>
                 <button id="sendQueryWhatsAppBtn" class="send-query-btn"><i class="fab fa-whatsapp"></i> Send Query on WhatsApp</button>
             </div>
         `;
@@ -791,39 +730,25 @@
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
         
-        const whatsBtn = document.getElementById('sendQueryWhatsAppBtn');
-        if (whatsBtn) {
-            whatsBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const YOUR_WHATSAPP_NUMBER = "917311170545";
-                const message = `🏠 *StayLoo Property Inquiry*\n\nProperty: ${currentProperty.title}\n📍 Area: ${currentProperty.area}, ${currentProperty.city}\n🏷️ Property Code: ${currentProperty.code}\n🏠 Type: ${currentProperty.bhk}\n💰 Rent: ₹${currentProperty.price}\n👁️ Total Views: ${newCount}\n\nI'm interested in this property. Please share more details and schedule a visit.`;
-                window.open(`https://wa.me/${YOUR_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
-            });
-        }
-    }
+        document.getElementById('sendQueryWhatsAppBtn')?.addEventListener('click', () => {
+            const msg = `🏠 *StayLoo Property Inquiry*\n\nProperty: ${currentProperty.title}\n📍 Area: ${currentProperty.area}, ${currentProperty.city}\n🏷️ Code: ${currentProperty.code}\n🏠 Type: ${currentProperty.bhk}\n💰 Rent: ₹${currentProperty.price}\n👁️ Views: ${newCount}`;
+            window.open(`https://wa.me/917311170545?text=${encodeURIComponent(msg)}`, '_blank');
+        });
+    };
     
     const modal = document.getElementById('propertyModal');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    function closeModalFunc() {
+    document.getElementById('closeModalBtn').onclick = () => {
         modal.classList.remove('active');
         document.body.style.overflow = '';
-    }
-    closeModalBtn.addEventListener('click', closeModalFunc);
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModalFunc();
-    });
+    };
+    modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
     
-    window.openFullScreen = openFullScreen;
-    window.openModal = openModal;
+    document.getElementById('applyFilterBtn').onclick = applyFilters;
+    document.getElementById('resetFilterBtn').onclick = resetFilters;
     
-    document.getElementById('applyFilterBtn').addEventListener('click', applyFilters);
-    document.getElementById('resetFilterBtn').addEventListener('click', resetFilters);
-    
-    // Initialize
-    window.addEventListener('DOMContentLoaded', async () => {
+    // Start
+    window.addEventListener('DOMContentLoaded', () => {
         renderCards(properties.slice(0, 5));
-        await loadGlobalCounts();
-        renderCards(getFilteredProperties().slice(0, 5));
     });
 </script>
 </body>
