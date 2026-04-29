@@ -341,6 +341,34 @@ a,
             color: #1c6a8f;
         }
 
+        /* Visitor Counter Badge - New Style */
+        .visitor-counter {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #f0f4f9 0%, #e6edf4 100%);
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #1c6a8f;
+            margin-top: 10px;
+            width: fit-content;
+            border: 1px solid rgba(28, 106, 143, 0.2);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+
+        .visitor-counter i {
+            font-size: 0.7rem;
+            color: #2c7da0;
+        }
+
+        .visitor-count {
+            font-weight: 800;
+            color: #0f3b4f;
+            margin-left: 2px;
+        }
+
         /* Modal Popup */
         .modal-overlay {
             position: fixed;
@@ -663,16 +691,41 @@ a,
 
 <script>
     // ============================================================
-    // 🔥 EASY IMAGE CONFIGURATION - USE YOUR GITHUB IMAGES HERE 🔥
+    // PROPERTY DATABASE WITH VISITOR COUNTER STORAGE (localStorage)
     // ============================================================
-    // Just replace the image URLs with your GitHub raw image links
-    // Format: https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/folder/image.jpg
     
-    // Example GitHub raw image URL structure:
-    // https://raw.githubusercontent.com/username/repository/branch/folder/image.jpg
+    // Storage key for visitor counts
+    const VISITOR_STORAGE_KEY = 'stayloo_property_views';
     
-    // ========== PROPERTY DATABASE ==========
-    // 👇 REPLACE THE image URLs BELOW WITH YOUR GITHUB IMAGE LINKS 👇
+    // Load saved view counts from localStorage or initialize empty object
+    function loadViewCounts() {
+        const saved = localStorage.getItem(VISITOR_STORAGE_KEY);
+        if (saved) {
+            try {
+                return JSON.parse(saved);
+            } catch(e) { return {}; }
+        }
+        return {};
+    }
+    
+    // Save view counts to localStorage
+    function saveViewCounts(counts) {
+        localStorage.setItem(VISITOR_STORAGE_KEY, JSON.stringify(counts));
+    }
+    
+    // Increment view count for a property ID
+    function incrementViewCount(propertyId) {
+        let counts = loadViewCounts();
+        counts[propertyId] = (counts[propertyId] || 0) + 1;
+        saveViewCounts(counts);
+        return counts[propertyId];
+    }
+    
+    // Get current view count for a property ID
+    function getViewCount(propertyId) {
+        const counts = loadViewCounts();
+        return counts[propertyId] || 0;
+    }
     
     const properties = [
         { 
@@ -683,12 +736,11 @@ a,
             title: "Sunrise Apartments", 
             bhk: "2 BHK", 
             price: 15000,
-            // 🔽 REPLACE THESE URLs with your GitHub image links
             images: [
-                "https://picsum.photos/id/152/400/300",   // replace with your image
-                "https://picsum.photos/id/155/400/300",   // replace with your image
-                "https://picsum.photos/id/159/400/300",   // replace with your image
-                "https://picsum.photos/id/158/400/300"    // replace with your image
+                "https://picsum.photos/id/152/400/300",
+                "https://picsum.photos/id/155/400/300",
+                "https://picsum.photos/id/159/400/300",
+                "https://picsum.photos/id/158/400/300"
             ],
             desc: "Fully furnished, near metro station, 24/7 security, covered parking available, modern amenities.", 
             size: "1100 sqft", 
@@ -857,7 +909,7 @@ a,
         }
     ];
 
-    // Helper: render property cards
+    // Render property cards with visitor counter
     function renderCards(filteredProps) {
         const grid = document.getElementById('propertiesGrid');
         if (!filteredProps.length) {
@@ -865,7 +917,9 @@ a,
             return;
         }
         
-        grid.innerHTML = filteredProps.map(prop => `
+        grid.innerHTML = filteredProps.map(prop => {
+            const viewCount = getViewCount(prop.id);
+            return `
             <div class="property-card" onclick="openModal('${prop.id}')">
                 <div class="card-img" style="background-image: url('${prop.images[0]}');">
                     <span class="property-code-badge">📌 ${prop.code}</span>
@@ -875,53 +929,70 @@ a,
                     <div class="card-location"><i class="fas fa-map-marker-alt"></i> ${prop.area}, ${prop.city}</div>
                     <div class="card-details"><span>🏠 ${prop.bhk}</span><span>📏 ${prop.size}</span></div>
                     <div class="price">₹${prop.price.toLocaleString()}/month</div>
+                    <div class="visitor-counter">
+                        <i class="fas fa-eye"></i> 
+                        <span>Views: <span class="visitor-count" id="viewCount-${prop.id}">${viewCount}</span></span>
+                    </div>
                     <div class="view-details"><i class="fas fa-eye"></i> View Details</div>
                 </div>
             </div>
-        `).join('');
+        `}).join('');
+        
+        // No need to attach extra events because counters update on modal open and re-render will fetch fresh counts
     }
+    
+    // Update specific property view counter in DOM without full re-render
+    function updateViewCounterInDOM(propertyId, newCount) {
+        const counterSpan = document.getElementById(`viewCount-${propertyId}`);
+        if (counterSpan) {
+            counterSpan.innerText = newCount;
+        } else {
+            // If element not found (maybe due to filter change), force re-render of current filtered view
+            applyFilters();
+        }
+    }
+    
     // Full Screen Image Viewer
-const fullscreenViewer = document.createElement('div');
-fullscreenViewer.className = 'fullscreen-img-viewer';
-fullscreenViewer.innerHTML = `
-    <button class="close-fullscreen">&times;</button>
-    <img class="fullscreen-img" src="" alt="Full Screen View">
-`;
-document.body.appendChild(fullscreenViewer);
-
-const fullscreenImg = fullscreenViewer.querySelector('.fullscreen-img');
-const closeFullscreen = fullscreenViewer.querySelector('.close-fullscreen');
-
-function openFullScreen(imgSrc) {
-    fullscreenImg.src = imgSrc;
-    fullscreenViewer.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeFullScreen() {
-    fullscreenViewer.classList.remove('active');
-    document.body.style.overflow = '';
-}
-
-closeFullscreen.addEventListener('click', closeFullScreen);
-fullscreenViewer.addEventListener('click', (e) => {
-    if (e.target === fullscreenViewer) closeFullScreen();
-});
-
-// Also close with Escape key
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && fullscreenViewer.classList.contains('active')) {
-        closeFullScreen();
+    const fullscreenViewer = document.createElement('div');
+    fullscreenViewer.className = 'fullscreen-img-viewer';
+    fullscreenViewer.innerHTML = `
+        <button class="close-fullscreen">&times;</button>
+        <img class="fullscreen-img" src="" alt="Full Screen View">
+    `;
+    document.body.appendChild(fullscreenViewer);
+    
+    const fullscreenImg = fullscreenViewer.querySelector('.fullscreen-img');
+    const closeFullscreen = fullscreenViewer.querySelector('.close-fullscreen');
+    
+    function openFullScreen(imgSrc) {
+        fullscreenImg.src = imgSrc;
+        fullscreenViewer.classList.add('active');
+        document.body.style.overflow = 'hidden';
     }
-});
-
+    
+    function closeFullScreen() {
+        fullscreenViewer.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    
+    closeFullscreen.addEventListener('click', closeFullScreen);
+    fullscreenViewer.addEventListener('click', (e) => {
+        if (e.target === fullscreenViewer) closeFullScreen();
+    });
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && fullscreenViewer.classList.contains('active')) {
+            closeFullScreen();
+        }
+    });
+    
     // Filter logic
     function getFilteredProperties() {
         const city = document.getElementById('cityFilter').value;
         const areaQuery = document.getElementById('areaFilter').value.toLowerCase().trim();
         const budgetVal = document.getElementById('budgetFilter').value;
         const bhk = document.getElementById('bhkFilter').value;
-
+    
         return properties.filter(prop => {
             if (city !== 'all' && prop.city !== city) return false;
             if (areaQuery && !prop.area.toLowerCase().includes(areaQuery) && !prop.title.toLowerCase().includes(areaQuery)) return false;
@@ -933,12 +1004,12 @@ document.addEventListener('keydown', (e) => {
             return true;
         });
     }
-
+    
     function applyFilters() {
         const filtered = getFilteredProperties();
         renderCards(filtered);
     }
-
+    
     function resetFilters() {
         document.getElementById('cityFilter').value = 'all';
         document.getElementById('areaFilter').value = '';
@@ -946,17 +1017,23 @@ document.addEventListener('keydown', (e) => {
         document.getElementById('bhkFilter').value = 'all';
         applyFilters();
     }
-
-    // Modal logic
+    
+    // Modal logic with visitor counter increment
     let currentProperty = null;
     function openModal(propertyId) {
         const prop = properties.find(p => p.id === propertyId);
         if (!prop) return;
+        
+        // INCREMENT VISITOR COUNT FOR THIS PROPERTY
+        const newCount = incrementViewCount(prop.id);
+        // Update the counter in the card if visible
+        updateViewCounterInDOM(prop.id, newCount);
+        
         currentProperty = prop;
         const modal = document.getElementById('propertyModal');
         const modalContent = document.getElementById('modalContent');
         
-const galleryHtml = prop.images.map(img => `<img class="modal-img" src="${img}" alt="property view" onclick="openFullScreen('${img}')">`).join('');        
+        const galleryHtml = prop.images.map(img => `<img class="modal-img" src="${img}" alt="property view" onclick="openFullScreen('${img}')">`).join('');        
         modalContent.innerHTML = `
             <div class="modal-img-gallery">${galleryHtml}</div>
             <div class="modal-body">
@@ -976,6 +1053,9 @@ const galleryHtml = prop.images.map(img => `<img class="modal-img" src="${img}" 
                 <div style="margin-top: 12px;">
                     <strong>💰 Monthly Rent:</strong> ₹${prop.price.toLocaleString()} + maintenance as applicable
                 </div>
+                <div class="visitor-counter" style="margin-top: 16px; background: #eef2f8;">
+                    <i class="fas fa-eye"></i> Total Views: <strong>${newCount}</strong> times
+                </div>
                 <button id="sendQueryWhatsAppBtn" class="send-query-btn"><i class="fab fa-whatsapp"></i> Send Query on WhatsApp</button>
             </div>
         `;
@@ -987,8 +1067,7 @@ const galleryHtml = prop.images.map(img => `<img class="modal-img" src="${img}" 
         if (whatsBtn) {
             whatsBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                // YOUR WHATSAPP NUMBER - CHANGE THIS
-                const YOUR_WHATSAPP_NUMBER = "917311170545"; // Replace with your number (country code without +)
+                const YOUR_WHATSAPP_NUMBER = "917311170545";
                 const message = `🏠 *StayLoo Property Inquiry*\n\nProperty: ${currentProperty.title}\n📍 Area: ${currentProperty.area}, ${currentProperty.city}\n🏷️ Property Code: ${currentProperty.code}\n🏠 Type: ${currentProperty.bhk}\n💰 Rent: ₹${currentProperty.price}\n\nI'm interested in this property. Please share more details and schedule a visit.`;
                 const encodedMsg = encodeURIComponent(message);
                 window.open(`https://wa.me/${YOUR_WHATSAPP_NUMBER}?text=${encodedMsg}`, '_blank');
@@ -1007,19 +1086,18 @@ const galleryHtml = prop.images.map(img => `<img class="modal-img" src="${img}" 
     modal.addEventListener('click', (e) => {
         if (e.target === modal) closeModalFunc();
     });
-    // Make openFullScreen available globally
+    
     window.openFullScreen = openFullScreen;
+    window.openModal = openModal;
     
     // Event Listeners
     document.getElementById('applyFilterBtn').addEventListener('click', applyFilters);
     document.getElementById('resetFilterBtn').addEventListener('click', resetFilters);
     
-    // Initial render - show first 5 properties only
+    // Initial render - show first 5 properties only (matching original)
     window.addEventListener('DOMContentLoaded', () => {
         renderCards(properties.slice(0, 5));
     });
-    
-    window.openModal = openModal;
 </script>
 </body>
 </html>
