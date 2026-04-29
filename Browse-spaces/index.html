@@ -671,7 +671,7 @@
   <div class="container">
     <div class="nav-flex">
       <div class="logo-text">
-        <i class="fas fa-building"></i> StayLoo
+  <img src="/images/logo1.png" alt="StayLoo Logo" style="height: 60px; width: auto;">
       </div>
       <button class="hamburger" id="hamburgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
       <div class="nav-links">
@@ -693,7 +693,7 @@
         <h1>Find your perfect space</h1>
         <p>Verified listings. Zero brokerage. Direct owner contact.</p>
         <div class="cities-available">
-          <a href="../View-in-Lucknow" class="city-badge" data-city="lucknow">📍Lucknow </a>
+          <a href="../View-in-Lucknow" class="city-badge" id="lucknowCityBtn">📍 Lucknow</a>
         </div>
         <div class="badge-expand">
           <i class="fas fa-rocket"></i> Expanding fast – more cities coming soon
@@ -727,15 +727,15 @@
       </div>
       <div class="footer-col">
         <h4 style="color:#1f4a60;">Quick Links</h4>
-        <a href="list-space/">List Your Space</a>
-        <a href="Tell-us/">Tell Us</a>
+        <a href="../list-space/">List Your Space</a>
+        <a href="../Tell-us/">Tell Us</a>
         <a href="#">Trending</a>
       </div>
       <div class="footer-col">
         <h4 style="color:#1f4a60;">Company</h4>
-        <a href="about-us/">About StayLoo</a>
-        <a href="contact-us/">Contact</a>
-        <a href="list-space/">List Your Space</a>
+        <a href="../about-us/">About StayLoo</a>
+        <a href="../contact-us/">Contact</a>
+        <a href="../list-space/">List Your Space</a>
       </div>
     </div>
     <div class="copyright">© 2025 StayLoo — Zero brokerage rental platform</div>
@@ -847,25 +847,22 @@
       });
     });
 
-    // City badges navigation
-    document.querySelectorAll('.city-badge').forEach(btn => {
-      btn.addEventListener('click', (e) => {
+    // ========== LUCKNOW CITY BUTTON - DIRECT REDIRECT (NO ALERT) ==========
+    const lucknowBtn = document.getElementById('lucknowCityBtn');
+    if (lucknowBtn) {
+      lucknowBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        const city = btn.getAttribute('data-city');
-        if (city === 'delhi') {
-          navigateTo('/delhi-ncr');
-        } else {
-          alert(`📍 ${city.toUpperCase()} page coming soon!`);
-        }
+        // Directly go to Lucknow page - NO "coming soon" alert
+        window.location.href = "../View-in-Lucknow";
       });
-    });
+    }
 
     // Tell Us Requirement Button
     const tellRequirementBtn = document.getElementById('tellRequirementBtn');
     if (tellRequirementBtn) {
       tellRequirementBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        navigateTo('Tell-us/');
+        navigateTo('../Tell-us/');
       });
     }
 
@@ -873,7 +870,7 @@
     const listSpaceBtn = document.getElementById('listSpaceBtn');
     if (listSpaceBtn) {
       listSpaceBtn.addEventListener('click', () => {
-        navigateTo('list-space/');
+        navigateTo('../list-space/');
       });
     }
 
