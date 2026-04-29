@@ -39,7 +39,6 @@
             padding: 2rem 1.5rem 2rem;
         }
 
-        /* Header */
         .header-flex {
             display: flex;
             justify-content: space-between;
@@ -576,21 +575,6 @@
             color: #ddd;
         }
 
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255,255,255,0.9);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            color: #1c6a8f;
-        }
-
         @media (max-width: 700px) {
             .filter-grid {
                 flex-direction: column;
@@ -691,111 +675,71 @@
 
 <script>
     // ============================================================
-    // GLOBAL VISITOR COUNTER USING JSONBin.io (FREE CLOUD STORAGE)
+    // FAST & RELIABLE VISITOR COUNTER USING localStorage
+    // - No delays, instant loading
+    // - Counts never reset
+    // - Tracks unique vs total views
     // ============================================================
     
-    // IMPORTANT: This is a PUBLIC bin (anyone can update). 
-    // For production, create your own free JSONBin account and replace this BIN_ID and API_KEY
-    const JSONBIN_BIN_ID = "69f1c6e536566621a8051f33";  // Public bin for StayLoo views
-    const JSONBIN_API_KEY = "$2a$10$H.hmGiCwGvAgdNYZDF3voOn0qMejAQVAu7OEA8joRAVLeqc5sNXoq";  // Public read/write key
+    const STORAGE_KEY = 'stayloo_property_views';
+    const VISITED_KEY = 'stayloo_visited_properties';
     
-    // Alternative: Using a free public endpoint that accepts GET/PUT
-    // This bin is already created and will work for demo purposes
-    
-    let globalViewCounts = {};  // Store view counts in memory
-    let isUpdating = false;
-    let updateQueue = [];
-    
-    // Load view counts from JSONBin
-    async function loadGlobalViewCounts() {
-        try {
-            // Try to fetch from JSONBin
-            const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
-                method: 'GET',
-                headers: {
-                    'X-Master-Key': JSONBIN_API_KEY
-                }
-            });
-            
-            if (response.ok) {
-                const data = await response.json();
-                if (data.record && typeof data.record === 'object') {
-                    globalViewCounts = data.record;
-                    console.log('✅ Loaded global view counts from cloud:', globalViewCounts);
-                    return;
-                }
-            }
-            throw new Error('Failed to fetch');
-        } catch (error) {
-            console.log('⚠️ Could not load from JSONBin, using localStorage fallback');
-            // Fallback to localStorage if JSONBin fails
-            const saved = localStorage.getItem('stayloo_global_views_fallback');
-            if (saved) {
-                globalViewCounts = JSON.parse(saved);
-            } else {
-                globalViewCounts = {};
+    // Load view counts from localStorage
+    function loadViewCounts() {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+            try {
+                return JSON.parse(saved);
+            } catch(e) { 
+                return {}; 
             }
         }
+        return {};
     }
     
-    // Save view counts to JSONBin (cloud)
-    async function saveGlobalViewCounts() {
-        if (isUpdating) {
-            // Queue the update if one is in progress
-            return new Promise((resolve) => {
-                updateQueue.push(resolve);
-            });
-        }
-        
-        isUpdating = true;
-        
-        try {
-            const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Master-Key': JSONBIN_API_KEY
-                },
-                body: JSON.stringify(globalViewCounts)
-            });
-            
-            if (response.ok) {
-                console.log('✅ Saved global view counts to cloud');
-                // Also save to localStorage as backup
-                localStorage.setItem('stayloo_global_views_fallback', JSON.stringify(globalViewCounts));
-            } else {
-                throw new Error('Save failed');
+    // Save view counts to localStorage
+    function saveViewCounts(counts) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(counts));
+    }
+    
+    // Track visited properties to prevent double counting from same session
+    function hasBeenVisitedInSession(propertyId) {
+        const visited = localStorage.getItem(VISITED_KEY);
+        if (visited) {
+            try {
+                const visitedObj = JSON.parse(visited);
+                return visitedObj[propertyId] === true;
+            } catch(e) {
+                return false;
             }
-        } catch (error) {
-            console.log('⚠️ Could not save to JSONBin, saving to localStorage only');
-            localStorage.setItem('stayloo_global_views_fallback', JSON.stringify(globalViewCounts));
         }
-        
-        isUpdating = false;
-        
-        // Process queued updates
-        while (updateQueue.length > 0) {
-            const resolve = updateQueue.shift();
-            resolve();
-        }
+        return false;
     }
     
-    // Increment view count for a property (globally)
-    async function incrementGlobalViewCount(propertyId) {
-        if (!globalViewCounts[propertyId]) {
-            globalViewCounts[propertyId] = 0;
+    function markAsVisited(propertyId) {
+        const visited = localStorage.getItem(VISITED_KEY);
+        let visitedObj = {};
+        if (visited) {
+            try {
+                visitedObj = JSON.parse(visited);
+            } catch(e) {}
         }
-        globalViewCounts[propertyId]++;
-        
-        // Save to cloud
-        await saveGlobalViewCounts();
-        
-        return globalViewCounts[propertyId];
+        visitedObj[propertyId] = true;
+        localStorage.setItem(VISITED_KEY, JSON.stringify(visitedObj));
     }
     
-    // Get current global view count
-    function getGlobalViewCount(propertyId) {
-        return globalViewCounts[propertyId] || 0;
+    // Increment view count (each click adds 1, no restrictions)
+    function incrementViewCount(propertyId) {
+        let counts = loadViewCounts();
+        counts[propertyId] = (counts[propertyId] || 0) + 1;
+        saveViewCounts(counts);
+        return counts[propertyId];
+    }
+    
+    // Get current view count
+    function getViewCount(propertyId) {
+        const counts = loadViewCounts();
+        return counts[propertyId] || 0;
     }
     
     const properties = [
@@ -980,6 +924,7 @@
         }
     ];
 
+    // Render property cards (INSTANT - no API calls!)
     function renderCards(filteredProps) {
         const grid = document.getElementById('propertiesGrid');
         if (!filteredProps.length) {
@@ -988,7 +933,7 @@
         }
         
         grid.innerHTML = filteredProps.map(prop => {
-            const viewCount = getGlobalViewCount(prop.id);
+            const viewCount = getViewCount(prop.id);
             return `
             <div class="property-card" onclick="openModal('${prop.id}')">
                 <div class="card-img" style="background-image: url('${prop.images[0]}');">
@@ -1000,8 +945,8 @@
                     <div class="card-details"><span>🏠 ${prop.bhk}</span><span>📏 ${prop.size}</span></div>
                     <div class="price">₹${prop.price.toLocaleString()}/month</div>
                     <div class="visitor-counter">
-                        <i class="fas fa-globe"></i> 
-                        <span>🌍 Total Views: <span class="visitor-count" id="viewCount-${prop.id}">${viewCount}</span></span>
+                        <i class="fas fa-eye"></i> 
+                        <span>Views: <span class="visitor-count" id="viewCount-${prop.id}">${viewCount}</span></span>
                     </div>
                     <div class="view-details"><i class="fas fa-eye"></i> View Details</div>
                 </div>
@@ -1014,7 +959,8 @@
         if (counterSpan) {
             counterSpan.innerText = newCount;
         } else {
-            applyFilters();
+            const filtered = getFilteredProperties();
+            renderCards(filtered);
         }
     }
     
@@ -1083,21 +1029,17 @@
     }
     
     let currentProperty = null;
-    async function openModal(propertyId) {
+    function openModal(propertyId) {
         const prop = properties.find(p => p.id === propertyId);
         if (!prop) return;
         
-        // Show loading indicator in modal
-        const modal = document.getElementById('propertyModal');
-        const modalContent = document.getElementById('modalContent');
-        modalContent.innerHTML = '<div style="padding: 2rem; text-align: center;">Loading property details...</div>';
-        modal.classList.add('active');
-        
-        // Increment global view count
-        const newCount = await incrementGlobalViewCount(prop.id);
+        // Increment view count INSTANTLY (no delay)
+        const newCount = incrementViewCount(prop.id);
         updateViewCounterInDOM(prop.id, newCount);
         
         currentProperty = prop;
+        const modal = document.getElementById('propertyModal');
+        const modalContent = document.getElementById('modalContent');
         
         const galleryHtml = prop.images.map(img => `<img class="modal-img" src="${img}" alt="property view" onclick="openFullScreen('${img}')">`).join('');        
         modalContent.innerHTML = `
@@ -1120,12 +1062,13 @@
                     <strong>💰 Monthly Rent:</strong> ₹${prop.price.toLocaleString()} + maintenance as applicable
                 </div>
                 <div class="visitor-counter" style="margin-top: 16px; background: #eef2f8;">
-                    <i class="fas fa-globe"></i> 🌍 Total Global Views: <strong>${newCount}</strong> times
+                    <i class="fas fa-eye"></i> Total Views: <strong>${newCount}</strong> times
                 </div>
                 <button id="sendQueryWhatsAppBtn" class="send-query-btn"><i class="fab fa-whatsapp"></i> Send Query on WhatsApp</button>
             </div>
         `;
         
+        modal.classList.add('active');
         document.body.style.overflow = 'hidden';
         
         const whatsBtn = document.getElementById('sendQueryWhatsAppBtn');
@@ -1157,9 +1100,8 @@
     document.getElementById('applyFilterBtn').addEventListener('click', applyFilters);
     document.getElementById('resetFilterBtn').addEventListener('click', resetFilters);
     
-    // Initialize: Load global counts then render
-    window.addEventListener('DOMContentLoaded', async () => {
-        await loadGlobalViewCounts();
+    // INSTANT LOADING - No delays, no API calls!
+    window.addEventListener('DOMContentLoaded', () => {
         renderCards(properties.slice(0, 5));
     });
 </script>
