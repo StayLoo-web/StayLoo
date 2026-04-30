@@ -978,6 +978,50 @@
                 min-height: 360px;
             }
         }
+        /* Professional gradient - clean modern look */
+.professional-gradient {
+    position: relative;
+    background: linear-gradient(180deg, 
+        #ffffff 0%,
+        #f8fbfd 15%,
+        #eef5f9 30%,
+        #e2eef5 50%,
+        #d4e6ef 70%,
+        #c5dde8 85%,
+        #bdd4e0 100%);
+}
+
+.professional-gradient .feature-card,
+.professional-gradient .card,
+.professional-gradient .testimonial-card {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 10px 25px -8px rgba(17, 90, 122, 0.1);
+}
+
+.professional-gradient footer {
+    background: linear-gradient(135deg, #1a2a35 0%, #0d1f2b 100%);
+    position: relative;
+    z-index: 2;
+    margin-top: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Add floating subtle particles effect (optional eye-catching element) */
+.professional-gradient::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(circle at 20% 30%, rgba(44, 125, 160, 0.08) 2%, transparent 2%),
+                      radial-gradient(circle at 80% 70%, rgba(17, 90, 122, 0.06) 1.5%, transparent 1.5%);
+    background-size: 60px 60px, 80px 80px;
+    pointer-events: none;
+    z-index: 0;
+}
 
         /* ===== FOOTER ===== */
         footer {
@@ -1124,17 +1168,17 @@
     </div>
 
     <section class="hero">
-        <div class="hero-content">
-            <div class="trusted-line">Trusted by 500+ Users</div>
-            <div class="hero-headline">
-                <span class="no-brokers">No Brokers.</span>
-                <div class="headline-group">
-                    <span class="find-verified">Find Verified Rooms</span>
-                    <span class="blue-easily">Easily.</span>
-                </div>
-            </div>
+     <div class="hero-content">
+    <div class="hero-headline">
+        <span class="no-brokers">No Brokers.</span>
+        <div class="headline-group">
+            <span class="find-verified">Find Verified Rooms</span>
+            <span class="blue-easily">Easily.</span>
+        </div>
+    </div>
+    <div class="trusted-line">Trusted by 500+ Users</div>
             <div class="hero-description">
-                Browse trusted listings or list your space in minutes – fast, simple, and direct.
+                Real owners. Zero brokerage. Instant contact
             </div>
             <div class="hero-buttons">
                 <a href="Browse-spaces" class="btn btn-primary"><span class="btn-icon">🔍</span> Find a Room</a>
@@ -1155,12 +1199,14 @@
                     <div class="feature-item">
                         <span class="feature-icon">⚡</span>
                         <span>Quick Connect</span>
+                    <span class="separator">|</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
     
+    <div class="professional-gradient">
     <section class="why-stayloo">
         <div class="section-header">
             <h2>Why Choose StayLoo?</h2>
@@ -1389,6 +1435,7 @@
             </div>
         </div>
     </footer>
+    </div>
 
     <script>
         (function() {
