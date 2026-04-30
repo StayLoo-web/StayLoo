@@ -85,25 +85,27 @@
         }    
 
         /* ===== Header Styles ===== */
-         .site-header {
-      background: #ffffff;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
-      border-bottom: 1px solid #eef2f8;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
+      .site-header {
+  background: #ffffff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid #eef2f8;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: transform 0.3s ease; /* Add smooth transition for hide/show */
+}
 
-    .header-container {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0.9rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
+   .header-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0.9rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  min-height: 80px; /* Fixed minimum height */
+}
 
     /* Logo image – no text stickers, pure picture */
     .logo-img {
@@ -1036,6 +1038,15 @@
     .testimonial-track::-webkit-scrollbar {
       display: none;
     }
+        
+        /* Header hide/show on scroll */
+.site-header.hide-header {
+  transform: translateY(-100%);
+}
+
+.site-header.show-header {
+  transform: translateY(0);
+}
 
     /* Responsive - Desktop: 3 cards, Tablet: 2 cards, Mobile: 1 card */
     @media (min-width: 768px) {
@@ -2121,6 +2132,62 @@ button:hover {
                 this.classList.add('active');
             });
         });
+        // Auto-hide header on scroll down, show on scroll up
+(function() {
+  let lastScrollTop = 0;
+  const header = document.querySelector('.site-header');
+  let scrollTimeout;
+  
+  // Add a small delay before hiding to ensure smooth experience
+  let isScrolling = false;
+  
+  window.addEventListener('scroll', function() {
+    if (!header) return;
+    
+    let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+    
+    // Clear previous timeout
+    clearTimeout(scrollTimeout);
+    
+    // Don't hide at the very top of page
+    if (currentScroll <= 10) {
+      header.classList.remove('hide-header');
+      header.classList.add('show-header');
+      lastScrollTop = currentScroll;
+      return;
+    }
+    
+    // Detecting scroll direction
+    if (currentScroll > lastScrollTop + 5) {
+      // Scrolling DOWN - hide header
+      header.classList.add('hide-header');
+      header.classList.remove('show-header');
+    } 
+    else if (currentScroll < lastScrollTop - 5) {
+      // Scrolling UP - show header
+      header.classList.remove('hide-header');
+      header.classList.add('show-header');
+    }
+    
+    lastScrollTop = currentScroll;
+    
+    // Optional: Show header when scrolling stops
+    scrollTimeout = setTimeout(function() {
+      if (currentScroll > 50) {
+        header.classList.remove('hide-header');
+        header.classList.add('show-header');
+      }
+    }, 150);
+  });
+  
+  // Also show header on mouse move near top of screen
+  window.addEventListener('mousemove', function(e) {
+    if (e.clientY < 50) {
+      header.classList.remove('hide-header');
+      header.classList.add('show-header');
+    }
+  });
+})();
         
         // Update active dot on scroll
         slider.addEventListener('scroll', function() {
