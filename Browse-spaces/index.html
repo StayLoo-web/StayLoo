@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
   <title>StayLoo | Find Your Perfect Space</title>
-  <!-- Google Fonts: Modern font theme (Plus Jakarta Sans + Outfit) -->
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -33,17 +32,17 @@
       padding: 0 28px;
     }
 
-    /* ========= HEADER ========= */
+    /* ========= HEADER - SMALLER VERSION ========= */
     .site-header {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(255, 255, 255, 0.96);
+      background: rgba(255, 255, 255, 0.98);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(150, 175, 195, 0.25);
       transition: transform 0.35s ease-in-out, box-shadow 0.2s;
       transform: translateY(0);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
     }
     .site-header.hide-header {
       transform: translateY(-100%);
@@ -53,15 +52,16 @@
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      padding: 0.9rem 0;
+      padding: 0.5rem 0;
       gap: 1rem;
+      min-height: 65px;
     }
-    /* Logo with new color */
+    /* Smaller Logo */
     .logo-text {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 28px;
+      gap: 6px;
+      font-size: 22px;
       font-weight: 800;
       font-family: 'Outfit', sans-serif;
       background: linear-gradient(135deg, #1e4a62, #3a7f9e);
@@ -73,13 +73,13 @@
     .logo-text i {
       background: none;
       color: #3a7f9e;
-      font-size: 28px;
+      font-size: 24px;
     }
 
-    /* Desktop navigation links */
+    /* Desktop navigation links - smaller font */
     .nav-links {
       display: flex;
-      gap: 2rem;
+      gap: 1.5rem;
       align-items: center;
       flex-wrap: wrap;
     }
@@ -88,29 +88,12 @@
       font-weight: 600;
       color: #2c5a72;
       transition: 0.2s ease;
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       font-family: 'Outfit', sans-serif;
       cursor: pointer;
     }
     .nav-links a:hover {
       color: #1f7b9e;
-    }
-    .cta-list {
-      background: linear-gradient(105deg, #1e4a62, #357a9a);
-      color: white;
-      border: none;
-      padding: 8px 24px;
-      border-radius: 40px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: 0.2s;
-      font-family: 'Outfit', sans-serif;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-    .cta-list:hover {
-      background: linear-gradient(105deg, #153c4f, #2a6682);
-      transform: translateY(-1px);
     }
 
     /* ========= MOBILE HAMBURGER MENU ========= */
@@ -119,13 +102,13 @@
       background: none;
       border: none;
       cursor: pointer;
-      padding: 8px;
+      padding: 6px;
       z-index: 1100;
-      border-radius: 12px;
+      border-radius: 10px;
       transition: background 0.2s;
     }
     .hamburger i {
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       color: #1e4a62;
     }
     .hamburger:hover {
@@ -136,17 +119,17 @@
       top: 0;
       left: 0;
       width: 80%;
-      max-width: 300px;
+      max-width: 280px;
       height: 100%;
       background: white;
       box-shadow: 4px 0 24px rgba(0,0,0,0.1);
       z-index: 2000;
       transform: translateX(-100%);
       transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      padding: 2rem 1.5rem;
+      padding: 1.8rem 1.3rem;
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1.2rem;
       border-right: 1px solid #e2ecf5;
     }
     .mobile-menu.open {
@@ -154,28 +137,23 @@
     }
     .mobile-menu a {
       text-decoration: none;
-      font-size: 1.2rem;
+      font-size: 1rem;
       font-weight: 600;
       color: #1e4a62;
-      padding: 0.6rem 0;
+      padding: 0.5rem 0;
       border-bottom: 1px solid #e9f0f5;
       display: block;
       font-family: 'Outfit', sans-serif;
       cursor: pointer;
     }
-    .mobile-menu a:active {
-      background: #eef3fc;
-      border-radius: 12px;
-      padding-left: 8px;
-    }
     .close-menu {
       background: none;
       border: none;
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       align-self: flex-end;
       cursor: pointer;
       color: #1e4a62;
-      margin-bottom: 1rem;
+      margin-bottom: 0.8rem;
     }
     .overlay-blur {
       position: fixed;
@@ -198,7 +176,7 @@
     /* ========= HERO SECTION ========= */
     .hero {
       position: relative;
-      padding: 100px 0 110px;
+      padding: 80px 0 90px;
       margin: 20px 0 40px;
       background: linear-gradient(125deg, rgba(30, 50, 65, 0.65), rgba(45, 70, 85, 0.7)), url('https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=1600');
       background-size: cover;
@@ -215,20 +193,20 @@
     }
 
     .hero h1 {
-      font-size: clamp(2.8rem, 7vw, 4.5rem);
+      font-size: clamp(2.5rem, 6vw, 4rem);
       font-weight: 800;
       font-family: 'Outfit', sans-serif;
       letter-spacing: -0.02em;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       color: white;
       text-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
     }
 
     .hero p {
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       font-weight: 500;
       color: rgba(255, 255, 255, 0.92);
-      margin-bottom: 42px;
+      margin-bottom: 38px;
       max-width: 650px;
       margin-left: auto;
       margin-right: auto;
@@ -239,17 +217,17 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 20px;
-      margin-top: 35px;
+      gap: 18px;
+      margin-top: 30px;
     }
 
     .city-badge {
       background: rgba(255, 255, 255, 0.18);
       backdrop-filter: blur(8px);
-      padding: 14px 32px;
+      padding: 12px 28px;
       border-radius: 60px;
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 0.95rem;
       cursor: pointer;
       transition: 0.25s ease;
       border: 1px solid rgba(255, 255, 255, 0.35);
@@ -267,26 +245,53 @@
       display: inline-flex;
       background: rgba(0, 0, 0, 0.45);
       backdrop-filter: blur(6px);
-      padding: 10px 24px;
+      padding: 8px 20px;
       border-radius: 80px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 600;
       gap: 8px;
-      margin-top: 38px;
+      margin-top: 32px;
       color: white;
       border: 1px solid rgba(255, 255, 255, 0.25);
     }
 
-    /* Section Headings */
-    .section-title {
-      font-size: 2rem;
-      font-weight: 700;
+    /* ========= PROFESSIONAL SECTION HEADER ========= */
+    .section-header {
+      text-align: center;
+      margin: 50px 0 35px;
+      position: relative;
+    }
+    .section-header .subtitle {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #3a7f9e;
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: inline-block;
+      background: rgba(58, 127, 158, 0.1);
+      padding: 0.25rem 1rem;
+      border-radius: 50px;
+    }
+    .section-header h2 {
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      font-weight: 800;
       font-family: 'Outfit', sans-serif;
-      margin: 48px 0 32px 0;
-      letter-spacing: -0.3px;
-      color: #1f4a60;
+      background: linear-gradient(135deg, #1e4a62, #3a7f9e);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.02em;
+    }
+    .section-header .underline {
+      width: 70px;
+      height: 3px;
+      background: linear-gradient(90deg, #1e4a62, #3a7f9e);
+      margin: 12px auto 0;
+      border-radius: 3px;
     }
 
+    /* Trending Grid */
     .trending-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
@@ -313,7 +318,7 @@
 
     .card-img {
       width: 100%;
-      height: 230px;
+      height: 220px;
       object-fit: cover;
       transition: transform 0.4s ease;
     }
@@ -323,13 +328,13 @@
     }
 
     .card-body {
-      padding: 20px 20px 24px;
+      padding: 18px 18px 22px;
     }
 
     .card-title {
       font-weight: 800;
-      font-size: 1.35rem;
-      margin-bottom: 6px;
+      font-size: 1.3rem;
+      margin-bottom: 5px;
       font-family: 'Outfit', sans-serif;
       color: #1e4d64;
     }
@@ -352,7 +357,7 @@
 
     .price {
       font-weight: 800;
-      font-size: 1.45rem;
+      font-size: 1.4rem;
       color: #2b7a9c;
       margin: 10px 0;
     }
@@ -396,9 +401,9 @@
 
     /* Tell Us Section */
     .tell-section {
-      background: #eef2f8;
+      background: linear-gradient(135deg, #eef2f8, #e5ecf3);
       border-radius: 48px;
-      padding: 54px 32px;
+      padding: 50px 32px;
       text-align: center;
       margin: 40px 0 60px;
       border: 1px solid #dde5ef;
@@ -406,16 +411,18 @@
 
     .tell-section h2 {
       color: #1f4a60;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.8rem;
     }
 
     .tell-btn {
       background: linear-gradient(105deg, #1e4a62, #357a9a);
       border: none;
-      padding: 14px 36px;
+      padding: 12px 32px;
       border-radius: 50px;
       color: white;
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 0.95rem;
       margin-top: 20px;
       cursor: pointer;
       transition: 0.2s;
@@ -428,38 +435,91 @@
       background: linear-gradient(105deg, #153c4f, #2a6682);
     }
 
-    /* Footer */
+    /* ========= FOOTER - MATCHING IMAGE DESIGN ========= */
     .footer {
-      border-top: 1px solid #dae3ec;
-      padding: 48px 0 32px;
-      background: #f8fafd;
+      background: #1a2e3f;
+      padding: 50px 0 30px;
+      color: #e8f0f5;
     }
 
     .footer-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 40px;
+      margin-bottom: 40px;
+      text-align: left; 
+    }
+
+    .footer-col h4 {
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      font-family: 'Outfit', sans-serif;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .footer-col h4:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: #3a7f9e;
+      border-radius: 2px;
     }
 
     .footer-col a {
       display: block;
       text-decoration: none;
-      color: #4d7087;
-      margin: 8px 0;
+      color: #b8d0de;
+      margin: 10px 0;
       transition: color 0.2s;
       font-weight: 500;
+      font-size: 0.9rem;
       cursor: pointer;
     }
 
     .footer-col a:hover {
-      color: #2b7a9c;
+      color: #5fbbd6;
+      padding-left: 5px;
+    }
+
+    .footer-col p {
+      color: #b8d0de;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-top: 10px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
+    .footer-logo i {
+      font-size: 28px;
+      color: #5fbbd6;
+    }
+
+    .footer-logo span {
+      font-size: 24px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff, #5fbbd6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
     .copyright {
       text-align: center;
-      padding-top: 40px;
-      color: #6b8ea3;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: #9bb7c8;
       font-size: 0.8rem;
     }
 
@@ -626,20 +686,20 @@
         justify-content: center;
       }
       .hero {
-        padding: 60px 0 70px;
+        padding: 50px 0 60px;
         margin: 16px 0 30px;
         border-radius: 32px;
       }
       .hero h1 {
-        font-size: 1.9rem;
+        font-size: 1.8rem;
       }
       .hero p {
-        font-size: 1rem;
+        font-size: 0.95rem;
         padding: 0 8px;
       }
       .city-badge {
-        padding: 10px 22px;
-        font-size: 0.85rem;
+        padding: 8px 18px;
+        font-size: 0.8rem;
       }
       .trending-grid {
         gap: 22px;
@@ -647,6 +707,18 @@
       .gallery-img {
         width: 90px;
         height: 80px;
+      }
+      .section-header h2 {
+        font-size: 1.6rem;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: left;
+      }
+      .footer-col h4:after {
+        left: 0;
+        transform: none
       }
     }
   </style>
@@ -666,12 +738,12 @@
   <a href="../Tell-us/">Tell Us</a>
 </div>
 
-<!-- Sticky Header -->
+<!-- Sticky Header - Smaller Version -->
 <header id="mainHeader" class="site-header">
   <div class="container">
     <div class="nav-flex">
       <div class="logo-text">
-  <img src="/images/logo1.png" alt="StayLoo Logo" style="height: 60px; width: auto;">
+        <i class="fas fa-home"></i> StayLoo
       </div>
       <button class="hamburger" id="hamburgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
       <div class="nav-links">
@@ -679,7 +751,7 @@
         <a href="../pricing-queries/">Pricing & Queries</a>
         <a href="../contact-us/">Contact Us</a>
         <a href="../about-us/">About Us</a>
-  <a href="../Tell-us/">Tell Us</a>
+        <a href="../Tell-us/">Tell Us</a>
       </div>
     </div>
   </div>
@@ -702,9 +774,13 @@
     </section>
   </div>
 
-  <!-- Trending Spaces Section -->
+  <!-- Trending Spaces Section - Professional Header -->
   <div class="container">
-    <h2 class="section-title">🔥 Trending Spaces in Lucknow</h2>
+    <div class="section-header">
+      <div class="subtitle">🔥 Hot Properties</div>
+      <h2>Trending Spaces in Lucknow</h2>
+      <div class="underline"></div>
+    </div>
     <div id="cardsGrid" class="trending-grid"></div>
   </div>
 
@@ -718,27 +794,40 @@
   </div>
 </main>
 
+<!-- Footer - Matching Image Design -->
 <footer class="footer">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-col">
-        <div class="logo-text" style="font-size: 24px;"><i class="fas fa-home"></i> StayLoo</div>
-        <p style="margin-top: 12px; color:#4d7087;">Find your space, hassle-free.<br>Rent smarter with direct connections.</p>
+        <div class="footer-logo">
+          <i class="fas fa-home"></i>
+          <span>StayLoo</span>
+        </div>
+        <p>Connecting people with their perfect living spaces. Our mission is to make finding and listing rental properties simple and stress-free.</p>
       </div>
       <div class="footer-col">
-        <h4 style="color:#1f4a60;">Quick Links</h4>
+        <h4>Quick Links</h4>
+        <a href="../Browse-spaces/">Browse Spaces</a>
         <a href="../list-space/">List Your Space</a>
-        <a href="../Tell-us/">Tell Us</a>
-        <a href="#">Trending</a>
+        <a href="../about-us/">About Us</a>
+        <a href="../contact-us/">Contact Us</a>
       </div>
       <div class="footer-col">
-        <h4 style="color:#1f4a60;">Company</h4>
-        <a href="../about-us/">About StayLoo</a>
-        <a href="../contact-us/">Contact</a>
-        <a href="../list-space/">List Your Space</a>
+        <h4>Property Types</h4>
+        <a href="../View-flats/">Flats/Apartments</a>
+        <a href="../View-houses/">Houses</a>
+        <a href="../View-PGs/">PGs/Hostels</a>
+        <a href="../View-rooms/">Normal Rooms</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <p><i class="fas fa-map-marker-alt"></i> Lucknow, India</p>
+        <p><i class="fas fa-envelope"></i> info.stayloo@gmail.com</p>
       </div>
     </div>
-    <div class="copyright">© 2025 StayLoo — Zero brokerage rental platform</div>
+    <div class="copyright">
+      <p>&copy; 2026 StayLoo. All rights reserved. | <a href="../privacy-policies/" style="color:#9bb7c8;">Privacy Policy</a> | <a href="../Terms-conditions/" style="color:#9bb7c8;">Terms and Conditions</a></p>
+    </div>
   </div>
 </footer>
 
@@ -800,15 +889,13 @@
       document.body.style.overflow = ''; 
     }
     
-    hamburger.addEventListener('click', openMenu);
-    closeDrawerBtn.addEventListener('click', closeMenu);
-    overlay.addEventListener('click', closeMenu);
+    if (hamburger) hamburger.addEventListener('click', openMenu);
+    if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeMenu);
+    if (overlay) overlay.addEventListener('click', closeMenu);
     
-    // Close mobile menu when clicking any link inside it
     document.querySelectorAll('.mobile-menu a').forEach(link => link.addEventListener('click', closeMenu));
 
-    // ========== PAGE NAVIGATION - ALL BUTTONS WORK ==========
-    // Function to navigate to different pages
+    // Navigation function
     function navigateTo(url) {
       if (url && url !== '#' && url !== '') {
         window.location.href = url;
@@ -820,19 +907,7 @@
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const href = link.getAttribute('href');
-        if (href && href !== '#') {
-          navigateTo(href);
-        }
-      });
-    });
-
-    // Mobile menu links
-    document.querySelectorAll('.mobile-menu a').forEach(link => {
-      link.addEventListener('click', (e) => {
-        const href = link.getAttribute('href');
-        if (href && href !== '#') {
-          navigateTo(href);
-        }
+        if (href && href !== '#') navigateTo(href);
       });
     });
 
@@ -841,18 +916,15 @@
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const href = link.getAttribute('href');
-        if (href && href !== '#') {
-          navigateTo(href);
-        }
+        if (href && href !== '#') navigateTo(href);
       });
     });
 
-    // ========== LUCKNOW CITY BUTTON - DIRECT REDIRECT (NO ALERT) ==========
+    // Lucknow city button
     const lucknowBtn = document.getElementById('lucknowCityBtn');
     if (lucknowBtn) {
       lucknowBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        // Directly go to Lucknow page - NO "coming soon" alert
         window.location.href = "../View-in-Lucknow";
       });
     }
@@ -866,15 +938,7 @@
       });
     }
 
-    // List Your Space Button (Top Right CTA)
-    const listSpaceBtn = document.getElementById('listSpaceBtn');
-    if (listSpaceBtn) {
-      listSpaceBtn.addEventListener('click', () => {
-        navigateTo('../list-space/');
-      });
-    }
-
-    // ========== PROPERTIES DATA ==========
+    // Properties Data
     const properties = [
       { id: "STL101", title: "1BHK Flat", location: "Gomti Nagar, Lucknow", price: 12000, images: ["https://picsum.photos/id/152/600/400", "https://picsum.photos/id/169/600/400", "https://picsum.photos/id/175/600/400"], tags: ["Verified", "Popular"], bedrooms: 1, bathroom: 1, furnishing: "Semi-furnished", nearby: "Metro, Food Plaza", description: "Spacious 1BHK with power backup & parking. Close to shopping malls." },
       { id: "STL202", title: "2BHK Premium", location: "Hazratganj, Lucknow", price: 22000, images: ["https://picsum.photos/id/20/600/400", "https://picsum.photos/id/26/600/400", "https://picsum.photos/id/28/600/400"], tags: ["New", "Popular"], bedrooms: 2, bathroom: 2, furnishing: "Fully furnished", nearby: "Restaurants, Mall", description: "Luxury interiors, modular kitchen, prime location." },
@@ -952,7 +1016,7 @@
     document.getElementById('closeFullscreen')?.addEventListener('click', closeFullscreen);
     document.getElementById('fullscreenViewer')?.addEventListener('click', (e) => { if (e.target === document.getElementById('fullscreenViewer')) closeFullscreen(); });
 
-    // Initialize cards
+    // Initialize
     renderCards();
   })();
 </script>
