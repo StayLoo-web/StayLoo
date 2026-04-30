@@ -978,49 +978,65 @@
                 min-height: 360px;
             }
         }
-        /* Professional gradient - clean modern look */
-.professional-gradient {
+        /* Add to your style section */
+.ocean-gradient {
     position: relative;
     background: linear-gradient(180deg, 
         #ffffff 0%,
-        #f8fbfd 15%,
-        #eef5f9 30%,
-        #e2eef5 50%,
-        #d4e6ef 70%,
-        #c5dde8 85%,
-        #bdd4e0 100%);
+        #e8f4f8 15%,
+        #b8dee8 30%,
+        #7fc1d4 50%,
+        #4a9eb8 70%,
+        #2c7da0 85%,
+        #1b4965 100%);
 }
 
-.professional-gradient .feature-card,
-.professional-gradient .card,
-.professional-gradient .testimonial-card {
+.ocean-gradient .feature-card,
+.ocean-gradient .card,
+.ocean-gradient .testimonial-card {
     background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(2px);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 10px 25px -8px rgba(17, 90, 122, 0.1);
+    box-shadow: 0 10px 30px rgba(27, 73, 101, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.7);
 }
 
-.professional-gradient footer {
-    background: linear-gradient(135deg, #1a2a35 0%, #0d1f2b 100%);
-    position: relative;
-    z-index: 2;
-    margin-top: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+.ocean-gradient .feature-card h3,
+.ocean-gradient .card-content h3 {
+    color: #1b4965;
 }
 
-/* Add floating subtle particles effect (optional eye-catching element) */
-.professional-gradient::before {
+.ocean-gradient footer {
+    background: transparent;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ocean-gradient .footer-column h3,
+.ocean-gradient .footer-bottom {
+    color: white;
+}
+
+.ocean-gradient .footer-column h3:after {
+    background: #60a5fa;
+}
+
+.ocean-gradient .footer-column ul li a,
+.ocean-gradient .footer-bottom a {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.ocean-gradient .footer-column ul li a:hover {
+    color: white;
+}
+
+/* Subtle wave decoration */
+.ocean-gradient::before {
     content: '';
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
     right: 0;
-    bottom: 0;
-    background-image: radial-gradient(circle at 20% 30%, rgba(44, 125, 160, 0.08) 2%, transparent 2%),
-                      radial-gradient(circle at 80% 70%, rgba(17, 90, 122, 0.06) 1.5%, transparent 1.5%);
-    background-size: 60px 60px, 80px 80px;
+    height: 100px;
+    background: linear-gradient(180deg, transparent, rgba(255,255,255,0.1));
     pointer-events: none;
-    z-index: 0;
 }
 
         /* ===== FOOTER ===== */
@@ -1206,7 +1222,7 @@
         </div>
     </section>
     
-    <div class="professional-gradient">
+    <div class="ocean-gradient">
     <section class="why-stayloo">
         <div class="section-header">
             <h2>Why Choose StayLoo?</h2>
