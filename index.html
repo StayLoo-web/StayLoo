@@ -91,6 +91,7 @@
             top: 0;
             left: 0;
             right: 0;
+            width: 100%;
             z-index: 1000;
             transition: transform 0.3s ease-in-out;
         }
@@ -111,15 +112,16 @@
         }
 
         .header-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0.5rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
+    max-width: 100%;  /* Changed from 1280px to 100% */
+    width: 100%;
+    margin: 0 auto;
+    padding: 0.5rem 3rem;  /* Increased horizontal padding */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
 
         /* Logo image - fixed size without increasing header */
         .logo-img {
