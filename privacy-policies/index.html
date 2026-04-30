@@ -2,106 +2,482 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - STAYLOO</title>
-    <link rel="icon" type="image/png" href="../images/FEVICON.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>StayLoo | Privacy Policy — Your Data, Our Commitment</title>
+    <link rel="icon" type="image/png" href="../images/logo.png">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        * {
+            -webkit-tap-highlight-color: transparent !important;
+        }
+        a, button, [onclick] { 
+            text-decoration: none !important; 
+            outline: none !important; 
+            -webkit-tap-highlight-color: transparent !important; 
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #000000;
-            background-color: #ffffff;
-            max-width: 1000px;
+            font-family: 'Inter', sans-serif;
+            background: #fafcfd;
+            color: #0a2540;
+            line-height: 1.5;
+        }
+
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            flex: 1;
+        }
+
+        .container {
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 2rem 1.5rem 2rem;
         }
-        
-        h1 {
-            color: #4361ee;
+
+        /* HEADER with centered logo */
+        .header-centered {
             text-align: center;
-            font-size: 2.5em;
-            margin-bottom: 30px;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(44, 125, 160, 0.2);
         }
-        
-        h2 {
-            color: #4361ee;
-            margin-top: 25px;
-            font-size: 1.5em;
+
+        .logo-centered {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: transparent;
+            padding: 0.25rem 1rem;
         }
-        
-        p, ul {
-            margin-bottom: 15px;
+
+        .logo-img {
+            height: 58px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.03));
+            background: transparent;
         }
-        
-        ul {
-            padding-left: 20px;
+
+        .logo-text {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0f2b3d, #1c6a8f);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
         }
-        
+
+        /* Privacy Hero */
+        .privacy-hero {
+            background: linear-gradient(120deg, #ffffff 0%, #f1f7fc 100%);
+            border-radius: 2rem;
+            padding: 2rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.05);
+            border: 1px solid rgba(44,125,160,0.1);
+        }
+
+        .privacy-hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1b4f6e, #135b7c);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
         .last-updated {
-            font-style: italic;
-            text-align: right;
-            margin-top: 40px;
+            display: inline-block;
+            background: rgba(28,106,143,0.1);
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #1c6a8f;
+            margin-top: 0.5rem;
+        }
+
+        .privacy-card {
+            background: white;
+            border-radius: 1.8rem;
+            padding: 2rem 2rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.03);
+            border: 1px solid #eef3f8;
+            margin-bottom: 2rem;
+        }
+
+        .privacy-section {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #eef2f6;
+            padding-bottom: 1.5rem;
+        }
+
+        .privacy-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .privacy-section h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0f2b3d;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .privacy-section h2 i {
+            color: #1c6a8f;
+            font-size: 1.4rem;
+        }
+
+        .privacy-section h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 1rem 0 0.5rem;
+            color: #1c5a7a;
+        }
+
+        .privacy-section p, .privacy-section li {
+            color: #345e7e;
+            line-height: 1.6;
+            margin-bottom: 0.75rem;
+        }
+
+        .privacy-section ul {
+            margin-left: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .privacy-section li {
+            margin-bottom: 0.4rem;
+        }
+
+        .info-badge {
+            background: #eef4fa;
+            border-radius: 30px;
+            padding: 0.2rem 0.9rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #1c6a8f;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .contact-privacy-block {
+            background: #f8fafd;
+            padding: 1.2rem;
+            border-radius: 1.2rem;
+            margin-top: 1rem;
+            border-left: 4px solid #1c6a8f;
+        }
+
+        .cookie-note {
+            background: #fef9e6;
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            border: 1px solid #ffe1b3;
+        }
+
+        .cta-section-mini {
+            background: linear-gradient(125deg, #0a1e2c 0%, #14455f 100%);
+            border-radius: 2rem;
+            padding: 2rem 2rem;
+            text-align: center;
+            margin: 2rem 0 1rem;
+            color: white;
+        }
+
+        .cta-section-mini h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .main-footer {
+            background: #0a1e2c;
+            margin-top: 3rem;
+            padding: 2.5rem 1.5rem 1.8rem;
+            color: #cbdde9;
+        }
+
+        .footer-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .footer-col {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .footer-col h5 {
+            color: white;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-col a {
+            display: block;
+            color: #bdd3e6;
+            text-decoration: none;
+            margin-bottom: 0.6rem;
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+
+        .footer-col a:hover {
+            color: white;
+            text-decoration: underline;
+            transform: translateX(3px);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            font-size: 1.2rem;
+            margin-bottom: 0;
+        }
+
+        .copyright {
+            text-align: center;
+            border-top: 1px solid #1f4057;
+            padding-top: 1.8rem;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #8da3b5;
+        }
+
+        @media (max-width: 780px) {
+            .container {
+                padding: 1.2rem;
+            }
+            .privacy-hero h1 {
+                font-size: 2rem;
+            }
+            .privacy-card {
+                padding: 1.5rem;
+            }
+            .privacy-section h2 {
+                font-size: 1.4rem;
+            }
+            .logo-img {
+                height: 48px;
+            }
+            .logo-text {
+                font-size: 1.6rem;
+            }
+            .footer-inner {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-centered {
+                flex-direction: column;
+                gap: 6px;
+            }
+            .privacy-card {
+                padding: 1.2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>STAYLOO</h1>
-    <h1>Privacy Policy</h1>
-    
-    <p>Last Updated: 10th July 2025</p>
-    
-    <p>Welcome to STAYLOO ("we," "our," or "us"). We are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our platform to list or rent rooms.</p>
-    
-    <h2>1. Information We Collect</h2>
-    <p>We may collect the following types of information:</p>
-    <ul>
-        <li><strong>Personal Information:</strong> Name, email address, phone number, payment information,list a room, or book a stay.</li>
-        <li><strong>Property Information:</strong> Details about rooms or properties being listed, including address, photos, descriptions, and amenities.</li>
-        <li><strong>Usage Data:</strong> Information about how you interact with our website, including IP address, browser type, pages visited, and search queries.</li>
-        <li><strong>Communication Data:</strong> Messages with our support team.</li>
-    </ul>
-    
-    <h2>2. How We Use Your Information</h2>
-    <p>We use the information we collect to:</p>
-    <ul>
-        <li>Provide, operate, and maintain our platform</li>
-        <li>Verify user identities and prevent fraud</li>
-        <li>Communicate with you about bookings, listings, and platform updates</li>
-        <li>Improve our services and develop new features</li>
-        <li>Comply with legal obligations and resolve disputes</li>
-    </ul>
-    
-    <h2>3. Sharing of Information</h2>
-    <p>We may share your information in the following circumstances:</p>
-    <ul>
-        <li>Between hosts and guests to facilitate bookings (contact information is shared only after a booking is confirmed)</li>
-        <li>When required by law or to protect our rights and safety</li>
-        <li>In connection with a business transfer, such as a merger or acquisition</li>
-    </ul>
-    
-    <h2>4. Data Security</h2>
-    <p>We implement appropriate technical and organizational measures to protect your personal information. However, no internet transmission or electronic storage is completely secure, so we cannot guarantee absolute security.</p>
-    
-    <h2>5. Your Rights and Choices</h2>
-    <p>Depending on your location, you may have certain rights regarding your personal information, including:</p>
-    <ul>
-        <li>Accessing, correcting, or deleting your information</li>
-        <li>Objecting to or restricting certain processing</li>
-        <li>Withdrawing consent where applicable</li>
-    </ul>
-    <p>You can manage many aspects of your information through contacting us.</p>
-    
-    <h2>6. Cookies and Tracking Technologies</h2>
-    <p>We use cookies and similar technologies to enhance your experience, analyze usage, and deliver personalized content. You can control cookies through your browser settings.</p>
-    
-    <h2>7. Changes to This Policy</h2>
-    <p>We may update this Privacy Policy periodically. We will notify you of significant changes through our platform or by email.</p>
-    
-    <h2>8. Contact Us</h2>
-    <p>If you have any questions about this Privacy Policy, please </p>
-    <p>Contact us at:  info.stayloo@gmail.com</p>
-    <p>Mailing Address: Lucknow,India</p>
-    
-    <p class="last-updated">StayLoo· 2025</p>
+<div class="page-wrapper">
+    <div class="main-content">
+        <div class="container">
+            <!-- Header with centered logo (exactly like About page / Terms) -->
+            <div class="header-centered">
+                <div class="logo-centered">
+                    <img class="logo-img" src="../images/logonew1.png" alt="StayLoo Logo" style="background: transparent;">
+                </div>
+            </div>
+
+            <!-- Privacy Hero Section -->
+            <div class="privacy-hero">
+                <h1>Privacy Policy</h1>
+                <div class="last-updated"><i class="fas fa-calendar-alt"></i> Last Updated: 10th July 2025</div>
+                <p style="margin-top: 1rem; color: #2c5a7a; font-weight: 500;">Welcome to STAYLOO ("we," "our," or "us"). We are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our platform to list or rent rooms.</p>
+            </div>
+
+            <!-- Main Privacy Content Card -->
+            <div class="privacy-card">
+                <!-- Section 1 -->
+                <div class="privacy-section">
+                    <h2><i class="fas fa-database"></i> 1. Information We Collect</h2>
+                    <p>We may collect the following types of information:</p>
+                    <ul>
+                        <li><strong>Personal Information:</strong> Name, email address, phone number, payment information, list a room, or book a stay.</li>
+                        <li><strong>Property Information:</strong> Details about rooms or properties being listed, including address, photos, descriptions, and amenities.</li>
+                        <li><strong>Usage Data:</strong> Information about how you interact with our website, including IP address, browser type, pages visited, and search queries.</li>
+                        <li><strong>Communication Data:</strong> Messages with our support team.</li>
+                    </ul>
+                </div>
+
+                <!-- Section 2 -->
+                <div class="privacy-section">
+                    <h2><i class="fas fa-chart-line"></i> 2. How We Use Your Information</h2>
+                    <p>We use the information we collect to:</p>
+                    <ul>
+                        <li>Provide, operate, and maintain our platform</li>
+                        <li>Verify user identities and prevent fraud</li>
+                        <li>Communicate with you about bookings, listings, and platform updates</li>
+                        <li>Improve our services and develop new features</li>
+                        <li>Comply with legal obligations and resolve disputes</li>
+                    </ul>
+                </div>
+
+                <!-- Section 3 -->
+                <div class="privacy-section">
+                    <h2><i class="fas fa-share-alt"></i> 3. Sharing of Information</h2>
+                    <p>We may share your information in the following circumstances:</p>
+                    <ul>
+                        <li>Between hosts and guests to facilitate bookings (contact information is shared only after a booking is confirmed)</li>
+                        <li>When required by law or to protect our rights and safety</li>
+                        <li>In connection with a business transfer, such as a merger or acquisition</li>
+                    </ul>
+                </div>
+
+                <!-- Section 4 -->
+                <div class="privacy-section">
+                    <h2><i class="fas fa-shield-hooded"></i> 4. Data Security</h2>
+                    <p>We implement appropriate technical and organizational measures to protect your personal information. However, no internet transmission or electronic storage is completely secure, so we cannot guarantee absolute security.</p>
+                    <div class="info-badge" style="background:#e0f2e9;"><i class="fas fa-lock"></i> SSL encryption & secure servers</div>
+                </div>
+
+                <!-- Section 5 -->
+                <div class="privacy-section">
+                    <h2><i class="fas fa-user-check"></i> 5. Your Rights and Choices</h2>
+                    <p>Depending on your location, you may have certain rights regarding your personal information, including:</p>
+                    <ul>
+                        <li>Accessing, correcting, or deleting your information</li>
+                        <li>Objecting to or restricting certain processing</li>
+                        <li>Withdrawing consent where applicable</li>
+                    </ul>
+                    <p>You can manage many aspects of your information through contacting us.</p>
+                </div>
+
+                <!-- Section 6 -->
+                <div class="privacy-section">
+                    <h2><i class="fas fa-cookie-bite"></i> 6. Cookies and Tracking Technologies</h2>
+                    <p>We use cookies and similar technologies to enhance your experience, analyze usage, and deliver personalized content. You can control cookies through your browser settings.</p>
+                    <div class="cookie-note">
+                        <i class="fas fa-info-circle" style="color:#1c6a8f;"></i> By using StayLoo, you consent to the use of essential and functional cookies. Manage preferences anytime via browser settings.
+                    </div>
+                </div>
+
+                <!-- Section 7 -->
+                <div class="privacy-section">
+                    <h2><i class="fas fa-edit"></i> 7. Changes to This Policy</h2>
+                    <p>We may update this Privacy Policy periodically. We will notify you of significant changes through our platform or by email.</p>
+                </div>
+
+                <!-- Section 8 Contact -->
+                <div class="privacy-section">
+                    <h2><i class="fas fa-address-card"></i> 8. Contact Us</h2>
+                    <div class="contact-privacy-block">
+                        <p>If you have any questions about this Privacy Policy, please contact us at:</p>
+                        <p><i class="fas fa-envelope"></i> <strong>Email:</strong> info.stayloo@gmail.com</p>
+                        <p><i class="fas fa-map-marker-alt"></i> <strong>Mailing Address:</strong> Lucknow, India</p>
+                        <p><i class="fas fa-phone-alt"></i> <strong>Support:</strong> +91 7311170545</p>
+                        <p style="margin-top: 12px;"><span class="info-badge">StayLoo · 2025</span> Your trust is our priority.</p>
+                    </div>
+                </div>
+
+                <!-- Additional acknowledgment -->
+                <div style="margin-top: 1rem; text-align: center; font-size: 0.85rem; background:#f9fbfd; border-radius: 1rem; padding: 0.8rem;">
+                    <i class="fas fa-shield-alt" style="color:#1c6a8f;"></i> We value transparency — this Privacy Policy is part of our commitment to protect your data.
+                </div>
+            </div>
+
+            <!-- Mini CTA: consistent with brand -->
+            <div class="cta-section-mini">
+                <h3><i class="fas fa-hand-sparkles"></i> Your Privacy Matters</h3>
+                <p>If you have any concerns about how your data is handled, reach out to our Data Protection team.</p>
+                <a href="../contact-us/" class="cta-button" style="background:white; color:#14455f; padding: 10px 28px; border-radius: 40px; display: inline-flex; align-items: center; gap: 8px; font-weight: 700; text-decoration: none;">Contact Privacy Desk <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Professional Footer matching the exact style from About page -->
+    <footer class="main-footer">
+        <div class="footer-inner">
+            <div class="footer-col">
+                <h5>Explore</h5>
+                <a href="/Browse-spaces/">Browse Spaces</a>
+                <a href="/list-space/">List Your Property</a>
+                <a href="/pricing-queries/">Pricing Plans</a>
+            </div>
+            <div class="footer-col">
+                <h5>Support</h5>
+                <a href="/contact-us/">Contact Us</a>
+            </div>
+            <div class="footer-col">
+                <h5>Legal</h5>
+                <a href="/Terms-conditions/">Terms of Service</a>
+                <a href="/privacy-policies/">Privacy Policy</a>
+            </div>
+            <div class="footer-col">
+                <h5>Connect</h5>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <a href="#">info.stayloo@gmail.com</a>
+                <span style="display: block; font-size: 0.7rem; margin-top: 8px;">📞 +91 7311170545</span>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2026 StayLoo — Move with ease. All rights reserved. | Built with <i class="fas fa-heart" style="color: #e07a5f;"></i> for transparent renting
+        </div>
+    </footer>
+</div>
+
+<!-- Optional smooth interactions for any privacy links (cookie info, contact) -->
+<script>
+    // Enhance UX: make any 'contact-privacy-block' interactive if needed, but just demonstration
+    const contactLink = document.querySelector('.cta-button');
+    if (contactLink && contactLink.getAttribute('href') === '../contact-us/') {
+        // quiet — navigation will work if page exists. otherwise alert as fallback for demo
+        contactLink.addEventListener('click', (e) => {
+            // if contact page doesn't exist yet, we can softly inform: but we keep smooth flow.
+            // no override to allow actual redirect if folder structure exists.
+        });
+    }
+    // Additional small easter egg: cookie note informative but non-intrusive
+    console.log('Privacy Policy — StayLoo respects your data rights');
+</script>
 </body>
 </html>
