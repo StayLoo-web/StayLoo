@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
   <title>StayLoo | Find Your Perfect Space</title>
+  <link rel="icon" type="image/png" href="../images/logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -56,25 +57,23 @@
       gap: 1rem;
       min-height: 65px;
     }
-    /* Smaller Logo */
-    .logo-text {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 22px;
-      font-weight: 800;
-      font-family: 'Outfit', sans-serif;
-      background: linear-gradient(135deg, #1e4a62, #3a7f9e);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      letter-spacing: -0.3px;
-    }
-    .logo-text i {
-      background: none;
-      color: #3a7f9e;
-      font-size: 24px;
-    }
+  /* Logo Image Styles */
+.logo-img-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  height: 45px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.logo-img:hover {
+  transform: scale(1.02);
+}
 
     /* Desktop navigation links - smaller font */
     .nav-links {
@@ -742,8 +741,8 @@
 <header id="mainHeader" class="site-header">
   <div class="container">
     <div class="nav-flex">
-      <div class="logo-text">
-        <i class="fas fa-home"></i> StayLoo
+     <div class="logo-img-container">
+  <img src="../images/logonew1.png" alt="StayLoo Logo" class="logo-img">
       </div>
       <button class="hamburger" id="hamburgerBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
       <div class="nav-links">
@@ -800,9 +799,8 @@
     <div class="footer-grid">
       <div class="footer-col">
         <div class="footer-logo">
-          <i class="fas fa-home"></i>
-          <span>StayLoo</span>
-        </div>
+  <img src="../images/logonew1.png" alt="StayLoo Logo" style="height: 35px; width: auto;">
+         </div>
         <p>Connecting people with their perfect living spaces. Our mission is to make finding and listing rental properties simple and stress-free.</p>
       </div>
       <div class="footer-col">
