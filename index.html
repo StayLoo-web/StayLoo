@@ -112,16 +112,16 @@
         }
 
         .header-container {
-    max-width: 100%;  /* Changed from 1280px to 100% */
-    width: 100%;
-    margin: 0 auto;
-    padding: 0.5rem 3rem;  /* Increased horizontal padding */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
+            max-width: 100%;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0.5rem 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
 
         /* Logo image - fixed size without increasing header */
         .logo-img {
@@ -434,14 +434,15 @@
             transform: translateY(-2px);
         }
 
+        /* FIXED: Features container - always in one line on desktop */
         .features-professional {
             margin-top: 20px;
             width: 100%;
         }
         
         .features-container {
-            display: inline-flex;
-            flex-wrap: wrap;
+            display: flex;
+            flex-direction: row;
             align-items: center;
             gap: 24px;
             background: rgba(0, 0, 0, 0.55);
@@ -450,6 +451,8 @@
             border-radius: 40px;
             border: 0.5px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 10px 25px -8px rgba(0,0,0,0.4);
+            width: auto;
+            min-width: fit-content;
         }
         
         .feature-item {
@@ -460,6 +463,7 @@
             font-weight: 550;
             color: #ffffff;
             letter-spacing: 0.2px;
+            white-space: nowrap;
         }
         
         .feature-icon {
@@ -504,10 +508,20 @@
             }
             
             .features-container {
-                padding: 10px 20px;
+                padding: 12px 20px;
                 gap: 16px;
                 flex-wrap: wrap;
                 border-radius: 50px;
+                justify-content: center;
+            }
+            
+            .feature-item {
+                white-space: normal;
+                font-size: 0.85rem;
+            }
+            
+            .separator {
+                display: none;
             }
         }
 
@@ -525,6 +539,18 @@
             
             .btn {
                 text-align: center;
+            }
+            
+            .features-container {
+                gap: 12px;
+                padding: 10px 16px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .feature-item {
+                width: 100%;
+                justify-content: flex-start;
             }
         }
 
@@ -609,7 +635,7 @@
             border-color: #cde3ef;
         }
         
-        .feature-icon {
+        .feature-card .feature-icon {
             width: 70px;
             height: 70px;
             background: linear-gradient(135deg, #eef7fc, #e0f0f7);
@@ -625,7 +651,7 @@
             background: linear-gradient(135deg, #2c7da0, #115a7a);
         }
         
-        .feature-icon i {
+        .feature-card .feature-icon i {
             font-size: 2rem;
             color: #115a7a;
             transition: 0.2s;
@@ -1126,15 +1152,15 @@
     </div>
 
     <section class="hero">
-     <div class="hero-content">
-    <div class="hero-headline">
-        <span class="no-brokers">No Brokers.</span>
-        <div class="headline-group">
-            <span class="find-verified">Find Verified Rooms</span>
-            <span class="blue-easily">Easily.</span>
-        </div>
-    </div>
-    <div class="trusted-line">Trusted by 500+ Users</div>
+        <div class="hero-content">
+            <div class="hero-headline">
+                <span class="no-brokers">No Brokers.</span>
+                <div class="headline-group">
+                    <span class="find-verified">Find Verified Rooms</span>
+                    <span class="blue-easily">Easily.</span>
+                </div>
+            </div>
+            <div class="trusted-line">Trusted by 500+ Users</div>
             <div class="hero-description">
                 Real owners. Zero brokerage. Instant contact.
             </div>
@@ -1157,7 +1183,6 @@
                     <div class="feature-item">
                         <span class="feature-icon">⚡</span>
                         <span>Quick Connect</span>
-                    <span class="separator">|</span>
                     </div>
                 </div>
             </div>
@@ -1522,17 +1547,15 @@
                 link.addEventListener('click', closeMenu);
             });
             
-            // ===== AUTO-HIDE HEADER ON SCROLL (WORKING VERSION) =====
+            // ===== AUTO-HIDE HEADER ON SCROLL =====
             let lastScrollTop = 0;
             const header = document.querySelector('.site-header');
             
-            // Set initial state
             header.classList.add('show-header');
             
             window.addEventListener('scroll', function() {
                 let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
                 
-                // At the very top, always show header
                 if (currentScroll <= 10) {
                     header.classList.remove('hide-header');
                     header.classList.add('show-header');
@@ -1540,14 +1563,11 @@
                     return;
                 }
                 
-                // Check scroll direction
                 if (currentScroll > lastScrollTop + 5) {
-                    // Scrolling DOWN - hide header
                     header.classList.add('hide-header');
                     header.classList.remove('show-header');
                 } 
                 else if (currentScroll < lastScrollTop - 5) {
-                    // Scrolling UP - show header
                     header.classList.remove('hide-header');
                     header.classList.add('show-header');
                 }
@@ -1555,15 +1575,12 @@
                 lastScrollTop = currentScroll;
             });
             
-            // Show header when mouse moves near top of screen
             window.addEventListener('mousemove', function(e) {
                 if (e.clientY < 50) {
                     header.classList.remove('hide-header');
                     header.classList.add('show-header');
                 }
             });
-            
-            console.log('Auto-hide header initialized');
         })();
     </script>
 </body>
