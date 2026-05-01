@@ -9,20 +9,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
-      -webkit-tap-highlight-color: transparent !important;
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    a, button, [onclick] { 
-      text-decoration: none !important; 
-      outline: none !important; 
-      -webkit-tap-highlight-color: transparent !important; 
-    }
-        * {
+            -webkit-tap-highlight-color: transparent !important;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+        a, button, [onclick] { 
+            text-decoration: none !important; 
+            outline: none !important; 
+            -webkit-tap-highlight-color: transparent !important; 
         }
 
         body {
@@ -63,21 +58,11 @@
             flex-shrink: 0;
             text-decoration: none;
         }
-        /* Logo image styling - you can replace src with your actual logo */
         .logo-img {
             height: 48px;
             width: auto;
             object-fit: contain;
             border-radius: 12px;
-        }
-        /* Fallback text logo in case image doesn't load (optional) */
-        .logo-text-fallback {
-            font-size: 1.6rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #8b5cf6, #6366f1);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
         }
         .city-selector {
             background: #f1f5f9;
@@ -98,7 +83,7 @@
             .city-selector { padding: 0.4rem 0.9rem; font-size: 0.75rem; }
         }
 
-        /* Hero Section - also slightly bigger */
+        /* Hero Section */
         .hero {
             position: relative;
             background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.65)), 
@@ -281,6 +266,45 @@
             font-size: 1.3rem;
             margin: 8px 0;
         }
+        
+        /* Owner Section Styles */
+        .owner-section-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f8fafc;
+            padding: 10px 14px;
+            border-radius: 60px;
+            margin: 12px 0;
+            cursor: pointer;
+            transition: background 0.2s;
+            border: 1px solid #e2edf2;
+        }
+        .owner-section-card:hover {
+            background: #eef3f8;
+        }
+        .owner-avatar-card {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #cbdde9;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .owner-info-card {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #8b5cf6;
+            flex: 1;
+        }
+        .owner-info-card small {
+            font-weight: normal;
+            font-size: 0.7rem;
+            color: #5e7e9c;
+            display: block;
+        }
+        
         .view-btn {
             background: #f1f5f9;
             width: 100%;
@@ -292,7 +316,7 @@
             transition: 0.2s;
         }
 
-        /* Load More / View Less Container - CENTERED */
+        /* Load More / View Less Container */
         .load-more-container {
             text-align: center;
             margin-top: 2.5rem;
@@ -325,7 +349,7 @@
             background: linear-gradient(95deg, #334155, #1e293b);
         }
 
-        /* Modal Styles */
+        /* Modal Styles - Larger Gallery */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -357,18 +381,40 @@
         }
         .modal-gallery {
             display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            padding: 1rem;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 1.5rem;
             background: #f8fafc;
+            max-height: 400px;
+            overflow-y: auto;
         }
         .modal-img {
-            width: 150px;
-            height: 120px;
+            width: 200px;
+            height: 160px;
             object-fit: cover;
             border-radius: 1rem;
             cursor: pointer;
             transition: 0.2s;
+            flex-shrink: 0;
+        }
+        .modal-img:hover {
+            transform: scale(1.04);
+        }
+        .modal-video-item {
+            width: 200px;
+            height: 160px;
+            border-radius: 1rem;
+            flex-shrink: 0;
+            background: #1e2a36;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .modal-video-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         .modal-body {
             padding: 1.5rem;
@@ -401,6 +447,68 @@
             width: 36px;
             margin: 8px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        /* Owner Popup */
+        .owner-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2100;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .owner-popup-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .owner-popup-card {
+            background: white;
+            max-width: 380px;
+            width: 85%;
+            border-radius: 2rem;
+            text-align: center;
+            padding: 1.8rem 1.5rem;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        .owner-popup-img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 4px solid #8b5cf6;
+        }
+        .close-owner-popup {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #8aaec0;
+        }
+        .half-blurred-number {
+            filter: blur(5px);
+            display: inline-block;
+            font-family: monospace;
+            letter-spacing: 0px;
+            background: #f0f0f0;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        .contact-display {
+            margin-top: 18px;
+            font-size: 1rem;
         }
 
         /* Fullscreen viewer */
@@ -440,7 +548,7 @@
             cursor: pointer;
         }
 
-        /* Footer - HORIZONTAL LINKS for all screen sizes */
+        /* Footer */
         .footer {
             background: #0f172a;
             color: #cbd5e1;
@@ -484,7 +592,6 @@
         .footer-links a:hover {
             color: white;
         }
-        /* For smaller screens, keep horizontal arrangement but wrap gracefully */
         @media (max-width: 768px) {
             .footer-grid {
                 flex-wrap: wrap;
@@ -495,7 +602,6 @@
                 min-width: 150px;
             }
         }
-        /* For very small phones still horizontal-ish but stacked if needed? Actually we want horizontal: so flex wrap but each column side by side */
         @media (max-width: 550px) {
             .footer-grid {
                 flex-direction: row;
@@ -517,6 +623,16 @@
         @media (max-width: 640px) {
             .grid { grid-template-columns: 1fr; }
         }
+        
+        @media (max-width: 780px) {
+            .modal-img, .modal-video-item {
+                width: 150px;
+                height: 120px;
+            }
+            .modal-gallery {
+                max-height: 300px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -524,9 +640,7 @@
 <header class="header" id="mainHeader">
     <div class="header-container">
         <div class="logo">
-            <!-- REPLACE THIS SRC WITH YOUR ACTUAL LOGO IMAGE URL -->
             <img class="logo-img" src="/images/logonew1.png" alt="StayLoo Logo">
-            <!-- Optional fallback text (hidden if image loads, but kept for semantic) -->
         </div>
         <div class="city-selector">
             <i class="fas fa-map-marker-alt" style="color:#8b5cf6;"></i> Lucknow Spaces
@@ -589,13 +703,12 @@
     <h2 class="section-title">Spaces for you in Lucknow</h2>
     <div class="grid" id="propertiesGrid"></div>
     
-    <!-- Load More / View Less Button Container - Centered -->
     <div class="load-more-container" id="loadMoreContainer">
         <button class="load-more-btn" id="loadMoreBtn">+ Load More Spaces</button>
     </div>
 </section>
 
-<!-- Footer with HORIZONTAL links (inline / flex row) -->
+<!-- Footer -->
 <footer class="footer">
     <div class="footer-grid">
         <div class="footer-col">
@@ -646,6 +759,20 @@
     </div>
 </div>
 
+<!-- Owner Popup -->
+<div id="ownerPopup" class="owner-popup-overlay">
+    <div class="owner-popup-card">
+        <span class="close-owner-popup" id="closeOwnerPopupBtn">&times;</span>
+        <img id="ownerPopupImg" class="owner-popup-img" src="" alt="Owner">
+        <h3 id="ownerPopupName" style="margin: 8px 0 4px;">Owner Name</h3>
+        <p id="ownerPopupBio" style="color:#3c657e; font-size:0.9rem; margin-top:8px;"></p>
+        <div class="contact-display">
+            <i class="fas fa-phone-alt"></i> 
+            <span id="ownerPopupContact" class="half-blurred-number"></span>
+        </div>
+    </div>
+</div>
+
 <!-- Fullscreen viewer -->
 <div id="fsViewer" class="fullscreen-view">
     <button class="close-fs" id="closeFsBtn">&times;</button>
@@ -653,39 +780,84 @@
 </div>
 
 <script>
-    // ========== PROPERTIES DATA (Expanded for demo) ==========
+    // Owner data for each property
+    const ownersData = {
+        1: { name: "Mr. Rajesh Verma", avatar: "https://randomuser.me/api/portraits/men/32.jpg", bio: "Real estate enthusiast with 8+ years experience. Passionate about helping families find their dream home.", contact: "+91 98765 12345" },
+        2: { name: "Mrs. Priya Singh", avatar: "https://randomuser.me/api/portraits/women/68.jpg", bio: "Interior designer turned landlord. Loves creating cozy spaces and green environments.", contact: "+91 99887 66554" },
+        3: { name: "Mr. Ankit Sharma", avatar: "https://randomuser.me/api/portraits/men/45.jpg", bio: "Young entrepreneur focused on premium rental properties in prime locations.", contact: "+91 98112 33456" },
+        4: { name: "Ms. Neha Mehta", avatar: "https://randomuser.me/api/portraits/women/23.jpg", bio: "Hospitality professional ensuring every tenant enjoys luxury and comfort.", contact: "+91 99200 77661" },
+        5: { name: "Mr. Karthik Iyer", avatar: "https://randomuser.me/api/portraits/men/52.jpg", bio: "Tech professional renting out premium flats near IT parks. Quick responsive maintenance.", contact: "+91 97422 99881" },
+        6: { name: "Mrs. Sneha Joshi", avatar: "https://randomuser.me/api/portraits/women/44.jpg", bio: "Property manager with keen eye for quality, providing fully equipped homes.", contact: "+91 91234 56789" },
+        7: { name: "Mr. Akhtar Khan", avatar: "https://randomuser.me/api/portraits/men/22.jpg", bio: "Budget-friendly housing specialist focusing on student accommodations.", contact: "+91 88670 33221" },
+        8: { name: "Ms. Ritu Bhatia", avatar: "https://randomuser.me/api/portraits/women/89.jpg", bio: "Modern living curator, smart homes and tech-ready apartments.", contact: "+91 98732 11457" },
+        9: { name: "Mr. Dheeraj Menon", avatar: "https://randomuser.me/api/portraits/men/64.jpg", bio: "Premium realtor, known for upscale rental experiences.", contact: "+91 77009 88112" }
+    };
+    
+    // Function to create blurred half number
+    function getHalfBlurredNumber(fullNumber) {
+        const cleanNumber = fullNumber.replace(/[\s+]/g, '');
+        const length = cleanNumber.length;
+        const halfLength = Math.floor(length / 2);
+        const visiblePart = cleanNumber.slice(-halfLength);
+        const maskedNumber = '•'.repeat(length - halfLength) + visiblePart;
+        if (fullNumber.startsWith('+')) {
+            return '+' + maskedNumber.slice(0, 2) + ' ' + maskedNumber.slice(2, 4) + ' ' + maskedNumber.slice(4);
+        }
+        return maskedNumber;
+    }
+    
+    function openOwnerPopup(propertyId) {
+        const owner = ownersData[propertyId];
+        if(!owner) return;
+        document.getElementById('ownerPopupImg').src = owner.avatar;
+        document.getElementById('ownerPopupName').innerText = owner.name;
+        document.getElementById('ownerPopupBio').innerText = owner.bio;
+        const blurredDisplay = getHalfBlurredNumber(owner.contact);
+        document.getElementById('ownerPopupContact').innerText = blurredDisplay;
+        document.getElementById('ownerPopup').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    document.getElementById('closeOwnerPopupBtn').onclick = () => {
+        document.getElementById('ownerPopup').classList.remove('active');
+        document.body.style.overflow = '';
+    };
+    document.getElementById('ownerPopup').onclick = (e) => { if(e.target === document.getElementById('ownerPopup')) document.getElementById('ownerPopup').classList.remove('active'); };
+    
+    // Properties Data with videos added
     const properties = [
         { id: 1, code: "STL-LKO-001", type: "PG", title: "Elite PG for Boys & Girls", location: "Gomti Nagar", price: 8500, forGender: "Anyone",
           images: ["https://picsum.photos/id/152/500/350", "https://picsum.photos/id/155/500/350", "https://picsum.photos/id/159/500/350", "https://picsum.photos/id/158/500/350"],
-          desc: "Fully furnished PG with WiFi, AC, meals available. Prime location near metro station.", bedrooms: "1-2 sharing", bathrooms: "Attached", amenities: "WiFi, Meals, AC, Parking", size: "250 sqft" },
+          videos: ["https://www.w3schools.com/html/mov_bbb.mp4"], desc: "Fully furnished PG with WiFi, AC, meals available. Prime location near metro station.", bedrooms: "1-2 sharing", bathrooms: "Attached", amenities: "WiFi, Meals, AC, Parking", size: "250 sqft" },
         { id: 2, code: "STL-LKO-002", type: "Flat", title: "2 BHK Fully Furnished Flat", location: "Indira Nagar", price: 18000, forGender: "Anyone",
           images: ["https://picsum.photos/id/169/500/350", "https://picsum.photos/id/164/500/350", "https://picsum.photos/id/29/500/350", "https://picsum.photos/id/28/500/350"],
-          desc: "Spacious flat with modern kitchen, two balconies, gated society.", bedrooms: "2 BHK", bathrooms: "2", amenities: "WiFi, AC, Parking, Lift", size: "1100 sqft" },
+          videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Spacious flat with modern kitchen, two balconies, gated society.", bedrooms: "2 BHK", bathrooms: "2", amenities: "WiFi, AC, Parking, Lift", size: "1100 sqft" },
         { id: 3, code: "STL-LKO-003", type: "Room", title: "Premium Single Room with AC", location: "Hazratganj", price: 7500, forGender: "Girls",
           images: ["https://picsum.photos/id/1/500/350", "https://picsum.photos/id/2/500/350", "https://picsum.photos/id/3/500/350", "https://picsum.photos/id/4/500/350"],
-          desc: "Cozy, fully furnished single room in a well-maintained building.", bedrooms: "Single", bathrooms: "1 Attached", amenities: "WiFi, AC, Study Table", size: "180 sqft" },
+          videos: [], desc: "Cozy, fully furnished single room in a well-maintained building.", bedrooms: "Single", bathrooms: "1 Attached", amenities: "WiFi, AC, Study Table", size: "180 sqft" },
         { id: 4, code: "STL-LKO-004", type: "PG", title: "Luxury PG with Meals & WiFi", location: "Alambagh", price: 12000, forGender: "Anyone",
           images: ["https://picsum.photos/id/5/500/350", "https://picsum.photos/id/6/500/350", "https://picsum.photos/id/7/500/350", "https://picsum.photos/id/8/500/350"],
-          desc: "Luxury PG with chef-made meals, AC rooms, and cleaning service.", bedrooms: "2/3 sharing", bathrooms: "Common + Attached", amenities: "WiFi, Meals, AC, Parking", size: "300 sqft" },
+          videos: ["https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"], desc: "Luxury PG with chef-made meals, AC rooms, and cleaning service.", bedrooms: "2/3 sharing", bathrooms: "Common + Attached", amenities: "WiFi, Meals, AC, Parking", size: "300 sqft" },
         { id: 5, code: "STL-LKO-005", type: "Flat", title: "3 BHK Family Apartment", location: "Chinhat", price: 25000, forGender: "Anyone",
           images: ["https://picsum.photos/id/10/500/350", "https://picsum.photos/id/11/500/350", "https://picsum.photos/id/12/500/350", "https://picsum.photos/id/13/500/350"],
-          desc: "Spacious 3 BHK flat in a serene locality. Fully furnished.", bedrooms: "3 BHK", bathrooms: "2", amenities: "AC, Parking, Lift, Gym", size: "1500 sqft" },
+          videos: [], desc: "Spacious 3 BHK flat in a serene locality. Fully furnished.", bedrooms: "3 BHK", bathrooms: "2", amenities: "AC, Parking, Lift, Gym", size: "1500 sqft" },
         { id: 6, code: "STL-LKO-006", type: "Room", title: "Co-living Space for Girls", location: "Gomti Nagar", price: 9500, forGender: "Girls",
           images: ["https://picsum.photos/id/15/500/350", "https://picsum.photos/id/16/500/350", "https://picsum.photos/id/17/500/350", "https://picsum.photos/id/18/500/350"],
-          desc: "Safe and vibrant co-living space for girls. Includes meals, WiFi.", bedrooms: "Single + Double", bathrooms: "Attached", amenities: "WiFi, Meals, CCTV, AC", size: "220 sqft" },
+          videos: [], desc: "Safe and vibrant co-living space for girls. Includes meals, WiFi.", bedrooms: "Single + Double", bathrooms: "Attached", amenities: "WiFi, Meals, CCTV, AC", size: "220 sqft" },
         { id: 7, code: "STL-LKO-007", type: "PG", title: "Zolo Divine PG", location: "Jankipuram", price: 11000, forGender: "Boys",
           images: ["https://picsum.photos/id/20/500/350", "https://picsum.photos/id/21/500/350", "https://picsum.photos/id/22/500/350", "https://picsum.photos/id/23/500/350"],
-          desc: "Modern PG with high-speed WiFi, gym, and recreational area.", bedrooms: "1/2 sharing", bathrooms: "Common", amenities: "WiFi, Gym, AC, Power Backup", size: "280 sqft" },
+          videos: [], desc: "Modern PG with high-speed WiFi, gym, and recreational area.", bedrooms: "1/2 sharing", bathrooms: "Common", amenities: "WiFi, Gym, AC, Power Backup", size: "280 sqft" },
         { id: 8, code: "STL-LKO-008", type: "Flat", title: "1 RK Studio Apartment", location: "Gomti Nagar Extension", price: 14500, forGender: "Anyone",
           images: ["https://picsum.photos/id/25/500/350", "https://picsum.photos/id/26/500/350", "https://picsum.photos/id/27/500/350", "https://picsum.photos/id/30/500/350"],
-          desc: "Compact studio with modular kitchen & smart TV. Perfect for singles/couples.", bedrooms: "Studio", bathrooms: "1", amenities: "Smart TV, AC, WiFi", size: "450 sqft" },
+          videos: [], desc: "Compact studio with modular kitchen & smart TV. Perfect for singles/couples.", bedrooms: "Studio", bathrooms: "1", amenities: "Smart TV, AC, WiFi", size: "450 sqft" },
         { id: 9, code: "STL-LKO-009", type: "Room", title: "Fully Furnished Private Room", location: "Aliganj", price: 6800, forGender: "Boys",
           images: ["https://picsum.photos/id/32/500/350", "https://picsum.photos/id/33/500/350", "https://picsum.photos/id/34/500/350", "https://picsum.photos/id/35/500/350"],
-          desc: "Attached bathroom, large cupboard, prime location near market.", bedrooms: "Single", bathrooms: "Attached", amenities: "AC, WiFi, Laundry", size: "200 sqft" }
+          videos: [], desc: "Attached bathroom, large cupboard, prime location near market.", bedrooms: "Single", bathrooms: "Attached", amenities: "AC, WiFi, Laundry", size: "200 sqft" }
     ];
 
     let visibleCount = 6;
     let currentFilteredList = [];
+    let currentVideoElements = []; // Track video elements to stop them when modal closes
 
     function renderCards(propertiesToShow) {
         const grid = document.getElementById('propertiesGrid');
@@ -693,7 +865,10 @@
             grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem;">✨ No spaces found. Adjust filters.</div>`;
             return;
         }
-        grid.innerHTML = propertiesToShow.map(prop => `
+        grid.innerHTML = propertiesToShow.map(prop => {
+            const owner = ownersData[prop.id];
+            const ownerAvatar = owner ? owner.avatar : "https://randomuser.me/api/portraits/lego/1.jpg";
+            return `
             <div class="card">
                 <div class="card-img" style="background-image: url('${prop.images[0]}');">
                     <span class="card-badge">${prop.type}</span>
@@ -703,10 +878,27 @@
                     <div class="location"><i class="fas fa-map-marker-alt"></i> ${prop.location}</div>
                     <div class="features">${prop.amenities.substring(0, 35)}${prop.amenities.length > 35 ? '...' : ''}</div>
                     <div class="price">₹${prop.price.toLocaleString()}<span style="font-size:0.8rem;">/month</span></div>
+                    <div class="owner-section-card" data-owner-id="${prop.id}">
+                        <img class="owner-avatar-card" src="${ownerAvatar}" alt="owner">
+                        <div class="owner-info-card">
+                            Know more about owner <i class="fas fa-chevron-right"></i><br>
+                            <small>${owner ? owner.name : "Verified Partner"}</small>
+                        </div>
+                    </div>
                     <div class="view-btn" data-id="${prop.id}">View Details →</div>
                 </div>
             </div>
-        `).join('');
+        `}).join('');
+        
+        // Owner section click handlers
+        document.querySelectorAll('.owner-section-card').forEach(section => {
+            section.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const propId = parseInt(section.getAttribute('data-owner-id'));
+                openOwnerPopup(propId);
+            });
+        });
+        
         document.querySelectorAll('.view-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const id = parseInt(btn.getAttribute('data-id'));
@@ -714,6 +906,81 @@
                 if (prop) openModal(prop);
             });
         });
+    }
+
+    function stopAllVideos() {
+        currentVideoElements.forEach(video => {
+            if (video && !video.paused) {
+                video.pause();
+                video.currentTime = 0;
+            }
+        });
+        currentVideoElements = [];
+    }
+
+    function openModal(prop) {
+        const modal = document.getElementById('propertyModal');
+        const modalContent = document.getElementById('modalContent');
+        
+        // Create gallery HTML with images and videos
+        let galleryHtml = '';
+        prop.images.forEach(img => {
+            galleryHtml += `<img class="modal-img" src="${img}" onclick="openFullscreen('${img}')">`;
+        });
+        
+        if(prop.videos && prop.videos.length) {
+            prop.videos.forEach((vidUrl, idx) => {
+                const videoId = `modal-video-${prop.id}-${idx}`;
+                galleryHtml += `
+                    <div class="modal-video-item">
+                        <video id="${videoId}" controls preload="metadata" style="width:100%; height:100%; object-fit:cover;">
+                            <source src="${vidUrl}" type="video/mp4">
+                        </video>
+                    </div>
+                `;
+            });
+        }
+        
+        modalContent.innerHTML = `
+            <div class="modal-gallery">${galleryHtml}</div>
+            <div class="modal-body">
+                <div style="display:flex; justify-content:space-between;"><h2>${prop.title}</h2><span style="background:#eef2ff; padding:4px 12px; border-radius:40px;">${prop.type}</span></div>
+                <p><i class="fas fa-map-marker-alt"></i> ${prop.location}, Lucknow</p>
+                <div style="background:#f1f5f9; padding:8px 12px; border-radius:40px; display:inline-block; margin:10px 0;"><i class="fas fa-tag"></i> ${prop.code}</div>
+                <div style="display:flex; gap:1rem;"><span><i class="fas fa-bed"></i> ${prop.bedrooms}</span><span><i class="fas fa-bath"></i> ${prop.bathrooms}</span><span><i class="fas fa-arrows-alt"></i> ${prop.size}</span></div>
+                <div style="background:#f8fafc; padding:1rem; border-radius:1rem; margin:12px 0;"><strong>📝 Description</strong><br>${prop.desc}<br><br><strong>✨ Amenities</strong><br>${prop.amenities}</div>
+                <div class="price" style="font-size:1.8rem;">₹${prop.price.toLocaleString()}<span style="font-size:0.9rem;">/month</span></div>
+                <button id="sendWhatsappBtn" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Send Query on WhatsApp</button>
+            </div>
+        `;
+        
+        // Store video elements to stop them later
+        currentVideoElements = [];
+        if(prop.videos && prop.videos.length) {
+            prop.videos.forEach((_, idx) => {
+                const videoEl = document.getElementById(`modal-video-${prop.id}-${idx}`);
+                if(videoEl) {
+                    currentVideoElements.push(videoEl);
+                }
+            });
+        }
+        
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        const waBtn = document.getElementById('sendWhatsappBtn');
+        if (waBtn) waBtn.addEventListener('click', () => {
+            const YOUR_WHATSAPP = "919170548739";
+            const message = `🏠 StayLoo Inquiry%0A%0ACode: ${prop.code}%0A${prop.title}%0ALocation: ${prop.location}%0ARent: ₹${prop.price}%0AI'm interested.`;
+            window.open(`https://wa.me/${YOUR_WHATSAPP}?text=${message}`, '_blank');
+        });
+    }
+
+    function closeModalAndStopVideos() {
+        stopAllVideos();
+        const modal = document.getElementById('propertyModal');
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
     }
 
     function applyFilters() {
@@ -800,37 +1067,10 @@
     closeFs.addEventListener('click', closeFullscreen);
     fsViewer.addEventListener('click', (e) => { if (e.target === fsViewer) closeFullscreen(); });
 
-    // Modal logic
-    let currentProperty = null;
-    function openModal(prop) {
-        currentProperty = prop;
-        const modal = document.getElementById('propertyModal');
-        const modalContent = document.getElementById('modalContent');
-        const galleryHtml = prop.images.map(img => `<img class="modal-img" src="${img}" onclick="openFullscreen('${img}')">`).join('');
-        modalContent.innerHTML = `
-            <div class="modal-gallery">${galleryHtml}</div>
-            <div class="modal-body">
-                <div style="display:flex; justify-content:space-between;"><h2>${prop.title}</h2><span style="background:#eef2ff; padding:4px 12px; border-radius:40px;">${prop.type}</span></div>
-                <p><i class="fas fa-map-marker-alt"></i> ${prop.location}, Lucknow</p>
-                <div style="background:#f1f5f9; padding:8px 12px; border-radius:40px; display:inline-block; margin:10px 0;"><i class="fas fa-tag"></i> ${prop.code}</div>
-                <div style="display:flex; gap:1rem;"><span><i class="fas fa-bed"></i> ${prop.bedrooms}</span><span><i class="fas fa-bath"></i> ${prop.bathrooms}</span><span><i class="fas fa-arrows-alt"></i> ${prop.size}</span></div>
-                <div style="background:#f8fafc; padding:1rem; border-radius:1rem; margin:12px 0;"><strong>📝 Description</strong><br>${prop.desc}<br><br><strong>✨ Amenities</strong><br>${prop.amenities}</div>
-                <div class="price" style="font-size:1.8rem;">₹${prop.price.toLocaleString()}<span style="font-size:0.9rem;">/month</span></div>
-                <button id="sendWhatsappBtn" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Send Query on WhatsApp</button>
-            </div>
-        `;
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        const waBtn = document.getElementById('sendWhatsappBtn');
-        if (waBtn) waBtn.addEventListener('click', () => {
-            const YOUR_WHATSAPP = "919170548739";
-            const message = `🏠 StayLoo Inquiry%0A%0ACode: ${currentProperty.code}%0A${currentProperty.title}%0ALocation: ${currentProperty.location}%0ARent: ₹${currentProperty.price}%0AI'm interested.`;
-            window.open(`https://wa.me/${YOUR_WHATSAPP}?text=${message}`, '_blank');
-        });
-    }
+    // Modal close with video stop
+    document.getElementById('closeModalBtn').addEventListener('click', closeModalAndStopVideos);
     const modalEl = document.getElementById('propertyModal');
-    document.getElementById('closeModalBtn').addEventListener('click', () => { modalEl.classList.remove('active'); document.body.style.overflow = ''; });
-    modalEl.addEventListener('click', (e) => { if (e.target === modalEl) { modalEl.classList.remove('active'); document.body.style.overflow = ''; } });
+    modalEl.addEventListener('click', (e) => { if (e.target === modalEl) closeModalAndStopVideos(); });
 
     document.getElementById('applyFiltersBtn').addEventListener('click', applyFilters);
     document.getElementById('resetFiltersBtn').addEventListener('click', resetFilters);
