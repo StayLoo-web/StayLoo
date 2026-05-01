@@ -4,20 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>StayLoo | Flats & Apartments - Find Your Dream Home</title>
-    <link rel="icon" type="image/png" href="../images/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
-            -webkit-tap-highlight-color: transparent !important;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-        a, button, [onclick] { 
-            text-decoration: none !important; 
-            outline: none !important; 
-            -webkit-tap-highlight-color: transparent !important; 
+            -webkit-tap-highlight-color: transparent;
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -25,71 +19,85 @@
             color: #0a2540;
             line-height: 1.5;
         }
-        .page-wrapper {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+        body.modal-open {
+            overflow: hidden;
         }
-        .main-content {
-            flex: 1;
+        /* Hero Section with Flat-Focused Background */
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.65)), 
+                        url('https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover no-repeat;
+            background-size: cover;
+            background-position: center 40%;
+            padding: 2rem 2rem 3.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-        .container {
+        @media (max-width: 768px) {
+            .hero-section { padding: 1.5rem 1.2rem 2.5rem; }
+        }
+        .hero-container {
             max-width: 1280px;
             margin: 0 auto;
-            padding: 2rem 1.5rem 2rem;
         }
+        /* Header - Left Logo, Right "View flats" */
         .header-flex {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
             margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid rgba(44, 125, 160, 0.25);
-            flex-wrap: nowrap;
         }
-        .logo-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .logo-img {
+        .logo-left img {
             height: 52px;
             width: auto;
             object-fit: contain;
-            background: transparent;
+            filter: brightness(0) invert(1);
         }
-        .page-title-right {
-            text-align: right;
+        .view-flats-tag {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 0.5rem 1.5rem;
+            border-radius: 60px;
+            border: 1px solid rgba(255,255,255,0.4);
+            font-weight: 700;
+            color: white;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
         }
-        .tagline-right {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #1c6a8f;
-            background: #eef2f8;
-            padding: 6px 16px;
-            border-radius: 40px;
-            display: inline-block;
+        .view-flats-tag i {
+            margin-right: 6px;
+            color: #ffd966;
         }
-        @media (max-width: 600px) {
-            .header-flex {
-                flex-direction: row;
-                justify-content: space-between;
-            }
-            .logo-img {
-                height: 40px;
-            }
-            .tagline-right {
-                font-size: 0.8rem;
-                padding: 4px 12px;
-            }
-        }
-        .filter-section {
-            background: white;
-            border-radius: 1.5rem;
-            padding: 1.5rem;
+        /* Hero title - flats focused */
+        .hero-title-block {
+            margin-top: 0.8rem;
             margin-bottom: 2rem;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-            border: 1px solid #eef2f8;
+        }
+        .hero-title-block h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: white;
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            max-width: 700px;
+        }
+        .hero-title-block p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+            margin-top: 0.75rem;
+            font-weight: 500;
+            max-width: 600px;
+        }
+        @media (max-width: 700px) {
+            .hero-title-block h1 { font-size: 1.9rem; }
+        }
+        /* Filter Card - Modern */
+        .filter-card {
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 1.8rem;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2);
+            margin-top: 0.8rem;
         }
         .filter-grid {
             display: flex;
@@ -97,58 +105,39 @@
             gap: 1rem;
             align-items: flex-end;
         }
-        @media (max-width: 700px) {
-            .filter-grid {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .filter-group {
-                width: 100%;
-            }
-            .filter-group select,
-            .filter-group input {
-                width: 100%;
-            }
-            .filter-buttons {
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                gap: 12px;
-                margin-top: 10px;
-            }
-            .btn-filter, .btn-reset {
-                flex: 1;
-                text-align: center;
-                justify-content: center;
-            }
-        }
         .filter-group {
             flex: 1;
             min-width: 150px;
         }
         .filter-group label {
-            font-weight: 600;
-            font-size: 0.8rem;
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             display: block;
             margin-bottom: 5px;
-            color: #1e405b;
+            color: #2c5a74;
         }
         .filter-group select, .filter-group input {
             width: 100%;
-            padding: 10px 14px;
-            border-radius: 40px;
-            border: 1.5px solid #e2e8f0;
+            padding: 11px 16px;
+            border-radius: 48px;
+            border: 1.5px solid #e2edf2;
             font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
             background: white;
         }
+        .filter-buttons {
+            display: flex;
+            gap: 12px;
+        }
         .btn-filter, .btn-reset {
-            padding: 10px 24px;
-            border-radius: 40px;
-            font-weight: 600;
+            padding: 11px 28px;
+            border-radius: 48px;
+            font-weight: 700;
             cursor: pointer;
             border: none;
-            font-family: inherit;
+            font-size: 0.85rem;
         }
         .btn-filter {
             background: #1c6a8f;
@@ -158,43 +147,42 @@
             background: #eef2f8;
             color: #1e405b;
         }
+        @media (max-width: 780px) {
+            .filter-grid { flex-direction: column; }
+            .filter-group { width: 100%; }
+            .filter-buttons { width: 100%; justify-content: stretch; }
+            .btn-filter, .btn-reset { flex: 1; text-align: center; }
+        }
+        /* Properties Grid */
+        .main-container {
+            max-width: 1280px;
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
+        }
         .properties-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 1.8rem;
-            margin-top: 1rem;
+            gap: 2rem;
         }
         .property-card {
             background: white;
             border-radius: 1.5rem;
             overflow: hidden;
+            transition: 0.25s;
             box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #eef2f8;
             cursor: pointer;
         }
         .property-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.12);
         }
         .card-img {
-            height: 200px;
+            height: 210px;
             background-size: cover;
             background-position: center;
             position: relative;
         }
-        .property-code-badge {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: rgba(0,0,0,0.75);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-family: monospace;
-            font-weight: 600;
-        }
-        /* Verified and Popular Badges */
         .badge-container {
             position: absolute;
             top: 12px;
@@ -203,53 +191,32 @@
             gap: 8px;
             z-index: 2;
         }
-        .verified-badge {
-            background: #00a884;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
+        .verified-badge, .popular-badge {
+            padding: 4px 12px;
+            border-radius: 30px;
             font-size: 0.7rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .popular-badge {
-            background: #ff6b35;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .card-content {
-            padding: 1.2rem;
-        }
-        .card-title {
-            font-size: 1.2rem;
             font-weight: 700;
-            margin-bottom: 4px;
+            backdrop-filter: blur(4px);
         }
-        .card-location {
-            color: #1c6a8f;
-            font-size: 0.85rem;
-            margin-bottom: 8px;
+        .verified-badge { background: #00a884; color: white; }
+        .popular-badge { background: #ff6b35; color: white; }
+        .property-code-badge {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
         }
-        .card-details {
-            display: flex;
-            gap: 1rem;
-            font-size: 0.8rem;
-            color: #5c7c9a;
-            margin: 10px 0;
-        }
-        .price {
-            font-weight: 800;
-            color: #0f2b3d;
-            font-size: 1.2rem;
-        }
+        .card-content { padding: 1.2rem; }
+        .card-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 4px; }
+        .card-location { color: #1c6a8f; font-size: 0.85rem; margin-bottom: 8px; }
+        .card-details { display: flex; gap: 1rem; font-size: 0.8rem; color: #5c7c9a; margin: 8px 0; }
+        .price { font-weight: 800; font-size: 1.25rem; color: #0f2b3d; }
         .owner-section {
             display: flex;
             align-items: center;
@@ -257,52 +224,53 @@
             background: #f8fafc;
             padding: 8px 12px;
             border-radius: 50px;
-            margin: 12px 0 10px;
+            margin: 14px 0 12px;
             cursor: pointer;
-            transition: background 0.2s;
             border: 1px solid #e2edf2;
         }
-        .owner-section:hover {
-            background: #eef3f8;
-        }
-        .owner-avatar {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            object-fit: cover;
-            background: #cbdde9;
-            border: 2px solid white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .owner-info-text {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #1c6a8f;
-        }
-        .owner-info-text small {
-            font-weight: normal;
-            font-size: 0.7rem;
-            color: #5e7e9c;
-            display: block;
-        }
+        .owner-avatar { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; }
+        .owner-info-text { font-size: 0.85rem; font-weight: 600; color: #1c6a8f; }
         .view-details {
-            margin-top: 12px;
             background: #eef2f8;
-            padding: 8px;
             text-align: center;
+            padding: 8px;
             border-radius: 40px;
-            font-size: 0.85rem;
             font-weight: 600;
+            font-size: 0.8rem;
             color: #1c6a8f;
         }
-        .modal-overlay {
+        /* View More / View Less Button */
+        .view-more-wrapper {
+            text-align: center;
+            margin-top: 2.5rem;
+        }
+        .btn-view-more {
+            background: white;
+            border: 2px solid #1c6a8f;
+            color: #1c6a8f;
+            padding: 12px 32px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-view-more:hover {
+            background: #1c6a8f;
+            color: white;
+        }
+        /* Modal & Fullscreen Styles */
+        .modal-overlay, .owner-popup-overlay, .fullscreen-viewer {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -311,64 +279,62 @@
             opacity: 0;
             transition: 0.2s;
         }
-        .modal-overlay.active {
-            visibility: visible;
-            opacity: 1;
-        }
+        .modal-overlay.active, .owner-popup-overlay.active, .fullscreen-viewer.active { visibility: visible; opacity: 1; }
         .modal-container {
             background: white;
-            max-width: 750px;
+            max-width: 800px;
             width: 90%;
             max-height: 85vh;
             border-radius: 2rem;
             overflow-y: auto;
             position: relative;
         }
-        .modal-img-gallery {
+        .close-modal {
+            position: sticky;
+            top: 10px;
+            float: right;
+            background: white;
+            border: none;
+            font-size: 1.8rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 10px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+        .modal-gallery {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             overflow-x: auto;
-            padding: 1.2rem;
+            padding: 1rem;
             background: #f8fafc;
             scrollbar-width: thin;
         }
-        .modal-img {
+        .modal-media-item {
             width: 200px;
-            height: 160px;
-            object-fit: cover;
-            border-radius: 1rem;
+            height: 150px;
             flex-shrink: 0;
+            border-radius: 1rem;
             cursor: pointer;
+            object-fit: cover;
+            background: #ddd;
         }
         .modal-video-item {
-            width: 200px;
-            height: 160px;
-            border-radius: 1rem;
-            flex-shrink: 0;
-            background: #1e2a36;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
             position: relative;
+            width: 200px;
+            height: 150px;
+            flex-shrink: 0;
+            border-radius: 1rem;
+            overflow: hidden;
+            background: #000;
         }
         .modal-video-item video {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 1rem;
-        }
-        .modal-body {
-            padding: 1.5rem;
-        }
-        .modal-property-code {
-            background: #eef2f8;
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            display: inline-block;
-            margin-bottom: 1rem;
-            font-weight: 600;
+            cursor: pointer;
         }
         .send-query-btn {
             background: #25D366;
@@ -378,33 +344,58 @@
             padding: 14px;
             border-radius: 60px;
             font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-top: 1.5rem;
+            margin-top: 1.2rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-        }
-        .close-modal {
-            position: sticky;
-            top: 10px;
-            right: 20px;
-            float: right;
-            background: white;
-            border: none;
-            font-size: 1.8rem;
+            gap: 8px;
             cursor: pointer;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            margin: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            font-size: 1rem;
+            transition: 0.2s;
         }
-        .main-footer {
+        .send-query-btn:hover {
+            background: #1da15a;
+            transform: scale(1.02);
+        }
+        .owner-popup-card {
+            background: white;
+            max-width: 380px;
+            width: 85%;
+            border-radius: 2rem;
+            text-align: center;
+            padding: 1.8rem;
+            position: relative;
+        }
+        .half-blurred-number { filter: blur(5px); display: inline-block; background: #f0f0f0; padding: 4px 12px; border-radius: 30px; font-family: monospace; }
+        .fullscreen-viewer {
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            cursor: pointer;
+        }
+        .fullscreen-media {
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+        }
+        .fullscreen-video {
+            max-width: 95%;
+            max-height: 95%;
+        }
+        .close-fullscreen {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 2001;
+        }
+        footer {
             background: #0a1e2c;
             margin-top: 3rem;
-            padding: 2rem 1.5rem 1.5rem;
+            padding: 2rem 1.5rem;
             color: #cbdde9;
         }
         .footer-inner {
@@ -415,431 +406,338 @@
             justify-content: space-between;
             gap: 1.5rem;
         }
-        .footer-col {
-            flex: 1;
-            min-width: 130px;
-        }
-        .footer-col h5 {
-            color: white;
-            margin-bottom: 0.8rem;
-            font-size: 1rem;
-        }
-        .footer-col a {
-            display: block;
-            color: #bdd3e6;
-            text-decoration: none;
-            font-size: 0.8rem;
-            margin-bottom: 0.5rem;
-        }
-        .copyright {
-            text-align: center;
-            border-top: 1px solid #1f4057;
-            padding-top: 1.5rem;
-            margin-top: 1.5rem;
-            font-size: 0.75rem;
-        }
-        .fullscreen-img-viewer {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            visibility: hidden;
-            opacity: 0;
-            cursor: pointer;
-        }
-        .fullscreen-img-viewer.active {
-            visibility: visible;
-            opacity: 1;
-        }
-        .fullscreen-img {
-            max-width: 95%;
-            max-height: 95%;
-            object-fit: contain;
-        }
-        .close-fullscreen {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: white;
-            font-size: 40px;
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-        .owner-popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(4px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2100;
-            visibility: hidden;
-            opacity: 0;
-            transition: 0.2s;
-        }
-        .owner-popup-overlay.active {
-            visibility: visible;
-            opacity: 1;
-        }
-        .owner-popup-card {
-            background: white;
-            max-width: 380px;
-            width: 85%;
-            border-radius: 2rem;
-            text-align: center;
-            padding: 1.8rem 1.5rem;
-            box-shadow: 0 20px 35px rgba(0,0,0,0.2);
-            position: relative;
-        }
-        .owner-popup-img {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 1rem;
-            border: 4px solid #1c6a8f;
-        }
-        .close-owner-popup {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 28px;
-            cursor: pointer;
-            color: #8aaec0;
-        }
-        /* Half blurred number - permanently blurred, no interaction */
-        .half-blurred-number {
-            filter: blur(5px);
-            display: inline-block;
-            font-family: monospace;
-            letter-spacing: 0px;
-            background: #f0f0f0;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-        .contact-display {
-            margin-top: 18px;
-            font-size: 1rem;
-        }
+        .footer-col h5 { color: white; margin-bottom: 0.8rem; }
+        .footer-col a { display: block; color: #bdd3e6; font-size: 0.8rem; margin-bottom: 0.5rem; text-decoration: none; }
+        .copyright { text-align: center; border-top: 1px solid #1f4057; padding-top: 1.5rem; margin-top: 1.5rem; font-size: 0.75rem; }
     </style>
 </head>
 <body>
-<div class="page-wrapper">
-    <div class="main-content">
-        <div class="container">
-            <div class="header-flex">
-                <div class="logo-left">
-                    <img class="logo-img" src="../images/logonew1.png" alt="StayLoo Logo">
-                </div>
-                <div class="page-title-right">
-                    <div class="tagline-right">Flats & Apartments</div>
-                </div>
+
+<div class="hero-section">
+    <div class="hero-container">
+        <div class="header-flex">
+            <div class="logo-left">
+                <img src="https://placehold.co/200x60/1c6a8f/white?text=StayLoo" alt="StayLoo Logo" style="background:transparent; height:48px;">
             </div>
-
-            <div class="filter-section">
-                <div class="filter-grid">
-                    <div class="filter-group">
-                        <label>🏙️ City</label>
-                        <select id="cityFilter">
-                            <option value="all">All Cities</option>
-                            <option value="Lucknow">Lucknow</option>
-                            <option value="Delhi NCR">Delhi NCR</option>
-                            <option value="Mumbai">Mumbai</option>
-                            <option value="Bangalore">Bangalore</option>
-                            <option value="Pune">Pune</option>
-                            <option value="Chennai">Chennai</option>
-                            <option value="Kolkata">Kolkata</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>📍 Area / Locality</label>
-                        <input type="text" id="areaFilter" placeholder="e.g., Gomti Nagar">
-                    </div>
-                    <div class="filter-group">
-                        <label>💰 Max Budget (₹)</label>
-                        <select id="budgetFilter">
-                            <option value="any">Any</option>
-                            <option value="10000">Up to ₹10,000</option>
-                            <option value="20000">Up to ₹20,000</option>
-                            <option value="35000">Up to ₹35,000</option>
-                            <option value="50000">Up to ₹50,000</option>
-                            <option value="100000">50,000+</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>🏠 BHK Type</label>
-                        <select id="bhkFilter">
-                            <option value="all">All</option>
-                            <option value="1 BHK">1 BHK</option>
-                            <option value="2 BHK">2 BHK</option>
-                            <option value="3 BHK">3 BHK</option>
-                            <option value="4+ BHK">4+ BHK</option>
-                        </select>
-                    </div>
-                    <div class="filter-buttons">
-                        <button class="btn-filter" id="applyFilterBtn"> Apply Filter</button>
-                        <button class="btn-reset" id="resetFilterBtn"> Reset</button>
-                    </div>
-                </div>
+            <div class="view-flats-tag">
+                <i class="fas fa-building"></i> View flats
             </div>
-
-            <div id="propertiesGrid" class="properties-grid"></div>
         </div>
-    </div>
-
-    <footer class="main-footer">
-        <div class="footer-inner">
-            <div class="footer-col"><h5>StayLoo</h5><a href="/about-us/">About Us</a><a href="/contact-us/">Contact Us</a></div>
-            <div class="footer-col"><h5>Explore</h5><a href="/View-houses/">Houses</a><a href="/View-rooms/">Rooms</a><a href="/View-PGs/">PG / Hostels</a></div>
-            <div class="footer-col"><h5>Support</h5><a href="/pricing-queries/">Pricing & Queries</a><a href="/privacy-policies/">Privacy Policy</a><a href="/Terms-conditions/">Terms of Service</a></div>
-            <div class="footer-col"><h5>Connect</h5><a href="#"><i class="fab fa-whatsapp"></i> WhatsApp</a><a href="#"><i class="fab fa-instagram"></i> Instagram</a><a href="#"><i class="fab fa-twitter"></i> Twitter</a></div>
+        <div class="hero-title-block">
+            <h1>Discover premium flats & <br>luxury apartments</h1>
+            <p>Explore verified flats, penthouses, and serviced apartments in top cities. Live the lifestyle you deserve.</p>
         </div>
-        <div class="copyright">© 2026 StayLoo — Move with ease. All rights reserved.</div>
-    </footer>
-</div>
-
-<div id="propertyModal" class="modal-overlay">
-    <div class="modal-container">
-        <button class="close-modal" id="closeModalBtn">&times;</button>
-        <div id="modalContent"></div>
-    </div>
-</div>
-
-<div id="ownerPopup" class="owner-popup-overlay">
-    <div class="owner-popup-card">
-        <span class="close-owner-popup" id="closeOwnerPopupBtn">&times;</span>
-        <img id="ownerPopupImg" class="owner-popup-img" src="" alt="Owner">
-        <h3 id="ownerPopupName" style="margin: 8px 0 4px;">Owner Name</h3>
-        <p id="ownerPopupBio" style="color:#3c657e; font-size:0.9rem; margin-top:8px;"></p>
-        <div class="contact-display">
-            <i class="fas fa-phone-alt"></i> 
-            <span id="ownerPopupContact" class="half-blurred-number"></span>
+        <div class="filter-card">
+            <div class="filter-grid">
+                <div class="filter-group"><label>🏙️ CITY</label><select id="cityFilter"><option value="all">All Cities</option><option value="Lucknow">Lucknow</option><option value="Delhi NCR">Delhi NCR</option><option value="Mumbai">Mumbai</option><option value="Bangalore">Bangalore</option><option value="Pune">Pune</option><option value="Chennai">Chennai</option><option value="Kolkata">Kolkata</option></select></div>
+                <div class="filter-group"><label>📍 AREA</label><input type="text" id="areaFilter" placeholder="e.g., Gomti Nagar"></div>
+                <div class="filter-group"><label>💰 MAX BUDGET (₹)</label><select id="budgetFilter"><option value="any">Any</option><option value="10000">Up to ₹10,000</option><option value="20000">Up to ₹20,000</option><option value="35000">Up to ₹35,000</option><option value="50000">Up to ₹50,000</option><option value="100000">₹50,000+</option></select></div>
+                <div class="filter-group"><label>🏠 BHK</label><select id="bhkFilter"><option value="all">All</option><option value="1 BHK">1 BHK</option><option value="2 BHK">2 BHK</option><option value="3 BHK">3 BHK</option><option value="4+ BHK">4+ BHK</option></select></div>
+                <div class="filter-buttons"><button class="btn-filter" id="applyFilterBtn">Apply Filter</button><button class="btn-reset" id="resetFilterBtn">Reset</button></div>
+            </div>
         </div>
     </div>
 </div>
+
+<div class="main-container">
+    <div id="propertiesGrid" class="properties-grid"></div>
+    <div class="view-more-wrapper" id="viewMoreWrapper">
+        <button class="btn-view-more" id="viewMoreBtn"><i class="fas fa-arrow-down"></i> View More Flats</button>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-inner">
+        <div class="footer-col"><h5>StayLoo</h5><a href="#">About Us</a><a href="#">Contact Us</a></div>
+        <div class="footer-col"><h5>Explore</h5><a href="#">Flats & Apartments</a><a href="#">Luxury Rentals</a></div>
+        <div class="footer-col"><h5>Support</h5><a href="#">Pricing & Queries</a><a href="#">Privacy Policy</a></div>
+        <div class="footer-col"><h5>Connect</h5><a href="#"><i class="fab fa-whatsapp"></i> WhatsApp</a><a href="#"><i class="fab fa-instagram"></i> Instagram</a></div>
+    </div>
+    <div class="copyright">© 2026 StayLoo — Find your perfect flat. All rights reserved.</div>
+</footer>
+
+<!-- Modals -->
+<div id="propertyModal" class="modal-overlay"><div class="modal-container"><button class="close-modal" id="closeModalBtn">&times;</button><div id="modalContent"></div></div></div>
+<div id="ownerPopup" class="owner-popup-overlay"><div class="owner-popup-card"><span class="close-owner-popup" id="closeOwnerPopupBtn">&times;</span><img id="ownerPopupImg" class="owner-popup-img" style="width:100px;height:100px;border-radius:50%;object-fit:cover;"><h3 id="ownerPopupName" style="margin:10px 0 5px;"></h3><p id="ownerPopupBio" style="color:#3c657e;"></p><div><i class="fas fa-phone-alt"></i> <span id="ownerPopupContact" class="half-blurred-number"></span></div></div></div>
+<div id="fullscreenViewer" class="fullscreen-viewer"><button class="close-fullscreen">&times;</button><div style="display:flex;justify-content:center;align-items:center;width:100%;height:100%;"><img id="fullscreenImg" class="fullscreen-media" style="display:none;"><video id="fullscreenVideo" class="fullscreen-video" controls style="display:none; max-width:95%; max-height:95%;"></video></div></div>
 
 <script>
-    // Owner data for each property
-    const ownersData = {
-        "STL101": { name: "Mr. Rajesh Verma", avatar: "https://randomuser.me/api/portraits/men/32.jpg", bio: "Real estate enthusiast with 8+ years experience. Passionate about helping families find their dream home.", contact: "+91 98765 12345" },
-        "STL102": { name: "Mrs. Priya Singh", avatar: "https://randomuser.me/api/portraits/women/68.jpg", bio: "Interior designer turned landlord. Loves creating cozy spaces and green environments.", contact: "+91 99887 66554" },
-        "STL103": { name: "Mr. Ankit Sharma", avatar: "https://randomuser.me/api/portraits/men/45.jpg", bio: "Young entrepreneur focused on premium rental properties in prime locations.", contact: "+91 98112 33456" },
-        "STL104": { name: "Ms. Neha Mehta", avatar: "https://randomuser.me/api/portraits/women/23.jpg", bio: "Hospitality professional ensuring every tenant enjoys luxury and comfort.", contact: "+91 99200 77661" },
-        "STL105": { name: "Mr. Karthik Iyer", avatar: "https://randomuser.me/api/portraits/men/52.jpg", bio: "Tech professional renting out premium flats near IT parks. Quick responsive maintenance.", contact: "+91 97422 99881" },
-        "STL106": { name: "Mrs. Sneha Joshi", avatar: "https://randomuser.me/api/portraits/women/44.jpg", bio: "Property manager with keen eye for quality, providing fully equipped homes.", contact: "+91 91234 56789" },
-        "STL107": { name: "Mr. Akhtar Khan", avatar: "https://randomuser.me/api/portraits/men/22.jpg", bio: "Budget-friendly housing specialist focusing on student accommodations.", contact: "+91 88670 33221" },
-        "STL108": { name: "Ms. Ritu Bhatia", avatar: "https://randomuser.me/api/portraits/women/89.jpg", bio: "Modern living curator, smart homes and tech-ready apartments.", contact: "+91 98732 11457" },
-        "STL109": { name: "Mr. Dheeraj Menon", avatar: "https://randomuser.me/api/portraits/men/64.jpg", bio: "Premium realtor in Koramangala, known for upscale rental experiences.", contact: "+91 77009 88112" }
-    };
-    
-    // Badge data for each property (verified and popular status)
-    const propertyBadges = {
-        "STL101": { verified: true, popular: true },
-        "STL102": { verified: true, popular: false },
-        "STL103": { verified: true, popular: true },
-        "STL104": { verified: true, popular: false },
-        "STL105": { verified: true, popular: true },
-        "STL106": { verified: true, popular: false },
-        "STL107": { verified: false, popular: false },
-        "STL108": { verified: true, popular: false },
-        "STL109": { verified: true, popular: true }
-    };
-    
-    // Function to create blurred half number (permanently blurred, no reveal)
-    function getHalfBlurredNumber(fullNumber) {
-        // Remove spaces for counting
-        const cleanNumber = fullNumber.replace(/[\s+]/g, '');
-        const length = cleanNumber.length;
-        const halfLength = Math.floor(length / 2);
-        // First half will be blurred (we'll replace with X's but apply CSS blur)
-        const visiblePart = cleanNumber.slice(-halfLength);
-        const hiddenPart = cleanNumber.slice(0, length - halfLength);
-        // Return a string that shows hidden part as X's but with blur class applied to whole
-        // For better visual: show asterisks for hidden part
-        const maskedNumber = '•'.repeat(hiddenPart.length) + visiblePart;
-        // Format with proper spacing
-        if (fullNumber.startsWith('+')) {
-            return '+' + maskedNumber.slice(0, 2) + ' ' + maskedNumber.slice(2, 4) + ' ' + maskedNumber.slice(4);
-        }
-        return maskedNumber;
-    }
-    
-    const properties = [
-        { id: "STL101", code: "STL-101", city: "Lucknow", area: "Gomti Nagar", title: "Sunrise Apartments", bhk: "2 BHK", price: 15000,
-          images: ["https://picsum.photos/id/152/400/300", "https://picsum.photos/id/155/400/300", "https://picsum.photos/id/159/400/300", "https://picsum.photos/id/158/400/300"],
-          videos: ["https://www.w3schools.com/html/mov_bbb.mp4"], desc: "Fully furnished, near metro station, 24/7 security, covered parking available, modern amenities.", size: "1100 sqft", floor: "3rd Floor", available: "Immediate", features: "Wi-Fi, Gym, Power Backup, Lift" },
-        { id: "STL102", code: "STL-102", city: "Lucknow", area: "Indira Nagar", title: "Green Valley Homes", bhk: "3 BHK", price: 22000,
-          images: ["https://picsum.photos/id/169/400/300", "https://picsum.photos/id/164/400/300", "https://picsum.photos/id/29/400/300", "https://picsum.photos/id/28/400/300"],
-          videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Semi-furnished, park facing, modular kitchen, spacious balconies, excellent ventilation.", size: "1350 sqft", floor: "2nd Floor", available: "Next month", features: "Park View, Modular Kitchen, Parking, CCTV" },
-        { id: "STL103", code: "STL-103", city: "Delhi NCR", area: "Dwarka", title: "Advent Residency", bhk: "2 BHK", price: 18500,
-          images: ["https://picsum.photos/id/105/400/300", "https://picsum.photos/id/106/400/300", "https://picsum.photos/id/107/400/300", "https://picsum.photos/id/108/400/300"],
-          videos: [], desc: "Close to metro station, gym & swimming pool, wifi ready, 24x7 water supply.", size: "950 sqft", floor: "5th Floor", available: "15 days", features: "Swimming Pool, Gym, Security, Intercom" },
-        { id: "STL104", code: "STL-104", city: "Mumbai", area: "Andheri East", title: "Sea View Apartments", bhk: "1 BHK", price: 28000,
-          images: ["https://picsum.photos/id/21/400/300", "https://picsum.photos/id/22/400/300", "https://picsum.photos/id/23/400/300", "https://picsum.photos/id/24/400/300"],
-          videos: ["https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"], desc: "Premium location, 5 mins to metro, AC rooms, sea facing, luxury complex.", size: "650 sqft", floor: "12th Floor", available: "Immediate", features: "Sea View, AC, Lift, Club House" },
-        { id: "STL105", code: "STL-105", city: "Bangalore", area: "Whitefield", title: "Tech Hub Nest", bhk: "2 BHK", price: 25000,
-          images: ["https://picsum.photos/id/1/400/300", "https://picsum.photos/id/2/400/300", "https://picsum.photos/id/3/400/300", "https://picsum.photos/id/4/400/300"],
-          videos: [], desc: "Near IT parks, gated community, excellent ventilation, high speed internet ready.", size: "1050 sqft", floor: "8th Floor", available: "Immediate", features: "Gated Community, Power Backup, Parking, Garden" },
-        { id: "STL106", code: "STL-106", city: "Pune", area: "Hinjewadi", title: "Hinjewadi Heights", bhk: "3 BHK", price: 32000,
-          images: ["https://picsum.photos/id/5/400/300", "https://picsum.photos/id/6/400/300", "https://picsum.photos/id/7/400/300", "https://picsum.photos/id/8/400/300"],
-          videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Spacious, power backup, kids play area, near IT parks, great locality.", size: "1450 sqft", floor: "4th Floor", available: "Next week", features: "Kids Play Area, Power Backup, Gym, Security" },
-        { id: "STL107", code: "STL-107", city: "Lucknow", area: "Alambagh", title: "Royal Residency", bhk: "1 BHK", price: 8000,
-          images: ["https://picsum.photos/id/9/400/300", "https://picsum.photos/id/10/400/300", "https://picsum.photos/id/11/400/300"],
-          videos: [], desc: "Budget friendly, near bus stand, fully furnished, ideal for students.", size: "550 sqft", floor: "1st Floor", available: "Immediate", features: "Furnished, Water Filter, Parking" },
-        { id: "STL108", code: "STL-108", city: "Delhi NCR", area: "Noida Sector 62", title: "Elite Studio", bhk: "1 BHK", price: 12000,
-          images: ["https://picsum.photos/id/12/400/300", "https://picsum.photos/id/13/400/300", "https://picsum.photos/id/14/400/300", "https://picsum.photos/id/15/400/300"],
-          videos: [], desc: "Smart studio apartment, high speed internet, nearby metro, modern interiors.", size: "480 sqft", floor: "9th Floor", available: "Immediate", features: "Smart Lock, High Speed WiFi, CCTV" },
-        { id: "STL109", code: "STL-109", city: "Bangalore", area: "Koramangala", title: "Central Vista", bhk: "2 BHK", price: 38000,
-          images: ["https://picsum.photos/id/16/400/300", "https://picsum.photos/id/17/400/300", "https://picsum.photos/id/18/400/300", "https://picsum.photos/id/19/400/300"],
-          videos: [], desc: "High-street location, cafes nearby, modern interiors, premium locality.", size: "1200 sqft", floor: "6th Floor", available: "Negotiable", features: "Premium Location, Modern Kitchen, Parking, Lift" }
+    // ========== PROPERTIES DATA ==========
+    const allProperties = [
+        { id: "STL101", code: "STL-101", city: "Lucknow", area: "Gomti Nagar", title: "Sunrise Luxury Apartments", bhk: "2 BHK", price: 15000, images: ["https://picsum.photos/id/152/500/350", "https://picsum.photos/id/155/500/350", "https://picsum.photos/id/159/500/350"], videos: ["https://www.w3schools.com/html/mov_bbb.mp4"], desc: "Fully furnished, metro accessible, 24/7 security, modern amenities.", size: "1100 sqft", floor: "3rd", available: "Immediate", features: "Wi-Fi, Gym, Lift, Power Backup" },
+        { id: "STL102", code: "STL-102", city: "Lucknow", area: "Indira Nagar", title: "Green Valley Flats", bhk: "3 BHK", price: 22000, images: ["https://picsum.photos/id/169/500/350", "https://picsum.photos/id/164/500/350", "https://picsum.photos/id/29/500/350"], videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Park facing, modular kitchen, spacious balconies.", size: "1350 sqft", floor: "2nd", available: "Next month", features: "Park View, Modular Kitchen, CCTV" },
+        { id: "STL103", code: "STL-103", city: "Delhi NCR", area: "Dwarka", title: "Advent Residency", bhk: "2 BHK", price: 18500, images: ["https://picsum.photos/id/105/500/350", "https://picsum.photos/id/106/500/350"], videos: [], desc: "Close to metro, gym & pool, wifi ready.", size: "950 sqft", floor: "5th", available: "15 days", features: "Swimming Pool, Gym, Security" },
+        { id: "STL104", code: "STL-104", city: "Mumbai", area: "Andheri East", title: "Sea View Apartments", bhk: "1 BHK", price: 28000, images: ["https://picsum.photos/id/21/500/350", "https://picsum.photos/id/22/500/350", "https://picsum.photos/id/23/500/350"], videos: ["https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"], desc: "Sea facing luxury complex, AC rooms.", size: "650 sqft", floor: "12th", available: "Immediate", features: "Sea View, AC, Club House" },
+        { id: "STL105", code: "STL-105", city: "Bangalore", area: "Whitefield", title: "Tech Hub Nest", bhk: "2 BHK", price: 25000, images: ["https://picsum.photos/id/1/500/350", "https://picsum.photos/id/2/500/350", "https://picsum.photos/id/3/500/350"], videos: [], desc: "Near IT parks, gated community.", size: "1050 sqft", floor: "8th", available: "Immediate", features: "Gated Community, Power Backup, Parking" },
+        { id: "STL106", code: "STL-106", city: "Pune", area: "Hinjewadi", title: "Hinjewadi Heights", bhk: "3 BHK", price: 32000, images: ["https://picsum.photos/id/5/500/350", "https://picsum.photos/id/6/500/350"], videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Spacious, power backup, kids play area.", size: "1450 sqft", floor: "4th", available: "Next week", features: "Kids Play Area, Gym, Security" },
+        { id: "STL107", code: "STL-107", city: "Lucknow", area: "Alambagh", title: "Royal Residency", bhk: "1 BHK", price: 8000, images: ["https://picsum.photos/id/9/500/350", "https://picsum.photos/id/10/500/350"], videos: [], desc: "Budget friendly, fully furnished.", size: "550 sqft", floor: "1st", available: "Immediate", features: "Furnished, Water Filter" },
+        { id: "STL108", code: "STL-108", city: "Delhi NCR", area: "Noida Sector 62", title: "Elite Studio Apartment", bhk: "1 BHK", price: 12000, images: ["https://picsum.photos/id/12/500/350", "https://picsum.photos/id/13/500/350", "https://picsum.photos/id/14/500/350"], videos: [], desc: "Smart studio, high speed internet, modern interiors.", size: "480 sqft", floor: "9th", available: "Immediate", features: "Smart Lock, High Speed WiFi" },
+        { id: "STL109", code: "STL-109", city: "Bangalore", area: "Koramangala", title: "Central Vista", bhk: "2 BHK", price: 38000, images: ["https://picsum.photos/id/16/500/350", "https://picsum.photos/id/17/500/350", "https://picsum.photos/id/18/500/350"], videos: [], desc: "High-street location, modern interiors.", size: "1200 sqft", floor: "6th", available: "Negotiable", features: "Premium Location, Parking" },
+        { id: "STL110", code: "STL-110", city: "Lucknow", area: "Hazratganj", title: "The Paramount Flat", bhk: "3 BHK", price: 42000, images: ["https://picsum.photos/id/104/500/350", "https://picsum.photos/id/116/500/350"], videos: ["https://www.w3schools.com/html/mov_bbb.mp4"], desc: "Heart of city, luxury interiors, fully automated.", size: "1600 sqft", floor: "10th", available: "Immediate", features: "Smart Home, Jacuzzi, Parking" },
+        { id: "STL111", code: "STL-111", city: "Mumbai", area: "Bandra", title: "Oceanic Breeze", bhk: "2 BHK", price: 55000, images: ["https://picsum.photos/id/26/500/350", "https://picsum.photos/id/27/500/350"], videos: [], desc: "Premium sea-facing apartment.", size: "1250 sqft", floor: "15th", available: "Negotiable", features: "Sea View, Gym, Pool" }
     ];
 
-    function openOwnerPopup(propertyId) {
-        const owner = ownersData[propertyId];
-        if(!owner) return;
-        document.getElementById('ownerPopupImg').src = owner.avatar;
-        document.getElementById('ownerPopupName').innerText = owner.name;
-        document.getElementById('ownerPopupBio').innerText = owner.bio;
-        const blurredDisplay = getHalfBlurredNumber(owner.contact);
-        document.getElementById('ownerPopupContact').innerText = blurredDisplay;
-        document.getElementById('ownerPopup').classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
+    // Owner data mapping
+    const ownersData = {};
+    allProperties.forEach((prop, idx) => {
+        const names = ["Mr. Rajesh Verma", "Mrs. Priya Singh", "Mr. Ankit Sharma", "Ms. Neha Mehta", "Mr. Karthik Iyer", "Mrs. Sneha Joshi", "Mr. Akhtar Khan", "Ms. Ritu Bhatia", "Mr. Dheeraj Menon", "Ms. Swati Narayan", "Mr. Rohit Mehra"];
+        const avatars = ["https://randomuser.me/api/portraits/men/32.jpg", "https://randomuser.me/api/portraits/women/68.jpg", "https://randomuser.me/api/portraits/men/45.jpg", "https://randomuser.me/api/portraits/women/23.jpg", "https://randomuser.me/api/portraits/men/52.jpg", "https://randomuser.me/api/portraits/women/44.jpg", "https://randomuser.me/api/portraits/men/22.jpg", "https://randomuser.me/api/portraits/women/89.jpg", "https://randomuser.me/api/portraits/men/64.jpg", "https://randomuser.me/api/portraits/women/33.jpg", "https://randomuser.me/api/portraits/men/55.jpg"];
+        const bio = ["Real estate expert with 8+ years experience","Interior designer turned landlord","Young entrepreneur focused on premium rentals","Hospitality professional ensuring luxury","Tech professional near IT parks","Property manager with quality homes","Budget-friendly housing specialist","Modern living curator","Premium realtor in prime locations","Luxury property specialist","Friendly landlord with quick response"];
+        const contact = ["+91 98765 12345","+91 99887 66554","+91 98112 33456","+91 99200 77661","+91 97422 99881","+91 91234 56789","+91 88670 33221","+91 98732 11457","+91 77009 88112","+91 99988 77665","+91 98222 33445"];
+        ownersData[prop.id] = { name: names[idx % names.length], avatar: avatars[idx % avatars.length], bio: bio[idx % bio.length], contact: contact[idx % contact.length] };
+    });
     
-    document.getElementById('closeOwnerPopupBtn').onclick = () => {
-        document.getElementById('ownerPopup').classList.remove('active');
+    const propertyBadges = {};
+    allProperties.forEach(prop => { propertyBadges[prop.id] = { verified: true, popular: (prop.price > 25000) }; });
+
+    let currentDisplayLimit = 6;
+    let filteredMasterList = [];
+
+    // ========== MODAL BACK BUTTON HANDLER ==========
+    let isModalOpen = false;
+    let isOwnerPopupOpen = false;
+    let isFullscreenOpen = false;
+
+    function closeAllModals() {
+        if (isModalOpen) {
+            document.getElementById('propertyModal').classList.remove('active');
+            isModalOpen = false;
+            // Remove hash from URL without triggering navigation
+            if (window.location.hash) {
+                history.pushState("", document.title, window.location.pathname + window.location.search);
+            }
+        }
+        if (isOwnerPopupOpen) {
+            document.getElementById('ownerPopup').classList.remove('active');
+            isOwnerPopupOpen = false;
+        }
+        if (isFullscreenOpen) {
+            document.getElementById('fullscreenViewer').classList.remove('active');
+            const videoEl = document.getElementById('fullscreenVideo');
+            if (videoEl) videoEl.pause();
+            isFullscreenOpen = false;
+        }
         document.body.style.overflow = '';
-    };
-    document.getElementById('ownerPopup').onclick = (e) => { if(e.target === document.getElementById('ownerPopup')) document.getElementById('ownerPopup').classList.remove('active'); };
-    
-    function renderCards(filteredProps) {
-        const grid = document.getElementById('propertiesGrid');
-        if (!filteredProps.length) { grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 3rem;">🏠 No properties match your criteria.</div>`; return; }
-        grid.innerHTML = filteredProps.map(prop => {
-            const owner = ownersData[prop.id];
-            const ownerAvatar = owner ? owner.avatar : "https://randomuser.me/api/portraits/lego/1.jpg";
-            const badges = propertyBadges[prop.id] || { verified: false, popular: false };
-            let badgesHtml = '';
-            if (badges.verified) {
-                badgesHtml += `<span class="verified-badge"><i class="fas fa-check-circle"></i> Verified</span>`;
-            }
-            if (badges.popular) {
-                badgesHtml += `<span class="popular-badge"><i class="fas fa-fire"></i> Popular</span>`;
-            }
-            return `
-            <div class="property-card">
-                <div onclick="openModal('${prop.id}')">
-                    <div class="card-img" style="background-image: url('${prop.images[0]}');">
-                        <div class="badge-container">${badgesHtml}</div>
-                        <span class="property-code-badge">📌 ${prop.code}</span>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <div onclick="openModal('${prop.id}')" style="cursor:pointer;">
-                        <div class="card-title">${prop.title}</div>
-                        <div class="card-location"><i class="fas fa-map-marker-alt"></i> ${prop.area}, ${prop.city}</div>
-                        <div class="card-details"><span>🏠 ${prop.bhk}</span><span>📏 ${prop.size}</span></div>
-                        <div class="price">₹${prop.price.toLocaleString()}/month</div>
-                    </div>
-                    <!-- Owner section with circle + know more -->
-                    <div class="owner-section" onclick="openOwnerPopup('${prop.id}')">
-                        <img class="owner-avatar" src="${ownerAvatar}" alt="owner">
-                        <div class="owner-info-text">
-                            Know more about owner <i class="fas fa-chevron-right"></i><br>
-                            <small>${owner ? owner.name : "Verified Partner"}</small>
-                        </div>
-                    </div>
-                    <div class="view-details" onclick="openModal('${prop.id}')"><i class="fas fa-eye"></i> View Details</div>
-                </div>
-            </div>
-        `}).join('');
     }
-    
-    const fullscreenViewer = document.createElement('div');
-    fullscreenViewer.className = 'fullscreen-img-viewer';
-    fullscreenViewer.innerHTML = `<button class="close-fullscreen">&times;</button><img class="fullscreen-img" src="">`;
-    document.body.appendChild(fullscreenViewer);
-    const fullscreenImg = fullscreenViewer.querySelector('.fullscreen-img');
-    const closeFullscreen = fullscreenViewer.querySelector('.close-fullscreen');
-    window.openFullScreen = function(imgSrc) { fullscreenImg.src = imgSrc; fullscreenViewer.classList.add('active'); document.body.style.overflow = 'hidden'; };
-    closeFullscreen.onclick = () => { fullscreenViewer.classList.remove('active'); document.body.style.overflow = ''; };
-    fullscreenViewer.onclick = (e) => { if (e.target === fullscreenViewer) closeFullscreen.click(); };
-    
+
+    // Handle browser back button
+    window.addEventListener('popstate', function(event) {
+        if (isModalOpen || isOwnerPopupOpen || isFullscreenOpen) {
+            closeAllModals();
+            // Prevent the page from actually going back
+            event.preventDefault();
+            // Push the current state again to stay on the same page
+            history.pushState(null, null, window.location.pathname);
+        }
+    });
+
+    function openModalWithHistory(propertyId) {
+        // Add a hash to URL so back button knows modal is open
+        history.pushState({ modalOpen: true }, "", "#modal");
+        openModal(propertyId);
+    }
+
+    function openOwnerPopupWithHistory(propId) {
+        history.pushState({ ownerPopupOpen: true }, "", "#owner");
+        openOwnerPopup(propId);
+    }
+
     function getFilteredProperties() {
         const city = document.getElementById('cityFilter').value;
         const areaQuery = document.getElementById('areaFilter').value.toLowerCase().trim();
         const budgetVal = document.getElementById('budgetFilter').value;
         const bhk = document.getElementById('bhkFilter').value;
-        return properties.filter(prop => {
+        return allProperties.filter(prop => {
             if (city !== 'all' && prop.city !== city) return false;
             if (areaQuery && !prop.area.toLowerCase().includes(areaQuery) && !prop.title.toLowerCase().includes(areaQuery)) return false;
             if (bhk !== 'all' && prop.bhk !== bhk) return false;
-            if (budgetVal !== 'any') { const maxBudget = parseInt(budgetVal); if (prop.price > maxBudget) return false; }
+            if (budgetVal !== 'any') { if (prop.price > parseInt(budgetVal)) return false; }
             return true;
         });
     }
-    function applyFilters() { renderCards(getFilteredProperties()); }
-    function resetFilters() { document.getElementById('cityFilter').value = 'all'; document.getElementById('areaFilter').value = ''; document.getElementById('budgetFilter').value = 'any'; document.getElementById('bhkFilter').value = 'all'; applyFilters(); }
+
+    function renderLimitedCards() {
+        const grid = document.getElementById('propertiesGrid');
+        const visible = filteredMasterList.slice(0, currentDisplayLimit);
+        if (!visible.length) { grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem;">🏠 No flats match your criteria.</div>`; } 
+        else {
+            grid.innerHTML = visible.map(prop => {
+                const owner = ownersData[prop.id];
+                const badges = propertyBadges[prop.id];
+                let badgeHtml = '';
+                if (badges.verified) badgeHtml += `<span class="verified-badge"><i class="fas fa-check-circle"></i> Verified</span>`;
+                if (badges.popular) badgeHtml += `<span class="popular-badge"><i class="fas fa-fire"></i> Popular</span>`;
+                return `<div class="property-card"><div onclick="openModalWithHistory('${prop.id}')"><div class="card-img" style="background-image: url('${prop.images[0]}');"><div class="badge-container">${badgeHtml}</div><span class="property-code-badge">📌 ${prop.code}</span></div></div><div class="card-content"><div onclick="openModalWithHistory('${prop.id}')" style="cursor:pointer;"><div class="card-title">${prop.title}</div><div class="card-location"><i class="fas fa-map-marker-alt"></i> ${prop.area}, ${prop.city}</div><div class="card-details"><span>🏠 ${prop.bhk}</span><span>📏 ${prop.size}</span></div><div class="price">₹${prop.price.toLocaleString()}/month</div></div><div class="owner-section" onclick="openOwnerPopupWithHistory('${prop.id}')"><img class="owner-avatar" src="${owner.avatar}" alt="owner"><div class="owner-info-text">Know more about owner <i class="fas fa-chevron-right"></i><br><small>${owner.name}</small></div></div><div class="view-details" onclick="openModalWithHistory('${prop.id}')"><i class="fas fa-eye"></i> View Details</div></div></div>`;
+            }).join('');
+        }
+        const btn = document.getElementById('viewMoreBtn');
+        if (filteredMasterList.length <= currentDisplayLimit) {
+            btn.innerHTML = '<i class="fas fa-chevron-up"></i> View Less';
+        } else {
+            btn.innerHTML = '<i class="fas fa-arrow-down"></i> View More Flats';
+        }
+    }
+
+    function applyFiltersAndResetPagination() {
+        filteredMasterList = getFilteredProperties();
+        currentDisplayLimit = 6;
+        renderLimitedCards();
+    }
+
+    function toggleViewMore() {
+        if (filteredMasterList.length <= currentDisplayLimit) {
+            currentDisplayLimit = 6;
+        } else {
+            currentDisplayLimit = Math.min(currentDisplayLimit + 5, filteredMasterList.length);
+        }
+        renderLimitedCards();
+    }
+
+    // Fullscreen media handler
+    function openFullscreenMedia(url, isVideo = false) {
+        isFullscreenOpen = true;
+        const viewer = document.getElementById('fullscreenViewer');
+        const imgEl = document.getElementById('fullscreenImg');
+        const videoEl = document.getElementById('fullscreenVideo');
+        if (isVideo) {
+            imgEl.style.display = 'none';
+            videoEl.style.display = 'block';
+            videoEl.src = url;
+            videoEl.load();
+            videoEl.play().catch(e=>console.log);
+        } else {
+            imgEl.style.display = 'block';
+            videoEl.style.display = 'none';
+            videoEl.pause();
+            imgEl.src = url;
+        }
+        viewer.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        history.pushState({ fullscreenOpen: true }, "", "#fullscreen");
+    }
     
-    let currentProperty = null;
+    window.closeFullscreen = function() {
+        const viewer = document.getElementById('fullscreenViewer');
+        viewer.classList.remove('active');
+        const videoEl = document.getElementById('fullscreenVideo');
+        videoEl.pause();
+        document.body.style.overflow = '';
+        isFullscreenOpen = false;
+        if (window.location.hash === '#fullscreen') {
+            history.back();
+        }
+    };
+    
+    // Modal with WhatsApp functionality
     window.openModal = function(propertyId) {
-        const prop = properties.find(p => p.id === propertyId);
+        const prop = allProperties.find(p => p.id === propertyId);
         if (!prop) return;
-        currentProperty = prop;
+        isModalOpen = true;
         const modal = document.getElementById('propertyModal');
         const modalContent = document.getElementById('modalContent');
-        let mediaHtml = prop.images.map(img => `<img class="modal-img" src="${img}" onclick="openFullScreen('${img}')">`).join('');
-        if(prop.videos && prop.videos.length){
+        
+        let mediaHtml = '';
+        prop.images.forEach(img => {
+            mediaHtml += `<img class="modal-media-item" src="${img}" onclick="event.stopPropagation(); openFullscreenMedia('${img}', false)">`;
+        });
+        if (prop.videos && prop.videos.length) {
             prop.videos.forEach(vid => {
-                mediaHtml += `<div class="modal-video-item"><video controls preload="metadata" style="width:100%; height:100%; border-radius:1rem;"><source src="${vid}" type="video/mp4"></video></div>`;
+                mediaHtml += `<div class="modal-video-item" onclick="event.stopPropagation(); openFullscreenMedia('${vid}', true)"><video preload="metadata" style="width:100%;height:100%;object-fit:cover;"><source src="${vid}" type="video/mp4"></video><div style="position:absolute;bottom:5px;right:8px;background:rgba(0,0,0,0.6);padding:2px 8px;border-radius:20px;font-size:10px;color:white;"><i class="fas fa-expand"></i></div></div>`;
             });
         }
+        
         modalContent.innerHTML = `
-            <div class="modal-img-gallery">${mediaHtml}</div>
-            <div class="modal-body">
-                <span class="modal-property-code"><i class="fas fa-tag"></i> Property Code: <strong>${prop.code}</strong></span>
-                <h2 style="margin:12px 0 8px">${prop.title}</h2>
-                <p><i class="fas fa-location-dot"></i> ${prop.area}, ${prop.city}</p>
-                <div style="display:flex; gap:1rem; margin:12px 0; flex-wrap:wrap;">
+            <div class="modal-gallery">${mediaHtml}</div>
+            <div class="modal-body" style="padding:1.2rem;">
+                <span style="background:#eef2f8;padding:4px 12px;border-radius:30px;font-size:0.8rem;"><i class="fas fa-tag"></i> ${prop.code}</span>
+                <h2 style="margin:12px 0 8px;">${prop.title}</h2>
+                <p><i class="fas fa-map-marker-alt"></i> ${prop.area}, ${prop.city}</p>
+                <div style="display:flex;gap:1rem;flex-wrap:wrap;margin:12px 0;">
                     <span><i class="fas fa-bed"></i> ${prop.bhk}</span>
                     <span><i class="fas fa-arrows-alt"></i> ${prop.size}</span>
-                    <span><i class="fas fa-layer-group"></i> ${prop.floor}</span>
+                    <span><i class="fas fa-layer-group"></i> Floor ${prop.floor}</span>
                     <span><i class="fas fa-calendar"></i> Available: ${prop.available}</span>
                 </div>
-                <div style="background:#f0f7fb; padding:14px; border-radius:16px; margin:12px 0;">
+                <div style="background:#f0f7fb;padding:12px;border-radius:16px;margin:12px 0;">
                     <strong>📝 Description:</strong><br> ${prop.desc}<br><br>
                     <strong>✨ Features:</strong><br> ${prop.features}
                 </div>
-                <div><strong>💰 Monthly Rent:</strong> ₹${prop.price.toLocaleString()} + maintenance</div>
-                <button id="sendQueryWhatsAppBtn" class="send-query-btn"><i class="fab fa-whatsapp"></i> Send Query on WhatsApp</button>
+                <div style="font-size:1.2rem; font-weight:800; margin:15px 0; color:#0f2b3d;">💰 ₹${prop.price.toLocaleString()}/month + maintenance</div>
+                
+                <button id="whatsappModalBtn" class="send-query-btn">
+                    <i class="fab fa-whatsapp"></i> Send Query on WhatsApp
+                </button>
             </div>
         `;
+        
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
-        document.getElementById('sendQueryWhatsAppBtn')?.addEventListener('click', () => {
-            const msg = `🏠 *StayLoo Property Inquiry*\n\nProperty: ${currentProperty.title}\n📍 Area: ${currentProperty.area}, ${currentProperty.city}\n🏷️ Code: ${currentProperty.code}\n🏠 Type: ${currentProperty.bhk}\n💰 Rent: ₹${currentProperty.price}`;
-            window.open(`https://wa.me/917311170545?text=${encodeURIComponent(msg)}`, '_blank');
+        
+        document.getElementById('whatsappModalBtn')?.addEventListener('click', () => {
+            // 👇 REPLACE WITH YOUR WHATSAPP NUMBER
+            const YOUR_WHATSAPP_NUMBER = "919170548739";
+            
+            const message = `🏠 *STAYLOO PROPERTY INQUIRY* 🏠
+━━━━━━━━━━━━━━━━━━━━━
+📌 *Property Code:* ${prop.code}
+🏢 *Property Name:* ${prop.title}
+📍 *Location:* ${prop.area}, ${prop.city}
+🏠 *BHK Type:* ${prop.bhk}
+💰 *Monthly Rent:* ₹${prop.price.toLocaleString()}
+📏 *Size:* ${prop.size}
+🔑 *Availability:* ${prop.available}
+✨ *Key Features:* ${prop.features}
+━━━━━━━━━━━━━━━━━━━━━
+👤 *Customer Message:* 
+I'm interested in this property. Please share more details and schedule a visit.
+
+📅 *Inquiry Date:* ${new Date().toLocaleString()}`;
+            
+            window.open(`https://wa.me/${YOUR_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
         });
     };
     
-    const modal = document.getElementById('propertyModal');
-    document.getElementById('closeModalBtn').onclick = () => { modal.classList.remove('active'); document.body.style.overflow = ''; };
-    modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
-    document.getElementById('applyFilterBtn').onclick = applyFilters;
-    document.getElementById('resetFilterBtn').onclick = resetFilters;
-    window.addEventListener('DOMContentLoaded', () => { renderCards(properties); });
+    function openOwnerPopup(propId) {
+        const o = ownersData[propId]; if(!o) return;
+        isOwnerPopupOpen = true;
+        document.getElementById('ownerPopupImg').src = o.avatar;
+        document.getElementById('ownerPopupName').innerText = o.name;
+        document.getElementById('ownerPopupBio').innerText = o.bio;
+        function blurNumber(num) { let clean = num.replace(/\D/g,''); let half = Math.floor(clean.length/2); let visible = clean.slice(-half); return '•'.repeat(clean.length-half)+visible; }
+        document.getElementById('ownerPopupContact').innerText = blurNumber(o.contact);
+        document.getElementById('ownerPopup').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    function closeModalManually() {
+        closeAllModals();
+    }
+    
+    // Event Listeners
+    document.getElementById('closeModalBtn').onclick = () => closeModalManually();
+    document.getElementById('closeOwnerPopupBtn').onclick = () => closeModalManually();
+    document.querySelector('.close-fullscreen').onclick = () => window.closeFullscreen();
+    document.getElementById('fullscreenViewer').onclick = (e) => { if(e.target === document.getElementById('fullscreenViewer')) window.closeFullscreen(); };
+    document.getElementById('applyFilterBtn').onclick = () => applyFiltersAndResetPagination();
+    document.getElementById('resetFilterBtn').onclick = () => { document.getElementById('cityFilter').value='all'; document.getElementById('areaFilter').value=''; document.getElementById('budgetFilter').value='any'; document.getElementById('bhkFilter').value='all'; applyFiltersAndResetPagination(); };
+    document.getElementById('viewMoreBtn').onclick = () => toggleViewMore();
+    
+    // Click outside modal to close
+    document.getElementById('propertyModal').onclick = (e) => { if(e.target === document.getElementById('propertyModal')) closeModalManually(); };
+    document.getElementById('ownerPopup').onclick = (e) => { if(e.target === document.getElementById('ownerPopup')) closeModalManually(); };
+    
+    window.openFullscreenMedia = openFullscreenMedia;
+    window.openOwnerPopup = openOwnerPopup;
+    window.openModalWithHistory = openModalWithHistory;
+    window.openOwnerPopupWithHistory = openOwnerPopupWithHistory;
+    
+    // Initialize
+    filteredMasterList = allProperties;
+    currentDisplayLimit = 6;
+    renderLimitedCards();
+    
+    // Initial history state to prevent accidental navigation
+    history.pushState(null, null, window.location.pathname);
 </script>
 </body>
 </html>
