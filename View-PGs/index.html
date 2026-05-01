@@ -942,7 +942,9 @@
             // 👇👇👇 REPLACE "919876543210" WITH YOUR ACTUAL WHATSAPP NUMBER 👇👇👇
             const YOUR_WHATSAPP_NUMBER = "919170548739"; // CHANGE THIS!
             
-            const message = `🏠 *STAYLOO PG INQUIRY* 🏠
+            const message = `🏠 *STAYLOO PG INQUIRY* 🏠 
+Hey StayLoo!             
+I'm interested in this PG accommodation. Please share more details and schedule a visit.
 ━━━━━━━━━━━━━━━━━━━━━
 📌 *Property Code:* ${prop.code}
 🏢 *PG Name:* ${prop.title}
@@ -950,12 +952,7 @@
 🏠 *BHK Type:* ${prop.bhk}
 💰 *Monthly Rent:* ₹${prop.price.toLocaleString()}
 📏 *Size:* ${prop.size}
-🔑 *Availability:* ${prop.available}
-✨ *Features:* ${prop.features}
 ━━━━━━━━━━━━━━━━━━━━━
-👤 *Customer Message:* 
-I'm interested in this PG accommodation. Please share more details and schedule a visit.
-
 📅 *Inquiry Date:* ${new Date().toLocaleString()}`;
             
             window.open(`https://wa.me/${YOUR_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
