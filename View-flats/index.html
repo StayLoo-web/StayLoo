@@ -194,6 +194,37 @@
             font-family: monospace;
             font-weight: 600;
         }
+        /* Verified and Popular Badges */
+        .badge-container {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            display: flex;
+            gap: 8px;
+            z-index: 2;
+        }
+        .verified-badge {
+            background: #00a884;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .popular-badge {
+            background: #ff6b35;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
         .card-content {
             padding: 1.2rem;
         }
@@ -263,29 +294,6 @@
             font-size: 0.85rem;
             font-weight: 600;
             color: #1c6a8f;
-        }
-        .visitor-counter {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: linear-gradient(135deg, #f0f4f9 0%, #e6edf4 100%);
-            padding: 5px 12px;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #1c6a8f;
-            margin-top: 10px;
-            width: fit-content;
-            border: 1px solid rgba(28, 106, 143, 0.2);
-        }
-        .visitor-counter i {
-            font-size: 0.7rem;
-            color: #2c7da0;
-        }
-        .visitor-count {
-            font-weight: 800;
-            color: #0f3b4f;
-            margin-left: 2px;
         }
         .modal-overlay {
             position: fixed;
@@ -510,6 +518,21 @@
             cursor: pointer;
             color: #8aaec0;
         }
+        /* Half blurred number - permanently blurred, no interaction */
+        .half-blurred-number {
+            filter: blur(5px);
+            display: inline-block;
+            font-family: monospace;
+            letter-spacing: 0px;
+            background: #f0f0f0;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        .contact-display {
+            margin-top: 18px;
+            font-size: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -600,18 +623,14 @@
         <img id="ownerPopupImg" class="owner-popup-img" src="" alt="Owner">
         <h3 id="ownerPopupName" style="margin: 8px 0 4px;">Owner Name</h3>
         <p id="ownerPopupBio" style="color:#3c657e; font-size:0.9rem; margin-top:8px;"></p>
-        <div style="margin-top: 18px;"><i class="fas fa-phone-alt"></i> <span id="ownerPopupContact">Available on request</span></div>
+        <div class="contact-display">
+            <i class="fas fa-phone-alt"></i> 
+            <span id="ownerPopupContact" class="half-blurred-number"></span>
+        </div>
     </div>
 </div>
 
 <script>
-    let viewCounts = {};
-    function loadCounts() { const saved = localStorage.getItem('stayloo_property_views'); if (saved) viewCounts = JSON.parse(saved); }
-    function saveCounts() { localStorage.setItem('stayloo_property_views', JSON.stringify(viewCounts)); }
-    function getCount(propertyId) { return viewCounts[propertyId] || 0; }
-    function incrementCount(propertyId) { const current = getCount(propertyId); viewCounts[propertyId] = current + 1; saveCounts(); return viewCounts[propertyId]; }
-    loadCounts();
-
     // Owner data for each property
     const ownersData = {
         "STL101": { name: "Mr. Rajesh Verma", avatar: "https://randomuser.me/api/portraits/men/32.jpg", bio: "Real estate enthusiast with 8+ years experience. Passionate about helping families find their dream home.", contact: "+91 98765 12345" },
@@ -624,6 +643,38 @@
         "STL108": { name: "Ms. Ritu Bhatia", avatar: "https://randomuser.me/api/portraits/women/89.jpg", bio: "Modern living curator, smart homes and tech-ready apartments.", contact: "+91 98732 11457" },
         "STL109": { name: "Mr. Dheeraj Menon", avatar: "https://randomuser.me/api/portraits/men/64.jpg", bio: "Premium realtor in Koramangala, known for upscale rental experiences.", contact: "+91 77009 88112" }
     };
+    
+    // Badge data for each property (verified and popular status)
+    const propertyBadges = {
+        "STL101": { verified: true, popular: true },
+        "STL102": { verified: true, popular: false },
+        "STL103": { verified: true, popular: true },
+        "STL104": { verified: true, popular: false },
+        "STL105": { verified: true, popular: true },
+        "STL106": { verified: true, popular: false },
+        "STL107": { verified: false, popular: false },
+        "STL108": { verified: true, popular: false },
+        "STL109": { verified: true, popular: true }
+    };
+    
+    // Function to create blurred half number (permanently blurred, no reveal)
+    function getHalfBlurredNumber(fullNumber) {
+        // Remove spaces for counting
+        const cleanNumber = fullNumber.replace(/[\s+]/g, '');
+        const length = cleanNumber.length;
+        const halfLength = Math.floor(length / 2);
+        // First half will be blurred (we'll replace with X's but apply CSS blur)
+        const visiblePart = cleanNumber.slice(-halfLength);
+        const hiddenPart = cleanNumber.slice(0, length - halfLength);
+        // Return a string that shows hidden part as X's but with blur class applied to whole
+        // For better visual: show asterisks for hidden part
+        const maskedNumber = '•'.repeat(hiddenPart.length) + visiblePart;
+        // Format with proper spacing
+        if (fullNumber.startsWith('+')) {
+            return '+' + maskedNumber.slice(0, 2) + ' ' + maskedNumber.slice(2, 4) + ' ' + maskedNumber.slice(4);
+        }
+        return maskedNumber;
+    }
     
     const properties = [
         { id: "STL101", code: "STL-101", city: "Lucknow", area: "Gomti Nagar", title: "Sunrise Apartments", bhk: "2 BHK", price: 15000,
@@ -661,27 +712,37 @@
         document.getElementById('ownerPopupImg').src = owner.avatar;
         document.getElementById('ownerPopupName').innerText = owner.name;
         document.getElementById('ownerPopupBio').innerText = owner.bio;
-        document.getElementById('ownerPopupContact').innerHTML = `<i class="fas fa-phone-alt"></i> ${owner.contact}`;
+        const blurredDisplay = getHalfBlurredNumber(owner.contact);
+        document.getElementById('ownerPopupContact').innerText = blurredDisplay;
         document.getElementById('ownerPopup').classList.add('active');
         document.body.style.overflow = 'hidden';
     }
+    
     document.getElementById('closeOwnerPopupBtn').onclick = () => {
         document.getElementById('ownerPopup').classList.remove('active');
         document.body.style.overflow = '';
     };
     document.getElementById('ownerPopup').onclick = (e) => { if(e.target === document.getElementById('ownerPopup')) document.getElementById('ownerPopup').classList.remove('active'); };
-
+    
     function renderCards(filteredProps) {
         const grid = document.getElementById('propertiesGrid');
         if (!filteredProps.length) { grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 3rem;">🏠 No properties match your criteria.</div>`; return; }
         grid.innerHTML = filteredProps.map(prop => {
-            const count = getCount(prop.id);
             const owner = ownersData[prop.id];
             const ownerAvatar = owner ? owner.avatar : "https://randomuser.me/api/portraits/lego/1.jpg";
+            const badges = propertyBadges[prop.id] || { verified: false, popular: false };
+            let badgesHtml = '';
+            if (badges.verified) {
+                badgesHtml += `<span class="verified-badge"><i class="fas fa-check-circle"></i> Verified</span>`;
+            }
+            if (badges.popular) {
+                badgesHtml += `<span class="popular-badge"><i class="fas fa-fire"></i> Popular</span>`;
+            }
             return `
             <div class="property-card">
                 <div onclick="openModal('${prop.id}')">
                     <div class="card-img" style="background-image: url('${prop.images[0]}');">
+                        <div class="badge-container">${badgesHtml}</div>
                         <span class="property-code-badge">📌 ${prop.code}</span>
                     </div>
                 </div>
@@ -700,16 +761,11 @@
                             <small>${owner ? owner.name : "Verified Partner"}</small>
                         </div>
                     </div>
-                    <div class="visitor-counter">
-                        <i class="fas fa-eye"></i> 
-                        <span>Views: <span id="viewCount-${prop.id}">${count}</span></span>
-                    </div>
                     <div class="view-details" onclick="openModal('${prop.id}')"><i class="fas fa-eye"></i> View Details</div>
                 </div>
             </div>
         `}).join('');
     }
-    function updateCountDisplay(propertyId, newCount) { const el = document.getElementById(`viewCount-${propertyId}`); if (el) el.innerText = newCount; }
     
     const fullscreenViewer = document.createElement('div');
     fullscreenViewer.className = 'fullscreen-img-viewer';
@@ -741,8 +797,6 @@
     window.openModal = function(propertyId) {
         const prop = properties.find(p => p.id === propertyId);
         if (!prop) return;
-        const newCount = incrementCount(prop.id);
-        updateCountDisplay(prop.id, newCount);
         currentProperty = prop;
         const modal = document.getElementById('propertyModal');
         const modalContent = document.getElementById('modalContent');
@@ -769,14 +823,13 @@
                     <strong>✨ Features:</strong><br> ${prop.features}
                 </div>
                 <div><strong>💰 Monthly Rent:</strong> ₹${prop.price.toLocaleString()} + maintenance</div>
-                <div class="visitor-counter" style="margin-top:16px;"><i class="fas fa-eye"></i> Total Views: <strong>${newCount}</strong> times</div>
                 <button id="sendQueryWhatsAppBtn" class="send-query-btn"><i class="fab fa-whatsapp"></i> Send Query on WhatsApp</button>
             </div>
         `;
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
         document.getElementById('sendQueryWhatsAppBtn')?.addEventListener('click', () => {
-            const msg = `🏠 *StayLoo Property Inquiry*\n\nProperty: ${currentProperty.title}\n📍 Area: ${currentProperty.area}, ${currentProperty.city}\n🏷️ Code: ${currentProperty.code}\n🏠 Type: ${currentProperty.bhk}\n💰 Rent: ₹${currentProperty.price}\n👁️ Views: ${newCount}`;
+            const msg = `🏠 *StayLoo Property Inquiry*\n\nProperty: ${currentProperty.title}\n📍 Area: ${currentProperty.area}, ${currentProperty.city}\n🏷️ Code: ${currentProperty.code}\n🏠 Type: ${currentProperty.bhk}\n💰 Rent: ₹${currentProperty.price}`;
             window.open(`https://wa.me/917311170545?text=${encodeURIComponent(msg)}`, '_blank');
         });
     };
