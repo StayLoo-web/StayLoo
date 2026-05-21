@@ -372,19 +372,9 @@
             gap: 1px;
         }
 
+        /* REMOVED hero-description completely */
         .hero-description {
-            font-size: 1.2rem;
-            color: #f0f6fa;
-            max-width: 580px;
-            margin: 0 0 36px 0;
-            font-weight: 450;
-            line-height: 1.5;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(2px);
-            display: inline-block;
-            padding: 10px 16px;
-            border-radius: 8px;
+            display: none;
         }
 
         .hero-buttons {
@@ -396,7 +386,7 @@
 
         .btn {
             display: inline-block;
-            padding: 14px 24px;
+            padding: 14px 28px;
             font-weight: 600;
             border-radius: 60px;
             text-decoration: none;
@@ -488,7 +478,7 @@
             -webkit-tap-highlight-color: transparent !important; 
         }
 
-        /* Responsive adjustments but keeping items in a SINGLE ROW on all screens */
+        /* Responsive adjustments - FIXED button alignment on phones */
         @media (max-width: 760px) {
             .hero-content {
                 margin-left: 5%;
@@ -507,11 +497,21 @@
                 white-space: normal;
             }
             
-            .hero-description {
-                font-size: 1rem;
+            /* FIX: Buttons remain side by side on tablets and medium screens */
+            .hero-buttons {
+                flex-direction: row;
+                justify-content: flex-start;
+                gap: 16px;
+                margin-bottom: 40px;
             }
             
-            /* CRITICAL FIX: Force horizontal row, never wrap, adjust gap and padding */
+            .btn {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+                flex: 0 0 auto;
+            }
+            
+            /* Features row - keep horizontal */
             .features-container {
                 flex-direction: row;
                 flex-wrap: nowrap;
@@ -536,7 +536,7 @@
             }
         }
 
-        /* Very small screens (phones under 480px) - still keep one row, reduce font/gap */
+        /* Very small screens (phones under 550px) - buttons stay side by side, NOT stacked */
         @media (max-width: 550px) {
             .hero-headline .no-brokers,
             .hero-headline .find-verified,
@@ -544,13 +544,19 @@
                 font-size: 1.9rem;
             }
             
+            /* CRITICAL FIX: Buttons remain in ROW, never column, with proper sizing */
             .hero-buttons {
-                flex-direction: column;
-                width: 100%;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 12px;
+                margin-bottom: 32px;
             }
             
             .btn {
-                text-align: center;
+                padding: 10px 18px;
+                font-size: 0.85rem;
+                white-space: nowrap;
+                flex: 0 0 auto;
             }
             
             .features-container {
@@ -574,8 +580,15 @@
             }
         }
 
-        /* Extra safeguard: for extremely narrow screens (below 400px) keep row, allow slight shrink */
+        /* Extra safeguard for extremely narrow screens: buttons still row, may wrap gracefully but not stacked column */
         @media (max-width: 450px) {
+            .hero-buttons {
+                gap: 10px;
+            }
+            .btn {
+                padding: 8px 14px;
+                font-size: 0.8rem;
+            }
             .features-container {
                 gap: 10px;
                 padding: 6px 14px;
@@ -585,6 +598,18 @@
             }
             .separator {
                 margin: 0 1px;
+            }
+        }
+
+        /* For very small devices where buttons might be tight - ensure they never become full width column */
+        @media (max-width: 380px) {
+            .hero-buttons {
+                flex-direction: row;
+                justify-content: flex-start;
+                width: 100%;
+            }
+            .btn {
+                flex-shrink: 0;
             }
         }
 
@@ -1195,9 +1220,7 @@
                 </div>
             </div>
             <div class="trusted-line">Trusted by 500+ Users</div>
-            <div class="hero-description">
-                Real owners. Zero brokerage. Instant contact.
-            </div>
+            <!-- hero-description removed as requested -->
             <div class="hero-buttons">
                 <a href="Browse-spaces" class="btn btn-primary"><span class="btn-icon">🔍</span> Find a Room</a>
                 <a href="list-space" class="btn btn-secondary"><span class="btn-icon">🏠</span> List Your Property</a>
