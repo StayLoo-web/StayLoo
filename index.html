@@ -96,17 +96,14 @@
             transition: transform 0.3s ease-in-out;
         }
 
-        /* Hide header when scrolling down */
         .site-header.hide-header {
             transform: translateY(-100%);
         }
 
-        /* Show header when scrolling up */
         .site-header.show-header {
             transform: translateY(0);
         }
 
-        /* Add padding to body to prevent content from hiding under fixed header */
         body {
             padding-top: 80px;
         }
@@ -123,7 +120,6 @@
             gap: 1rem;
         }
 
-        /* Logo image - fixed size without increasing header */
         .logo-img {
             height: 60px;
             width: auto;
@@ -136,7 +132,6 @@
             transform: scale(1.02);
         }
 
-        /* Desktop navigation */
         .nav-links {
             display: flex;
             gap: 2rem;
@@ -159,7 +154,6 @@
             border-bottom-color: #2c7da0;
         }
 
-        /* Mobile hamburger (hidden on desktop) */
         .hamburger {
             display: none;
             background: none;
@@ -181,11 +175,6 @@
             background: #eef3fc;
         }
         
-        .hamburger:active {
-            background: #e0eaf3;
-        }
-        
-        /* Mobile drawer menu */
         .mobile-menu {
             position: fixed;
             top: 0;
@@ -219,12 +208,6 @@
             display: block;
         }
         
-        .mobile-menu a:active {
-            background: #eef3fc;
-            border-radius: 12px;
-            padding-left: 8px;
-        }
-        
         .close-menu {
             background: none;
             border: none;
@@ -254,7 +237,6 @@
             visibility: visible;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             body {
                 padding-top: 70px;
@@ -330,6 +312,7 @@
             border: 0.5px solid rgba(255,255,255,0.2);
         }
 
+        /* FIXED: Headline styling for both desktop and mobile */
         .hero-headline {
             margin-bottom: 28px;
         }
@@ -349,7 +332,7 @@
             font-weight: 800;
             color: #ffffff;
             line-height: 1.2;
-            display: inline-block;
+            display: block;
             letter-spacing: -0.02em;
             text-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
@@ -359,20 +342,16 @@
             font-weight: 800;
             color: #3b82f6;
             line-height: 1.2;
-            display: inline-block;
+            display: block;
             letter-spacing: -0.02em;
             text-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            white-space: nowrap;
         }
         
+        /* Remove headline-group as we want block display on mobile */
         .headline-group {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: baseline;
-            gap: 1px;
+            display: block;
         }
 
-        /* REMOVED hero-description completely */
         .hero-description {
             display: none;
         }
@@ -424,7 +403,7 @@
             transform: translateY(-2px);
         }
 
-        /* FIXED: Features container - consistent row alignment on ALL devices */
+        /* FIXED: Features container - balanced spacing on laptop, no overflow on phone */
         .features-professional {
             margin-top: 20px;
             width: 100%;
@@ -478,7 +457,8 @@
             -webkit-tap-highlight-color: transparent !important; 
         }
 
-        /* Responsive adjustments - FIXED button alignment on phones */
+        /* ===== RESPONSIVE FIXES ===== */
+        /* Tablet and mobile adjustments */
         @media (max-width: 760px) {
             .hero-content {
                 margin-left: 5%;
@@ -486,23 +466,29 @@
                 padding: 20px 16px;
             }
             
-            .hero-headline .no-brokers,
-            .hero-headline .find-verified,
-            .hero-headline .blue-easily {
-                font-size: 2.4rem;
+            /* FIXED: Headline on mobile - each on separate line exactly as requested */
+            .hero-headline .no-brokers {
+                font-size: 2.5rem;
+                margin-bottom: 8px;
+            }
+            
+            .hero-headline .find-verified {
+                font-size: 2.3rem;
+                display: block;
+                margin-bottom: 4px;
             }
             
             .hero-headline .blue-easily {
-                font-size: 2.4rem;
-                white-space: normal;
+                font-size: 2.3rem;
+                display: block;
             }
             
-            /* FIX: Buttons remain side by side on tablets and medium screens */
             .hero-buttons {
                 flex-direction: row;
                 justify-content: flex-start;
                 gap: 16px;
                 margin-bottom: 40px;
+                flex-wrap: wrap;
             }
             
             .btn {
@@ -511,18 +497,15 @@
                 flex: 0 0 auto;
             }
             
-            /* Features row - keep horizontal */
+            /* FIXED: Features container - balanced, no overflow, equal spacing */
             .features-container {
                 flex-direction: row;
-                flex-wrap: nowrap;
+                flex-wrap: wrap;
                 justify-content: center;
-                gap: 16px;
+                gap: 16px 20px;
                 padding: 10px 20px;
                 border-radius: 60px;
-                width: auto;
-                min-width: 0;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
+                width: 100%;
             }
             
             .feature-item {
@@ -532,22 +515,25 @@
             }
             
             .separator {
-                display: inline-flex;
+                display: none;
             }
         }
 
-        /* Very small screens (phones under 550px) - buttons stay side by side, NOT stacked */
+        /* Small phones - further adjustments */
         @media (max-width: 550px) {
-            .hero-headline .no-brokers,
-            .hero-headline .find-verified,
-            .hero-headline .blue-easily {
-                font-size: 1.9rem;
+            .hero-headline .no-brokers {
+                font-size: 2rem;
             }
             
-            /* CRITICAL FIX: Buttons remain in ROW, never column, with proper sizing */
+            .hero-headline .find-verified {
+                font-size: 1.8rem;
+            }
+            
+            .hero-headline .blue-easily {
+                font-size: 1.8rem;
+            }
+            
             .hero-buttons {
-                flex-direction: row;
-                flex-wrap: wrap;
                 gap: 12px;
                 margin-bottom: 32px;
             }
@@ -556,32 +542,35 @@
                 padding: 10px 18px;
                 font-size: 0.85rem;
                 white-space: nowrap;
-                flex: 0 0 auto;
             }
             
             .features-container {
-                gap: 12px;
+                gap: 12px 16px;
                 padding: 8px 16px;
                 justify-content: center;
-                border-radius: 50px;
             }
             
             .feature-item {
                 font-size: 0.75rem;
-                gap: 4px;
+                gap: 5px;
             }
             
             .feature-icon {
                 font-size: 1rem;
             }
-            
-            .separator {
-                font-size: 0.85rem;
-            }
         }
 
-        /* Extra safeguard for extremely narrow screens: buttons still row, may wrap gracefully but not stacked column */
+        /* Extra small devices */
         @media (max-width: 450px) {
+            .hero-headline .no-brokers {
+                font-size: 1.7rem;
+            }
+            .hero-headline .find-verified {
+                font-size: 1.5rem;
+            }
+            .hero-headline .blue-easily {
+                font-size: 1.5rem;
+            }
             .hero-buttons {
                 gap: 10px;
             }
@@ -590,26 +579,19 @@
                 font-size: 0.8rem;
             }
             .features-container {
-                gap: 10px;
+                gap: 10px 14px;
                 padding: 6px 14px;
             }
             .feature-item {
                 font-size: 0.7rem;
             }
-            .separator {
-                margin: 0 1px;
-            }
         }
 
-        /* For very small devices where buttons might be tight - ensure they never become full width column */
-        @media (max-width: 380px) {
-            .hero-buttons {
-                flex-direction: row;
-                justify-content: flex-start;
-                width: 100%;
-            }
-            .btn {
-                flex-shrink: 0;
+        /* LAPTOP FIX: Reduce empty space after Quick Connect - make container fit content with balanced padding */
+        @media (min-width: 1024px) {
+            .features-container {
+                padding: 12px 24px;
+                gap: 24px;
             }
         }
 
@@ -880,11 +862,6 @@
         .card-link {
             text-decoration: none;
         }
-        
-        .card-link:active .card {
-            transform: scale(0.98);
-            transition: transform 0.05s;
-        }
 
         /* ===== TESTIMONIALS SECTION ===== */
         .testimonials-section {
@@ -923,11 +900,6 @@
             min-height: 380px;
             display: flex;
             flex-direction: column;
-        }
-
-        .testimonial-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 30px -10px rgba(17, 90, 122, 0.12);
         }
 
         .quote-icon {
@@ -1010,14 +982,12 @@
             transition: all 0.2s ease;
             color: #115a7a;
             font-size: 1.2rem;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
         }
 
         .nav-btn:hover {
             background: #115a7a;
             color: white;
             border-color: #115a7a;
-            transform: scale(1.05);
         }
 
         .dots-container {
@@ -1059,7 +1029,6 @@
                 margin: 2.5rem auto;
                 padding: 0 1rem;
             }
-            
             .testimonial-card {
                 padding: 1.5rem;
                 min-height: 360px;
@@ -1174,7 +1143,6 @@
             -webkit-tap-highlight-color: transparent !important;
         }
     </style>
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WR97R18Q9H"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -1214,13 +1182,11 @@
         <div class="hero-content">
             <div class="hero-headline">
                 <span class="no-brokers">No Brokers.</span>
-                <div class="headline-group">
-                    <span class="find-verified">Find Verified Rooms</span>
-                    <span class="blue-easily">Easily.</span>
-                </div>
+                <span class="find-verified">Find Verified</span>
+                <span class="find-verified" style="display: block;">Rooms</span>
+                <span class="blue-easily">Easily.</span>
             </div>
-            <div class="trusted-line">Trusted by 500+ Users</div>
-            <!-- hero-description removed as requested -->
+            <div class="trusted-line">TRUSTED BY 500+ USERS</div>
             <div class="hero-buttons">
                 <a href="Browse-spaces" class="btn btn-primary"><span class="btn-icon">🔍</span> Find a Room</a>
                 <a href="list-space" class="btn btn-secondary"><span class="btn-icon">🏠</span> List Your Property</a>
@@ -1254,33 +1220,25 @@
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-badge">⭐ Trust</div>
-                <div class="feature-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
+                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
                 <h3>Verified Badges</h3>
                 <p>Verified properties are personally verified to ensure quality and authenticity.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-badge">📍 Reach</div>
-                <div class="feature-icon">
-                    <i class="fas fa-globe-asia"></i>
-                </div>
+                <div class="feature-icon"><i class="fas fa-globe-asia"></i></div>
                 <h3>Wide Selection</h3>
                 <p>Thousands of options across multiple cities to fit your needs.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-badge">🔒 Safety</div>
-                <div class="feature-icon">
-                    <i class="fas fa-handshake"></i>
-                </div>
+                <div class="feature-icon"><i class="fas fa-handshake"></i></div>
                 <h3>Secure Process</h3>
                 <p>Safe and transparent rental process with verified owners.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-badge">💬 Live</div>
-                <div class="feature-icon">
-                    <i class="fas fa-headset"></i>
-                </div>
+                <div class="feature-icon"><i class="fas fa-headset"></i></div>
                 <h3>24/7 Support</h3>
                 <p>Our team is always ready to assist you with any queries.</p>
             </div>
@@ -1292,46 +1250,10 @@
             <h2>Browse by Property Type</h2>
         </div>
         <div class="property-cards">
-            <a href="../View-flats/" class="card-link">
-                <div class="card">
-                    <div class="card-badge"><i class="fas fa-building"></i> Popular</div>
-                    <img class="card-img" src="https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&h=350&fit=crop" alt="Modern apartment" loading="lazy">
-                    <div class="card-content">
-                        <h3>Flats & Apartments</h3>
-                        <p>Spacious, fully furnished & semi-furnished options</p>
-                    </div>
-                </div>
-            </a>
-            <a href="../View-houses/" class="card-link">
-                <div class="card">
-                    <div class="card-badge"><i class="fas fa-tree"></i> Private</div>
-                    <img class="card-img" src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=500&h=350&fit=crop" alt="Independent house" loading="lazy">
-                    <div class="card-content">
-                        <h3>Houses</h3>
-                        <p>Independent homes with private yards & parking</p>
-                    </div>
-                </div>
-            </a>
-            <a href="../View-PGs/" class="card-link">
-                <div class="card">
-                    <div class="card-badge"><i class="fas fa-users"></i> Budget</div>
-                    <img class="card-img" src="https://images.unsplash.com/photo-1554995207-c18c203602cb?w=500&h=350&fit=crop" alt="PG accommodation" loading="lazy">
-                    <div class="card-content">
-                        <h3>PGs & Hostels</h3>
-                        <p>Affordable shared spaces with meals & amenities</p>
-                    </div>
-                </div>
-            </a>
-            <a href="../View-rooms/" class="card-link">
-                <div class="card">
-                    <div class="card-badge"><i class="fas fa-door-open"></i> Flexible</div>
-                    <img class="card-img" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500&h=350&fit=crop" alt="Cozy private room" loading="lazy">
-                    <div class="card-content">
-                        <h3>Normal Rooms</h3>
-                        <p>Single occupancy, budget-friendly & ready to move in</p>
-                    </div>
-                </div>
-            </a>
+            <a href="../View-flats/" class="card-link"><div class="card"><div class="card-badge"><i class="fas fa-building"></i> Popular</div><img class="card-img" src="https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&h=350&fit=crop" alt="Modern apartment" loading="lazy"><div class="card-content"><h3>Flats & Apartments</h3><p>Spacious, fully furnished & semi-furnished options</p></div></div></a>
+            <a href="../View-houses/" class="card-link"><div class="card"><div class="card-badge"><i class="fas fa-tree"></i> Private</div><img class="card-img" src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=500&h=350&fit=crop" alt="Independent house" loading="lazy"><div class="card-content"><h3>Houses</h3><p>Independent homes with private yards & parking</p></div></div></a>
+            <a href="../View-PGs/" class="card-link"><div class="card"><div class="card-badge"><i class="fas fa-users"></i> Budget</div><img class="card-img" src="https://images.unsplash.com/photo-1554995207-c18c203602cb?w=500&h=350&fit=crop" alt="PG accommodation" loading="lazy"><div class="card-content"><h3>PGs & Hostels</h3><p>Affordable shared spaces with meals & amenities</p></div></div></a>
+            <a href="../View-rooms/" class="card-link"><div class="card"><div class="card-badge"><i class="fas fa-door-open"></i> Flexible</div><img class="card-img" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500&h=350&fit=crop" alt="Cozy private room" loading="lazy"><div class="card-content"><h3>Normal Rooms</h3><p>Single occupancy, budget-friendly & ready to move in</p></div></div></a>
         </div>
     </section>
     
@@ -1342,82 +1264,10 @@
         </div>
         <div class="slider-container">
             <div class="testimonial-track" id="testimonialTrack">
-                <div class="testimonial-slide">
-                    <div class="testimonial-card">
-                        <div class="card-badge"><i class="fas fa-check-circle"></i> Verified Tenant</div>
-                        <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                        <div class="rating">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <div class="testimonial-text">
-                            "StayLoo made finding my perfect apartment so easy! The verified listings saved me so much time and the support team was incredibly helpful throughout the process."
-                        </div>
-                        <div class="customer-info">
-                            <div class="avatar">RS</div>
-                            <div class="customer-details">
-                                <h4>Ram Sharma</h4>
-                                <p>Tenant in Lucknow</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-slide">
-                    <div class="testimonial-card">
-                        <div class="card-badge"><i class="fas fa-home"></i> Property Owner</div>
-                        <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                        <div class="rating">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <div class="testimonial-text">
-                            "As a property owner, I was able to find a reliable tenant within just 2 weeks of listing. The platform is user-friendly and the verification process gives tenants confidence."
-                        </div>
-                        <div class="customer-info">
-                            <div class="avatar">RK</div>
-                            <div class="customer-details">
-                                <h4>Rajesh Kumar</h4>
-                                <p>Property Owner</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-slide">
-                    <div class="testimonial-card">
-                        <div class="card-badge"><i class="fas fa-graduation-cap"></i> Student</div>
-                        <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                        <div class="rating">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <div class="testimonial-text">
-                            "The wide selection of PGs in my preferred location was impressive. I found exactly what I was looking for at a reasonable price. Highly recommended!"
-                        </div>
-                        <div class="customer-info">
-                            <div class="avatar">PS</div>
-                            <div class="customer-details">
-                                <h4>Priya Sharma</h4>
-                                <p>Student Tenant</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-slide">
-                    <div class="testimonial-card">
-                        <div class="card-badge"><i class="fas fa-building"></i> Premium User</div>
-                        <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                        <div class="rating">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <div class="testimonial-text">
-                            "One of the best rental platforms I've used. The interface is smooth, and the customer support responds within minutes. Highly recommended for everyone!"
-                        </div>
-                        <div class="customer-info">
-                            <div class="avatar">AJ</div>
-                            <div class="customer-details">
-                                <h4>Anjali Mehta</h4>
-                                <p>Verified Renter</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="testimonial-slide"><div class="testimonial-card"><div class="card-badge"><i class="fas fa-check-circle"></i> Verified Tenant</div><div class="quote-icon"><i class="fas fa-quote-left"></i></div><div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><div class="testimonial-text">"StayLoo made finding my perfect apartment so easy! The verified listings saved me so much time and the support team was incredibly helpful throughout the process."</div><div class="customer-info"><div class="avatar">RS</div><div class="customer-details"><h4>Ram Sharma</h4><p>Tenant in Lucknow</p></div></div></div></div>
+                <div class="testimonial-slide"><div class="testimonial-card"><div class="card-badge"><i class="fas fa-home"></i> Property Owner</div><div class="quote-icon"><i class="fas fa-quote-left"></i></div><div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><div class="testimonial-text">"As a property owner, I was able to find a reliable tenant within just 2 weeks of listing. The platform is user-friendly and the verification process gives tenants confidence."</div><div class="customer-info"><div class="avatar">RK</div><div class="customer-details"><h4>Rajesh Kumar</h4><p>Property Owner</p></div></div></div></div>
+                <div class="testimonial-slide"><div class="testimonial-card"><div class="card-badge"><i class="fas fa-graduation-cap"></i> Student</div><div class="quote-icon"><i class="fas fa-quote-left"></i></div><div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><div class="testimonial-text">"The wide selection of PGs in my preferred location was impressive. I found exactly what I was looking for at a reasonable price. Highly recommended!"</div><div class="customer-info"><div class="avatar">PS</div><div class="customer-details"><h4>Priya Sharma</h4><p>Student Tenant</p></div></div></div></div>
+                <div class="testimonial-slide"><div class="testimonial-card"><div class="card-badge"><i class="fas fa-building"></i> Premium User</div><div class="quote-icon"><i class="fas fa-quote-left"></i></div><div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><div class="testimonial-text">"One of the best rental platforms I've used. The interface is smooth, and the customer support responds within minutes. Highly recommended for everyone!"</div><div class="customer-info"><div class="avatar">AJ</div><div class="customer-details"><h4>Anjali Mehta</h4><p>Verified Renter</p></div></div></div></div>
             </div>
             <div class="slider-nav">
                 <button class="nav-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
@@ -1430,214 +1280,80 @@
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-column">
-                    <h3>StayLoo</h3>
-                    <p>Connecting people with their perfect living spaces. Our mission is to make finding and listing rental properties simple and stress-free.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.instagram.com/stayloo.in?igsh=MXJjNm9kbW5lYW9lOA=="><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="/Browse-spaces/">Browse Spaces</a></li>
-                        <li><a href="/list-space/">List Your Space</a></li>
-                        <li><a href="/about-us/">About Us</a></li>
-                        <li><a href="/contact-us/">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Property Types</h3>
-                    <ul>
-                        <li><a href="/View-flats/">Flats/Apartments</a></li>
-                        <li><a href="/View-houses/">Houses</a></li>
-                        <li><a href="/View-PGs/">PGs/Hostels</a></li>
-                        <li><a href="/View-rooms/">Normal Rooms</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Contact Us</h3>
-                    <div class="contact-info">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Lucknow, India</span>
-                    </div>
-                    <div class="contact-info">
-                        <i class="fas fa-envelope"></i>
-                        <span>info.stayloo@gmail.com</span>
-                    </div>
-                </div>
+                <div class="footer-column"><h3>StayLoo</h3><p>Connecting people with their perfect living spaces. Our mission is to make finding and listing rental properties simple and stress-free.</p><div class="social-links"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="https://www.instagram.com/stayloo.in?igsh=MXJjNm9kbW5lYW9lOA=="><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-youtube"></i></a></div></div>
+                <div class="footer-column"><h3>Quick Links</h3><ul><li><a href="/Browse-spaces/">Browse Spaces</a></li><li><a href="/list-space/">List Your Space</a></li><li><a href="/about-us/">About Us</a></li><li><a href="/contact-us/">Contact Us</a></li></ul></div>
+                <div class="footer-column"><h3>Property Types</h3><ul><li><a href="/View-flats/">Flats/Apartments</a></li><li><a href="/View-houses/">Houses</a></li><li><a href="/View-PGs/">PGs/Hostels</a></li><li><a href="/View-rooms/">Normal Rooms</a></li></ul></div>
+                <div class="footer-column"><h3>Contact Us</h3><div class="contact-info"><i class="fas fa-map-marker-alt"></i><span>Lucknow, India</span></div><div class="contact-info"><i class="fas fa-envelope"></i><span>info.stayloo@gmail.com</span></div></div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 StayLoo. All rights reserved. | <a href="/privacy-policies/">Privacy Policy</a> | <a href="/Terms-conditions/">Terms and Conditions</a></p>
-            </div>
+            <div class="footer-bottom"><p>&copy; 2026 StayLoo. All rights reserved. | <a href="/privacy-policies/">Privacy Policy</a> | <a href="/Terms-conditions/">Terms and Conditions</a></p></div>
         </div>
     </footer>
         
     <script>
         (function() {
-            // Testimonial Slider
             const track = document.getElementById('testimonialTrack');
             const slides = document.querySelectorAll('.testimonial-slide');
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
             const dotsContainer = document.getElementById('dotsContainer');
-            
             let currentGroup = 0;
             let slidesToShow = 1;
             let totalSlides = slides.length;
             let totalGroups = 1;
             
             function updateSlidesToShow() {
-                if (window.innerWidth >= 1024) {
-                    slidesToShow = 3;
-                } else if (window.innerWidth >= 768) {
-                    slidesToShow = 2;
-                } else {
-                    slidesToShow = 1;
-                }
+                if (window.innerWidth >= 1024) slidesToShow = 3;
+                else if (window.innerWidth >= 768) slidesToShow = 2;
+                else slidesToShow = 1;
                 totalGroups = Math.ceil(totalSlides / slidesToShow);
-                
                 const slideWidth = 100 / slidesToShow;
-                slides.forEach(slide => {
-                    slide.style.flex = `0 0 ${slideWidth}%`;
-                });
-                
-                if (currentGroup >= totalGroups) {
-                    currentGroup = 0;
-                }
-                
+                slides.forEach(slide => slide.style.flex = `0 0 ${slideWidth}%`);
+                if (currentGroup >= totalGroups) currentGroup = 0;
                 updateSlider();
                 updateDots();
             }
-            
-            function updateSlider() {
-                const movePercent = -(currentGroup * 100);
-                track.style.transform = `translateX(${movePercent}%)`;
-            }
-            
+            function updateSlider() { track.style.transform = `translateX(-${currentGroup * 100}%)`; }
             function updateDots() {
                 if (!dotsContainer) return;
                 dotsContainer.innerHTML = '';
                 for (let i = 0; i < totalGroups; i++) {
                     const dot = document.createElement('div');
                     dot.classList.add('dot');
-                    if (i === currentGroup) {
-                        dot.classList.add('active');
-                    }
-                    dot.addEventListener('click', (function(index) {
-                        return function() {
-                            currentGroup = index;
-                            updateSlider();
-                            updateDots();
-                        };
-                    })(i));
+                    if (i === currentGroup) dot.classList.add('active');
+                    dot.addEventListener('click', (function(index) { return function() { currentGroup = index; updateSlider(); updateDots(); }; })(i));
                     dotsContainer.appendChild(dot);
                 }
             }
-            
-            function goToNext() {
-                if (currentGroup + 1 < totalGroups) {
-                    currentGroup++;
-                    updateSlider();
-                    updateDots();
-                }
-            }
-            
-            function goToPrev() {
-                if (currentGroup - 1 >= 0) {
-                    currentGroup--;
-                    updateSlider();
-                    updateDots();
-                }
-            }
-            
-            if (prevBtn) {
-                prevBtn.onclick = goToPrev;
-            }
-            
-            if (nextBtn) {
-                nextBtn.onclick = goToNext;
-            }
-            
+            function goToNext() { if (currentGroup + 1 < totalGroups) { currentGroup++; updateSlider(); updateDots(); } }
+            function goToPrev() { if (currentGroup - 1 >= 0) { currentGroup--; updateSlider(); updateDots(); } }
+            if (prevBtn) prevBtn.onclick = goToPrev;
+            if (nextBtn) nextBtn.onclick = goToNext;
             let resizeTimeout;
-            window.addEventListener('resize', function() {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(updateSlidesToShow, 100);
-            });
-            
+            window.addEventListener('resize', function() { clearTimeout(resizeTimeout); resizeTimeout = setTimeout(updateSlidesToShow, 100); });
             updateSlidesToShow();
             
-            // Mobile Menu
             const hamburger = document.getElementById('hamburgerBtn');
             const mobileDrawer = document.getElementById('mobileDrawer');
             const overlay = document.getElementById('mobileOverlay');
             const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+            function openMenu() { mobileDrawer.classList.add('open'); overlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+            function closeMenu() { mobileDrawer.classList.remove('open'); overlay.classList.remove('active'); document.body.style.overflow = ''; }
+            if (hamburger) hamburger.addEventListener('click', openMenu);
+            if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeMenu);
+            if (overlay) overlay.addEventListener('click', closeMenu);
+            document.querySelectorAll('.mobile-menu a').forEach(link => link.addEventListener('click', closeMenu));
             
-            function openMenu() {
-                mobileDrawer.classList.add('open');
-                overlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-            
-            function closeMenu() {
-                mobileDrawer.classList.remove('open');
-                overlay.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-            
-            if (hamburger) {
-                hamburger.addEventListener('click', openMenu);
-            }
-            
-            if (closeDrawerBtn) {
-                closeDrawerBtn.addEventListener('click', closeMenu);
-            }
-            
-            if (overlay) {
-                overlay.addEventListener('click', closeMenu);
-            }
-            
-            const mobileLinks = document.querySelectorAll('.mobile-menu a');
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', closeMenu);
-            });
-            
-            // ===== AUTO-HIDE HEADER ON SCROLL =====
             let lastScrollTop = 0;
             const header = document.querySelector('.site-header');
-            
             header.classList.add('show-header');
-            
             window.addEventListener('scroll', function() {
                 let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-                
-                if (currentScroll <= 10) {
-                    header.classList.remove('hide-header');
-                    header.classList.add('show-header');
-                    lastScrollTop = currentScroll;
-                    return;
-                }
-                
-                if (currentScroll > lastScrollTop + 5) {
-                    header.classList.add('hide-header');
-                    header.classList.remove('show-header');
-                } 
-                else if (currentScroll < lastScrollTop - 5) {
-                    header.classList.remove('hide-header');
-                    header.classList.add('show-header');
-                }
-                
+                if (currentScroll <= 10) { header.classList.remove('hide-header'); header.classList.add('show-header'); lastScrollTop = currentScroll; return; }
+                if (currentScroll > lastScrollTop + 5) { header.classList.add('hide-header'); header.classList.remove('show-header'); }
+                else if (currentScroll < lastScrollTop - 5) { header.classList.remove('hide-header'); header.classList.add('show-header'); }
                 lastScrollTop = currentScroll;
             });
-            
-            window.addEventListener('mousemove', function(e) {
-                if (e.clientY < 50) {
-                    header.classList.remove('hide-header');
-                    header.classList.add('show-header');
-                }
-            });
+            window.addEventListener('mousemove', function(e) { if (e.clientY < 50) { header.classList.remove('hide-header'); header.classList.add('show-header'); } });
         })();
     </script>
 </body>
