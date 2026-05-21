@@ -312,7 +312,7 @@
             border: 0.5px solid rgba(255,255,255,0.2);
         }
 
-        /* FIXED: Headline styling for both desktop and mobile */
+        /* Headline styling */
         .hero-headline {
             margin-bottom: 28px;
         }
@@ -347,7 +347,6 @@
             text-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
         
-        /* Remove headline-group as we want block display on mobile */
         .headline-group {
             display: block;
         }
@@ -403,26 +402,27 @@
             transform: translateY(-2px);
         }
 
-        /* FIXED: Features container - balanced spacing on laptop, no overflow on phone */
+        /* FIXED: Features container - ALL THREE in ONE LINE, CENTERED on all devices */
         .features-professional {
             margin-top: 20px;
             width: 100%;
+            display: flex;
+            justify-content: center;
         }
         
         .features-container {
             display: flex;
             flex-direction: row;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center;
             gap: 28px;
             background: rgba(0, 0, 0, 0.55);
             backdrop-filter: blur(12px);
-            padding: 12px 28px;
+            padding: 12px 32px;
             border-radius: 60px;
             border: 0.5px solid rgba(255, 255, 255, 0.25);
             box-shadow: 0 10px 25px -8px rgba(0,0,0,0.4);
             width: auto;
-            min-width: fit-content;
             flex-wrap: nowrap;
         }
         
@@ -458,7 +458,6 @@
         }
 
         /* ===== RESPONSIVE FIXES ===== */
-        /* Tablet and mobile adjustments */
         @media (max-width: 760px) {
             .hero-content {
                 margin-left: 5%;
@@ -466,20 +465,19 @@
                 padding: 20px 16px;
             }
             
-            /* FIXED: Headline on mobile - each on separate line exactly as requested */
             .hero-headline .no-brokers {
                 font-size: 2.5rem;
                 margin-bottom: 8px;
             }
             
             .hero-headline .find-verified {
-                font-size: 2.3rem;
+                font-size: 2.2rem;
                 display: block;
                 margin-bottom: 4px;
             }
             
             .hero-headline .blue-easily {
-                font-size: 2.3rem;
+                font-size: 2.2rem;
                 display: block;
             }
             
@@ -497,15 +495,11 @@
                 flex: 0 0 auto;
             }
             
-            /* FIXED: Features container - balanced, no overflow, equal spacing */
+            /* CRITICAL: Keep all three in one line, centered, reduce gap on tablet */
             .features-container {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 16px 20px;
-                padding: 10px 20px;
-                border-radius: 60px;
-                width: 100%;
+                gap: 18px;
+                padding: 10px 22px;
+                flex-wrap: nowrap;
             }
             
             .feature-item {
@@ -515,52 +509,54 @@
             }
             
             .separator {
-                display: none;
+                display: inline-block;
             }
         }
 
-        /* Small phones - further adjustments */
+        /* Small phones - all three still in one line */
         @media (max-width: 550px) {
             .hero-headline .no-brokers {
                 font-size: 2rem;
             }
-            
             .hero-headline .find-verified {
-                font-size: 1.8rem;
+                font-size: 1.7rem;
             }
-            
             .hero-headline .blue-easily {
-                font-size: 1.8rem;
+                font-size: 1.7rem;
             }
             
             .hero-buttons {
                 gap: 12px;
                 margin-bottom: 32px;
             }
-            
             .btn {
-                padding: 10px 18px;
+                padding: 10px 16px;
                 font-size: 0.85rem;
                 white-space: nowrap;
             }
             
+            /* All three items in one line with reduced gap */
             .features-container {
-                gap: 12px 16px;
+                gap: 12px;
                 padding: 8px 16px;
-                justify-content: center;
+                flex-wrap: nowrap;
             }
             
             .feature-item {
-                font-size: 0.75rem;
-                gap: 5px;
+                font-size: 0.72rem;
+                gap: 4px;
             }
             
             .feature-icon {
-                font-size: 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .separator {
+                font-size: 0.8rem;
             }
         }
 
-        /* Extra small devices */
+        /* Extra small devices - still one line, just tighter */
         @media (max-width: 450px) {
             .hero-headline .no-brokers {
                 font-size: 1.7rem;
@@ -571,27 +567,37 @@
             .hero-headline .blue-easily {
                 font-size: 1.5rem;
             }
-            .hero-buttons {
-                gap: 10px;
+            
+            .features-container {
+                gap: 8px;
+                padding: 6px 12px;
             }
-            .btn {
-                padding: 8px 14px;
+            
+            .feature-item {
+                font-size: 0.65rem;
+                gap: 3px;
+            }
+            
+            .feature-icon {
                 font-size: 0.8rem;
             }
-            .features-container {
-                gap: 10px 14px;
-                padding: 6px 14px;
-            }
-            .feature-item {
+            
+            .separator {
                 font-size: 0.7rem;
             }
         }
 
-        /* LAPTOP FIX: Reduce empty space after Quick Connect - make container fit content with balanced padding */
-        @media (min-width: 1024px) {
+        /* For very narrow screens (320px) - ensure no wrapping */
+        @media (max-width: 380px) {
             .features-container {
-                padding: 12px 24px;
-                gap: 24px;
+                gap: 6px;
+                padding: 5px 10px;
+            }
+            .feature-item {
+                font-size: 0.6rem;
+            }
+            .feature-icon {
+                font-size: 0.75rem;
             }
         }
 
