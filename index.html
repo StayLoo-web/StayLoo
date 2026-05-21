@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>StayLoo - Find Your Perfect Living Space</title>
     <link rel="icon" type="image/png" href="../images/logo.png">
     <meta name="description" content="Find PGs, rooms and rental spaces in Lucknow with StayLoo. Browse verified listings, connect with owners, and move in easily. Simple, fast and reliable housing platform.">
@@ -434,7 +434,7 @@
             transform: translateY(-2px);
         }
 
-        /* FIXED: Features container - always in one line on desktop */
+        /* FIXED: Features container - consistent row alignment on ALL devices */
         .features-professional {
             margin-top: 20px;
             width: 100%;
@@ -444,21 +444,23 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            gap: 24px;
+            justify-content: flex-start;
+            gap: 28px;
             background: rgba(0, 0, 0, 0.55);
             backdrop-filter: blur(12px);
-            padding: 14px 28px;
-            border-radius: 40px;
-            border: 0.5px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 28px;
+            border-radius: 60px;
+            border: 0.5px solid rgba(255, 255, 255, 0.25);
             box-shadow: 0 10px 25px -8px rgba(0,0,0,0.4);
             width: auto;
             min-width: fit-content;
+            flex-wrap: nowrap;
         }
         
         .feature-item {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             font-size: 0.95rem;
             font-weight: 550;
             color: #ffffff;
@@ -467,16 +469,17 @@
         }
         
         .feature-icon {
-            font-weight: 500;
-            font-size: 1.3rem;
+            font-weight: 600;
+            font-size: 1.2rem;
             color: #60a5fa;
         }
         
         .separator {
             color: rgba(255,255,255,0.4);
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 300;
-            margin: 0 2px;
+            margin: 0;
+            line-height: 1;
         }
         
         a, button, [onclick] { 
@@ -485,6 +488,7 @@
             -webkit-tap-highlight-color: transparent !important; 
         }
 
+        /* Responsive adjustments but keeping items in a SINGLE ROW on all screens */
         @media (max-width: 760px) {
             .hero-content {
                 margin-left: 5%;
@@ -507,24 +511,32 @@
                 font-size: 1rem;
             }
             
+            /* CRITICAL FIX: Force horizontal row, never wrap, adjust gap and padding */
             .features-container {
-                padding: 12px 20px;
-                gap: 16px;
-                flex-wrap: wrap;
-                border-radius: 50px;
+                flex-direction: row;
+                flex-wrap: nowrap;
                 justify-content: center;
+                gap: 16px;
+                padding: 10px 20px;
+                border-radius: 60px;
+                width: auto;
+                min-width: 0;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
             }
             
             .feature-item {
-                white-space: normal;
+                white-space: nowrap;
                 font-size: 0.85rem;
+                gap: 6px;
             }
             
             .separator {
-                display: none;
+                display: inline-flex;
             }
         }
 
+        /* Very small screens (phones under 480px) - still keep one row, reduce font/gap */
         @media (max-width: 550px) {
             .hero-headline .no-brokers,
             .hero-headline .find-verified,
@@ -543,14 +555,36 @@
             
             .features-container {
                 gap: 12px;
-                padding: 10px 16px;
-                flex-direction: column;
-                align-items: flex-start;
+                padding: 8px 16px;
+                justify-content: center;
+                border-radius: 50px;
             }
             
             .feature-item {
-                width: 100%;
-                justify-content: flex-start;
+                font-size: 0.75rem;
+                gap: 4px;
+            }
+            
+            .feature-icon {
+                font-size: 1rem;
+            }
+            
+            .separator {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Extra safeguard: for extremely narrow screens (below 400px) keep row, allow slight shrink */
+        @media (max-width: 450px) {
+            .features-container {
+                gap: 10px;
+                padding: 6px 14px;
+            }
+            .feature-item {
+                font-size: 0.7rem;
+            }
+            .separator {
+                margin: 0 1px;
             }
         }
 
