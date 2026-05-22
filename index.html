@@ -496,17 +496,18 @@
                 flex: 0 0 auto;
             }
             
-            /* FIXED: Keep features container centered on mobile */
+            /* CRITICAL FIX: Force single line and center alignment on mobile */
             .features-professional {
                 justify-content: center;
                 width: 100%;
             }
             
             .features-container {
+                flex-direction: row;
+                flex-wrap: nowrap !important;
+                justify-content: center;
                 gap: 18px;
                 padding: 10px 22px;
-                flex-wrap: nowrap;
-                justify-content: center;
                 width: auto;
                 margin: 0 auto;
             }
@@ -551,7 +552,7 @@
             .features-container {
                 gap: 12px;
                 padding: 8px 16px;
-                flex-wrap: nowrap;
+                flex-wrap: nowrap !important;
                 justify-content: center;
             }
             
@@ -569,7 +570,7 @@
             }
         }
 
-        /* Extra small devices - bar remains centered */
+        /* Extra small devices - bar remains centered and in one line */
         @media (max-width: 450px) {
             .hero-headline .no-brokers {
                 font-size: 2.4rem;
@@ -584,6 +585,7 @@
             .features-container {
                 gap: 10px;
                 padding: 6px 12px;
+                flex-wrap: nowrap !important;
             }
             
             .feature-item {
@@ -614,6 +616,7 @@
             .features-container {
                 gap: 8px;
                 padding: 5px 10px;
+                flex-wrap: nowrap !important;
             }
             .feature-item {
                 font-size: 0.65rem;
