@@ -465,7 +465,7 @@
                 padding: 20px 16px;
             }
             
-            /* INCREASED FONT SIZES ON MOBILE - bigger and more readable */
+            /* INCREASED FONT SIZES ON MOBILE */
             .hero-headline .no-brokers {
                 font-size: 3.2rem;
                 margin-bottom: 8px;
@@ -496,10 +496,19 @@
                 flex: 0 0 auto;
             }
             
+            /* FIXED: Keep features container centered on mobile */
+            .features-professional {
+                justify-content: center;
+                width: 100%;
+            }
+            
             .features-container {
                 gap: 18px;
                 padding: 10px 22px;
                 flex-wrap: nowrap;
+                justify-content: center;
+                width: auto;
+                margin: 0 auto;
             }
             
             .feature-item {
@@ -513,7 +522,7 @@
             }
         }
 
-        /* Small phones - even larger font for better visibility */
+        /* Small phones - even larger font for better visibility, bar remains centered */
         @media (max-width: 550px) {
             .hero-headline .no-brokers {
                 font-size: 2.8rem;
@@ -535,10 +544,15 @@
                 white-space: nowrap;
             }
             
+            .features-professional {
+                justify-content: center;
+            }
+            
             .features-container {
                 gap: 12px;
                 padding: 8px 16px;
                 flex-wrap: nowrap;
+                justify-content: center;
             }
             
             .feature-item {
@@ -555,7 +569,7 @@
             }
         }
 
-        /* Extra small devices */
+        /* Extra small devices - bar remains centered */
         @media (max-width: 450px) {
             .hero-headline .no-brokers {
                 font-size: 2.4rem;
