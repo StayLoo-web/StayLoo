@@ -312,7 +312,7 @@
             border: 0.5px solid rgba(255,255,255,0.2);
         }
 
-        /* Headline styling */
+        /* Headline styling - DESKTOP (unchanged) */
         .hero-headline {
             margin-bottom: 28px;
         }
@@ -402,7 +402,7 @@
             transform: translateY(-2px);
         }
 
-        /* FIXED: Features container - ALL THREE in ONE LINE, CENTERED on all devices */
+        /* Features container - ALL THREE in ONE LINE, CENTERED on all devices */
         .features-professional {
             margin-top: 20px;
             width: 100%;
@@ -465,19 +465,20 @@
                 padding: 20px 16px;
             }
             
+            /* INCREASED FONT SIZES ON MOBILE - bigger and more readable */
             .hero-headline .no-brokers {
-                font-size: 2.5rem;
+                font-size: 3.2rem;
                 margin-bottom: 8px;
             }
             
             .hero-headline .find-verified {
-                font-size: 2.2rem;
+                font-size: 2.8rem;
                 display: block;
                 margin-bottom: 4px;
             }
             
             .hero-headline .blue-easily {
-                font-size: 2.2rem;
+                font-size: 2.8rem;
                 display: block;
             }
             
@@ -495,7 +496,6 @@
                 flex: 0 0 auto;
             }
             
-            /* CRITICAL: Keep all three in one line, centered, reduce gap on tablet */
             .features-container {
                 gap: 18px;
                 padding: 10px 22px;
@@ -513,16 +513,16 @@
             }
         }
 
-        /* Small phones - all three still in one line */
+        /* Small phones - even larger font for better visibility */
         @media (max-width: 550px) {
             .hero-headline .no-brokers {
-                font-size: 2rem;
+                font-size: 2.8rem;
             }
             .hero-headline .find-verified {
-                font-size: 1.7rem;
+                font-size: 2.4rem;
             }
             .hero-headline .blue-easily {
-                font-size: 1.7rem;
+                font-size: 2.4rem;
             }
             
             .hero-buttons {
@@ -535,7 +535,6 @@
                 white-space: nowrap;
             }
             
-            /* All three items in one line with reduced gap */
             .features-container {
                 gap: 12px;
                 padding: 8px 16px;
@@ -543,12 +542,12 @@
             }
             
             .feature-item {
-                font-size: 0.72rem;
+                font-size: 0.75rem;
                 gap: 4px;
             }
             
             .feature-icon {
-                font-size: 0.9rem;
+                font-size: 0.95rem;
             }
             
             .separator {
@@ -556,30 +555,30 @@
             }
         }
 
-        /* Extra small devices - still one line, just tighter */
+        /* Extra small devices */
         @media (max-width: 450px) {
             .hero-headline .no-brokers {
-                font-size: 1.7rem;
+                font-size: 2.4rem;
             }
             .hero-headline .find-verified {
-                font-size: 1.5rem;
+                font-size: 2.1rem;
             }
             .hero-headline .blue-easily {
-                font-size: 1.5rem;
+                font-size: 2.1rem;
             }
             
             .features-container {
-                gap: 8px;
+                gap: 10px;
                 padding: 6px 12px;
             }
             
             .feature-item {
-                font-size: 0.65rem;
+                font-size: 0.7rem;
                 gap: 3px;
             }
             
             .feature-icon {
-                font-size: 0.8rem;
+                font-size: 0.85rem;
             }
             
             .separator {
@@ -587,17 +586,26 @@
             }
         }
 
-        /* For very narrow screens (320px) - ensure no wrapping */
+        /* For very narrow screens */
         @media (max-width: 380px) {
+            .hero-headline .no-brokers {
+                font-size: 2rem;
+            }
+            .hero-headline .find-verified {
+                font-size: 1.8rem;
+            }
+            .hero-headline .blue-easily {
+                font-size: 1.8rem;
+            }
             .features-container {
-                gap: 6px;
+                gap: 8px;
                 padding: 5px 10px;
             }
             .feature-item {
-                font-size: 0.6rem;
+                font-size: 0.65rem;
             }
             .feature-icon {
-                font-size: 0.75rem;
+                font-size: 0.8rem;
             }
         }
 
