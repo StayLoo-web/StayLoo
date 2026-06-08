@@ -283,14 +283,27 @@
         .owner-section-card:hover {
             background: #eef3f8;
         }
+        /* Blank avatar style — Instagram style empty profile picture */
         .owner-avatar-card {
             width: 40px;
             height: 40px;
             border-radius: 50%;
             object-fit: cover;
-            background: #cbdde9;
+            background: #e2e8f0;
             border: 2px solid white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            font-size: 1.2rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        /* For blank avatar: if no image, show a placeholder icon */
+        .owner-avatar-card.blank-avatar {
+            background: #eef2ff;
+            color: #8b5cf6;
         }
         .owner-info-card {
             font-size: 0.85rem;
@@ -487,6 +500,20 @@
             object-fit: cover;
             margin-bottom: 1rem;
             border: 4px solid #8b5cf6;
+            background: #eef2ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #8b5cf6;
+        }
+        /* force blank avatar in popup too */
+        .owner-popup-img.blank-avatar-big {
+            background: #eef2ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #a78bfa;
         }
         .close-owner-popup {
             position: absolute;
@@ -763,7 +790,9 @@
 <div id="ownerPopup" class="owner-popup-overlay">
     <div class="owner-popup-card">
         <span class="close-owner-popup" id="closeOwnerPopupBtn">&times;</span>
-        <img id="ownerPopupImg" class="owner-popup-img" src="" alt="Owner">
+        <div id="ownerPopupImgContainer" class="owner-popup-img blank-avatar-big">
+            <i class="fas fa-user-circle"></i>
+        </div>
         <h3 id="ownerPopupName" style="margin: 8px 0 4px;">Owner Name</h3>
         <p id="ownerPopupBio" style="color:#3c657e; font-size:0.9rem; margin-top:8px;"></p>
         <div class="contact-display">
@@ -780,17 +809,17 @@
 </div>
 
 <script>
-    // Owner data for each property
+    // Owner data — all avatars removed intentionally (blank profile as Instagram style)
     const ownersData = {
-        1: { name: "Mrs. Manorama Maurya", avatar: "https://randomuser.me/api/portraits/men/32.jpg", bio: "Manorama is a homemaker and ready to help someone in need!", contact: "+91 98765 12345" },
-        2: { name: "Mrs. Priya Singh", avatar: "https://randomuser.me/api/portraits/women/68.jpg", bio: "Interior designer turned landlord. Loves creating cozy spaces and green environments.", contact: "+91 99887 66554" },
-        3: { name: "Mr. Ankit Sharma", avatar: "https://randomuser.me/api/portraits/men/45.jpg", bio: "Young entrepreneur focused on premium rental properties in prime locations.", contact: "+91 98112 33456" },
-        4: { name: "Ms. Neha Mehta", avatar: "https://randomuser.me/api/portraits/women/23.jpg", bio: "Hospitality professional ensuring every tenant enjoys luxury and comfort.", contact: "+91 99200 77661" },
-        5: { name: "Mr. Karthik Iyer", avatar: "https://randomuser.me/api/portraits/men/52.jpg", bio: "Tech professional renting out premium flats near IT parks. Quick responsive maintenance.", contact: "+91 97422 99881" },
-        6: { name: "Mrs. Sneha Joshi", avatar: "https://randomuser.me/api/portraits/women/44.jpg", bio: "Property manager with keen eye for quality, providing fully equipped homes.", contact: "+91 91234 56789" },
-        7: { name: "Mr. Akhtar Khan", avatar: "https://randomuser.me/api/portraits/men/22.jpg", bio: "Budget-friendly housing specialist focusing on student accommodations.", contact: "+91 88670 33221" },
-        8: { name: "Ms. Ritu Bhatia", avatar: "https://randomuser.me/api/portraits/women/89.jpg", bio: "Modern living curator, smart homes and tech-ready apartments.", contact: "+91 98732 11457" },
-        9: { name: "Mr. Dheeraj Menon", avatar: "https://randomuser.me/api/portraits/men/64.jpg", bio: "Premium realtor, known for upscale rental experiences.", contact: "+91 77009 88112" }
+        1: { name: "Mrs. Manorama Maurya", bio: "Manorama is a homemaker and ready to help someone in need!", contact: "+91 98765 12345" },
+        2: { name: "Mrs. Priya Singh", bio: "Interior designer turned landlord. Loves creating cozy spaces and green environments.", contact: "+91 99887 66554" },
+        3: { name: "Mr. Ankit Sharma", bio: "Young entrepreneur focused on premium rental properties in prime locations.", contact: "+91 98112 33456" },
+        4: { name: "Ms. Neha Mehta", bio: "Hospitality professional ensuring every tenant enjoys luxury and comfort.", contact: "+91 99200 77661" },
+        5: { name: "Mr. Karthik Iyer", bio: "Tech professional renting out premium flats near IT parks. Quick responsive maintenance.", contact: "+91 97422 99881" },
+        6: { name: "Mrs. Sneha Joshi", bio: "Property manager with keen eye for quality, providing fully equipped homes.", contact: "+91 91234 56789" },
+        7: { name: "Mr. Akhtar Khan", bio: "Budget-friendly housing specialist focusing on student accommodations.", contact: "+91 88670 33221" },
+        8: { name: "Ms. Ritu Bhatia", bio: "Modern living curator, smart homes and tech-ready apartments.", contact: "+91 98732 11457" },
+        9: { name: "Mr. Dheeraj Menon", bio: "Premium realtor, known for upscale rental experiences.", contact: "+91 77009 88112" }
     };
     
     // Function to create blurred half number
@@ -809,7 +838,10 @@
     function openOwnerPopup(propertyId) {
         const owner = ownersData[propertyId];
         if(!owner) return;
-        document.getElementById('ownerPopupImg').src = owner.avatar;
+        // No profile image — use blank avatar (icon inside the circle)
+        const imgContainer = document.getElementById('ownerPopupImgContainer');
+        imgContainer.innerHTML = '<i class="fas fa-user-circle" style="font-size: 4rem;"></i>';
+        imgContainer.classList.add('blank-avatar-big');
         document.getElementById('ownerPopupName').innerText = owner.name;
         document.getElementById('ownerPopupBio').innerText = owner.bio;
         const blurredDisplay = getHalfBlurredNumber(owner.contact);
@@ -824,11 +856,11 @@
     };
     document.getElementById('ownerPopup').onclick = (e) => { if(e.target === document.getElementById('ownerPopup')) document.getElementById('ownerPopup').classList.remove('active'); };
     
-    // Properties Data with videos added
+    // Properties Data with videos
     const properties = [
         { id: 1, code: "STL-LKO-001", type: "1 BHK", title: "1 BHK Fully Furnished", location: "Gomti Nagar", price: "7000", forGender: "Anyone",
           images: ["../images/SHR.jpeg", "https://picsum.photos/id/155/500/350", "https://picsum.photos/id/159/500/350", "https://picsum.photos/id/158/500/350"],
-          videos: ["https://www.w3schools.com/html/mov_bbb.mp4"], desc: " It is one 1st floor. It has 1 Almirah, 1 Cooler, 2 Tables, 1 Bed with a bed box .", bedrooms: "1", bathrooms: "1", amenities: "Almirah, Cooler, 2 Tables, Bed box"},
+          videos: ["https://www.w3schools.com/html/mov_bbb.mp4"], desc: "It is one 1st floor. It has 1 Almirah, 1 Cooler, 2 Tables, 1 Bed with a bed box .", bedrooms: "1", bathrooms: "1", amenities: "Almirah, Cooler, 2 Tables, Bed box", size: "450 sqft"},
         { id: 2, code: "STL-LKO-002", type: "Flat", title: "2 BHK Fully Furnished Flat", location: "Indira Nagar", price: 18000, forGender: "Anyone",
           images: ["https://picsum.photos/id/169/500/350", "https://picsum.photos/id/164/500/350", "https://picsum.photos/id/29/500/350", "https://picsum.photos/id/28/500/350"],
           videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Spacious flat with modern kitchen, two balconies, gated society.", bedrooms: "2 BHK", bathrooms: "2", amenities: "WiFi, AC, Parking, Lift", size: "1100 sqft" },
@@ -857,7 +889,7 @@
 
     let visibleCount = 6;
     let currentFilteredList = [];
-    let currentVideoElements = []; // Track video elements to stop them when modal closes
+    let currentVideoElements = [];
 
     function renderCards(propertiesToShow) {
         const grid = document.getElementById('propertiesGrid');
@@ -867,7 +899,8 @@
         }
         grid.innerHTML = propertiesToShow.map(prop => {
             const owner = ownersData[prop.id];
-            const ownerAvatar = owner ? owner.avatar : "https://randomuser.me/api/portraits/lego/1.jpg";
+            // BLANK AVATAR - no image, show placeholder icon (Instagram-style empty)
+            const avatarHtml = `<div class="owner-avatar-card blank-avatar"><i class="fas fa-user-circle"></i></div>`;
             return `
             <div class="card">
                 <div class="card-img" style="background-image: url('${prop.images[0]}');">
@@ -879,7 +912,7 @@
                     <div class="features">${prop.amenities.substring(0, 35)}${prop.amenities.length > 35 ? '...' : ''}</div>
                     <div class="price">₹${prop.price.toLocaleString()}<span style="font-size:0.8rem;">/month</span></div>
                     <div class="owner-section-card" data-owner-id="${prop.id}">
-                        <img class="owner-avatar-card" src="${ownerAvatar}" alt="owner">
+                        ${avatarHtml}
                         <div class="owner-info-card">
                             Know more about owner <i class="fas fa-chevron-right"></i><br>
                             <small>${owner ? owner.name : "Verified Partner"}</small>
@@ -890,7 +923,6 @@
             </div>
         `}).join('');
         
-        // Owner section click handlers
         document.querySelectorAll('.owner-section-card').forEach(section => {
             section.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -922,7 +954,6 @@
         const modal = document.getElementById('propertyModal');
         const modalContent = document.getElementById('modalContent');
         
-        // Create gallery HTML with images and videos
         let galleryHtml = '';
         prop.images.forEach(img => {
             galleryHtml += `<img class="modal-img" src="${img}" onclick="openFullscreen('${img}')">`;
@@ -947,14 +978,13 @@
                 <div style="display:flex; justify-content:space-between;"><h2>${prop.title}</h2><span style="background:#eef2ff; padding:4px 12px; border-radius:40px;">${prop.type}</span></div>
                 <p><i class="fas fa-map-marker-alt"></i> ${prop.location}, Lucknow</p>
                 <div style="background:#f1f5f9; padding:8px 12px; border-radius:40px; display:inline-block; margin:10px 0;"><i class="fas fa-tag"></i> ${prop.code}</div>
-                <div style="display:flex; gap:1rem;"><span><i class="fas fa-bed"></i> ${prop.bedrooms}</span><span><i class="fas fa-bath"></i> ${prop.bathrooms}</span><span><i class="fas fa-arrows-alt"></i> ${prop.size}</span></div>
+                <div style="display:flex; gap:1rem;"><span><i class="fas fa-bed"></i> ${prop.bedrooms}</span><span><i class="fas fa-bath"></i> ${prop.bathrooms}</span><span><i class="fas fa-arrows-alt"></i> ${prop.size || 'N/A'}</span></div>
                 <div style="background:#f8fafc; padding:1rem; border-radius:1rem; margin:12px 0;"><strong>📝 Description</strong><br>${prop.desc}<br><br><strong>✨ Amenities</strong><br>${prop.amenities}</div>
                 <div class="price" style="font-size:1.8rem;">₹${prop.price.toLocaleString()}<span style="font-size:0.9rem;">/month</span></div>
                 <button id="sendWhatsappBtn" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Send Query on WhatsApp</button>
             </div>
         `;
         
-        // Store video elements to stop them later
         currentVideoElements = [];
         if(prop.videos && prop.videos.length) {
             prop.videos.forEach((_, idx) => {
@@ -978,8 +1008,7 @@
 
     function closeModalAndStopVideos() {
         stopAllVideos();
-        const modal = document.getElementById('propertyModal');
-        modal.classList.remove('active');
+        document.getElementById('propertyModal').classList.remove('active');
         document.body.style.overflow = '';
     }
 
@@ -1049,7 +1078,6 @@
         }
     }
 
-    // Header scroll hide/show
     let lastScrollY = window.scrollY;
     const header = document.getElementById('mainHeader');
     window.addEventListener('scroll', () => {
@@ -1058,7 +1086,6 @@
         lastScrollY = window.scrollY;
     });
 
-    // Fullscreen logic
     const fsViewer = document.getElementById('fsViewer');
     const fsImage = document.getElementById('fsImage');
     const closeFs = document.getElementById('closeFsBtn');
@@ -1067,7 +1094,6 @@
     closeFs.addEventListener('click', closeFullscreen);
     fsViewer.addEventListener('click', (e) => { if (e.target === fsViewer) closeFullscreen(); });
 
-    // Modal close with video stop
     document.getElementById('closeModalBtn').addEventListener('click', closeModalAndStopVideos);
     const modalEl = document.getElementById('propertyModal');
     modalEl.addEventListener('click', (e) => { if (e.target === modalEl) closeModalAndStopVideos(); });
@@ -1078,6 +1104,3 @@
 </script>
 </body>
 </html>
-
-
- 
