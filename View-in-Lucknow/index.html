@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
     <title>StayLoo | Find Spaces in Lucknow — Rooms, Flats & PGs</title>
     <link rel="icon" type="image/png" href="../images/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -28,7 +28,7 @@
             padding-top: 85px;
         }
 
-        /* Header - LARGER VERSION with image logo support */
+        /* Header */
         .header {
             background: white;
             padding: 1rem 2rem;
@@ -283,7 +283,6 @@
         .owner-section-card:hover {
             background: #eef3f8;
         }
-        /* Blank avatar style — Instagram style empty profile picture */
         .owner-avatar-card {
             width: 40px;
             height: 40px;
@@ -300,7 +299,6 @@
             font-weight: 500;
             text-transform: uppercase;
         }
-        /* For blank avatar: if no image, show a placeholder icon */
         .owner-avatar-card.blank-avatar {
             background: #eef2ff;
             color: #8b5cf6;
@@ -329,7 +327,7 @@
             transition: 0.2s;
         }
 
-        /* Load More / View Less Container */
+        /* Load More */
         .load-more-container {
             text-align: center;
             margin-top: 2.5rem;
@@ -358,11 +356,8 @@
             background: linear-gradient(95deg, #475569, #334155);
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        .view-less-btn:hover {
-            background: linear-gradient(95deg, #334155, #1e293b);
-        }
 
-        /* Modal Styles - Larger Gallery */
+        /* Modal Styles */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -507,14 +502,6 @@
             font-size: 3rem;
             color: #8b5cf6;
         }
-        /* force blank avatar in popup too */
-        .owner-popup-img.blank-avatar-big {
-            background: #eef2ff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #a78bfa;
-        }
         .close-owner-popup {
             position: absolute;
             top: 15px;
@@ -538,31 +525,46 @@
             font-size: 1rem;
         }
 
-        /* Fullscreen viewer */
+        /* Fullscreen Viewer - WITH PINCH ZOOM & BLUR */
         .fullscreen-view {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 1200;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(25px) !important;
+            -webkit-backdrop-filter: blur(25px) !important;
+            z-index: 9999;
             display: flex;
             align-items: center;
             justify-content: center;
             visibility: hidden;
             opacity: 0;
-            transition: 0.2s;
-            cursor: pointer;
+            transition: 0.3s;
         }
         .fullscreen-view.active {
             visibility: visible;
             opacity: 1;
         }
-        .fullscreen-img {
+        .fs-image-wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            touch-action: none;
+        }
+        .fs-image {
             max-width: 90%;
             max-height: 90%;
             object-fit: contain;
+            transition: transform 0.1s ease;
+            cursor: grab;
+        }
+        .fs-image:active {
+            cursor: grabbing;
         }
         .close-fs {
             position: absolute;
@@ -570,9 +572,21 @@
             right: 30px;
             color: white;
             font-size: 2rem;
-            background: none;
+            background: rgba(0,0,0,0.5);
             border: none;
             cursor: pointer;
+            z-index: 10000;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+        .close-fs:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.1);
         }
 
         /* Footer */
@@ -629,17 +643,6 @@
                 min-width: 150px;
             }
         }
-        @media (max-width: 550px) {
-            .footer-grid {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: space-between;
-            }
-            .footer-col {
-                flex: 0 0 auto;
-                width: 45%;
-            }
-        }
         .copyright {
             text-align: center;
             border-top: 1px solid #1e293b;
@@ -650,7 +653,6 @@
         @media (max-width: 640px) {
             .grid { grid-template-columns: 1fr; }
         }
-        
         @media (max-width: 780px) {
             .modal-img, .modal-video-item {
                 width: 150px;
@@ -667,7 +669,7 @@
 <header class="header" id="mainHeader">
     <div class="header-container">
         <div class="logo">
-            <img class="logo-img" src="/images/logonew1.png" alt="StayLoo Logo">
+            <img class="logo-img" src="../images/FEVICON1.png" alt="StayLoo Logo" onerror="this.src='https://placehold.co/200x60/8b5cf6/white?text=StayLoo'">
         </div>
         <div class="city-selector">
             <i class="fas fa-map-marker-alt" style="color:#8b5cf6;"></i> Lucknow Spaces
@@ -790,7 +792,7 @@
 <div id="ownerPopup" class="owner-popup-overlay">
     <div class="owner-popup-card">
         <span class="close-owner-popup" id="closeOwnerPopupBtn">&times;</span>
-        <div id="ownerPopupImgContainer" class="owner-popup-img blank-avatar-big">
+        <div id="ownerPopupImgContainer" class="owner-popup-img">
             <i class="fas fa-user-circle"></i>
         </div>
         <h3 id="ownerPopupName" style="margin: 8px 0 4px;">Owner Name</h3>
@@ -802,27 +804,28 @@
     </div>
 </div>
 
-<!-- Fullscreen viewer -->
+<!-- Fullscreen viewer with PINCH ZOOM -->
 <div id="fsViewer" class="fullscreen-view">
     <button class="close-fs" id="closeFsBtn">&times;</button>
-    <img id="fsImage" class="fullscreen-img" src="../images/SHR1.jpeg" alt="Fullscreen">
+    <div class="fs-image-wrapper" id="fsImageWrapper">
+        <img id="fsImage" class="fs-image" src="" alt="Fullscreen">
+    </div>
 </div>
 
 <script>
-    // Owner data — all avatars removed intentionally (blank profile as Instagram style)
+    // Owner data
     const ownersData = {
         1: { name: "Mrs. Manorama Maurya", bio: "Manorama is a homemaker and ready to help someone in need!", contact: "+91 98765 12345" },
-        2: { name: "Mrs. Priya Singh", bio: "Interior designer turned landlord. Loves creating cozy spaces and green environments.", contact: "+91 99887 66554" },
-        3: { name: "Mr. Ankit Sharma", bio: "Young entrepreneur focused on premium rental properties in prime locations.", contact: "+91 98112 33456" },
-        4: { name: "Ms. Neha Mehta", bio: "Hospitality professional ensuring every tenant enjoys luxury and comfort.", contact: "+91 99200 77661" },
-        5: { name: "Mr. Karthik Iyer", bio: "Tech professional renting out premium flats near IT parks. Quick responsive maintenance.", contact: "+91 97422 99881" },
-        6: { name: "Mrs. Sneha Joshi", bio: "Property manager with keen eye for quality, providing fully equipped homes.", contact: "+91 91234 56789" },
-        7: { name: "Mr. Akhtar Khan", bio: "Budget-friendly housing specialist focusing on student accommodations.", contact: "+91 88670 33221" },
+        2: { name: "Mrs. Priya Singh", bio: "Interior designer turned landlord. Loves creating cozy spaces.", contact: "+91 99887 66554" },
+        3: { name: "Mr. Ankit Sharma", bio: "Young entrepreneur focused on premium rental properties.", contact: "+91 98112 33456" },
+        4: { name: "Ms. Neha Mehta", bio: "Hospitality professional ensuring every tenant enjoys comfort.", contact: "+91 99200 77661" },
+        5: { name: "Mr. Karthik Iyer", bio: "Tech professional renting out premium flats near IT parks.", contact: "+91 97422 99881" },
+        6: { name: "Mrs. Sneha Joshi", bio: "Property manager with keen eye for quality.", contact: "+91 91234 56789" },
+        7: { name: "Mr. Akhtar Khan", bio: "Budget-friendly housing specialist focusing on students.", contact: "+91 88670 33221" },
         8: { name: "Ms. Ritu Bhatia", bio: "Modern living curator, smart homes and tech-ready apartments.", contact: "+91 98732 11457" },
         9: { name: "Mr. Dheeraj Menon", bio: "Premium realtor, known for upscale rental experiences.", contact: "+91 77009 88112" }
     };
     
-    // Function to create blurred half number
     function getHalfBlurredNumber(fullNumber) {
         const cleanNumber = fullNumber.replace(/[\s+]/g, '');
         const length = cleanNumber.length;
@@ -838,10 +841,8 @@
     function openOwnerPopup(propertyId) {
         const owner = ownersData[propertyId];
         if(!owner) return;
-        // No profile image — use blank avatar (icon inside the circle)
         const imgContainer = document.getElementById('ownerPopupImgContainer');
         imgContainer.innerHTML = '<i class="fas fa-user-circle" style="font-size: 4rem;"></i>';
-        imgContainer.classList.add('blank-avatar-big');
         document.getElementById('ownerPopupName').innerText = owner.name;
         document.getElementById('ownerPopupBio').innerText = owner.bio;
         const blurredDisplay = getHalfBlurredNumber(owner.contact);
@@ -886,7 +887,7 @@
           images: ["https://picsum.photos/id/32/500/350", "https://picsum.photos/id/33/500/350", "https://picsum.photos/id/34/500/350", "https://picsum.photos/id/35/500/350"],
           videos: [], desc: "Attached bathroom, large cupboard, prime location near market.", bedrooms: "Single", bathrooms: "Attached", amenities: "AC, WiFi, Laundry", size: "200 sqft" }
     ];
-
+    
     let visibleCount = 6;
     let currentFilteredList = [];
     let currentVideoElements = [];
@@ -899,7 +900,6 @@
         }
         grid.innerHTML = propertiesToShow.map(prop => {
             const owner = ownersData[prop.id];
-            // BLANK AVATAR - no image, show placeholder icon (Instagram-style empty)
             const avatarHtml = `<div class="owner-avatar-card blank-avatar"><i class="fas fa-user-circle"></i></div>`;
             return `
             <div class="card">
@@ -910,7 +910,7 @@
                     <div class="card-title">${prop.title}</div>
                     <div class="location"><i class="fas fa-map-marker-alt"></i> ${prop.location}</div>
                     <div class="features">${prop.amenities.substring(0, 35)}${prop.amenities.length > 35 ? '...' : ''}</div>
-                    <div class="price">₹${prop.price.toLocaleString()}<span style="font-size:0.8rem;">/month</span></div>
+                    <div class="price">₹${parseInt(prop.price).toLocaleString()}<span style="font-size:0.8rem;">/month</span></div>
                     <div class="owner-section-card" data-owner-id="${prop.id}">
                         ${avatarHtml}
                         <div class="owner-info-card">
@@ -950,21 +950,92 @@
         currentVideoElements = [];
     }
 
+    // PINCH ZOOM FUNCTIONALITY for fullscreen
+    let currentScale = 1;
+    let currentTranslate = { x: 0, y: 0 };
+    let initialDistance = 0;
+    let initialScale = 1;
+    let isTouching = false;
+    let startX = 0, startY = 0;
+
+    function initPinchZoom() {
+        const wrapper = document.getElementById('fsImageWrapper');
+        const img = document.getElementById('fsImage');
+        
+        if (!wrapper || !img) return;
+        
+        // Reset transforms
+        function resetTransform() {
+            currentScale = 1;
+            currentTranslate = { x: 0, y: 0 };
+            img.style.transform = `translate(0px, 0px) scale(1)`;
+        }
+        
+        // Handle pinch zoom
+        wrapper.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 2) {
+                e.preventDefault();
+                const dx = e.touches[0].clientX - e.touches[1].clientX;
+                const dy = e.touches[0].clientY - e.touches[1].clientY;
+                initialDistance = Math.hypot(dx, dy);
+                initialScale = currentScale;
+                isTouching = true;
+            } else if (e.touches.length === 1 && currentScale > 1) {
+                startX = e.touches[0].clientX - currentTranslate.x;
+                startY = e.touches[0].clientY - currentTranslate.y;
+                isTouching = true;
+            }
+        });
+        
+        wrapper.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 2 && initialDistance > 0) {
+                e.preventDefault();
+                const dx = e.touches[0].clientX - e.touches[1].clientX;
+                const dy = e.touches[0].clientY - e.touches[1].clientY;
+                const newDistance = Math.hypot(dx, dy);
+                const scale = Math.min(Math.max(initialScale * (newDistance / initialDistance), 1), 4);
+                currentScale = scale;
+                img.style.transform = `translate(${currentTranslate.x}px, ${currentTranslate.y}px) scale(${currentScale})`;
+            } else if (e.touches.length === 1 && currentScale > 1 && isTouching) {
+                e.preventDefault();
+                currentTranslate.x = e.touches[0].clientX - startX;
+                currentTranslate.y = e.touches[0].clientY - startY;
+                img.style.transform = `translate(${currentTranslate.x}px, ${currentTranslate.y}px) scale(${currentScale})`;
+            }
+        });
+        
+        wrapper.addEventListener('touchend', (e) => {
+            if (currentScale < 1.1) {
+                resetTransform();
+            }
+            isTouching = false;
+            initialDistance = 0;
+        });
+        
+        // Mouse wheel zoom for desktop
+        wrapper.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? -0.1 : 0.1;
+            currentScale = Math.min(Math.max(currentScale + delta, 1), 4);
+            img.style.transform = `translate(${currentTranslate.x}px, ${currentTranslate.y}px) scale(${currentScale})`;
+        });
+    }
+
     function openModal(prop) {
+        stopAllVideos();
         const modal = document.getElementById('propertyModal');
         const modalContent = document.getElementById('modalContent');
         
         let galleryHtml = '';
         prop.images.forEach(img => {
-            galleryHtml += `<img class="modal-img" src="${img}" onclick="openFullscreen('${img}')">`;
+            galleryHtml += `<img class="modal-img" src="${img}" onclick="openFullscreen('${img}')" style="cursor:pointer;">`;
         });
         
         if(prop.videos && prop.videos.length) {
             prop.videos.forEach((vidUrl, idx) => {
-                const videoId = `modal-video-${prop.id}-${idx}`;
                 galleryHtml += `
                     <div class="modal-video-item">
-                        <video id="${videoId}" controls preload="metadata" style="width:100%; height:100%; object-fit:cover;">
+                        <video controls preload="metadata" style="width:100%; height:100%; object-fit:cover;">
                             <source src="${vidUrl}" type="video/mp4">
                         </video>
                     </div>
@@ -980,20 +1051,10 @@
                 <div style="background:#f1f5f9; padding:8px 12px; border-radius:40px; display:inline-block; margin:10px 0;"><i class="fas fa-tag"></i> ${prop.code}</div>
                 <div style="display:flex; gap:1rem;"><span><i class="fas fa-bed"></i> ${prop.bedrooms}</span><span><i class="fas fa-bath"></i> ${prop.bathrooms}</span><span><i class="fas fa-arrows-alt"></i> ${prop.size || 'N/A'}</span></div>
                 <div style="background:#f8fafc; padding:1rem; border-radius:1rem; margin:12px 0;"><strong>📝 Description</strong><br>${prop.desc}<br><br><strong>✨ Amenities</strong><br>${prop.amenities}</div>
-                <div class="price" style="font-size:1.8rem;">₹${prop.price.toLocaleString()}<span style="font-size:0.9rem;">/month</span></div>
+                <div class="price" style="font-size:1.8rem;">₹${parseInt(prop.price).toLocaleString()}<span style="font-size:0.9rem;">/month</span></div>
                 <button id="sendWhatsappBtn" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Send Query on WhatsApp</button>
             </div>
         `;
-        
-        currentVideoElements = [];
-        if(prop.videos && prop.videos.length) {
-            prop.videos.forEach((_, idx) => {
-                const videoEl = document.getElementById(`modal-video-${prop.id}-${idx}`);
-                if(videoEl) {
-                    currentVideoElements.push(videoEl);
-                }
-            });
-        }
         
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -1012,6 +1073,36 @@
         document.body.style.overflow = '';
     }
 
+    // Fullscreen with pinch zoom
+    window.openFullscreen = function(src) {
+        const fsViewer = document.getElementById('fsViewer');
+        const fsImage = document.getElementById('fsImage');
+        
+        // Reset zoom before showing new image
+        currentScale = 1;
+        currentTranslate = { x: 0, y: 0 };
+        fsImage.style.transform = `translate(0px, 0px) scale(1)`;
+        fsImage.src = src;
+        
+        fsViewer.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
+    }
+    
+    function closeFullscreen() {
+        const fsViewer = document.getElementById('fsViewer');
+        fsViewer.classList.remove('active');
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
+        // Reset zoom when closing
+        currentScale = 1;
+        currentTranslate = { x: 0, y: 0 };
+        const fsImage = document.getElementById('fsImage');
+        if (fsImage) fsImage.style.transform = `translate(0px, 0px) scale(1)`;
+    }
+
     function applyFilters() {
         const type = document.getElementById('propTypeFilter').value;
         const budget = document.getElementById('budgetFilter').value;
@@ -1023,7 +1114,7 @@
             if (locationQuery && !prop.location.toLowerCase().includes(locationQuery)) return false;
             if (budget !== 'any') {
                 const maxBudget = parseInt(budget);
-                if (prop.price > maxBudget) return false;
+                if (parseInt(prop.price) > maxBudget) return false;
             }
             return true;
         });
@@ -1086,20 +1177,22 @@
         lastScrollY = window.scrollY;
     });
 
-    const fsViewer = document.getElementById('fsViewer');
-    const fsImage = document.getElementById('fsImage');
-    const closeFs = document.getElementById('closeFsBtn');
-    window.openFullscreen = (src) => { fsImage.src = src; fsViewer.classList.add('active'); document.body.style.overflow = 'hidden'; };
-    function closeFullscreen() { fsViewer.classList.remove('active'); document.body.style.overflow = ''; }
-    closeFs.addEventListener('click', closeFullscreen);
-    fsViewer.addEventListener('click', (e) => { if (e.target === fsViewer) closeFullscreen(); });
-
+    // Event Listeners
     document.getElementById('closeModalBtn').addEventListener('click', closeModalAndStopVideos);
     const modalEl = document.getElementById('propertyModal');
     modalEl.addEventListener('click', (e) => { if (e.target === modalEl) closeModalAndStopVideos(); });
-
+    
     document.getElementById('applyFiltersBtn').addEventListener('click', applyFilters);
     document.getElementById('resetFiltersBtn').addEventListener('click', resetFilters);
+    
+    const fsViewer = document.getElementById('fsViewer');
+    const closeFsBtn = document.getElementById('closeFsBtn');
+    closeFsBtn.addEventListener('click', closeFullscreen);
+    fsViewer.addEventListener('click', (e) => { if (e.target === fsViewer) closeFullscreen(); });
+    
+    // Initialize pinch zoom
+    initPinchZoom();
+    
     applyFilters();
 </script>
 </body>
