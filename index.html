@@ -319,6 +319,7 @@
             text-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
+        /* ===== BUTTON STYLES - FIXED FOR MOBILE ===== */
         .hero-buttons {
             display: flex;
             gap: 20px;
@@ -328,7 +329,7 @@
 
         .btn {
             display: inline-block;
-            padding: 14px 36px;
+            padding: 14px 32px;
             font-weight: 600;
             border-radius: 60px;
             text-decoration: none;
@@ -338,6 +339,7 @@
             cursor: pointer;
             text-align: center;
             letter-spacing: 0.5px;
+            white-space: nowrap;
         }
 
         .btn-primary {
@@ -356,17 +358,17 @@
         .btn-secondary {
             background: rgba(255,255,255,0.12);
             backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.35);
+            border: 1.5px solid rgba(255,255,255,0.45);
             color: white;
         }
 
         .btn-secondary:hover {
             background: rgba(255,255,255,0.25);
-            border-color: rgba(255,255,255,0.6);
+            border-color: rgba(255,255,255,0.7);
             transform: translateY(-2px);
         }
 
-        /* ===== FEATURES BADGES - IMPROVED DESIGN ===== */
+        /* ===== FEATURES BADGES ===== */
         .features-wrapper {
             margin-top: 20px;
             width: 100%;
@@ -397,6 +399,7 @@
             letter-spacing: 0.2px;
             border: 0.5px solid rgba(255, 255, 255, 0.25);
             transition: all 0.2s ease;
+            white-space: nowrap;
         }
 
         .badge-pill:hover {
@@ -409,7 +412,7 @@
             color: #60a5fa;
         }
 
-        /* ===== RESPONSIVE - FIXED: BIGGER TEXT, BIGGER BUTTONS, BETTER SPACING ===== */
+        /* ===== RESPONSIVE - FIXED MOBILE BUTTONS ===== */
         @media (max-width: 760px) {
             .hero-content {
                 margin-left: 4%;
@@ -418,7 +421,6 @@
                 width: 92%;
             }
             
-            /* BIGGER HEADLINES ON MOBILE */
             .hero-headline .no-brokers {
                 font-size: 3.8rem;
                 margin-bottom: 8px;
@@ -435,29 +437,25 @@
                 display: block;
             }
             
-            /* BIGGER BUTTONS ON MOBILE */
             .hero-buttons {
                 gap: 16px;
                 margin-bottom: 35px;
                 flex-direction: row;
-                justify-content: flex-start;
+                flex-wrap: nowrap;
             }
             
             .btn {
-                padding: 14px 28px;
-                font-size: 1rem;
-                min-width: 160px;
+                padding: 12px 20px;
+                font-size: 0.9rem;
+                flex: 1;
+                white-space: nowrap;
+                letter-spacing: 0.3px;
             }
             
-            /* BIGGER BADGES ON MOBILE */
             .badge-pill {
                 padding: 8px 18px;
                 font-size: 0.85rem;
                 gap: 8px;
-            }
-            
-            .badge-icon {
-                font-size: 0.95rem;
             }
             
             .trusted-line {
@@ -467,74 +465,38 @@
             }
         }
 
-        @media (max-width: 550px) {
-            .hero-content {
-                margin-left: 3%;
-                margin-right: 3%;
-                width: 94%;
-                padding: 15px 12px;
-            }
-            
-            /* EVEN BIGGER FOR SMALL PHONES */
-            .hero-headline .no-brokers {
-                font-size: 3.2rem;
-            }
-            .hero-headline .find-verified {
-                font-size: 2.8rem;
-            }
-            .hero-headline .blue-easily {
-                font-size: 2.8rem;
-            }
-            
-            /* FULL WIDTH BUTTONS SIDE BY SIDE */
-            .hero-buttons {
-                gap: 14px;
-                margin-bottom: 30px;
-                flex-direction: row;
-                flex-wrap: nowrap;
-            }
-            
+        @media (max-width: 580px) {
             .btn {
-                padding: 12px 16px;
-                font-size: 0.9rem;
-                min-width: 140px;
-                flex: 1;
-                white-space: nowrap;
-            }
-            
-            .features-badges {
-                gap: 12px;
+                padding: 10px 14px;
+                font-size: 0.8rem;
+                letter-spacing: 0.2px;
             }
             
             .badge-pill {
-                padding: 7px 16px;
-                font-size: 0.8rem;
+                padding: 6px 14px;
+                font-size: 0.75rem;
                 gap: 6px;
             }
             
             .badge-icon {
-                font-size: 0.85rem;
+                font-size: 0.8rem;
             }
         }
 
-        @media (max-width: 450px) {
+        @media (max-width: 480px) {
             .hero-headline .no-brokers {
-                font-size: 2.8rem;
+                font-size: 3rem;
             }
             .hero-headline .find-verified {
-                font-size: 2.4rem;
+                font-size: 2.5rem;
             }
             .hero-headline .blue-easily {
-                font-size: 2.4rem;
+                font-size: 2.5rem;
             }
             
             .btn {
-                padding: 12px 20px;
-                font-size: 0.85rem;
-                min-width: 150px;
-                flex: 1;
-               white-space: nowrap;
-              letter-spacing: 0.4px;
+                padding: 9px 12px;
+                font-size: 0.75rem;
             }
             
             .features-badges {
@@ -542,8 +504,8 @@
             }
             
             .badge-pill {
-                padding: 6px 14px;
-                font-size: 0.75rem;
+                padding: 5px 12px;
+                font-size: 0.7rem;
             }
         }
 
@@ -1143,7 +1105,6 @@
                 <a href="list-space" class="btn btn-secondary"><span class="btn-icon">🏠</span> List Your Property</a>
             </div>
             
-            <!-- MODERN BADGES - SAME DESIGN FOR ALL -->
             <div class="features-wrapper">
                 <div class="features-badges">
                     <div class="badge-pill">
