@@ -265,14 +265,26 @@
         .owner-section:hover {
             background: #eef3f8;
         }
+        /* Blank avatar style — Instagram style empty profile picture */
         .owner-avatar {
             width: 38px;
             height: 38px;
             border-radius: 50%;
             object-fit: cover;
-            background: #cbdde9;
+            background: #e2e8f0;
             border: 2px solid white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        /* For blank avatar: show placeholder icon */
+        .owner-avatar.blank-avatar {
+            background: #eef2ff;
+            color: #8b5cf6;
         }
         .owner-info-text {
             font-size: 0.85rem;
@@ -506,9 +518,16 @@
             width: 110px;
             height: 110px;
             border-radius: 50%;
-            object-fit: cover;
             margin-bottom: 1rem;
             border: 4px solid #1c6a8f;
+            background: #eef2ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: #8b5cf6;
+            margin-left: auto;
+            margin-right: auto;
         }
         .close-owner-popup {
             position: absolute;
@@ -620,7 +639,9 @@
 <div id="ownerPopup" class="owner-popup-overlay">
     <div class="owner-popup-card">
         <span class="close-owner-popup" id="closeOwnerPopupBtn">&times;</span>
-        <img id="ownerPopupImg" class="owner-popup-img" src="" alt="Owner">
+        <div id="ownerPopupImgContainer" class="owner-popup-img">
+            <i class="fas fa-user-circle"></i>
+        </div>
         <h3 id="ownerPopupName" style="margin: 8px 0 4px;">Owner Name</h3>
         <p id="ownerPopupBio" style="color:#3c657e; font-size:0.9rem; margin-top:8px;"></p>
         <div class="contact-display">
@@ -631,17 +652,17 @@
 </div>
 
 <script>
-    // Owner data for each property
+    // Owner data for each property — all avatars removed intentionally (blank profile)
     const ownersData = {
         "STL101": { name: "Mrs. Manorama Maurya", bio: "Manorama is a homemaker and she is ready to help someone in need.", contact: "+91 98765 12345" },
-        "STL102": { name: "Mrs. Priya Singh", avatar: "https://randomuser.me/api/portraits/women/68.jpg", bio: "Interior designer turned landlord. Loves creating cozy spaces and green environments.", contact: "+91 99887 66554" },
-        "STL103": { name: "Mr. Ankit Sharma", avatar: "https://randomuser.me/api/portraits/men/45.jpg", bio: "Young entrepreneur focused on premium rental properties in prime locations.", contact: "+91 98112 33456" },
-        "STL104": { name: "Ms. Neha Mehta", avatar: "https://randomuser.me/api/portraits/women/23.jpg", bio: "Hospitality professional ensuring every tenant enjoys luxury and comfort.", contact: "+91 99200 77661" },
-        "STL105": { name: "Mr. Karthik Iyer", avatar: "https://randomuser.me/api/portraits/men/52.jpg", bio: "Tech professional renting out premium flats near IT parks. Quick responsive maintenance.", contact: "+91 97422 99881" },
-        "STL106": { name: "Mrs. Sneha Joshi", avatar: "https://randomuser.me/api/portraits/women/44.jpg", bio: "Property manager with keen eye for quality, providing fully equipped homes.", contact: "+91 91234 56789" },
-        "STL107": { name: "Mr. Akhtar Khan", avatar: "https://randomuser.me/api/portraits/men/22.jpg", bio: "Budget-friendly housing specialist focusing on student accommodations.", contact: "+91 88670 33221" },
-        "STL108": { name: "Ms. Ritu Bhatia", avatar: "https://randomuser.me/api/portraits/women/89.jpg", bio: "Modern living curator, smart homes and tech-ready apartments.", contact: "+91 98732 11457" },
-        "STL109": { name: "Mr. Dheeraj Menon", avatar: "https://randomuser.me/api/portraits/men/64.jpg", bio: "Premium realtor in Koramangala, known for upscale rental experiences.", contact: "+91 77009 88112" }
+        "STL102": { name: "Mrs. Priya Singh", bio: "Interior designer turned landlord. Loves creating cozy spaces and green environments.", contact: "+91 99887 66554" },
+        "STL103": { name: "Mr. Ankit Sharma", bio: "Young entrepreneur focused on premium rental properties in prime locations.", contact: "+91 98112 33456" },
+        "STL104": { name: "Ms. Neha Mehta", bio: "Hospitality professional ensuring every tenant enjoys luxury and comfort.", contact: "+91 99200 77661" },
+        "STL105": { name: "Mr. Karthik Iyer", bio: "Tech professional renting out premium flats near IT parks. Quick responsive maintenance.", contact: "+91 97422 99881" },
+        "STL106": { name: "Mrs. Sneha Joshi", bio: "Property manager with keen eye for quality, providing fully equipped homes.", contact: "+91 91234 56789" },
+        "STL107": { name: "Mr. Akhtar Khan", bio: "Budget-friendly housing specialist focusing on student accommodations.", contact: "+91 88670 33221" },
+        "STL108": { name: "Ms. Ritu Bhatia", bio: "Modern living curator, smart homes and tech-ready apartments.", contact: "+91 98732 11457" },
+        "STL109": { name: "Mr. Dheeraj Menon", bio: "Premium realtor in Koramangala, known for upscale rental experiences.", contact: "+91 77009 88112" }
     };
     
     // Badge data for each property (verified and popular status)
@@ -659,17 +680,12 @@
     
     // Function to create blurred half number (permanently blurred, no reveal)
     function getHalfBlurredNumber(fullNumber) {
-        // Remove spaces for counting
         const cleanNumber = fullNumber.replace(/[\s+]/g, '');
         const length = cleanNumber.length;
         const halfLength = Math.floor(length / 2);
-        // First half will be blurred (we'll replace with X's but apply CSS blur)
         const visiblePart = cleanNumber.slice(-halfLength);
         const hiddenPart = cleanNumber.slice(0, length - halfLength);
-        // Return a string that shows hidden part as X's but with blur class applied to whole
-        // For better visual: show asterisks for hidden part
         const maskedNumber = '•'.repeat(hiddenPart.length) + visiblePart;
-        // Format with proper spacing
         if (fullNumber.startsWith('+')) {
             return '+' + maskedNumber.slice(0, 2) + ' ' + maskedNumber.slice(2, 4) + ' ' + maskedNumber.slice(4);
         }
@@ -679,7 +695,7 @@
     const properties = [
         { id: "STL101", code: "STL-101", city: "Lucknow", area: "Gomti Nagar", title: "1 BHK Fully Furnished", bhk: "1 BHK", price: 7000,
           images: ["https://picsum.photos/id/152/400/300", "https://picsum.photos/id/155/400/300", "https://picsum.photos/id/159/400/300", "https://picsum.photos/id/158/400/300"],
-          videos: ["https://www.w3schools.com/html/mov_bbb.mp4"], desc: "Fully furnished, near Saraswati puram kharagpur, modern amenities.",  floor: "1st Floor", available: "Immediate", features: "Bed, Almirah, 2 Tables, Bed box, 1 Cooler" },
+          videos: ["https://www.w3schools.com/html/mov_bbb.mp4"], desc: "Fully furnished, near Saraswati puram kharagpur, modern amenities.",  floor: "1st Floor", available: "Immediate", features: "Bed, Almirah, 2 Tables, Bed box, 1 Cooler", size: "550 sqft" },
         { id: "STL102", code: "STL-102", city: "Lucknow", area: "Indira Nagar", title: "Green Valley Homes", bhk: "3 BHK", price: 22000,
           images: ["https://picsum.photos/id/169/400/300", "https://picsum.photos/id/164/400/300", "https://picsum.photos/id/29/400/300", "https://picsum.photos/id/28/400/300"],
           videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Semi-furnished, park facing, modular kitchen, spacious balconies, excellent ventilation.", size: "1350 sqft", floor: "2nd Floor", available: "Next month", features: "Park View, Modular Kitchen, Parking, CCTV" },
@@ -709,7 +725,9 @@
     function openOwnerPopup(propertyId) {
         const owner = ownersData[propertyId];
         if(!owner) return;
-        document.getElementById('ownerPopupImg').src = owner.avatar;
+        // Blank avatar: show icon instead of image
+        const imgContainer = document.getElementById('ownerPopupImgContainer');
+        imgContainer.innerHTML = '<i class="fas fa-user-circle" style="font-size: 4rem;"></i>';
         document.getElementById('ownerPopupName').innerText = owner.name;
         document.getElementById('ownerPopupBio').innerText = owner.bio;
         const blurredDisplay = getHalfBlurredNumber(owner.contact);
@@ -729,7 +747,8 @@
         if (!filteredProps.length) { grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 3rem;">🏠 No properties match your criteria.</div>`; return; }
         grid.innerHTML = filteredProps.map(prop => {
             const owner = ownersData[prop.id];
-            const ownerAvatar = owner ? owner.avatar : "https://randomuser.me/api/portraits/lego/1.jpg";
+            // BLANK AVATAR - no image, show placeholder icon (Instagram-style empty)
+            const avatarHtml = `<div class="owner-avatar blank-avatar"><i class="fas fa-user-circle"></i></div>`;
             const badges = propertyBadges[prop.id] || { verified: false, popular: false };
             let badgesHtml = '';
             if (badges.verified) {
@@ -750,12 +769,12 @@
                     <div onclick="openModal('${prop.id}')" style="cursor:pointer;">
                         <div class="card-title">${prop.title}</div>
                         <div class="card-location"><i class="fas fa-map-marker-alt"></i> ${prop.area}, ${prop.city}</div>
-                        <div class="card-details"><span>🏠 ${prop.bhk}</span><span>📏 ${prop.size}</span></div>
+                        <div class="card-details"><span>🏠 ${prop.bhk}</span><span>📏 ${prop.size || 'N/A'}</span></div>
                         <div class="price">₹${prop.price.toLocaleString()}/month</div>
                     </div>
-                    <!-- Owner section with circle + know more -->
+                    <!-- Owner section with blank avatar + know more -->
                     <div class="owner-section" onclick="openOwnerPopup('${prop.id}')">
-                        <img class="owner-avatar" src="${ownerAvatar}" alt="owner">
+                        ${avatarHtml}
                         <div class="owner-info-text">
                             Know more about owner <i class="fas fa-chevron-right"></i><br>
                             <small>${owner ? owner.name : "Verified Partner"}</small>
@@ -814,7 +833,7 @@
                 <p><i class="fas fa-location-dot"></i> ${prop.area}, ${prop.city}</p>
                 <div style="display:flex; gap:1rem; margin:12px 0; flex-wrap:wrap;">
                     <span><i class="fas fa-bed"></i> ${prop.bhk}</span>
-                    <span><i class="fas fa-arrows-alt"></i> ${prop.size}</span>
+                    <span><i class="fas fa-arrows-alt"></i> ${prop.size || 'N/A'}</span>
                     <span><i class="fas fa-layer-group"></i> ${prop.floor}</span>
                     <span><i class="fas fa-calendar"></i> Available: ${prop.available}</span>
                 </div>
