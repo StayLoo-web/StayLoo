@@ -39,7 +39,6 @@
             position: fixed;
             width: 100%;
         }
-        /* Hero Section */
         .hero-section {
             background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.65)), 
                         url('https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover no-repeat;
@@ -296,7 +295,6 @@
             background: #1c6a8f;
             color: white;
         }
-        /* Modal Styles */
         .modal-overlay, .owner-popup-overlay, .fullscreen-viewer {
             position: fixed;
             top: 0;
@@ -553,7 +551,6 @@
         { id: "STL111", code: "STL-111", city: "Mumbai", area: "Bandra", title: "Oceanic Breeze", bhk: "2 BHK", price: 55000, security: 45000, images: ["https://picsum.photos/id/26/500/350", "https://picsum.photos/id/27/500/350"], videos: [], desc: "Premium sea-facing apartment.", size: "1250 sqft", floor: "15th", available: "Negotiable", features: "Sea View, Gym, Pool" }
     ];
 
-    // Owner data mapping
     const ownersData = {};
     allProperties.forEach((prop, idx) => {
         const names = ["Mr. Rajesh Verma", "Mrs. Priya Singh", "Mr. Ankit Sharma", "Ms. Neha Mehta", "Mr. Karthik Iyer", "Mrs. Sneha Joshi", "Mr. Akhtar Khan", "Ms. Ritu Bhatia", "Mr. Dheeraj Menon", "Ms. Swati Narayan", "Mr. Rohit Mehra"];
@@ -568,15 +565,18 @@
 
     let currentDisplayLimit = 6;
     let filteredMasterList = [];
-    let savedScrollPosition = 0;
+    
+    // CRITICAL FIX: Store original page scroll position separately from modal scroll
+    let originalScrollPosition = 0;
+    let isModalActive = false;
+    let isFullscreenActive = false;
 
-    // FIX: Store original scroll position before any modal, restore properly
-    function storeScrollPosition() {
-        savedScrollPosition = window.scrollY || document.documentElement.scrollTop;
+    function storeOriginalScrollPosition() {
+        originalScrollPosition = window.scrollY || document.documentElement.scrollTop;
     }
 
-    function restoreScrollPosition() {
-        window.scrollTo(0, savedScrollPosition);
+    function restoreOriginalScrollPosition() {
+        window.scrollTo(0, originalScrollPosition);
     }
 
     function getFilteredProperties() {
@@ -631,8 +631,7 @@
         renderLimitedCards();
     }
     
-    // FULLSCREEN FIX: Close fullscreen without affecting layout or history except removing hash
-    let isFullscreenOpen = false;
+    // FULLSCREEN - without disturbing original scroll position
     let currentFullscreenImages = [];
     let currentFullscreenIndex = 0;
 
@@ -655,26 +654,39 @@
         updateFullscreenImage();
     }
 
-    function closeFullscreen(goBack = true) {
+    function closeFullscreen() {
         const viewer = document.getElementById('fullscreenViewer');
         viewer.classList.remove('active');
         const videoEl = document.getElementById('fullscreenVideo');
-        if (videoEl) videoEl.pause();
+        if (videoEl) {
+            videoEl.pause();
+            videoEl.src = "";
+        }
         document.body.style.overflow = '';
         document.body.style.position = '';
         document.body.style.width = '';
-        isFullscreenOpen = false;
+        document.body.style.top = '';
+        isFullscreenActive = false;
         currentFullscreenImages = [];
-        // Restore scroll position exactly where user was
-        restoreScrollPosition();
-        if (goBack && window.location.hash === '#fullscreen') {
-            history.back();
+        
+        // Restore modal body scroll if modal is still active, otherwise restore original
+        if (isModalActive) {
+            // Modal is still open, keep modal scroll position
+            const modalContainer = document.querySelector('#propertyModal .modal-container');
+            if (modalContainer) {
+                // Don't restore page scroll, modal is still open
+            }
+        } else {
+            restoreOriginalScrollPosition();
+        }
+        
+        if (window.location.hash === '#fullscreen') {
+            history.replaceState(null, null, window.location.pathname + window.location.search);
         }
     }
 
     function openFullscreenMedia(url, isVideo = false, allImages = []) {
-        storeScrollPosition();
-        isFullscreenOpen = true;
+        isFullscreenActive = true;
         const viewer = document.getElementById('fullscreenViewer');
         const imgEl = document.getElementById('fullscreenImg');
         const videoEl = document.getElementById('fullscreenVideo');
@@ -695,7 +707,10 @@
         } else {
             imgEl.style.display = 'block';
             videoEl.style.display = 'none';
-            if (videoEl) videoEl.pause();
+            if (videoEl) {
+                videoEl.pause();
+                videoEl.src = "";
+            }
             if (!allImages.length) imgEl.src = url;
         }
         
@@ -703,10 +718,9 @@
         document.body.style.overflow = 'hidden';
         document.body.style.position = 'fixed';
         document.body.style.width = '100%';
-        // Replace history state so that back button closes fullscreen only, not entire page
-        history.pushState({ fullscreenOpen: true }, "", "#fullscreen");
         
-        // Show hint after 1 sec
+        history.replaceState(null, null, '#fullscreen');
+        
         const hint = document.getElementById('swipeHint');
         if (hint && allImages.length > 1) {
             hint.style.animation = 'none';
@@ -748,15 +762,17 @@
         });
     }
 
-    // Modal and owner popup with proper history
+    // Modal functions
     function openModalWithHistory(propertyId) {
-        storeScrollPosition();
+        storeOriginalScrollPosition();
+        isModalActive = true;
         history.pushState({ modalOpen: true }, "", "#modal");
         openModal(propertyId);
     }
 
     function openOwnerPopupWithHistory(propId) {
-        storeScrollPosition();
+        storeOriginalScrollPosition();
+        isModalActive = true;
         history.pushState({ ownerPopupOpen: true }, "", "#owner");
         openOwnerPopup(propId);
     }
@@ -809,7 +825,7 @@
         document.body.style.overflow = 'hidden';
         document.body.style.position = 'fixed';
         document.body.style.width = '100%';
-        document.body.style.top = `-${savedScrollPosition}px`;
+        document.body.style.top = `-${originalScrollPosition}px`;
         
         document.getElementById('whatsappModalBtn')?.addEventListener('click', () => {
             const YOUR_WHATSAPP_NUMBER = "919170548739";
@@ -830,25 +846,32 @@
         document.body.style.overflow = 'hidden';
         document.body.style.position = 'fixed';
         document.body.style.width = '100%';
-        document.body.style.top = `-${savedScrollPosition}px`;
+        document.body.style.top = `-${originalScrollPosition}px`;
     }
     
     function closeAllModals() {
         const modal = document.getElementById('propertyModal');
         const owner = document.getElementById('ownerPopup');
+        
         if (modal.classList.contains('active')) {
             modal.classList.remove('active');
         }
         if (owner.classList.contains('active')) {
             owner.classList.remove('active');
         }
+        
         document.body.style.overflow = '';
         document.body.style.position = '';
         document.body.style.width = '';
         document.body.style.top = '';
-        restoreScrollPosition();
+        
+        isModalActive = false;
+        
+        // Always restore to original page scroll position
+        restoreOriginalScrollPosition();
+        
         if (window.location.hash === '#modal' || window.location.hash === '#owner') {
-            history.back();
+            history.replaceState(null, null, window.location.pathname + window.location.search);
         }
     }
     
@@ -860,24 +883,22 @@
         
         if (fsViewer.classList.contains('active')) {
             event.preventDefault();
-            closeFullscreen(true);
+            closeFullscreen();
         } else if (modal.classList.contains('active')) {
             event.preventDefault();
             closeAllModals();
         } else if (owner.classList.contains('active')) {
             event.preventDefault();
             closeAllModals();
-        } else {
-            // If no modals open, allow natural back navigation to previous page
-            window.history.back();
         }
+        // If no modals open, allow natural back navigation
     });
     
     // Event Listeners
     document.getElementById('closeModalBtn').onclick = () => closeAllModals();
     document.getElementById('closeOwnerPopupBtn').onclick = () => closeAllModals();
-    document.querySelector('.close-fullscreen').onclick = () => closeFullscreen(true);
-    document.getElementById('fullscreenViewer').onclick = (e) => { if(e.target === document.getElementById('fullscreenViewer')) closeFullscreen(true); };
+    document.querySelector('.close-fullscreen').onclick = () => closeFullscreen();
+    document.getElementById('fullscreenViewer').onclick = (e) => { if(e.target === document.getElementById('fullscreenViewer')) closeFullscreen(); };
     document.getElementById('applyFilterBtn').onclick = () => applyFiltersAndResetPagination();
     document.getElementById('resetFilterBtn').onclick = () => { document.getElementById('cityFilter').value='all'; document.getElementById('areaFilter').value=''; document.getElementById('budgetFilter').value='any'; document.getElementById('bhkFilter').value='all'; applyFiltersAndResetPagination(); };
     document.getElementById('viewMoreBtn').onclick = () => toggleViewMore();
@@ -894,8 +915,7 @@
     renderLimitedCards();
     initFullscreenSwipe();
     
-    // Replace initial history state to prevent accidental back-to-top
-    history.replaceState(null, null, window.location.pathname);
+    history.replaceState(null, null, window.location.pathname + window.location.search);
 </script>
 </body>
 </html>
