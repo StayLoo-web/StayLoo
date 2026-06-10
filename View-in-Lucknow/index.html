@@ -27,6 +27,13 @@
       line-height: 1.5;
       padding-top: 85px;
     }
+    /* Prevent body scroll when modal is open */
+    body.modal-open {
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+    }
 
     .header {
       background: white;
@@ -199,7 +206,6 @@
       margin: 0 auto;
       padding: 0 1rem 2rem;
     }
-    /* FIX: Centered section title */
     .section-title {
       font-size: 1.6rem;
       font-weight: 700;
@@ -259,7 +265,6 @@
       color: #475569;
       margin: 8px 0;
     }
-    /* FIX: Price and security badge on same line */
     .price-row {
       display: flex;
       justify-content: space-between;
@@ -550,7 +555,6 @@
       font-size: 1rem;
     }
 
-    /* Fullscreen viewer with swipe animation hint */
     .fullscreen-view {
       position: fixed;
       top: 0;
@@ -615,7 +619,6 @@
       transform: scale(1.1);
     }
 
-    /* Swipe hint animation */
     .swipe-hint {
       position: absolute;
       bottom: 30px;
@@ -866,6 +869,11 @@
 
 <script>
   (function() {
+    // Store scroll position
+    let savedScrollPosition = 0;
+    let isModalOpen = false;
+    let isFullscreenOpen = false;
+    
     const ownersData = {
       1: { name: "Mrs. Manorama Maurya", bio: "Manorama is a homemaker and ready to help someone in need!", contact: "+91 98765 12345" },
       2: { name: "Mrs. Priya Singh", bio: "Interior designer turned landlord. Loves creating cozy spaces.", contact: "+91 99887 66554" },
@@ -943,10 +951,7 @@
     let currentFilteredList = [];
     let currentVideoElements = [];
 
-    // History stack for back button
-    let historyStack = [];
-
-    // ---- Fullscreen logic with swipe hint ----
+    // ---- Fullscreen logic ----
     let currentFullscreenImages = [];
     let currentFullscreenIndex = 0;
     let swipeHintTimer = null;
@@ -954,9 +959,8 @@
     function showSwipeHint() {
       const hint = document.getElementById('swipeHint');
       if (!hint) return;
-      // Remove existing animation
       hint.style.animation = 'none';
-      hint.offsetHeight; // trigger reflow
+      hint.offsetHeight;
       hint.style.animation = 'fadeInOut 3s ease-in-out forwards';
     }
 
@@ -972,20 +976,24 @@
 
     function openFullscreen(imageSrc, allImages) {
       const fsViewer = document.getElementById('fsViewer');
-      const fsImage = document.getElementById('fsImage');
-      if (!fsViewer || !fsImage) return;
+      if (!fsViewer) return;
 
       currentFullscreenImages = allImages || [imageSrc];
       const idx = currentFullscreenImages.indexOf(imageSrc);
       currentFullscreenIndex = idx >= 0 ? idx : 0;
       updateFullscreenImage();
 
+      isFullscreenOpen = true;
       fsViewer.classList.add('active');
+      
+      // Prevent body scroll
       document.body.style.overflow = 'hidden';
       document.body.style.position = 'fixed';
       document.body.style.width = '100%';
       
-      // Show swipe hint after 3 seconds
+      // Push state for back button
+      history.pushState({ fullscreen: true }, '', '#fullscreen');
+      
       if (swipeHintTimer) clearTimeout(swipeHintTimer);
       swipeHintTimer = setTimeout(() => {
         if (fsViewer.classList.contains('active')) {
@@ -1009,18 +1017,25 @@
     function closeFullscreen() {
       const fsViewer = document.getElementById('fsViewer');
       if (fsViewer) fsViewer.classList.remove('active');
+      
+      isFullscreenOpen = false;
       document.body.style.overflow = '';
       document.body.style.position = '';
       document.body.style.width = '';
+      
       window.currentScale = 1;
       window.currentTranslate = { x: 0, y: 0 };
       const fsImage = document.getElementById('fsImage');
       if (fsImage) fsImage.style.transform = `translate(0px, 0px) scale(1)`;
       currentFullscreenImages = [];
+      
       if (swipeHintTimer) {
         clearTimeout(swipeHintTimer);
         swipeHintTimer = null;
       }
+      
+      // Restore scroll position
+      window.scrollTo(0, savedScrollPosition);
     }
 
     // Swipe detection for fullscreen
@@ -1194,21 +1209,18 @@
       currentVideoElements = [];
     }
 
-    // Push state to history when opening modal
-    function pushHistoryState() {
-      const state = { modalOpen: true };
-      history.pushState(state, '', '#modal');
-      historyStack.push(state);
-    }
-
     function openModal(prop) {
       stopAllVideos();
+      
+      // Save current scroll position
+      savedScrollPosition = window.scrollY;
+      
       const modal = document.getElementById('propertyModal');
       const modalContent = document.getElementById('modalContent');
 
       let galleryHtml = '';
       prop.images.forEach(img => {
-        galleryHtml += `<img class="modal-img" src="${img}" onclick="window.openFullscreen('${img}', ${JSON.stringify(prop.images).replace(/"/g, '&quot;')})" style="cursor:pointer;" alt="Property image">`;
+        galleryHtml += `<img class="modal-img" src="${img}" onclick="event.stopPropagation(); window.openFullscreen('${img}', ${JSON.stringify(prop.images).replace(/"/g, '&quot;')})" style="cursor:pointer;" alt="Property image">`;
       });
 
       if(prop.videos && prop.videos.length) {
@@ -1246,41 +1258,44 @@
         </div>
       `;
 
-      const scrollY = window.scrollY;
-      modal.dataset.scrollY = scrollY;
+      isModalOpen = true;
       modal.classList.add('active');
+      
+      // Prevent body scroll
       document.body.style.overflow = 'hidden';
       document.body.style.position = 'fixed';
       document.body.style.width = '100%';
-      document.body.style.top = `-${scrollY}px`;
+      document.body.style.top = `-${savedScrollPosition}px`;
 
-      // Push to history for back button support
-      pushHistoryState();
+      // Push state for back button
+      history.pushState({ modal: true }, '', '#modal');
 
       const waBtn = document.getElementById('sendWhatsappBtn');
-      if (waBtn) waBtn.addEventListener('click', () => {
+      if (waBtn) waBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         const YOUR_WHATSAPP = "917311170545";
         const message = `🏠 StayLoo Inquiry%0A%0ACode: ${prop.code}%0A${prop.title}%0ALocation: ${prop.location}%0ARent: ₹${prop.price}%0ASecurity: ${securityText}%0AI'm interested.`;
         window.open(`https://wa.me/${YOUR_WHATSAPP}?text=${message}`, '_blank');
       });
     }
 
-    function closeModalAndStopVideos() {
+    function closeModalAndRestore() {
+      if (!isModalOpen) return;
+      
       stopAllVideos();
       const modal = document.getElementById('propertyModal');
       modal.classList.remove('active');
       
-      const scrollY = parseInt(modal.dataset.scrollY || '0');
+      isModalOpen = false;
+      
+      // Restore body scroll
       document.body.style.overflow = '';
       document.body.style.position = '';
       document.body.style.width = '';
       document.body.style.top = '';
-      window.scrollTo(0, scrollY);
       
-      // Remove last history state if it was the modal
-      if (historyStack.length > 0) {
-        historyStack.pop();
-      }
+      // Restore scroll position
+      window.scrollTo(0, savedScrollPosition);
     }
 
     // Handle browser back button
@@ -1290,12 +1305,13 @@
       
       if (modal.classList.contains('active')) {
         event.preventDefault();
-        closeModalAndStopVideos();
+        closeModalAndRestore();
       } else if (fsViewer.classList.contains('active')) {
         event.preventDefault();
         closeFullscreen();
-      } else if (historyStack.length > 0) {
-        historyStack.pop();
+      } else {
+        // Allow normal back navigation to previous page
+        window.history.back();
       }
     });
 
@@ -1368,14 +1384,16 @@
     let lastScrollY = window.scrollY;
     const header = document.getElementById('mainHeader');
     window.addEventListener('scroll', () => {
-      if (window.scrollY > lastScrollY && window.scrollY > 80) header.classList.add('hide');
-      else header.classList.remove('hide');
-      lastScrollY = window.scrollY;
+      if (!isModalOpen && !isFullscreenOpen) {
+        if (window.scrollY > lastScrollY && window.scrollY > 80) header.classList.add('hide');
+        else header.classList.remove('hide');
+        lastScrollY = window.scrollY;
+      }
     });
 
-    document.getElementById('closeModalBtn').addEventListener('click', closeModalAndStopVideos);
+    document.getElementById('closeModalBtn').addEventListener('click', closeModalAndRestore);
     const modalEl = document.getElementById('propertyModal');
-    modalEl.addEventListener('click', (e) => { if (e.target === modalEl) closeModalAndStopVideos(); });
+    modalEl.addEventListener('click', (e) => { if (e.target === modalEl) closeModalAndRestore(); });
 
     document.getElementById('applyFiltersBtn').addEventListener('click', applyFilters);
     document.getElementById('resetFiltersBtn').addEventListener('click', resetFilters);
@@ -1388,9 +1406,6 @@
     initPinchZoom();
     initFullscreenSwipe();
     applyFilters();
-
-    // Initial history state
-    history.pushState(null, '', window.location.pathname);
   })();
 </script>
 </body>
