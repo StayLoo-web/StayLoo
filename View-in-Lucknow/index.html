@@ -918,7 +918,7 @@
     document.getElementById('ownerPopup').onclick = (e) => { if(e.target === document.getElementById('ownerPopup')) document.getElementById('ownerPopup').classList.remove('active'); };
 
     const properties = [
-      { id: 1, code: "STL-LKO-001", type: "Room", title: "1 BHK Fully Furnished", location: "Gomtinagar", price: "7000", security: "2000", address: "Saraswati puram, Kharagpur, Gomti Nagar, Lucknow", forGender: "Anyone",
+      { id: 1, code: "STL-LKO-001", type: "Room", title: "1 RK Fully Furnished", location: "Gomtinagar", price: "7000", security: "2000", address: "Saraswati puram, Kharagpur, Gomti Nagar, Lucknow", forGender: "Anyone",
         images: ["../images/SHR1.jpeg", "../images/SHR4.jpeg", "../images/SHR3.jpeg", "../images/SHR5.jpeg", "../images/SHR2.jpeg"],
         videos: [], desc: "It is on 1st floor. It has 1 Almirah, 1 Cooler, 2 Tables, 1 Bed with a bed box.", bedrooms: "1", bathrooms: "1", amenities: "Almirah, Cooler, 2 Tables, Bed box", size: ""},
       { id: 2, code: "STL-LKO-002", type: "Flat", title: "2 BHK Fully Furnished Flat", location: "Indira Nagar", price: 18000, security: "15000", address: "B-27, Sector 14, Indira Nagar, Lucknow", forGender: "Anyone",
@@ -1168,7 +1168,7 @@
             <div class="features">${prop.amenities.substring(0, 35)}${prop.amenities.length > 35 ? '...' : ''}</div>
             <div class="price-row">
               <div class="price">₹${parseInt(prop.price).toLocaleString()}<span style="font-size:0.8rem;">/month</span></div>
-              <div class="security-badge"><i class="fas fa-shield-alt"></i> ₹${securityText}</div>
+              <div class="security-badge"><i class="fas fa-shield-alt"></i> ${securityText}</div>
             </div>
             <div class="owner-section-card" data-owner-id="${prop.id}">
               ${avatarHtml}
@@ -1235,7 +1235,7 @@
         });
       }
 
-      const securityText = prop.security ? `₹${parseInt(prop.security).toLocaleString()}` : 'N/A';
+      const securityText = prop.security ? `${parseInt(prop.security).toLocaleString()}` : 'N/A';
       const addressText = prop.address || 'Address not available';
 
       modalContent.innerHTML = `
