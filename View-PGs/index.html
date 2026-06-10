@@ -34,7 +34,6 @@
             flex: 1;
         }
         
-        /* Hero Section */
         .hero-section {
             background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.65)), 
                         url('https://images.pexels.com/photos/271618/pexels-photo-271618.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover no-repeat;
@@ -51,7 +50,6 @@
             margin: 0 auto;
         }
         
-        /* Header */
         .header-flex {
             display: flex;
             justify-content: space-between;
@@ -87,7 +85,6 @@
             .pg-tag { font-size: 0.8rem; padding: 0.4rem 1rem; }
         }
         
-        /* Hero Title */
         .hero-title-block {
             margin-top: 0.8rem;
             margin-bottom: 2rem;
@@ -111,7 +108,6 @@
             .hero-title-block h1 { font-size: 1.9rem; }
         }
         
-        /* Filter Card */
         .filter-card {
             background: rgba(255, 255, 255, 0.97);
             border-radius: 1.8rem;
@@ -177,7 +173,6 @@
             .btn-filter, .btn-reset { flex: 1; text-align: center; }
         }
         
-        /* Properties Grid */
         .main-container {
             max-width: 1280px;
             margin: 2.5rem auto;
@@ -319,7 +314,6 @@
             color: #1c6a8f;
         }
         
-        /* View More Button */
         .view-more-wrapper {
             text-align: center;
             margin-top: 2.5rem;
@@ -343,7 +337,6 @@
             color: white;
         }
         
-        /* Modal Styles */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -465,7 +458,6 @@
             transform: scale(1.02);
         }
         
-        /* Fullscreen Viewer with Zoom Support */
         .fullscreen-img-viewer {
             position: fixed;
             top: 0;
@@ -568,7 +560,6 @@
             50% { transform: translateX(8px); }
         }
         
-        /* Owner Popup */
         .owner-popup-overlay {
             position: fixed;
             top: 0;
@@ -631,7 +622,6 @@
             font-size: 1rem;
         }
         
-        /* Footer */
         .main-footer {
             background: #0a1e2c;
             margin-top: 3rem;
@@ -857,7 +847,7 @@
 
     let currentDisplayLimit = 6;
     let filteredMasterList = [];
-    let originalScrollPosition = 0;  // Store original page scroll position
+    let originalScrollPosition = 0;
     let isModalActive = false;
     let isFullscreenActive = false;
     let isOwnerPopupActive = false;
@@ -916,9 +906,49 @@
         hint.style.animation = 'fadeInOut 3s ease-in-out forwards';
     }
 
+    // CRITICAL FIX: Both cross button AND back button call the same close function
+    // No history.back() - just close the viewer and restore scroll
+    function closeFullscreen() {
+        if (!isFullscreenActive) return;
+        
+        const viewer = document.getElementById('fullscreenViewer');
+        viewer.classList.remove('active');
+        const videoEl = document.getElementById('fullscreenVideo');
+        if (videoEl) {
+            videoEl.pause();
+            videoEl.src = "";
+        }
+        
+        isFullscreenActive = false;
+        currentFullscreenImages = [];
+        resetZoomTransform();
+        
+        if (swipeHintTimer) {
+            clearTimeout(swipeHintTimer);
+            swipeHintTimer = null;
+        }
+        
+        // Restore body scroll
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
+        document.body.style.top = '';
+        
+        // Only restore scroll if no other modal is active
+        if (!isModalActive && !isOwnerPopupActive) {
+            restoreOriginalScrollPosition();
+            originalScrollPosition = 0;
+        }
+        
+        // Remove hash without triggering navigation
+        if (window.location.hash === '#fullscreen') {
+            history.replaceState(null, null, window.location.pathname + window.location.search);
+        }
+    }
+
     function openFullscreenMedia(url, isVideo = false, allImages = []) {
-        // Store original scroll position if not already stored (in case opened from modal)
-        if (originalScrollPosition === 0) {
+        // Store original scroll position if not already stored
+        if (originalScrollPosition === 0 && !isModalActive && !isOwnerPopupActive) {
             storeOriginalScrollPosition();
         }
         isFullscreenActive = true;
@@ -950,7 +980,9 @@
         document.body.style.overflow = 'hidden';
         document.body.style.position = 'fixed';
         document.body.style.width = '100%';
-        history.pushState({ fullscreenOpen: true }, "", "#fullscreen");
+        
+        // Use replaceState instead of pushState to avoid extra history entries
+        history.replaceState({ fullscreenOpen: true }, "", "#fullscreen");
         
         if (swipeHintTimer) clearTimeout(swipeHintTimer);
         swipeHintTimer = setTimeout(() => {
@@ -958,36 +990,6 @@
                 showSwipeHint();
             }
         }, 3000);
-    }
-    
-    function closeFullscreen() {
-        const viewer = document.getElementById('fullscreenViewer');
-        viewer.classList.remove('active');
-        const videoEl = document.getElementById('fullscreenVideo');
-        if (videoEl) {
-            videoEl.pause();
-            videoEl.src = "";
-        }
-        document.body.style.overflow = '';
-        document.body.style.position = '';
-        document.body.style.width = '';
-        isFullscreenActive = false;
-        currentFullscreenImages = [];
-        resetZoomTransform();
-        if (swipeHintTimer) {
-            clearTimeout(swipeHintTimer);
-            swipeHintTimer = null;
-        }
-        
-        // Only restore scroll position if modal is not active
-        if (!isModalActive && !isOwnerPopupActive) {
-            restoreOriginalScrollPosition();
-            originalScrollPosition = 0;
-        }
-        
-        if (window.location.hash === '#fullscreen') {
-            history.back();
-        }
     }
 
     function initPinchZoom() {
@@ -1099,7 +1101,7 @@
             restoreOriginalScrollPosition();
             originalScrollPosition = 0;
             if (window.location.hash === '#modal') {
-                history.back();
+                history.replaceState(null, null, window.location.pathname + window.location.search);
             }
         }
         if (ownerPopup.classList.contains('active')) {
@@ -1111,14 +1113,12 @@
             restoreOriginalScrollPosition();
             originalScrollPosition = 0;
             if (window.location.hash === '#owner') {
-                history.back();
+                history.replaceState(null, null, window.location.pathname + window.location.search);
             }
-        }
-        if (isFullscreenActive) {
-            closeFullscreen();
         }
     }
 
+    // Handle browser back button - same as cross button
     window.addEventListener('popstate', function(event) {
         const modalEl = document.getElementById('propertyModal');
         const fsViewer = document.getElementById('fullscreenViewer');
@@ -1134,6 +1134,7 @@
             event.preventDefault();
             closeAllModals();
         }
+        // If no modals open, allow natural navigation
     });
 
     function openOwnerPopup(propertyId) {
@@ -1201,7 +1202,7 @@
         document.getElementById('sendQueryWhatsAppBtn')?.addEventListener('click', () => {
             const YOUR_WHATSAPP_NUMBER = "919170548739";
             const message = `🏠 *STAYLOO PG INQUIRY* 🏠 
-Hey StayLoo! I'm interested in this PG accommodation. Please share more details.
+Hey StayLoo! I'm interested in this PG accommodation.
 ━━━━━━━━━━━━━━━━━━━━━
 📌 *Property Code:* ${prop.code}
 🏢 *PG Name:* ${prop.title}
