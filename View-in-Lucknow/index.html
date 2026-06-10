@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1.0">
   <title>StayLoo | Find Spaces in Lucknow — Rooms, Flats & PGs</title>
   <link rel="icon" type="image/png" href="../images/logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -199,10 +199,12 @@
       margin: 0 auto;
       padding: 0 1rem 2rem;
     }
+    /* FIX: Centered section title */
     .section-title {
       font-size: 1.6rem;
       font-weight: 700;
       margin-bottom: 1.5rem;
+      text-align: center;
     }
     .grid {
       display: grid;
@@ -257,12 +259,19 @@
       color: #475569;
       margin: 8px 0;
     }
+    /* FIX: Price and security badge on same line */
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 8px 0;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
     .price {
       font-weight: 800;
       font-size: 1.3rem;
-      margin: 8px 0;
     }
-
     .security-badge {
       background: #fef3c7;
       color: #92400e;
@@ -273,7 +282,6 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      margin: 6px 0 10px;
     }
 
     .owner-section-card {
@@ -542,7 +550,7 @@
       font-size: 1rem;
     }
 
-    /* Fullscreen viewer with swipe navigation */
+    /* Fullscreen viewer with swipe animation hint */
     .fullscreen-view {
       position: fixed;
       top: 0;
@@ -572,6 +580,7 @@
       justify-content: center;
       overflow: hidden;
       touch-action: pan-x pinch-zoom;
+      position: relative;
     }
     .fs-image {
       max-width: 90%;
@@ -606,34 +615,40 @@
       transform: scale(1.1);
     }
 
-    /* Navigation arrows for fullscreen */
-    .fs-nav {
+    /* Swipe hint animation */
+    .swipe-hint {
       position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255,255,255,0.25);
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.6);
       backdrop-filter: blur(8px);
       color: white;
-      border: none;
-      font-size: 2.5rem;
-      width: 55px;
-      height: 55px;
-      border-radius: 50%;
+      padding: 10px 20px;
+      border-radius: 40px;
+      font-size: 0.85rem;
       display: flex;
       align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 10001;
-      transition: 0.2s;
+      gap: 10px;
+      z-index: 10002;
+      opacity: 0;
+      animation: fadeInOut 3s ease-in-out forwards;
+      pointer-events: none;
+      white-space: nowrap;
     }
-    .fs-nav:hover {
-      background: rgba(255,255,255,0.4);
+    .swipe-hint i {
+      font-size: 1rem;
+      animation: swipeAnim 1s ease-in-out infinite;
     }
-    .fs-nav-left {
-      left: 20px;
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+      15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-10px); visibility: hidden; }
     }
-    .fs-nav-right {
-      right: 20px;
+    @keyframes swipeAnim {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(8px); }
     }
 
     .footer {
@@ -841,14 +856,12 @@
   </div>
 </div>
 
-<!-- Fullscreen viewer with visible navigation arrows -->
 <div id="fsViewer" class="fullscreen-view">
   <button class="close-fs" id="closeFsBtn">&times;</button>
-  <button class="fs-nav fs-nav-left" id="fsPrevBtn"><i class="fas fa-chevron-left"></i></button>
-  <button class="fs-nav fs-nav-right" id="fsNextBtn"><i class="fas fa-chevron-right"></i></button>
   <div class="fs-image-wrapper" id="fsImageWrapper">
     <img id="fsImage" class="fs-image" src="" alt="Fullscreen">
   </div>
+  <div class="swipe-hint" id="swipeHint"><i class="fas fa-hand-peace"></i> Swipe left / right to see more photos</div>
 </div>
 
 <script>
@@ -930,9 +943,22 @@
     let currentFilteredList = [];
     let currentVideoElements = [];
 
-    // ---- Fullscreen swipe & arrow logic ----
+    // History stack for back button
+    let historyStack = [];
+
+    // ---- Fullscreen logic with swipe hint ----
     let currentFullscreenImages = [];
     let currentFullscreenIndex = 0;
+    let swipeHintTimer = null;
+
+    function showSwipeHint() {
+      const hint = document.getElementById('swipeHint');
+      if (!hint) return;
+      // Remove existing animation
+      hint.style.animation = 'none';
+      hint.offsetHeight; // trigger reflow
+      hint.style.animation = 'fadeInOut 3s ease-in-out forwards';
+    }
 
     function updateFullscreenImage() {
       const fsImage = document.getElementById('fsImage');
@@ -958,6 +984,14 @@
       document.body.style.overflow = 'hidden';
       document.body.style.position = 'fixed';
       document.body.style.width = '100%';
+      
+      // Show swipe hint after 3 seconds
+      if (swipeHintTimer) clearTimeout(swipeHintTimer);
+      swipeHintTimer = setTimeout(() => {
+        if (fsViewer.classList.contains('active')) {
+          showSwipeHint();
+        }
+      }, 3000);
     }
 
     function showNextFullscreenImage() {
@@ -983,30 +1017,22 @@
       const fsImage = document.getElementById('fsImage');
       if (fsImage) fsImage.style.transform = `translate(0px, 0px) scale(1)`;
       currentFullscreenImages = [];
+      if (swipeHintTimer) {
+        clearTimeout(swipeHintTimer);
+        swipeHintTimer = null;
+      }
     }
 
-    // Arrow buttons
-    document.getElementById('fsPrevBtn').addEventListener('click', (e) => {
-      e.stopPropagation();
-      showPrevFullscreenImage();
-    });
-    document.getElementById('fsNextBtn').addEventListener('click', (e) => {
-      e.stopPropagation();
-      showNextFullscreenImage();
-    });
-
-    // Swipe detection
+    // Swipe detection for fullscreen
     function initFullscreenSwipe() {
       const wrapper = document.getElementById('fsImageWrapper');
       if (!wrapper) return;
       let touchStartX = 0;
-      let touchStartY = 0;
       let touchMoved = false;
 
       wrapper.addEventListener('touchstart', (e) => {
         if (e.touches.length === 1) {
           touchStartX = e.touches[0].clientX;
-          touchStartY = e.touches[0].clientY;
           touchMoved = false;
         }
       }, { passive: false });
@@ -1014,8 +1040,7 @@
       wrapper.addEventListener('touchmove', (e) => {
         if (e.touches.length !== 1) return;
         const deltaX = e.touches[0].clientX - touchStartX;
-        const deltaY = e.touches[0].clientY - touchStartY;
-        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 10) {
+        if (Math.abs(deltaX) > 10) {
           e.preventDefault();
           touchMoved = true;
         }
@@ -1126,8 +1151,10 @@
             <div class="card-title">${prop.title}</div>
             <div class="location"><i class="fas fa-map-marker-alt"></i> ${prop.location}</div>
             <div class="features">${prop.amenities.substring(0, 35)}${prop.amenities.length > 35 ? '...' : ''}</div>
-            <div class="price">₹${parseInt(prop.price).toLocaleString()}<span style="font-size:0.8rem;">/month</span></div>
-            <div class="security-badge"><i class="fas fa-shield-alt"></i> Security: ${securityText}</div>
+            <div class="price-row">
+              <div class="price">₹${parseInt(prop.price).toLocaleString()}<span style="font-size:0.8rem;">/month</span></div>
+              <div class="security-badge"><i class="fas fa-shield-alt"></i> ₹${securityText}</div>
+            </div>
             <div class="owner-section-card" data-owner-id="${prop.id}">
               ${avatarHtml}
               <div class="owner-info-card">
@@ -1167,6 +1194,13 @@
       currentVideoElements = [];
     }
 
+    // Push state to history when opening modal
+    function pushHistoryState() {
+      const state = { modalOpen: true };
+      history.pushState(state, '', '#modal');
+      historyStack.push(state);
+    }
+
     function openModal(prop) {
       stopAllVideos();
       const modal = document.getElementById('propertyModal');
@@ -1204,13 +1238,14 @@
             <strong>✨ Amenities</strong><br>${prop.amenities}<br><br>
             <strong>📍 Full Address</strong><br>${addressText}
           </div>
-          <div class="price" style="font-size:1.8rem;">₹${parseInt(prop.price).toLocaleString()}<span style="font-size:0.9rem;">/month</span></div>
-          <div class="security-badge" style="font-size:1rem; margin-top:5px;"><i class="fas fa-shield-alt"></i> Security Deposit: ${securityText}</div>
+          <div class="price-row" style="margin-top:10px;">
+            <div class="price" style="font-size:1.8rem;">₹${parseInt(prop.price).toLocaleString()}<span style="font-size:0.9rem;">/month</span></div>
+            <div class="security-badge" style="font-size:1rem;"><i class="fas fa-shield-alt"></i> Security: ${securityText}</div>
+          </div>
           <button id="sendWhatsappBtn" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Send Query on WhatsApp</button>
         </div>
       `;
 
-      // Store current scroll position before opening modal
       const scrollY = window.scrollY;
       modal.dataset.scrollY = scrollY;
       modal.classList.add('active');
@@ -1218,6 +1253,9 @@
       document.body.style.position = 'fixed';
       document.body.style.width = '100%';
       document.body.style.top = `-${scrollY}px`;
+
+      // Push to history for back button support
+      pushHistoryState();
 
       const waBtn = document.getElementById('sendWhatsappBtn');
       if (waBtn) waBtn.addEventListener('click', () => {
@@ -1232,14 +1270,34 @@
       const modal = document.getElementById('propertyModal');
       modal.classList.remove('active');
       
-      // Restore scroll position
       const scrollY = parseInt(modal.dataset.scrollY || '0');
       document.body.style.overflow = '';
       document.body.style.position = '';
       document.body.style.width = '';
       document.body.style.top = '';
       window.scrollTo(0, scrollY);
+      
+      // Remove last history state if it was the modal
+      if (historyStack.length > 0) {
+        historyStack.pop();
+      }
     }
+
+    // Handle browser back button
+    window.addEventListener('popstate', function(event) {
+      const modal = document.getElementById('propertyModal');
+      const fsViewer = document.getElementById('fsViewer');
+      
+      if (modal.classList.contains('active')) {
+        event.preventDefault();
+        closeModalAndStopVideos();
+      } else if (fsViewer.classList.contains('active')) {
+        event.preventDefault();
+        closeFullscreen();
+      } else if (historyStack.length > 0) {
+        historyStack.pop();
+      }
+    });
 
     function applyFilters() {
       const type = document.getElementById('propTypeFilter').value;
@@ -1330,6 +1388,9 @@
     initPinchZoom();
     initFullscreenSwipe();
     applyFilters();
+
+    // Initial history state
+    history.pushState(null, '', window.location.pathname);
   })();
 </script>
 </body>
