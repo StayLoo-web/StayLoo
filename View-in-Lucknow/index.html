@@ -1,956 +1,962 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-    <title>StayLoo | Find Spaces in Lucknow — Rooms, Flats & PGs</title>
-    <link rel="icon" type="image/png" href="../images/logo.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        * {
-            -webkit-tap-highlight-color: transparent !important;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        a, button, [onclick] { 
-            text-decoration: none !important; 
-            outline: none !important; 
-            -webkit-tap-highlight-color: transparent !important; 
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1.0, user-scalable=no">
+  <title>StayLoo | Find Spaces in Lucknow — Rooms, Flats & PGs</title>
+  <link rel="icon" type="image/png" href="../images/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      -webkit-tap-highlight-color: transparent !important;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    a, button, [onclick] {
+      text-decoration: none !important;
+      outline: none !important;
+      -webkit-tap-highlight-color: transparent !important;
+    }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f8fafc;
-            color: #0f172a;
-            line-height: 1.5;
-            padding-top: 85px;
-        }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+      line-height: 1.5;
+      padding-top: 85px;
+    }
 
-        /* Header */
-        .header {
-            background: white;
-            padding: 1rem 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            transition: transform 0.3s ease;
-        }
-        .header.hide {
-            transform: translateY(-100%);
-        }
-        .header-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
-        }
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-shrink: 0;
-            text-decoration: none;
-        }
-        .logo-img {
-            height: 48px;
-            width: auto;
-            object-fit: contain;
-            border-radius: 12px;
-        }
-        .city-selector {
-            background: #f1f5f9;
-            padding: 0.6rem 1.4rem;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-shrink: 0;
-            white-space: nowrap;
-        }
-        @media (max-width: 640px) {
-            body { padding-top: 70px; }
-            .header { padding: 0.75rem 1rem; }
-            .logo-img { height: 38px; }
-            .city-selector { padding: 0.4rem 0.9rem; font-size: 0.75rem; }
-        }
+    .header {
+      background: white;
+      padding: 1rem 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      transition: transform 0.3s ease;
+    }
+    .header.hide {
+      transform: translateY(-100%);
+    }
+    .header-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+    .logo-img {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+    .city-selector {
+      background: #f1f5f9;
+      padding: 0.6rem 1.4rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    @media (max-width: 640px) {
+      body { padding-top: 70px; }
+      .header { padding: 0.75rem 1rem; }
+      .logo-img { height: 38px; }
+      .city-selector { padding: 0.4rem 0.9rem; font-size: 0.75rem; }
+    }
 
-        /* Hero Section */
-        .hero {
-            position: relative;
-            background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.65)), 
-                        url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
-            background-size: cover;
-            background-position: center 30%;
-            padding: 6rem 2rem;
-            text-align: center;
-        }
-        .hero-content h1 {
-            font-size: 3.2rem;
-            font-weight: 800;
-            color: white;
-            text-shadow: 0 2px 12px rgba(0,0,0,0.3);
-        }
-        .hero-content h1 .highlight-text {
-            background: linear-gradient(135deg, #c084fc, #a78bfa);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            position: relative;
-            display: inline-block;
-        }
-        .hero-content h1 .highlight-text::before {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, #c084fc, #a78bfa);
-            border-radius: 4px;
-        }
-        .hero-content p {
-            font-size: 1.3rem;
-            color: #f1f5f9;
-            margin-top: 1rem;
-            font-weight: 500;
-        }
-        @media (max-width: 768px) {
-            .hero { padding: 4rem 1rem; }
-            .hero-content h1 { font-size: 2.2rem; }
-            .hero-content p { font-size: 1rem; }
-        }
+    .hero {
+      position: relative;
+      background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.65)),
+      url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+      background-size: cover;
+      background-position: center 30%;
+      padding: 6rem 2rem;
+      text-align: center;
+    }
+    .hero-content h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      color: white;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+    .hero-content h1 .highlight-text {
+      background: linear-gradient(135deg, #c084fc, #a78bfa);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      position: relative;
+      display: inline-block;
+    }
+    .hero-content h1 .highlight-text::before {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #c084fc, #a78bfa);
+      border-radius: 4px;
+    }
+    .hero-content p {
+      font-size: 1.3rem;
+      color: #f1f5f9;
+      margin-top: 1rem;
+      font-weight: 500;
+    }
+    @media (max-width: 768px) {
+      .hero { padding: 4rem 1rem; }
+      .hero-content h1 { font-size: 2.2rem; }
+      .hero-content p { font-size: 1rem; }
+    }
 
-        /* Filter Section */
-        .filter-wrapper {
-            max-width: 1280px;
-            margin: -1.5rem auto 2rem;
-            padding: 0 1rem;
-            position: relative;
-            z-index: 10;
-        }
-        .filter-card {
-            background: white;
-            border-radius: 24px;
-            padding: 1.5rem;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-            border: 1px solid #eef2ff;
-        }
-        .filter-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        .filter-group {
-            flex: 1;
-            min-width: 160px;
-        }
-        .filter-group label {
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .filter-group select, .filter-group input {
-            width: 100%;
-            padding: 10px 14px;
-            border-radius: 40px;
-            border: 1.5px solid #e2e8f0;
-            background: white;
-            margin-top: 5px;
-            font-family: 'Inter', sans-serif;
-        }
-        .filter-buttons {
-            display: flex;
-            gap: 12px;
-            align-items: flex-end;
-        }
-        .btn-primary {
-            background: linear-gradient(95deg, #8b5cf6, #6366f1);
-            color: white;
-            border: none;
-            padding: 10px 28px;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        .btn-secondary {
-            background: transparent;
-            border: 1px solid #cbd5e1;
-            padding: 10px 24px;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        @media (max-width: 700px) {
-            .filter-grid { flex-direction: column; }
-            .filter-buttons { flex-direction: column; width: 100%; }
-            .btn-primary, .btn-secondary { text-align: center; }
-        }
+    .filter-wrapper {
+      max-width: 1280px;
+      margin: -1.5rem auto 2rem;
+      padding: 0 1rem;
+      position: relative;
+      z-index: 10;
+    }
+    .filter-card {
+      background: white;
+      border-radius: 24px;
+      padding: 1.5rem;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+      border: 1px solid #eef2ff;
+    }
+    .filter-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .filter-group {
+      flex: 1;
+      min-width: 160px;
+    }
+    .filter-group label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .filter-group select, .filter-group input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 40px;
+      border: 1.5px solid #e2e8f0;
+      background: white;
+      margin-top: 5px;
+      font-family: 'Inter', sans-serif;
+    }
+    .filter-buttons {
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+    }
+    .btn-primary {
+      background: linear-gradient(95deg, #8b5cf6, #6366f1);
+      color: white;
+      border: none;
+      padding: 10px 28px;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid #cbd5e1;
+      padding: 10px 24px;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    @media (max-width: 700px) {
+      .filter-grid { flex-direction: column; }
+      .filter-buttons { flex-direction: column; width: 100%; }
+      .btn-primary, .btn-secondary { text-align: center; }
+    }
 
-        /* Property Grid */
-        .listings-section {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 1rem 2rem;
-        }
-        .section-title {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2rem;
-        }
-        .card {
-            background: white;
-            border-radius: 1.5rem;
-            overflow: hidden;
-            transition: 0.25s;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
-            border: 1px solid #edf2f7;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
-        }
-        .card-img {
-            height: 210px;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
-        .card-badge {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            background: rgba(0,0,0,0.65);
-            backdrop-filter: blur(4px);
-            color: white;
-            font-size: 0.7rem;
-            padding: 4px 12px;
-            border-radius: 40px;
-        }
-        .card-content {
-            padding: 1.2rem;
-        }
-        .card-title {
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-        .location {
-            color: #8b5cf6;
-            font-size: 0.8rem;
-            margin: 6px 0;
-        }
-        .features {
-            display: flex;
-            gap: 12px;
-            font-size: 0.7rem;
-            color: #475569;
-            margin: 8px 0;
-        }
-        .price {
-            font-weight: 800;
-            font-size: 1.3rem;
-            margin: 8px 0;
-        }
-        
-        /* Owner Section Styles */
-        .owner-section-card {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: #f8fafc;
-            padding: 10px 14px;
-            border-radius: 60px;
-            margin: 12px 0;
-            cursor: pointer;
-            transition: background 0.2s;
-            border: 1px solid #e2edf2;
-        }
-        .owner-section-card:hover {
-            background: #eef3f8;
-        }
-        .owner-avatar-card {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-            background: #e2e8f0;
-            border: 2px solid white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #94a3b8;
-            font-size: 1.2rem;
-            font-weight: 500;
-            text-transform: uppercase;
-        }
-        .owner-avatar-card.blank-avatar {
-            background: #eef2ff;
-            color: #8b5cf6;
-        }
-        .owner-info-card {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #8b5cf6;
-            flex: 1;
-        }
-        .owner-info-card small {
-            font-weight: normal;
-            font-size: 0.7rem;
-            color: #5e7e9c;
-            display: block;
-        }
-        
-        .view-btn {
-            background: #f1f5f9;
-            width: 100%;
-            padding: 10px;
-            border-radius: 40px;
-            text-align: center;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+    .listings-section {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1rem 2rem;
+    }
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+    .card {
+      background: white;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      transition: 0.25s;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+      border: 1px solid #edf2f7;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
+    }
+    .card-img {
+      height: 210px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(4px);
+      color: white;
+      font-size: 0.7rem;
+      padding: 4px 12px;
+      border-radius: 40px;
+    }
+    .card-content {
+      padding: 1.2rem;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .location {
+      color: #8b5cf6;
+      font-size: 0.8rem;
+      margin: 6px 0;
+    }
+    .features {
+      display: flex;
+      gap: 12px;
+      font-size: 0.7rem;
+      color: #475569;
+      margin: 8px 0;
+    }
+    .price {
+      font-weight: 800;
+      font-size: 1.3rem;
+      margin: 8px 0;
+    }
 
-        /* Load More */
-        .load-more-container {
-            text-align: center;
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: center;
-        }
-        .load-more-btn {
-            background: linear-gradient(95deg, #8b5cf6, #6366f1);
-            color: white;
-            border: none;
-            padding: 12px 40px;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
-            display: inline-block;
-        }
-        .load-more-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
-        }
-        .view-less-btn {
-            background: linear-gradient(95deg, #475569, #334155);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
+    .security-badge {
+      background: #fef3c7;
+      color: #92400e;
+      padding: 6px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin: 6px 0 10px;
+    }
 
-        /* Modal Styles */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1100;
-            visibility: hidden;
-            opacity: 0;
-            transition: 0.2s;
-        }
-        .modal-overlay.active {
-            visibility: visible;
-            opacity: 1;
-        }
-        .modal-container {
-            background: white;
-            max-width: 800px;
-            width: 90%;
-            max-height: 85vh;
-            border-radius: 2rem;
-            overflow-y: auto;
-            position: relative;
-        }
-        .modal-gallery {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            padding: 1.5rem;
-            background: #f8fafc;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        .modal-img {
-            width: 200px;
-            height: 160px;
-            object-fit: cover;
-            border-radius: 1rem;
-            cursor: pointer;
-            transition: 0.2s;
-            flex-shrink: 0;
-        }
-        .modal-img:hover {
-            transform: scale(1.04);
-        }
-        .modal-video-item {
-            width: 200px;
-            height: 160px;
-            border-radius: 1rem;
-            flex-shrink: 0;
-            background: #1e2a36;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        .modal-video-item video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .modal-body {
-            padding: 1.5rem;
-        }
-        .whatsapp-btn {
-            background: #25D366;
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 14px;
-            border-radius: 60px;
-            font-weight: 700;
-            margin-top: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-        .close-modal {
-            position: sticky;
-            top: 10px;
-            right: 20px;
-            float: right;
-            background: white;
-            border: none;
-            font-size: 1.6rem;
-            cursor: pointer;
-            border-radius: 50%;
-            width: 36px;
-            margin: 8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
+    .owner-section-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #f8fafc;
+      padding: 10px 14px;
+      border-radius: 60px;
+      margin: 12px 0;
+      cursor: pointer;
+      transition: background 0.2s;
+      border: 1px solid #e2edf2;
+    }
+    .owner-section-card:hover {
+      background: #eef3f8;
+    }
+    .owner-avatar-card {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #e2e8f0;
+      border: 2px solid white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      font-size: 1.2rem;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+    .owner-avatar-card.blank-avatar {
+      background: #eef2ff;
+      color: #8b5cf6;
+    }
+    .owner-info-card {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #8b5cf6;
+      flex: 1;
+    }
+    .owner-info-card small {
+      font-weight: normal;
+      font-size: 0.7rem;
+      color: #5e7e9c;
+      display: block;
+    }
 
-        /* Owner Popup */
-        .owner-popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(4px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2100;
-            visibility: hidden;
-            opacity: 0;
-            transition: 0.2s;
-        }
-        .owner-popup-overlay.active {
-            visibility: visible;
-            opacity: 1;
-        }
-        .owner-popup-card {
-            background: white;
-            max-width: 380px;
-            width: 85%;
-            border-radius: 2rem;
-            text-align: center;
-            padding: 1.8rem 1.5rem;
-            box-shadow: 0 20px 35px rgba(0,0,0,0.2);
-            position: relative;
-        }
-        .owner-popup-img {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 1rem;
-            border: 4px solid #8b5cf6;
-            background: #eef2ff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: #8b5cf6;
-        }
-        .close-owner-popup {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 28px;
-            cursor: pointer;
-            color: #8aaec0;
-        }
-        .half-blurred-number {
-            filter: blur(5px);
-            display: inline-block;
-            font-family: monospace;
-            letter-spacing: 0px;
-            background: #f0f0f0;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-        .contact-display {
-            margin-top: 18px;
-            font-size: 1rem;
-        }
+    .view-btn {
+      background: #f1f5f9;
+      width: 100%;
+      padding: 10px;
+      border-radius: 40px;
+      text-align: center;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
 
-        /* Fullscreen Viewer - WITH PINCH ZOOM & BLUR */
-        .fullscreen-view {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(25px) !important;
-            -webkit-backdrop-filter: blur(25px) !important;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            visibility: hidden;
-            opacity: 0;
-            transition: 0.3s;
-        }
-        .fullscreen-view.active {
-            visibility: visible;
-            opacity: 1;
-        }
-        .fs-image-wrapper {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            touch-action: none;
-        }
-        .fs-image {
-            max-width: 90%;
-            max-height: 90%;
-            object-fit: contain;
-            transition: transform 0.1s ease;
-            cursor: grab;
-        }
-        .fs-image:active {
-            cursor: grabbing;
-        }
-        .close-fs {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: white;
-            font-size: 2rem;
-            background: rgba(0,0,0,0.5);
-            border: none;
-            cursor: pointer;
-            z-index: 10000;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.2s;
-        }
-        .close-fs:hover {
-            background: rgba(255,255,255,0.2);
-            transform: scale(1.1);
-        }
+    .load-more-container {
+      text-align: center;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: center;
+    }
+    .load-more-btn {
+      background: linear-gradient(95deg, #8b5cf6, #6366f1);
+      color: white;
+      border: none;
+      padding: 12px 40px;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+      display: inline-block;
+    }
+    .load-more-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+    }
+    .view-less-btn {
+      background: linear-gradient(95deg, #475569, #334155);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
 
-        /* Footer */
-        .footer {
-            background: #0f172a;
-            color: #cbd5e1;
-            padding: 2.5rem 2rem 1.5rem;
-            margin-top: 3rem;
-        }
-        .footer-grid {
-            max-width: 1280px;
-            margin: 0 auto;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 2rem;
-        }
-        .footer-col {
-            flex: 1;
-            min-width: 140px;
-        }
-        .footer-col h4 {
-            color: white;
-            margin-bottom: 1rem;
-            font-size: 1rem;
-            font-weight: 600;
-        }
-        .footer-col p {
-            font-size: 0.8rem;
-            line-height: 1.4;
-        }
-        .footer-links {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        .footer-links a {
-            color: #94a3b8;
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: color 0.2s;
-            display: inline-block;
-        }
-        .footer-links a:hover {
-            color: white;
-        }
-        @media (max-width: 768px) {
-            .footer-grid {
-                flex-wrap: wrap;
-                gap: 1.5rem;
-            }
-            .footer-col {
-                flex: 1 1 auto;
-                min-width: 150px;
-            }
-        }
-        .copyright {
-            text-align: center;
-            border-top: 1px solid #1e293b;
-            padding-top: 1.5rem;
-            margin-top: 2rem;
-            font-size: 0.7rem;
-        }
-        @media (max-width: 640px) {
-            .grid { grid-template-columns: 1fr; }
-        }
-        @media (max-width: 780px) {
-            .modal-img, .modal-video-item {
-                width: 150px;
-                height: 120px;
-            }
-            .modal-gallery {
-                max-height: 300px;
-            }
-        }
-    </style>
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1100;
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.2s;
+    }
+    .modal-overlay.active {
+      visibility: visible;
+      opacity: 1;
+    }
+    .modal-container {
+      background: white;
+      max-width: 800px;
+      width: 90%;
+      max-height: 85vh;
+      border-radius: 2rem;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    /* Horizontal slider for images */
+    .modal-gallery-slider {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 15px;
+      padding: 1.5rem;
+      background: #f8fafc;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: #8b5cf6 #e2e8f0;
+    }
+    .modal-gallery-slider::-webkit-scrollbar {
+      height: 6px;
+    }
+    .modal-gallery-slider::-webkit-scrollbar-thumb {
+      background: #8b5cf6;
+      border-radius: 10px;
+    }
+    .modal-img {
+      width: 200px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+      flex-shrink: 0;
+    }
+    .modal-img:hover {
+      transform: scale(1.04);
+    }
+    .modal-video-item {
+      width: 200px;
+      height: 160px;
+      border-radius: 1rem;
+      flex-shrink: 0;
+      background: #1e2a36;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .modal-video-item video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .modal-body {
+      padding: 1.5rem;
+    }
+    .whatsapp-btn {
+      background: #25D366;
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 14px;
+      border-radius: 60px;
+      font-weight: 700;
+      margin-top: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .close-modal {
+      position: sticky;
+      top: 10px;
+      right: 20px;
+      float: right;
+      background: white;
+      border: none;
+      font-size: 1.6rem;
+      cursor: pointer;
+      border-radius: 50%;
+      width: 36px;
+      margin: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      z-index: 10;
+    }
+
+    .owner-popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2100;
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.2s;
+    }
+    .owner-popup-overlay.active {
+      visibility: visible;
+      opacity: 1;
+    }
+    .owner-popup-card {
+      background: white;
+      max-width: 380px;
+      width: 85%;
+      border-radius: 2rem;
+      text-align: center;
+      padding: 1.8rem 1.5rem;
+      box-shadow: 0 20px 35px rgba(0,0,0,0.2);
+      position: relative;
+    }
+    .owner-popup-img {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+      border: 4px solid #8b5cf6;
+      background: #eef2ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: #8b5cf6;
+    }
+    .close-owner-popup {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 28px;
+      cursor: pointer;
+      color: #8aaec0;
+    }
+    .half-blurred-number {
+      filter: blur(5px);
+      display: inline-block;
+      font-family: monospace;
+      letter-spacing: 0px;
+      background: #f0f0f0;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+    .contact-display {
+      margin-top: 18px;
+      font-size: 1rem;
+    }
+
+    .fullscreen-view {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(25px) !important;
+      -webkit-backdrop-filter: blur(25px) !important;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.3s;
+    }
+    .fullscreen-view.active {
+      visibility: visible;
+      opacity: 1;
+    }
+    .fs-image-wrapper {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      touch-action: none;
+    }
+    .fs-image {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      transition: transform 0.1s ease;
+      cursor: grab;
+    }
+    .fs-image:active {
+      cursor: grabbing;
+    }
+    .close-fs {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 2rem;
+      background: rgba(0,0,0,0.5);
+      border: none;
+      cursor: pointer;
+      z-index: 10000;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.2s;
+    }
+    .close-fs:hover {
+      background: rgba(255,255,255,0.2);
+      transform: scale(1.1);
+    }
+
+    .footer {
+      background: #0f172a;
+      color: #cbd5e1;
+      padding: 2.5rem 2rem 1.5rem;
+      margin-top: 3rem;
+    }
+    .footer-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .footer-col {
+      flex: 1;
+      min-width: 140px;
+    }
+    .footer-col h4 {
+      color: white;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .footer-col p {
+      font-size: 0.8rem;
+      line-height: 1.4;
+    }
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .footer-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+      display: inline-block;
+    }
+    .footer-links a:hover {
+      color: white;
+    }
+    @media (max-width: 768px) {
+      .footer-grid {
+        flex-wrap: wrap;
+        gap: 1.5rem;
+      }
+      .footer-col {
+        flex: 1 1 auto;
+        min-width: 150px;
+      }
+    }
+    .copyright {
+      text-align: center;
+      border-top: 1px solid #1e293b;
+      padding-top: 1.5rem;
+      margin-top: 2rem;
+      font-size: 0.7rem;
+    }
+    @media (max-width: 640px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 780px) {
+      .modal-img, .modal-video-item {
+        width: 150px;
+        height: 120px;
+      }
+    }
+  </style>
 </head>
 <body>
 
 <header class="header" id="mainHeader">
-    <div class="header-container">
-        <div class="logo">
-            <img class="logo-img" src="../images/logonew1.png" alt="StayLoo Logo" onerror="this.src='https://placehold.co/200x60/8b5cf6/white?text=StayLoo'">
-        </div>
-        <div class="city-selector">
-            <i class="fas fa-map-marker-alt" style="color:#8b5cf6;"></i> Lucknow Spaces
-        </div>
+  <div class="header-container">
+    <div class="logo">
+      <img class="logo-img" src="../images/logonew1.png" alt="StayLoo Logo" onerror="this.src='https://placehold.co/200x60/8b5cf6/white?text=StayLoo'">
     </div>
+    <div class="city-selector">
+      <i class="fas fa-map-marker-alt" style="color:#8b5cf6;"></i> Lucknow Spaces
+    </div>
+  </div>
 </header>
 
-<!-- Hero Section -->
 <section class="hero">
-    <div class="hero-content">
-        <h1>Find <span class="highlight-text">Spaces in Lucknow</span></h1>
-        <p>Discover verified rooms, flats and PGs that match your lifestyle</p>
-    </div>
+  <div class="hero-content">
+    <h1>Find <span class="highlight-text">Spaces in Lucknow</span></h1>
+    <p>Discover verified rooms, flats and PGs that match your lifestyle</p>
+  </div>
 </section>
 
-<!-- Filter Section -->
 <div class="filter-wrapper">
-    <div class="filter-card">
-        <div class="filter-grid">
-            <div class="filter-group">
-                <label>PROPERTY TYPE</label>
-                <select id="propTypeFilter">
-                    <option value="all">All</option>
-                    <option value="PG">PG</option>
-                    <option value="Room">Room</option>
-                    <option value="Flat">Flat</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <label>BUDGET (₹/month)</label>
-                <select id="budgetFilter">
-                    <option value="any">Any</option>
-                    <option value="10000">Up to ₹10,000</option>
-                    <option value="20000">₹10k – ₹20k</option>
-                    <option value="35000">₹20k – ₹35k</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <label>LOCATION</label>
-                <input type="text" id="locationFilter" placeholder="e.g., Gomti Nagar, Aliganj">
-            </div>
-            <div class="filter-group">
-                <label>FOR</label>
-                <select id="genderFilter">
-                    <option value="Anyone">Anyone</option>
-                    <option value="Boys">Boys</option>
-                    <option value="Girls">Girls</option>
-                </select>
-            </div>
-            <div class="filter-buttons">
-                <button class="btn-primary" id="applyFiltersBtn">View Spaces</button>
-                <button class="btn-secondary" id="resetFiltersBtn">Reset</button>
-            </div>
-        </div>
+  <div class="filter-card">
+    <div class="filter-grid">
+      <div class="filter-group">
+        <label>PROPERTY TYPE</label>
+        <select id="propTypeFilter">
+          <option value="all">All</option>
+          <option value="PG">PG</option>
+          <option value="Room">Room</option>
+          <option value="Flat">Flat</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>BUDGET (₹/month)</label>
+        <select id="budgetFilter">
+          <option value="any">Any</option>
+          <option value="10000">Up to ₹10,000</option>
+          <option value="20000">₹10k – ₹20k</option>
+          <option value="35000">₹20k – ₹35k</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>LOCATION</label>
+        <input type="text" id="locationFilter" placeholder="e.g., Gomti Nagar, Aliganj">
+      </div>
+      <div class="filter-group">
+        <label>FOR</label>
+        <select id="genderFilter">
+          <option value="Anyone">Anyone</option>
+          <option value="Boys">Boys</option>
+          <option value="Girls">Girls</option>
+        </select>
+      </div>
+      <div class="filter-buttons">
+        <button class="btn-primary" id="applyFiltersBtn">View Spaces</button>
+        <button class="btn-secondary" id="resetFiltersBtn">Reset</button>
+      </div>
     </div>
+  </div>
 </div>
 
-<!-- Property Listings -->
 <section class="listings-section">
-    <h2 class="section-title">Spaces for you in Lucknow</h2>
-    <div class="grid" id="propertiesGrid"></div>
-    
-    <div class="load-more-container" id="loadMoreContainer">
-        <button class="load-more-btn" id="loadMoreBtn">+ Load More Spaces</button>
-    </div>
+  <h2 class="section-title">Spaces for you in Lucknow</h2>
+  <div class="grid" id="propertiesGrid"></div>
+
+  <div class="load-more-container" id="loadMoreContainer">
+    <button class="load-more-btn" id="loadMoreBtn">+ Load More Spaces</button>
+  </div>
 </section>
 
-<!-- Footer -->
 <footer class="footer">
-    <div class="footer-grid">
-        <div class="footer-col">
-            <h4>StayLoo</h4>
-            <p style="font-size:0.8rem;">Find your perfect space in Lucknow.</p>
-        </div>
-        <div class="footer-col">
-            <h4>Company</h4>
-            <div class="footer-links">
-                <a href="#">About Us</a>
-                <a href="#">Careers</a>
-                <a href="#">Blog</a>
-            </div>
-        </div>
-        <div class="footer-col">
-            <h4>Explore</h4>
-            <div class="footer-links">
-                <a href="#">PG in Lucknow</a>
-                <a href="#">Flats for Rent</a>
-                <a href="#">Rooms</a>
-            </div>
-        </div>
-        <div class="footer-col">
-            <h4>For Owners</h4>
-            <div class="footer-links">
-                <a href="#">List Property</a>
-                <a href="#">Owner Dashboard</a>
-                <a href="#">Pricing</a>
-            </div>
-        </div>
-        <div class="footer-col">
-            <h4>Support</h4>
-            <div class="footer-links">
-                <a href="#">Contact Us</a>
-                <a href="#">FAQs</a>
-                <a href="#">Privacy Policy</a>
-            </div>
-        </div>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>StayLoo</h4>
+      <p style="font-size:0.8rem;">Find your perfect space in Lucknow.</p>
     </div>
-    <div class="copyright">© 2026 StayLoo — Find Spaces in Lucknow. All rights reserved.</div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <div class="footer-links">
+        <a href="#">About Us</a>
+        <a href="#">Careers</a>
+        <a href="#">Blog</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <div class="footer-links">
+        <a href="#">PG in Lucknow</a>
+        <a href="#">Flats for Rent</a>
+        <a href="#">Rooms</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>For Owners</h4>
+      <div class="footer-links">
+        <a href="#">List Property</a>
+        <a href="#">Owner Dashboard</a>
+        <a href="#">Pricing</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <div class="footer-links">
+        <a href="#">Contact Us</a>
+        <a href="#">FAQs</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+  <div class="copyright">© 2026 StayLoo — Find Spaces in Lucknow. All rights reserved.</div>
 </footer>
 
-<!-- Modal -->
 <div id="propertyModal" class="modal-overlay">
-    <div class="modal-container">
-        <button class="close-modal" id="closeModalBtn">&times;</button>
-        <div id="modalContent"></div>
-    </div>
+  <div class="modal-container">
+    <button class="close-modal" id="closeModalBtn">&times;</button>
+    <div id="modalContent"></div>
+  </div>
 </div>
 
-<!-- Owner Popup -->
 <div id="ownerPopup" class="owner-popup-overlay">
-    <div class="owner-popup-card">
-        <span class="close-owner-popup" id="closeOwnerPopupBtn">&times;</span>
-        <div id="ownerPopupImgContainer" class="owner-popup-img">
-            <i class="fas fa-user-circle"></i>
-        </div>
-        <h3 id="ownerPopupName" style="margin: 8px 0 4px;">Owner Name</h3>
-        <p id="ownerPopupBio" style="color:#3c657e; font-size:0.9rem; margin-top:8px;"></p>
-        <div class="contact-display">
-            <i class="fas fa-phone-alt"></i> 
-            <span id="ownerPopupContact" class="half-blurred-number"></span>
-        </div>
+  <div class="owner-popup-card">
+    <span class="close-owner-popup" id="closeOwnerPopupBtn">&times;</span>
+    <div id="ownerPopupImgContainer" class="owner-popup-img">
+      <i class="fas fa-user-circle"></i>
     </div>
+    <h3 id="ownerPopupName" style="margin: 8px 0 4px;">Owner Name</h3>
+    <p id="ownerPopupBio" style="color:#3c657e; font-size:0.9rem; margin-top:8px;"></p>
+    <div class="contact-display">
+      <i class="fas fa-phone-alt"></i>
+      <span id="ownerPopupContact" class="half-blurred-number"></span>
+    </div>
+  </div>
 </div>
 
-<!-- Fullscreen viewer with PINCH ZOOM -->
 <div id="fsViewer" class="fullscreen-view">
-    <button class="close-fs" id="closeFsBtn">&times;</button>
-    <div class="fs-image-wrapper" id="fsImageWrapper">
-        <img id="fsImage" class="fs-image" src="" alt="Fullscreen">
-    </div>
+  <button class="close-fs" id="closeFsBtn">&times;</button>
+  <div class="fs-image-wrapper" id="fsImageWrapper">
+    <img id="fsImage" class="fs-image" src="" alt="Fullscreen">
+  </div>
 </div>
 
 <script>
-    // Owner data
+  (function() {
     const ownersData = {
-        1: { name: "Mrs. Manorama Maurya", bio: "Manorama is a homemaker and ready to help someone in need!", contact: "+91 98765 12345" },
-        2: { name: "Mrs. Priya Singh", bio: "Interior designer turned landlord. Loves creating cozy spaces.", contact: "+91 99887 66554" },
-        3: { name: "Mr. Ankit Sharma", bio: "Young entrepreneur focused on premium rental properties.", contact: "+91 98112 33456" },
-        4: { name: "Ms. Neha Mehta", bio: "Hospitality professional ensuring every tenant enjoys comfort.", contact: "+91 99200 77661" },
-        5: { name: "Mr. Karthik Iyer", bio: "Tech professional renting out premium flats near IT parks.", contact: "+91 97422 99881" },
-        6: { name: "Mrs. Sneha Joshi", bio: "Property manager with keen eye for quality.", contact: "+91 91234 56789" },
-        7: { name: "Mr. Akhtar Khan", bio: "Budget-friendly housing specialist focusing on students.", contact: "+91 88670 33221" },
-        8: { name: "Ms. Ritu Bhatia", bio: "Modern living curator, smart homes and tech-ready apartments.", contact: "+91 98732 11457" },
-        9: { name: "Mr. Dheeraj Menon", bio: "Premium realtor, known for upscale rental experiences.", contact: "+91 77009 88112" }
+      1: { name: "Mrs. Manorama Maurya", bio: "Manorama is a homemaker and ready to help someone in need!", contact: "+91 98765 12345" },
+      2: { name: "Mrs. Priya Singh", bio: "Interior designer turned landlord. Loves creating cozy spaces.", contact: "+91 99887 66554" },
+      3: { name: "Mr. Ankit Sharma", bio: "Young entrepreneur focused on premium rental properties.", contact: "+91 98112 33456" },
+      4: { name: "Ms. Neha Mehta", bio: "Hospitality professional ensuring every tenant enjoys comfort.", contact: "+91 99200 77661" },
+      5: { name: "Mr. Karthik Iyer", bio: "Tech professional renting out premium flats near IT parks.", contact: "+91 97422 99881" },
+      6: { name: "Mrs. Sneha Joshi", bio: "Property manager with keen eye for quality.", contact: "+91 91234 56789" },
+      7: { name: "Mr. Akhtar Khan", bio: "Budget-friendly housing specialist focusing on students.", contact: "+91 88670 33221" },
+      8: { name: "Ms. Ritu Bhatia", bio: "Modern living curator, smart homes and tech-ready apartments.", contact: "+91 98732 11457" },
+      9: { name: "Mr. Dheeraj Menon", bio: "Premium realtor, known for upscale rental experiences.", contact: "+91 77009 88112" }
     };
-    
+
     function getHalfBlurredNumber(fullNumber) {
-        const cleanNumber = fullNumber.replace(/[\s+]/g, '');
-        const length = cleanNumber.length;
-        const halfLength = Math.floor(length / 2);
-        const visiblePart = cleanNumber.slice(-halfLength);
-        const maskedNumber = '•'.repeat(length - halfLength) + visiblePart;
-        if (fullNumber.startsWith('+')) {
-            return '+' + maskedNumber.slice(0, 2) + ' ' + maskedNumber.slice(2, 4) + ' ' + maskedNumber.slice(4);
-        }
-        return maskedNumber;
+      const cleanNumber = fullNumber.replace(/[\s+]/g, '');
+      const length = cleanNumber.length;
+      const halfLength = Math.floor(length / 2);
+      const visiblePart = cleanNumber.slice(-halfLength);
+      const maskedNumber = '•'.repeat(length - halfLength) + visiblePart;
+      if (fullNumber.startsWith('+')) {
+        return '+' + maskedNumber.slice(0, 2) + ' ' + maskedNumber.slice(2, 4) + ' ' + maskedNumber.slice(4);
+      }
+      return maskedNumber;
     }
-    
+
     function openOwnerPopup(propertyId) {
-        const owner = ownersData[propertyId];
-        if(!owner) return;
-        const imgContainer = document.getElementById('ownerPopupImgContainer');
-        imgContainer.innerHTML = '<i class="fas fa-user-circle" style="font-size: 4rem;"></i>';
-        document.getElementById('ownerPopupName').innerText = owner.name;
-        document.getElementById('ownerPopupBio').innerText = owner.bio;
-        const blurredDisplay = getHalfBlurredNumber(owner.contact);
-        document.getElementById('ownerPopupContact').innerText = blurredDisplay;
-        document.getElementById('ownerPopup').classList.add('active');
-        document.body.style.overflow = 'hidden';
+      const owner = ownersData[propertyId];
+      if(!owner) return;
+      const imgContainer = document.getElementById('ownerPopupImgContainer');
+      imgContainer.innerHTML = '<i class="fas fa-user-circle" style="font-size: 4rem;"></i>';
+      document.getElementById('ownerPopupName').innerText = owner.name;
+      document.getElementById('ownerPopupBio').innerText = owner.bio;
+      const blurredDisplay = getHalfBlurredNumber(owner.contact);
+      document.getElementById('ownerPopupContact').innerText = blurredDisplay;
+      document.getElementById('ownerPopup').classList.add('active');
+      document.body.style.overflow = 'hidden';
     }
-    
+
     document.getElementById('closeOwnerPopupBtn').onclick = () => {
-        document.getElementById('ownerPopup').classList.remove('active');
-        document.body.style.overflow = '';
+      document.getElementById('ownerPopup').classList.remove('active');
+      document.body.style.overflow = '';
     };
     document.getElementById('ownerPopup').onclick = (e) => { if(e.target === document.getElementById('ownerPopup')) document.getElementById('ownerPopup').classList.remove('active'); };
-    
-    // Properties Data with videos
+
     const properties = [
-        { id: 1, code: "STL-LKO-001", type: "Room", title: "1 BHK Fully Furnished", location: "Gomtinagar", price: "7000", forGender: "Anyone",
-          images: ["../images/SHR1.jpeg", "../images/SHR4.jpeg", "../images/SHR3.jpeg", "../images/SHR5.jpeg", "../images/SHR2.jpeg"],
-          videos: [], desc: "It is on 1st floor. It has 1 Almirah, 1 Cooler, 2 Tables, 1 Bed with a bed box .", bedrooms: "1", bathrooms: "1", amenities: "Almirah, Cooler, 2 Tables, Bed box", size: "450 sqft"},
-        { id: 2, code: "STL-LKO-002", type: "Flat", title: "2 BHK Fully Furnished Flat", location: "Indira Nagar", price: 18000, forGender: "Anyone",
-          images: ["https://picsum.photos/id/169/500/350", "https://picsum.photos/id/164/500/350", "https://picsum.photos/id/29/500/350", "https://picsum.photos/id/28/500/350"],
-          videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Spacious flat with modern kitchen, two balconies, gated society.", bedrooms: "2 BHK", bathrooms: "2", amenities: "WiFi, AC, Parking, Lift", size: "1100 sqft" },
-        { id: 3, code: "STL-LKO-003", type: "Room", title: "Premium Single Room with AC", location: "Hazratganj", price: 7500, forGender: "Girls",
-          images: ["https://picsum.photos/id/1/500/350", "https://picsum.photos/id/2/500/350", "https://picsum.photos/id/3/500/350", "https://picsum.photos/id/4/500/350"],
-          videos: [], desc: "Cozy, fully furnished single room in a well-maintained building.", bedrooms: "Single", bathrooms: "1 Attached", amenities: "WiFi, AC, Study Table", size: "180 sqft" },
-        { id: 4, code: "STL-LKO-004", type: "PG", title: "Luxury PG with Meals & WiFi", location: "Alambagh", price: 12000, forGender: "Anyone",
-          images: ["https://picsum.photos/id/5/500/350", "https://picsum.photos/id/6/500/350", "https://picsum.photos/id/7/500/350", "https://picsum.photos/id/8/500/350"],
-          videos: ["https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"], desc: "Luxury PG with chef-made meals, AC rooms, and cleaning service.", bedrooms: "2/3 sharing", bathrooms: "Common + Attached", amenities: "WiFi, Meals, AC, Parking", size: "300 sqft" },
-        { id: 5, code: "STL-LKO-005", type: "Flat", title: "3 BHK Family Apartment", location: "Chinhat", price: 25000, forGender: "Anyone",
-          images: ["https://picsum.photos/id/10/500/350", "https://picsum.photos/id/11/500/350", "https://picsum.photos/id/12/500/350", "https://picsum.photos/id/13/500/350"],
-          videos: [], desc: "Spacious 3 BHK flat in a serene locality. Fully furnished.", bedrooms: "3 BHK", bathrooms: "2", amenities: "AC, Parking, Lift, Gym", size: "1500 sqft" },
-        { id: 6, code: "STL-LKO-006", type: "Room", title: "Co-living Space for Girls", location: "Gomti Nagar", price: 9500, forGender: "Girls",
-          images: ["https://picsum.photos/id/15/500/350", "https://picsum.photos/id/16/500/350", "https://picsum.photos/id/17/500/350", "https://picsum.photos/id/18/500/350"],
-          videos: [], desc: "Safe and vibrant co-living space for girls. Includes meals, WiFi.", bedrooms: "Single + Double", bathrooms: "Attached", amenities: "WiFi, Meals, CCTV, AC", size: "220 sqft" },
-        { id: 7, code: "STL-LKO-007", type: "PG", title: "Zolo Divine PG", location: "Jankipuram", price: 11000, forGender: "Boys",
-          images: ["https://picsum.photos/id/20/500/350", "https://picsum.photos/id/21/500/350", "https://picsum.photos/id/22/500/350", "https://picsum.photos/id/23/500/350"],
-          videos: [], desc: "Modern PG with high-speed WiFi, gym, and recreational area.", bedrooms: "1/2 sharing", bathrooms: "Common", amenities: "WiFi, Gym, AC, Power Backup", size: "280 sqft" },
-        { id: 8, code: "STL-LKO-008", type: "Flat", title: "1 RK Studio Apartment", location: "Gomti Nagar Extension", price: 14500, forGender: "Anyone",
-          images: ["https://picsum.photos/id/25/500/350", "https://picsum.photos/id/26/500/350", "https://picsum.photos/id/27/500/350", "https://picsum.photos/id/30/500/350"],
-          videos: [], desc: "Compact studio with modular kitchen & smart TV. Perfect for singles/couples.", bedrooms: "Studio", bathrooms: "1", amenities: "Smart TV, AC, WiFi", size: "450 sqft" },
-        { id: 9, code: "STL-LKO-009", type: "Room", title: "Fully Furnished Private Room", location: "Aliganj", price: 6800, forGender: "Boys",
-          images: ["https://picsum.photos/id/32/500/350", "https://picsum.photos/id/33/500/350", "https://picsum.photos/id/34/500/350", "https://picsum.photos/id/35/500/350"],
-          videos: [], desc: "Attached bathroom, large cupboard, prime location near market.", bedrooms: "Single", bathrooms: "Attached", amenities: "AC, WiFi, Laundry", size: "200 sqft" }
+      { id: 1, code: "STL-LKO-001", type: "Room", title: "1 BHK Fully Furnished", location: "Gomtinagar", price: "7000", security: "5000", address: "12/4, Vivek Khand, Gomti Nagar, Lucknow", forGender: "Anyone",
+        images: ["../images/SHR1.jpeg", "../images/SHR4.jpeg", "../images/SHR3.jpeg", "../images/SHR5.jpeg", "../images/SHR2.jpeg"],
+        videos: [], desc: "It is on 1st floor. It has 1 Almirah, 1 Cooler, 2 Tables, 1 Bed with a bed box.", bedrooms: "1", bathrooms: "1", amenities: "Almirah, Cooler, 2 Tables, Bed box", size: "450 sqft"},
+      { id: 2, code: "STL-LKO-002", type: "Flat", title: "2 BHK Fully Furnished Flat", location: "Indira Nagar", price: 18000, security: "15000", address: "B-27, Sector 14, Indira Nagar, Lucknow", forGender: "Anyone",
+        images: ["https://picsum.photos/id/169/500/350", "https://picsum.photos/id/164/500/350", "https://picsum.photos/id/29/500/350", "https://picsum.photos/id/28/500/350"],
+        videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Spacious flat with modern kitchen, two balconies, gated society.", bedrooms: "2 BHK", bathrooms: "2", amenities: "WiFi, AC, Parking, Lift", size: "1100 sqft" },
+      { id: 3, code: "STL-LKO-003", type: "Room", title: "Premium Single Room with AC", location: "Hazratganj", price: 7500, security: "6000", address: "3, Lalbagh, Hazratganj, Lucknow", forGender: "Girls",
+        images: ["https://picsum.photos/id/1/500/350", "https://picsum.photos/id/2/500/350", "https://picsum.photos/id/3/500/350", "https://picsum.photos/id/4/500/350"],
+        videos: [], desc: "Cozy, fully furnished single room in a well-maintained building.", bedrooms: "Single", bathrooms: "1 Attached", amenities: "WiFi, AC, Study Table", size: "180 sqft" },
+      { id: 4, code: "STL-LKO-004", type: "PG", title: "Luxury PG with Meals & WiFi", location: "Alambagh", price: 12000, security: "10000", address: "51, Kanpur Road, Alambagh, Lucknow", forGender: "Anyone",
+        images: ["https://picsum.photos/id/5/500/350", "https://picsum.photos/id/6/500/350", "https://picsum.photos/id/7/500/350", "https://picsum.photos/id/8/500/350"],
+        videos: ["https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"], desc: "Luxury PG with chef-made meals, AC rooms, and cleaning service.", bedrooms: "2/3 sharing", bathrooms: "Common + Attached", amenities: "WiFi, Meals, AC, Parking", size: "300 sqft" },
+      { id: 5, code: "STL-LKO-005", type: "Flat", title: "3 BHK Family Apartment", location: "Chinhat", price: 25000, security: "20000", address: "Plot 9, Chinhat Tiraha, Faizabad Road, Lucknow", forGender: "Anyone",
+        images: ["https://picsum.photos/id/10/500/350", "https://picsum.photos/id/11/500/350", "https://picsum.photos/id/12/500/350", "https://picsum.photos/id/13/500/350"],
+        videos: [], desc: "Spacious 3 BHK flat in a serene locality. Fully furnished.", bedrooms: "3 BHK", bathrooms: "2", amenities: "AC, Parking, Lift, Gym", size: "1500 sqft" },
+      { id: 6, code: "STL-LKO-006", type: "Room", title: "Co-living Space for Girls", location: "Gomti Nagar", price: 9500, security: "8000", address: "4/22, Vinay Khand, Gomti Nagar, Lucknow", forGender: "Girls",
+        images: ["https://picsum.photos/id/15/500/350", "https://picsum.photos/id/16/500/350", "https://picsum.photos/id/17/500/350", "https://picsum.photos/id/18/500/350"],
+        videos: [], desc: "Safe and vibrant co-living space for girls. Includes meals, WiFi.", bedrooms: "Single + Double", bathrooms: "Attached", amenities: "WiFi, Meals, CCTV, AC", size: "220 sqft" },
+      { id: 7, code: "STL-LKO-007", type: "PG", title: "Zolo Divine PG", location: "Jankipuram", price: 11000, security: "9000", address: "Sector H, Jankipuram Extension, Lucknow", forGender: "Boys",
+        images: ["https://picsum.photos/id/20/500/350", "https://picsum.photos/id/21/500/350", "https://picsum.photos/id/22/500/350", "https://picsum.photos/id/23/500/350"],
+        videos: [], desc: "Modern PG with high-speed WiFi, gym, and recreational area.", bedrooms: "1/2 sharing", bathrooms: "Common", amenities: "WiFi, Gym, AC, Power Backup", size: "280 sqft" },
+      { id: 8, code: "STL-LKO-008", type: "Flat", title: "1 RK Studio Apartment", location: "Gomti Nagar Extension", price: 14500, security: "12000", address: "TCG-5/7, Shaheed Path, Gomti Nagar Ext, Lucknow", forGender: "Anyone",
+        images: ["https://picsum.photos/id/25/500/350", "https://picsum.photos/id/26/500/350", "https://picsum.photos/id/27/500/350", "https://picsum.photos/id/30/500/350"],
+        videos: [], desc: "Compact studio with modular kitchen & smart TV. Perfect for singles/couples.", bedrooms: "Studio", bathrooms: "1", amenities: "Smart TV, AC, WiFi", size: "450 sqft" },
+      { id: 9, code: "STL-LKO-009", type: "Room", title: "Fully Furnished Private Room", location: "Aliganj", price: 6800, security: "4500", address: "14, Sector A, Aliganj, Lucknow", forGender: "Boys",
+        images: ["https://picsum.photos/id/32/500/350", "https://picsum.photos/id/33/500/350", "https://picsum.photos/id/34/500/350", "https://picsum.photos/id/35/500/350"],
+        videos: [], desc: "Attached bathroom, large cupboard, prime location near market.", bedrooms: "Single", bathrooms: "Attached", amenities: "AC, WiFi, Laundry", size: "200 sqft" }
     ];
-    
+
     let visibleCount = 6;
     let currentFilteredList = [];
     let currentVideoElements = [];
 
     function renderCards(propertiesToShow) {
-        const grid = document.getElementById('propertiesGrid');
-        if (!propertiesToShow.length) {
-            grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem;">✨ No spaces found. Adjust filters.</div>`;
-            return;
-        }
-        grid.innerHTML = propertiesToShow.map(prop => {
-            const owner = ownersData[prop.id];
-            const avatarHtml = `<div class="owner-avatar-card blank-avatar"><i class="fas fa-user-circle"></i></div>`;
-            return `
-            <div class="card">
-                <div class="card-img" style="background-image: url('${prop.images[0]}');">
-                    <span class="card-badge">${prop.type}</span>
-                </div>
-                <div class="card-content">
-                    <div class="card-title">${prop.title}</div>
-                    <div class="location"><i class="fas fa-map-marker-alt"></i> ${prop.location}</div>
-                    <div class="features">${prop.amenities.substring(0, 35)}${prop.amenities.length > 35 ? '...' : ''}</div>
-                    <div class="price">₹${parseInt(prop.price).toLocaleString()}<span style="font-size:0.8rem;">/month</span></div>
-                    <div class="owner-section-card" data-owner-id="${prop.id}">
-                        ${avatarHtml}
-                        <div class="owner-info-card">
-                            Know more about owner <i class="fas fa-chevron-right"></i><br>
-                            <small>${owner ? owner.name : "Verified Partner"}</small>
-                        </div>
-                    </div>
-                    <div class="view-btn" data-id="${prop.id}">View Details →</div>
-                </div>
+      const grid = document.getElementById('propertiesGrid');
+      if (!propertiesToShow.length) {
+        grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem;">✨ No spaces found. Adjust filters.</div>`;
+        return;
+      }
+      grid.innerHTML = propertiesToShow.map(prop => {
+        const owner = ownersData[prop.id];
+        const avatarHtml = `<div class="owner-avatar-card blank-avatar"><i class="fas fa-user-circle"></i></div>`;
+        const securityText = prop.security ? `₹${parseInt(prop.security).toLocaleString()}` : 'N/A';
+        return `
+        <div class="card">
+          <div class="card-img" style="background-image: url('${prop.images[0]}');">
+            <span class="card-badge">${prop.type}</span>
+          </div>
+          <div class="card-content">
+            <div class="card-title">${prop.title}</div>
+            <div class="location"><i class="fas fa-map-marker-alt"></i> ${prop.location}</div>
+            <div class="features">${prop.amenities.substring(0, 35)}${prop.amenities.length > 35 ? '...' : ''}</div>
+            <div class="price">₹${parseInt(prop.price).toLocaleString()}<span style="font-size:0.8rem;">/month</span></div>
+            <div class="security-badge"><i class="fas fa-shield-alt"></i> Security: ${securityText}</div>
+            <div class="owner-section-card" data-owner-id="${prop.id}">
+              ${avatarHtml}
+              <div class="owner-info-card">
+                Know more about owner <i class="fas fa-chevron-right"></i><br>
+                <small>${owner ? owner.name : "Verified Partner"}</small>
+              </div>
             </div>
-        `}).join('');
-        
-        document.querySelectorAll('.owner-section-card').forEach(section => {
-            section.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const propId = parseInt(section.getAttribute('data-owner-id'));
-                openOwnerPopup(propId);
-            });
+            <div class="view-btn" data-id="${prop.id}">View Details →</div>
+          </div>
+        </div>
+      `}).join('');
+
+      document.querySelectorAll('.owner-section-card').forEach(section => {
+        section.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const propId = parseInt(section.getAttribute('data-owner-id'));
+          openOwnerPopup(propId);
         });
-        
-        document.querySelectorAll('.view-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const id = parseInt(btn.getAttribute('data-id'));
-                const prop = currentFilteredList.find(p => p.id === id) || properties.find(p => p.id === id);
-                if (prop) openModal(prop);
-            });
+      });
+
+      document.querySelectorAll('.view-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const id = parseInt(btn.getAttribute('data-id'));
+          const prop = currentFilteredList.find(p => p.id === id) || properties.find(p => p.id === id);
+          if (prop) openModal(prop);
         });
+      });
     }
 
     function stopAllVideos() {
-        currentVideoElements.forEach(video => {
-            if (video && !video.paused) {
-                video.pause();
-                video.currentTime = 0;
-            }
-        });
-        currentVideoElements = [];
+      currentVideoElements.forEach(video => {
+        if (video && !video.paused) {
+          video.pause();
+          video.currentTime = 0;
+        }
+      });
+      currentVideoElements = [];
     }
 
-    // PINCH ZOOM FUNCTIONALITY for fullscreen
     let currentScale = 1;
     let currentTranslate = { x: 0, y: 0 };
     let initialDistance = 0;
@@ -959,241 +965,238 @@
     let startX = 0, startY = 0;
 
     function initPinchZoom() {
-        const wrapper = document.getElementById('fsImageWrapper');
-        const img = document.getElementById('fsImage');
-        
-        if (!wrapper || !img) return;
-        
-        // Reset transforms
-        function resetTransform() {
-            currentScale = 1;
-            currentTranslate = { x: 0, y: 0 };
-            img.style.transform = `translate(0px, 0px) scale(1)`;
+      const wrapper = document.getElementById('fsImageWrapper');
+      const img = document.getElementById('fsImage');
+      if (!wrapper || !img) return;
+
+      function resetTransform() {
+        currentScale = 1;
+        currentTranslate = { x: 0, y: 0 };
+        img.style.transform = `translate(0px, 0px) scale(1)`;
+      }
+
+      wrapper.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 2) {
+          e.preventDefault();
+          const dx = e.touches[0].clientX - e.touches[1].clientX;
+          const dy = e.touches[0].clientY - e.touches[1].clientY;
+          initialDistance = Math.hypot(dx, dy);
+          initialScale = currentScale;
+          isTouching = true;
+        } else if (e.touches.length === 1 && currentScale > 1) {
+          startX = e.touches[0].clientX - currentTranslate.x;
+          startY = e.touches[0].clientY - currentTranslate.y;
+          isTouching = true;
         }
-        
-        // Handle pinch zoom
-        wrapper.addEventListener('touchstart', (e) => {
-            if (e.touches.length === 2) {
-                e.preventDefault();
-                const dx = e.touches[0].clientX - e.touches[1].clientX;
-                const dy = e.touches[0].clientY - e.touches[1].clientY;
-                initialDistance = Math.hypot(dx, dy);
-                initialScale = currentScale;
-                isTouching = true;
-            } else if (e.touches.length === 1 && currentScale > 1) {
-                startX = e.touches[0].clientX - currentTranslate.x;
-                startY = e.touches[0].clientY - currentTranslate.y;
-                isTouching = true;
-            }
-        });
-        
-        wrapper.addEventListener('touchmove', (e) => {
-            if (e.touches.length === 2 && initialDistance > 0) {
-                e.preventDefault();
-                const dx = e.touches[0].clientX - e.touches[1].clientX;
-                const dy = e.touches[0].clientY - e.touches[1].clientY;
-                const newDistance = Math.hypot(dx, dy);
-                const scale = Math.min(Math.max(initialScale * (newDistance / initialDistance), 1), 4);
-                currentScale = scale;
-                img.style.transform = `translate(${currentTranslate.x}px, ${currentTranslate.y}px) scale(${currentScale})`;
-            } else if (e.touches.length === 1 && currentScale > 1 && isTouching) {
-                e.preventDefault();
-                currentTranslate.x = e.touches[0].clientX - startX;
-                currentTranslate.y = e.touches[0].clientY - startY;
-                img.style.transform = `translate(${currentTranslate.x}px, ${currentTranslate.y}px) scale(${currentScale})`;
-            }
-        });
-        
-        wrapper.addEventListener('touchend', (e) => {
-            if (currentScale < 1.1) {
-                resetTransform();
-            }
-            isTouching = false;
-            initialDistance = 0;
-        });
-        
-        // Mouse wheel zoom for desktop
-        wrapper.addEventListener('wheel', (e) => {
-            e.preventDefault();
-            const delta = e.deltaY > 0 ? -0.1 : 0.1;
-            currentScale = Math.min(Math.max(currentScale + delta, 1), 4);
-            img.style.transform = `translate(${currentTranslate.x}px, ${currentTranslate.y}px) scale(${currentScale})`;
-        });
+      });
+
+      wrapper.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 2 && initialDistance > 0) {
+          e.preventDefault();
+          const dx = e.touches[0].clientX - e.touches[1].clientX;
+          const dy = e.touches[0].clientY - e.touches[1].clientY;
+          const newDistance = Math.hypot(dx, dy);
+          const scale = Math.min(Math.max(initialScale * (newDistance / initialDistance), 1), 4);
+          currentScale = scale;
+          img.style.transform = `translate(${currentTranslate.x}px, ${currentTranslate.y}px) scale(${currentScale})`;
+        } else if (e.touches.length === 1 && currentScale > 1 && isTouching) {
+          e.preventDefault();
+          currentTranslate.x = e.touches[0].clientX - startX;
+          currentTranslate.y = e.touches[0].clientY - startY;
+          img.style.transform = `translate(${currentTranslate.x}px, ${currentTranslate.y}px) scale(${currentScale})`;
+        }
+      });
+
+      wrapper.addEventListener('touchend', (e) => {
+        if (currentScale < 1.1) {
+          resetTransform();
+        }
+        isTouching = false;
+        initialDistance = 0;
+      });
+
+      wrapper.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const delta = e.deltaY > 0 ? -0.1 : 0.1;
+        currentScale = Math.min(Math.max(currentScale + delta, 1), 4);
+        img.style.transform = `translate(${currentTranslate.x}px, ${currentTranslate.y}px) scale(${currentScale})`;
+      });
     }
 
     function openModal(prop) {
-        stopAllVideos();
-        const modal = document.getElementById('propertyModal');
-        const modalContent = document.getElementById('modalContent');
-        
-        let galleryHtml = '';
-        prop.images.forEach(img => {
-            galleryHtml += `<img class="modal-img" src="${img}" onclick="openFullscreen('${img}')" style="cursor:pointer;">`;
-        });
-        
-        if(prop.videos && prop.videos.length) {
-            prop.videos.forEach((vidUrl, idx) => {
-                galleryHtml += `
-                    <div class="modal-video-item">
-                        <video controls preload="metadata" style="width:100%; height:100%; object-fit:cover;">
-                            <source src="${vidUrl}" type="video/mp4">
-                        </video>
-                    </div>
-                `;
-            });
-        }
-        
-        modalContent.innerHTML = `
-            <div class="modal-gallery">${galleryHtml}</div>
-            <div class="modal-body">
-                <div style="display:flex; justify-content:space-between;"><h2>${prop.title}</h2><span style="background:#eef2ff; padding:4px 12px; border-radius:40px;">${prop.type}</span></div>
-                <p><i class="fas fa-map-marker-alt"></i> ${prop.location}, Lucknow</p>
-                <div style="background:#f1f5f9; padding:8px 12px; border-radius:40px; display:inline-block; margin:10px 0;"><i class="fas fa-tag"></i> ${prop.code}</div>
-                <div style="display:flex; gap:1rem;"><span><i class="fas fa-bed"></i> ${prop.bedrooms}</span><span><i class="fas fa-bath"></i> ${prop.bathrooms}</span><span><i class="fas fa-arrows-alt"></i> ${prop.size || 'N/A'}</span></div>
-                <div style="background:#f8fafc; padding:1rem; border-radius:1rem; margin:12px 0;"><strong>📝 Description</strong><br>${prop.desc}<br><br><strong>✨ Amenities</strong><br>${prop.amenities}</div>
-                <div class="price" style="font-size:1.8rem;">₹${parseInt(prop.price).toLocaleString()}<span style="font-size:0.9rem;">/month</span></div>
-                <button id="sendWhatsappBtn" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Send Query on WhatsApp</button>
+      stopAllVideos();
+      const modal = document.getElementById('propertyModal');
+      const modalContent = document.getElementById('modalContent');
+
+      let galleryHtml = '';
+      prop.images.forEach(img => {
+        galleryHtml += `<img class="modal-img" src="${img}" onclick="openFullscreen('${img}')" style="cursor:pointer;" alt="Property image">`;
+      });
+
+      if(prop.videos && prop.videos.length) {
+        prop.videos.forEach((vidUrl, idx) => {
+          galleryHtml += `
+            <div class="modal-video-item">
+              <video controls preload="metadata" style="width:100%; height:100%; object-fit:cover;">
+                <source src="${vidUrl}" type="video/mp4">
+              </video>
             </div>
-        `;
-        
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        
-        const waBtn = document.getElementById('sendWhatsappBtn');
-        if (waBtn) waBtn.addEventListener('click', () => {
-            const YOUR_WHATSAPP = "917311170545";
-            const message = `🏠 StayLoo Inquiry%0A%0ACode: ${prop.code}%0A${prop.title}%0ALocation: ${prop.location}%0ARent: ₹${prop.price}%0AI'm interested.`;
-            window.open(`https://wa.me/${YOUR_WHATSAPP}?text=${message}`, '_blank');
+          `;
         });
+      }
+
+      const securityText = prop.security ? `₹${parseInt(prop.security).toLocaleString()}` : 'N/A';
+      const addressText = prop.address || 'Address not available';
+
+      modalContent.innerHTML = `
+        <div class="modal-gallery-slider">${galleryHtml}</div>
+        <div class="modal-body">
+          <div style="display:flex; justify-content:space-between;"><h2>${prop.title}</h2><span style="background:#eef2ff; padding:4px 12px; border-radius:40px;">${prop.type}</span></div>
+          <p><i class="fas fa-map-marker-alt"></i> ${prop.location}, Lucknow</p>
+          <div style="background:#f1f5f9; padding:8px 12px; border-radius:40px; display:inline-block; margin:10px 0;"><i class="fas fa-tag"></i> ${prop.code}</div>
+          <div style="display:flex; gap:1rem;"><span><i class="fas fa-bed"></i> ${prop.bedrooms}</span><span><i class="fas fa-bath"></i> ${prop.bathrooms}</span><span><i class="fas fa-arrows-alt"></i> ${prop.size || 'N/A'}</span></div>
+          <div style="background:#f8fafc; padding:1rem; border-radius:1rem; margin:12px 0;">
+            <strong>📝 Description</strong><br>${prop.desc}<br><br>
+            <strong>✨ Amenities</strong><br>${prop.amenities}<br><br>
+            <strong>📍 Full Address</strong><br>${addressText}
+          </div>
+          <div class="price" style="font-size:1.8rem;">₹${parseInt(prop.price).toLocaleString()}<span style="font-size:0.9rem;">/month</span></div>
+          <div class="security-badge" style="font-size:1rem; margin-top:5px;"><i class="fas fa-shield-alt"></i> Security Deposit: ${securityText}</div>
+          <button id="sendWhatsappBtn" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Send Query on WhatsApp</button>
+        </div>
+      `;
+
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+
+      const waBtn = document.getElementById('sendWhatsappBtn');
+      if (waBtn) waBtn.addEventListener('click', () => {
+        const YOUR_WHATSAPP = "917311170545";
+        const message = `🏠 StayLoo Inquiry%0A%0ACode: ${prop.code}%0A${prop.title}%0ALocation: ${prop.location}%0ARent: ₹${prop.price}%0ASecurity: ${securityText}%0AI'm interested.`;
+        window.open(`https://wa.me/${YOUR_WHATSAPP}?text=${message}`, '_blank');
+      });
     }
 
     function closeModalAndStopVideos() {
-        stopAllVideos();
-        document.getElementById('propertyModal').classList.remove('active');
-        document.body.style.overflow = '';
+      stopAllVideos();
+      document.getElementById('propertyModal').classList.remove('active');
+      document.body.style.overflow = '';
     }
 
-    // Fullscreen with pinch zoom
     window.openFullscreen = function(src) {
-        const fsViewer = document.getElementById('fsViewer');
-        const fsImage = document.getElementById('fsImage');
-        
-        // Reset zoom before showing new image
-        currentScale = 1;
-        currentTranslate = { x: 0, y: 0 };
-        fsImage.style.transform = `translate(0px, 0px) scale(1)`;
-        fsImage.src = src;
-        
-        fsViewer.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        document.body.style.position = 'fixed';
-        document.body.style.width = '100%';
+      const fsViewer = document.getElementById('fsViewer');
+      const fsImage = document.getElementById('fsImage');
+      currentScale = 1;
+      currentTranslate = { x: 0, y: 0 };
+      fsImage.style.transform = `translate(0px, 0px) scale(1)`;
+      fsImage.src = src;
+      fsViewer.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
     }
-    
+
     function closeFullscreen() {
-        const fsViewer = document.getElementById('fsViewer');
-        fsViewer.classList.remove('active');
-        document.body.style.overflow = '';
-        document.body.style.position = '';
-        document.body.style.width = '';
-        // Reset zoom when closing
-        currentScale = 1;
-        currentTranslate = { x: 0, y: 0 };
-        const fsImage = document.getElementById('fsImage');
-        if (fsImage) fsImage.style.transform = `translate(0px, 0px) scale(1)`;
+      const fsViewer = document.getElementById('fsViewer');
+      fsViewer.classList.remove('active');
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      currentScale = 1;
+      currentTranslate = { x: 0, y: 0 };
+      const fsImage = document.getElementById('fsImage');
+      if (fsImage) fsImage.style.transform = `translate(0px, 0px) scale(1)`;
     }
 
     function applyFilters() {
-        const type = document.getElementById('propTypeFilter').value;
-        const budget = document.getElementById('budgetFilter').value;
-        const locationQuery = document.getElementById('locationFilter').value.toLowerCase().trim();
-        const gender = document.getElementById('genderFilter').value;
-        currentFilteredList = properties.filter(prop => {
-            if (type !== 'all' && prop.type !== type) return false;
-            if (gender !== 'Anyone' && prop.forGender !== 'Anyone' && prop.forGender !== gender) return false;
-            if (locationQuery && !prop.location.toLowerCase().includes(locationQuery)) return false;
-            if (budget !== 'any') {
-                const maxBudget = parseInt(budget);
-                if (parseInt(prop.price) > maxBudget) return false;
-            }
-            return true;
-        });
-        visibleCount = 6;
-        renderCards(currentFilteredList.slice(0, visibleCount));
-        updateButtonState();
+      const type = document.getElementById('propTypeFilter').value;
+      const budget = document.getElementById('budgetFilter').value;
+      const locationQuery = document.getElementById('locationFilter').value.toLowerCase().trim();
+      const gender = document.getElementById('genderFilter').value;
+      currentFilteredList = properties.filter(prop => {
+        if (type !== 'all' && prop.type !== type) return false;
+        if (gender !== 'Anyone' && prop.forGender !== 'Anyone' && prop.forGender !== gender) return false;
+        if (locationQuery && !prop.location.toLowerCase().includes(locationQuery)) return false;
+        if (budget !== 'any') {
+          const maxBudget = parseInt(budget);
+          if (parseInt(prop.price) > maxBudget) return false;
+        }
+        return true;
+      });
+      visibleCount = 6;
+      renderCards(currentFilteredList.slice(0, visibleCount));
+      updateButtonState();
     }
 
     function resetFilters() {
-        document.getElementById('propTypeFilter').value = 'all';
-        document.getElementById('budgetFilter').value = 'any';
-        document.getElementById('locationFilter').value = '';
-        document.getElementById('genderFilter').value = 'Anyone';
-        applyFilters();
+      document.getElementById('propTypeFilter').value = 'all';
+      document.getElementById('budgetFilter').value = 'any';
+      document.getElementById('locationFilter').value = '';
+      document.getElementById('genderFilter').value = 'Anyone';
+      applyFilters();
     }
 
     function loadMoreProperties() {
-        const total = currentFilteredList.length;
-        if (visibleCount < total) {
-            visibleCount = Math.min(visibleCount + 4, total);
-            renderCards(currentFilteredList.slice(0, visibleCount));
-            updateButtonState();
-        }
-    }
-    
-    function viewLessProperties() {
-        visibleCount = 6;
+      const total = currentFilteredList.length;
+      if (visibleCount < total) {
+        visibleCount = Math.min(visibleCount + 4, total);
         renderCards(currentFilteredList.slice(0, visibleCount));
         updateButtonState();
+      }
+    }
+
+    function viewLessProperties() {
+      visibleCount = 6;
+      renderCards(currentFilteredList.slice(0, visibleCount));
+      updateButtonState();
     }
 
     function updateButtonState() {
-        const loadMoreBtn = document.getElementById('loadMoreBtn');
-        const total = currentFilteredList.length;
-        if (!loadMoreBtn) return;
-        if (total === 0) { loadMoreBtn.style.display = 'none'; return; }
-        loadMoreBtn.style.display = 'inline-block';
-        if (visibleCount < total) {
-            loadMoreBtn.textContent = `+ Load More Spaces (${total - visibleCount} left)`;
-            loadMoreBtn.classList.remove('view-less-btn');
-            const newBtn = loadMoreBtn.cloneNode(true);
-            loadMoreBtn.parentNode.replaceChild(newBtn, loadMoreBtn);
-            newBtn.addEventListener('click', loadMoreProperties);
-        } else if (visibleCount >= total && total > 6) {
-            loadMoreBtn.textContent = `− View Less (Show first 6)`;
-            loadMoreBtn.classList.add('view-less-btn');
-            const newBtn = loadMoreBtn.cloneNode(true);
-            loadMoreBtn.parentNode.replaceChild(newBtn, loadMoreBtn);
-            newBtn.addEventListener('click', viewLessProperties);
-        } else {
-            loadMoreBtn.style.display = 'none';
-        }
+      const loadMoreBtn = document.getElementById('loadMoreBtn');
+      const total = currentFilteredList.length;
+      if (!loadMoreBtn) return;
+      if (total === 0) { loadMoreBtn.style.display = 'none'; return; }
+      loadMoreBtn.style.display = 'inline-block';
+      if (visibleCount < total) {
+        loadMoreBtn.textContent = `+ Load More Spaces (${total - visibleCount} left)`;
+        loadMoreBtn.classList.remove('view-less-btn');
+        const newBtn = loadMoreBtn.cloneNode(true);
+        loadMoreBtn.parentNode.replaceChild(newBtn, loadMoreBtn);
+        newBtn.addEventListener('click', loadMoreProperties);
+      } else if (visibleCount >= total && total > 6) {
+        loadMoreBtn.textContent = `− View Less (Show first 6)`;
+        loadMoreBtn.classList.add('view-less-btn');
+        const newBtn = loadMoreBtn.cloneNode(true);
+        loadMoreBtn.parentNode.replaceChild(newBtn, loadMoreBtn);
+        newBtn.addEventListener('click', viewLessProperties);
+      } else {
+        loadMoreBtn.style.display = 'none';
+      }
     }
 
     let lastScrollY = window.scrollY;
     const header = document.getElementById('mainHeader');
     window.addEventListener('scroll', () => {
-        if (window.scrollY > lastScrollY && window.scrollY > 80) header.classList.add('hide');
-        else header.classList.remove('hide');
-        lastScrollY = window.scrollY;
+      if (window.scrollY > lastScrollY && window.scrollY > 80) header.classList.add('hide');
+      else header.classList.remove('hide');
+      lastScrollY = window.scrollY;
     });
 
-    // Event Listeners
     document.getElementById('closeModalBtn').addEventListener('click', closeModalAndStopVideos);
     const modalEl = document.getElementById('propertyModal');
     modalEl.addEventListener('click', (e) => { if (e.target === modalEl) closeModalAndStopVideos(); });
-    
+
     document.getElementById('applyFiltersBtn').addEventListener('click', applyFilters);
     document.getElementById('resetFiltersBtn').addEventListener('click', resetFilters);
-    
+
     const fsViewer = document.getElementById('fsViewer');
     const closeFsBtn = document.getElementById('closeFsBtn');
     closeFsBtn.addEventListener('click', closeFullscreen);
     fsViewer.addEventListener('click', (e) => { if (e.target === fsViewer) closeFullscreen(); });
-    
-    // Initialize pinch zoom
+
     initPinchZoom();
-    
     applyFilters();
+  })();
 </script>
 </body>
 </html>
