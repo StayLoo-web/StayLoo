@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
     <title>StayLoo | PG Accommodations — Verified Listings for Bachelors & Working Professionals</title>
     <link rel="icon" type="image/png" href="../images/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -25,9 +25,6 @@
             color: #0a2540;
             line-height: 1.5;
         }
-        body.modal-open {
-            overflow: hidden;
-        }
         .page-wrapper {
             display: flex;
             flex-direction: column;
@@ -37,7 +34,7 @@
             flex: 1;
         }
         
-        /* Hero Section with PG Background - Filter Inside */
+        /* Hero Section */
         .hero-section {
             background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.65)), 
                         url('https://images.pexels.com/photos/271618/pexels-photo-271618.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover no-repeat;
@@ -63,16 +60,6 @@
             gap: 1rem;
             margin-bottom: 2rem;
         }
-        @media (max-width: 480px) {
-    .logo-left img {
-        height: 35px;  /* Smaller logo on very small screens */
-    }
-    .pg-tag {
-        font-size: 0.75rem;  /* Smaller text */
-        padding: 0.4rem 1rem;
-        white-space: nowrap;  /* Prevent text from wrapping */
-    }
-}
         .logo-left img {
             height: 52px;
             width: auto;
@@ -89,10 +76,15 @@
             color: white;
             font-size: 1rem;
             letter-spacing: 0.5px;
+            white-space: nowrap;
         }
         .pg-tag i {
             margin-right: 6px;
             color: #ffd966;
+        }
+        @media (max-width: 480px) {
+            .logo-left img { height: 38px; }
+            .pg-tag { font-size: 0.8rem; padding: 0.4rem 1rem; }
         }
         
         /* Hero Title */
@@ -119,10 +111,9 @@
             .hero-title-block h1 { font-size: 1.9rem; }
         }
         
-        /* Filter Section - Inside Hero with Glassmorphism */
+        /* Filter Card */
         .filter-card {
             background: rgba(255, 255, 255, 0.97);
-            backdrop-filter: blur(0px);
             border-radius: 1.8rem;
             padding: 1.5rem 2rem;
             margin-top: 1rem;
@@ -148,8 +139,7 @@
             margin-bottom: 6px;
             color: #2c5a74;
         }
-        .filter-group select, 
-        .filter-group input {
+        .filter-group select, .filter-group input {
             width: 100%;
             padding: 12px 16px;
             border-radius: 48px;
@@ -158,13 +148,6 @@
             font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
             font-weight: 500;
-            transition: all 0.2s;
-        }
-        .filter-group select:focus, 
-        .filter-group input:focus {
-            outline: none;
-            border-color: #1c6a8f;
-            box-shadow: 0 0 0 3px rgba(28,106,143,0.1);
         }
         .filter-buttons {
             display: flex;
@@ -174,27 +157,17 @@
             padding: 12px 28px;
             border-radius: 48px;
             font-weight: 700;
-            font-family: inherit;
             cursor: pointer;
             border: none;
-            transition: 0.2s;
             font-size: 0.85rem;
         }
         .btn-filter {
             background: #1c6a8f;
             color: white;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-        }
-        .btn-filter:hover {
-            background: #0f4f6e;
-            transform: translateY(-2px);
         }
         .btn-reset {
             background: #eef2f8;
             color: #1e405b;
-        }
-        .btn-reset:hover {
-            background: #e2e8f0;
         }
         @media (max-width: 780px) {
             .filter-card { padding: 1.5rem; }
@@ -223,6 +196,7 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.05);
             transition: transform 0.2s, box-shadow 0.2s;
             cursor: pointer;
+            border: 1px solid #eef2f8;
         }
         .property-card:hover {
             transform: translateY(-4px);
@@ -310,7 +284,6 @@
             border-radius: 50px;
             margin: 12px 0 10px;
             cursor: pointer;
-            transition: background 0.2s;
             border: 1px solid #e2edf2;
         }
         .owner-section:hover {
@@ -323,7 +296,6 @@
             object-fit: cover;
             background: #cbdde9;
             border: 2px solid white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         .owner-info-text {
             font-size: 0.85rem;
@@ -378,8 +350,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -401,13 +373,38 @@
             overflow-y: auto;
             position: relative;
         }
-        .modal-img-gallery {
+        .close-modal {
+            position: sticky;
+            top: 10px;
+            right: 20px;
+            float: right;
+            background: white;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+        .modal-gallery {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             overflow-x: auto;
-            padding: 1.2rem;
+            padding: 1rem;
             background: #f8fafc;
             scrollbar-width: thin;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        .modal-gallery::-webkit-scrollbar {
+            height: 6px;
+        }
+        .modal-gallery::-webkit-scrollbar-thumb {
+            background: #1c6a8f;
+            border-radius: 10px;
         }
         .modal-img {
             width: 200px;
@@ -467,24 +464,8 @@
             background: #1da15a;
             transform: scale(1.02);
         }
-        .close-modal {
-            position: sticky;
-            top: 10px;
-            right: 20px;
-            float: right;
-            background: white;
-            border: none;
-            font-size: 1.8rem;
-            cursor: pointer;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            margin: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            z-index: 10;
-        }
         
-        /* Fullscreen Viewer */
+        /* Fullscreen Viewer with Zoom Support */
         .fullscreen-img-viewer {
             position: fixed;
             top: 0;
@@ -492,22 +473,39 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(25px) !important;
+            -webkit-backdrop-filter: blur(25px) !important;
             z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             visibility: hidden;
             opacity: 0;
-            cursor: pointer;
+            cursor: grab;
+        }
+        .fullscreen-img-viewer:active {
+            cursor: grabbing;
         }
         .fullscreen-img-viewer.active {
             visibility: visible;
             opacity: 1;
         }
+        .fs-image-wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            touch-action: pan-x pinch-zoom;
+            position: relative;
+        }
         .fullscreen-img {
-            max-width: 95%;
-            max-height: 95%;
+            max-width: 90%;
+            max-height: 90%;
             object-fit: contain;
+            transition: transform 0.1s ease;
+            cursor: grab;
+        }
+        .fullscreen-img:active {
+            cursor: grabbing;
         }
         .fullscreen-video {
             max-width: 95%;
@@ -520,8 +518,54 @@
             color: white;
             font-size: 40px;
             cursor: pointer;
-            background: none;
+            background: rgba(0,0,0,0.5);
             border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2001;
+            transition: 0.2s;
+        }
+        .close-fullscreen:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.1);
+        }
+        .swipe-hint {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 10002;
+            opacity: 0;
+            animation: fadeInOut 3s ease-in-out forwards;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        .swipe-hint i {
+            font-size: 1rem;
+            animation: swipeAnim 1s ease-in-out infinite;
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+            15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-10px); visibility: hidden; }
+        }
+        @keyframes swipeAnim {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(8px); }
         }
         
         /* Owner Popup */
@@ -570,12 +614,13 @@
             font-size: 28px;
             cursor: pointer;
             color: #8aaec0;
+            background: none;
+            border: none;
         }
         .half-blurred-number {
             filter: blur(5px);
             display: inline-block;
             font-family: monospace;
-            letter-spacing: 0px;
             background: #f0f0f0;
             padding: 4px 10px;
             border-radius: 20px;
@@ -628,7 +673,6 @@
 </head>
 <body>
 <div class="page-wrapper">
-    <!-- Hero Section with Background - Filter INSIDE hero -->
     <div class="hero-section">
         <div class="hero-container">
             <div class="header-flex">
@@ -636,7 +680,7 @@
                     <img class="logo-img" src="../images/logonew1.png" alt="StayLoo Logo" onerror="this.src='https://placehold.co/200x60/1c6a8f/white?text=StayLoo'">
                 </div>
                 <div class="pg-tag">
-                    <i class="fas fa-bed"></i> PG Accommodations
+                    <i class="fas fa-bed"></i> PG
                 </div>
             </div>
             <div class="hero-title-block">
@@ -644,7 +688,6 @@
                 <p>Explore verified PGs, hostels, and shared spaces perfect for students and working professionals.</p>
             </div>
             
-            <!-- Filter Section - INSIDE Hero with rounded corners (like flats page) -->
             <div class="filter-card">
                 <div class="filter-grid">
                     <div class="filter-group">
@@ -697,8 +740,6 @@
     <div class="main-content">
         <div class="main-container">
             <div id="propertiesGrid" class="properties-grid"></div>
-            
-            <!-- View More / View Less Button -->
             <div class="view-more-wrapper" id="viewMoreWrapper">
                 <button class="btn-view-more" id="viewMoreBtn"><i class="fas fa-arrow-down"></i> View More PG</button>
             </div>
@@ -737,26 +778,28 @@
 </div>
 
 <div id="fullscreenViewer" class="fullscreen-img-viewer">
-    <button class="close-fullscreen">&times;</button>
-    <img class="fullscreen-img" id="fullscreenImg" style="display:none;">
-    <video id="fullscreenVideo" class="fullscreen-video" controls style="display:none;"></video>
+    <button class="close-fullscreen" id="closeFullscreenBtn">&times;</button>
+    <div class="fs-image-wrapper" id="fsImageWrapper">
+        <img id="fullscreenImg" class="fullscreen-img" src="" style="display:none;">
+        <video id="fullscreenVideo" class="fullscreen-video" controls style="display:none;"></video>
+    </div>
+    <div class="swipe-hint" id="swipeHint"><i class="fas fa-hand-peace"></i> Swipe left/right • Pinch to zoom</div>
 </div>
 
 <script>
-    // Owner data for each property
+    // Owner data
     const ownersData = {
-        "STL101": { name: "Mr. Rajesh Verma", avatar: "https://randomuser.me/api/portraits/men/32.jpg", bio: "Real estate enthusiast with 8+ years experience. Passionate about helping students find safe PG accommodations.", contact: "+91 98765 12345" },
-        "STL102": { name: "Mrs. Priya Singh", avatar: "https://randomuser.me/api/portraits/women/68.jpg", bio: "Interior designer turned PG owner. Loves creating cozy spaces for working professionals.", contact: "+91 99887 66554" },
-        "STL103": { name: "Mr. Ankit Sharma", avatar: "https://randomuser.me/api/portraits/men/45.jpg", bio: "Young entrepreneur focused on premium PG accommodations in prime locations.", contact: "+91 98112 33456" },
-        "STL104": { name: "Ms. Neha Mehta", avatar: "https://randomuser.me/api/portraits/women/23.jpg", bio: "Hospitality professional ensuring every PG tenant enjoys comfort and safety.", contact: "+91 99200 77661" },
-        "STL105": { name: "Mr. Karthik Iyer", avatar: "https://randomuser.me/api/portraits/men/52.jpg", bio: "Tech professional running PGs near IT parks. Quick responsive maintenance.", contact: "+91 97422 99881" },
-        "STL106": { name: "Mrs. Sneha Joshi", avatar: "https://randomuser.me/api/portraits/women/44.jpg", bio: "Property manager with keen eye for quality, providing fully equipped PGs.", contact: "+91 91234 56789" },
-        "STL107": { name: "Mr. Akhtar Khan", avatar: "https://randomuser.me/api/portraits/men/22.jpg", bio: "Budget-friendly housing specialist focusing on student accommodations.", contact: "+91 88670 33221" },
-        "STL108": { name: "Ms. Ritu Bhatia", avatar: "https://randomuser.me/api/portraits/women/89.jpg", bio: "Modern living curator, smart PGs with tech-ready amenities.", contact: "+91 98732 11457" },
-        "STL109": { name: "Mr. Dheeraj Menon", avatar: "https://randomuser.me/api/portraits/men/64.jpg", bio: "Premium PG owner in prime locations, known for upscale experiences.", contact: "+91 77009 88112" }
+        "STL101": { name: "Mr. Rajesh Verma", avatar: "https://randomuser.me/api/portraits/men/32.jpg", bio: "Real estate enthusiast with 8+ years experience.", contact: "+91 98765 12345" },
+        "STL102": { name: "Mrs. Priya Singh", avatar: "https://randomuser.me/api/portraits/women/68.jpg", bio: "Interior designer turned PG owner.", contact: "+91 99887 66554" },
+        "STL103": { name: "Mr. Ankit Sharma", avatar: "https://randomuser.me/api/portraits/men/45.jpg", bio: "Young entrepreneur focused on premium PG.", contact: "+91 98112 33456" },
+        "STL104": { name: "Ms. Neha Mehta", avatar: "https://randomuser.me/api/portraits/women/23.jpg", bio: "Hospitality professional ensuring comfort.", contact: "+91 99200 77661" },
+        "STL105": { name: "Mr. Karthik Iyer", avatar: "https://randomuser.me/api/portraits/men/52.jpg", bio: "Tech professional running PGs near IT parks.", contact: "+91 97422 99881" },
+        "STL106": { name: "Mrs. Sneha Joshi", avatar: "https://randomuser.me/api/portraits/women/44.jpg", bio: "Property manager with keen eye for quality.", contact: "+91 91234 56789" },
+        "STL107": { name: "Mr. Akhtar Khan", avatar: "https://randomuser.me/api/portraits/men/22.jpg", bio: "Budget-friendly housing specialist.", contact: "+91 88670 33221" },
+        "STL108": { name: "Ms. Ritu Bhatia", avatar: "https://randomuser.me/api/portraits/women/89.jpg", bio: "Modern living curator.", contact: "+91 98732 11457" },
+        "STL109": { name: "Mr. Dheeraj Menon", avatar: "https://randomuser.me/api/portraits/men/64.jpg", bio: "Premium PG owner.", contact: "+91 77009 88112" }
     };
     
-    // Badge data
     const propertyBadges = {
         "STL101": { verified: true, popular: true },
         "STL102": { verified: true, popular: false },
@@ -784,78 +827,112 @@
     
     const properties = [
         { id: "STL101", code: "STL-101", city: "Lucknow", area: "Gomti Nagar", title: "Sunrise PG for Boys", bhk: "2 BHK", price: 15000,
-          images: ["https://picsum.photos/id/152/400/300", "https://picsum.photos/id/155/400/300", "https://picsum.photos/id/159/400/300", "https://picsum.photos/id/158/400/300"],
-          videos: ["https://www.w3schools.com/html/mov_bbb.mp4"], desc: "Fully furnished PG, near metro station, 24/7 security, meals included, modern amenities.", size: "1100 sqft", floor: "3rd Floor", available: "Immediate", features: "Wi-Fi, Gym, Power Backup, Lift, Meals Included" },
+          images: ["https://picsum.photos/id/152/400/300", "https://picsum.photos/id/155/400/300", "https://picsum.photos/id/159/400/300"],
+          videos: ["https://www.w3schools.com/html/mov_bbb.mp4"], desc: "Fully furnished PG, near metro station, 24/7 security, meals included.", size: "1100 sqft", floor: "3rd Floor", available: "Immediate", features: "Wi-Fi, Gym, Power Backup, Lift, Meals Included" },
         { id: "STL102", code: "STL-102", city: "Lucknow", area: "Indira Nagar", title: "Green Valley PG for Girls", bhk: "3 BHK", price: 22000,
-          images: ["https://picsum.photos/id/169/400/300", "https://picsum.photos/id/164/400/300", "https://picsum.photos/id/29/400/300", "https://picsum.photos/id/28/400/300"],
-          videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Semi-furnished, park facing, modular kitchen, spacious balconies, excellent ventilation, lady owner.", size: "1350 sqft", floor: "2nd Floor", available: "Next month", features: "Park View, Modular Kitchen, CCTV, Ladies Only" },
+          images: ["https://picsum.photos/id/169/400/300", "https://picsum.photos/id/164/400/300", "https://picsum.photos/id/29/400/300"],
+          videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Semi-furnished, park facing, modular kitchen, lady owner.", size: "1350 sqft", floor: "2nd Floor", available: "Next month", features: "Park View, Modular Kitchen, CCTV, Ladies Only" },
         { id: "STL103", code: "STL-103", city: "Delhi NCR", area: "Dwarka", title: "Advent PG Residency", bhk: "2 BHK", price: 18500,
-          images: ["https://picsum.photos/id/105/400/300", "https://picsum.photos/id/106/400/300", "https://picsum.photos/id/107/400/300", "https://picsum.photos/id/108/400/300"],
-          videos: [], desc: "Close to metro station, gym & swimming pool, wifi ready, 24x7 water supply, meals available.", size: "950 sqft", floor: "5th Floor", available: "15 days", features: "Swimming Pool, Gym, Security, Intercom, Meals" },
+          images: ["https://picsum.photos/id/105/400/300", "https://picsum.photos/id/106/400/300", "https://picsum.photos/id/107/400/300"],
+          videos: [], desc: "Close to metro station, gym & swimming pool, wifi ready.", size: "950 sqft", floor: "5th Floor", available: "15 days", features: "Swimming Pool, Gym, Security, Meals" },
         { id: "STL104", code: "STL-104", city: "Mumbai", area: "Andheri East", title: "Sea View PG", bhk: "1 BHK", price: 28000,
-          images: ["https://picsum.photos/id/21/400/300", "https://picsum.photos/id/22/400/300", "https://picsum.photos/id/23/400/300", "https://picsum.photos/id/24/400/300"],
-          videos: ["https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"], desc: "Premium location, 5 mins to metro, AC rooms, sea facing, luxury PG complex.", size: "650 sqft", floor: "12th Floor", available: "Immediate", features: "Sea View, AC, Lift, Club House, Laundry" },
+          images: ["https://picsum.photos/id/21/400/300", "https://picsum.photos/id/22/400/300", "https://picsum.photos/id/23/400/300"],
+          videos: ["https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"], desc: "Premium location, AC rooms, sea facing, luxury PG complex.", size: "650 sqft", floor: "12th Floor", available: "Immediate", features: "Sea View, AC, Lift, Laundry" },
         { id: "STL105", code: "STL-105", city: "Bangalore", area: "Whitefield", title: "Tech Hub PG", bhk: "2 BHK", price: 25000,
-          images: ["https://picsum.photos/id/1/400/300", "https://picsum.photos/id/2/400/300", "https://picsum.photos/id/3/400/300", "https://picsum.photos/id/4/400/300"],
-          videos: [], desc: "Near IT parks, gated community, excellent ventilation, high speed internet ready, good for working professionals.", size: "1050 sqft", floor: "8th Floor", available: "Immediate", features: "Gated Community, Power Backup, Parking, Garden, High Speed WiFi" },
+          images: ["https://picsum.photos/id/1/400/300", "https://picsum.photos/id/2/400/300", "https://picsum.photos/id/3/400/300"],
+          videos: [], desc: "Near IT parks, gated community, high speed internet ready.", size: "1050 sqft", floor: "8th Floor", available: "Immediate", features: "Gated Community, Power Backup, Parking, High Speed WiFi" },
         { id: "STL106", code: "STL-106", city: "Pune", area: "Hinjewadi", title: "Hinjewadi PG Heights", bhk: "3 BHK", price: 32000,
-          images: ["https://picsum.photos/id/5/400/300", "https://picsum.photos/id/6/400/300", "https://picsum.photos/id/7/400/300", "https://picsum.photos/id/8/400/300"],
-          videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Spacious, power backup, kids play area, near IT parks, great locality.", size: "1450 sqft", floor: "4th Floor", available: "Next week", features: "Kids Play Area, Power Backup, Gym, Security" },
+          images: ["https://picsum.photos/id/5/400/300", "https://picsum.photos/id/6/400/300", "https://picsum.photos/id/7/400/300"],
+          videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Spacious, power backup, near IT parks.", size: "1450 sqft", floor: "4th Floor", available: "Next week", features: "Power Backup, Gym, Security" },
         { id: "STL107", code: "STL-107", city: "Lucknow", area: "Alambagh", title: "Royal PG Residency", bhk: "1 BHK", price: 8000,
           images: ["https://picsum.photos/id/9/400/300", "https://picsum.photos/id/10/400/300", "https://picsum.photos/id/11/400/300"],
-          videos: [], desc: "Budget friendly, near bus stand, fully furnished, ideal for students.", size: "550 sqft", floor: "1st Floor", available: "Immediate", features: "Furnished, Water Filter, Parking, Tiffin Service" },
+          videos: [], desc: "Budget friendly, near bus stand, fully furnished.", size: "550 sqft", floor: "1st Floor", available: "Immediate", features: "Furnished, Water Filter, Parking, Tiffin Service" },
         { id: "STL108", code: "STL-108", city: "Delhi NCR", area: "Noida Sector 62", title: "Elite PG Studio", bhk: "1 BHK", price: 12000,
-          images: ["https://picsum.photos/id/12/400/300", "https://picsum.photos/id/13/400/300", "https://picsum.photos/id/14/400/300", "https://picsum.photos/id/15/400/300"],
-          videos: [], desc: "Smart studio PG, high speed internet, nearby metro, modern interiors.", size: "480 sqft", floor: "9th Floor", available: "Immediate", features: "Smart Lock, High Speed WiFi, CCTV, AC" },
+          images: ["https://picsum.photos/id/12/400/300", "https://picsum.photos/id/13/400/300", "https://picsum.photos/id/14/400/300"],
+          videos: [], desc: "Smart studio PG, high speed internet, nearby metro.", size: "480 sqft", floor: "9th Floor", available: "Immediate", features: "Smart Lock, High Speed WiFi, CCTV, AC" },
         { id: "STL109", code: "STL-109", city: "Bangalore", area: "Koramangala", title: "Central Vista PG", bhk: "2 BHK", price: 38000,
-          images: ["https://picsum.photos/id/16/400/300", "https://picsum.photos/id/17/400/300", "https://picsum.photos/id/18/400/300", "https://picsum.photos/id/19/400/300"],
-          videos: [], desc: "High-street location, cafes nearby, modern interiors, premium locality.", size: "1200 sqft", floor: "6th Floor", available: "Negotiable", features: "Premium Location, Modern Kitchen, Parking, Lift, Gym" }
+          images: ["https://picsum.photos/id/16/400/300", "https://picsum.photos/id/17/400/300", "https://picsum.photos/id/18/400/300"],
+          videos: [], desc: "High-street location, cafes nearby, modern interiors.", size: "1200 sqft", floor: "6th Floor", available: "Negotiable", features: "Premium Location, Modern Kitchen, Parking, Lift, Gym" }
     ];
 
-    // ========== PAGINATION VARIABLES ==========
     let currentDisplayLimit = 6;
     let filteredMasterList = [];
+    let originalScrollPosition = 0;  // Store original page scroll position
+    let isModalActive = false;
+    let isFullscreenActive = false;
+    let isOwnerPopupActive = false;
+    let swipeHintTimer = null;
+    let currentFullscreenImages = [];
+    let currentFullscreenIndex = 0;
+    
+    // Pinch zoom variables
+    let currentScale = 1;
+    let currentTranslate = { x: 0, y: 0 };
+    let initialDistance = 0;
+    let initialScale = 1;
+    let startX = 0, startY = 0;
+    let isTouching = false;
 
-    // ========== BACK BUTTON HANDLER ==========
-    let isModalOpen = false;
-    let isOwnerPopupOpen = false;
-    let isFullscreenOpen = false;
-
-    function closeAllModals() {
-        if (isModalOpen) {
-            document.getElementById('propertyModal').classList.remove('active');
-            isModalOpen = false;
-            if (window.location.hash) {
-                history.pushState("", document.title, window.location.pathname + window.location.search);
-            }
-        }
-        if (isOwnerPopupOpen) {
-            document.getElementById('ownerPopup').classList.remove('active');
-            isOwnerPopupOpen = false;
-        }
-        if (isFullscreenOpen) {
-            document.getElementById('fullscreenViewer').classList.remove('active');
-            const videoEl = document.getElementById('fullscreenVideo');
-            if (videoEl) videoEl.pause();
-            isFullscreenOpen = false;
-        }
-        document.body.style.overflow = '';
+    function storeOriginalScrollPosition() {
+        originalScrollPosition = window.scrollY || document.documentElement.scrollTop;
     }
 
-    window.addEventListener('popstate', function(event) {
-        if (isModalOpen || isOwnerPopupOpen || isFullscreenOpen) {
-            closeAllModals();
-            event.preventDefault();
-            history.pushState(null, null, window.location.pathname);
-        }
-    });
+    function restoreOriginalScrollPosition() {
+        window.scrollTo(0, originalScrollPosition);
+    }
 
-    // ========== FULLSCREEN FUNCTIONS ==========
-    function openFullscreenMedia(url, isVideo = false) {
-        isFullscreenOpen = true;
+    function resetZoomTransform() {
+        currentScale = 1;
+        currentTranslate = { x: 0, y: 0 };
+        const img = document.getElementById('fullscreenImg');
+        if (img) img.style.transform = `translate(0px, 0px) scale(1)`;
+    }
+
+    function updateFullscreenImage() {
+        const imgEl = document.getElementById('fullscreenImg');
+        if (imgEl && currentFullscreenImages.length) {
+            imgEl.src = currentFullscreenImages[currentFullscreenIndex];
+            resetZoomTransform();
+        }
+    }
+
+    function showNextFullscreenImage() {
+        if (!currentFullscreenImages.length) return;
+        currentFullscreenIndex = (currentFullscreenIndex + 1) % currentFullscreenImages.length;
+        updateFullscreenImage();
+    }
+
+    function showPrevFullscreenImage() {
+        if (!currentFullscreenImages.length) return;
+        currentFullscreenIndex = (currentFullscreenIndex - 1 + currentFullscreenImages.length) % currentFullscreenImages.length;
+        updateFullscreenImage();
+    }
+
+    function showSwipeHint() {
+        const hint = document.getElementById('swipeHint');
+        if (!hint) return;
+        hint.style.animation = 'none';
+        hint.offsetHeight;
+        hint.style.animation = 'fadeInOut 3s ease-in-out forwards';
+    }
+
+    function openFullscreenMedia(url, isVideo = false, allImages = []) {
+        // Store original scroll position if not already stored (in case opened from modal)
+        if (originalScrollPosition === 0) {
+            storeOriginalScrollPosition();
+        }
+        isFullscreenActive = true;
         const viewer = document.getElementById('fullscreenViewer');
         const imgEl = document.getElementById('fullscreenImg');
         const videoEl = document.getElementById('fullscreenVideo');
+        
+        if (allImages.length > 0) {
+            currentFullscreenImages = allImages;
+            currentFullscreenIndex = currentFullscreenImages.indexOf(url);
+            if (currentFullscreenIndex === -1) currentFullscreenIndex = 0;
+            updateFullscreenImage();
+        }
+        
         if (isVideo) {
             imgEl.style.display = 'none';
             videoEl.style.display = 'block';
@@ -865,31 +942,205 @@
         } else {
             imgEl.style.display = 'block';
             videoEl.style.display = 'none';
-            videoEl.pause();
-            imgEl.src = url;
+            if (videoEl) videoEl.pause();
+            if (!allImages.length) imgEl.src = url;
         }
+        
         viewer.classList.add('active');
         document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
         history.pushState({ fullscreenOpen: true }, "", "#fullscreen");
+        
+        if (swipeHintTimer) clearTimeout(swipeHintTimer);
+        swipeHintTimer = setTimeout(() => {
+            if (viewer.classList.contains('active')) {
+                showSwipeHint();
+            }
+        }, 3000);
     }
     
-    window.closeFullscreen = function() {
+    function closeFullscreen() {
         const viewer = document.getElementById('fullscreenViewer');
         viewer.classList.remove('active');
         const videoEl = document.getElementById('fullscreenVideo');
-        videoEl.pause();
+        if (videoEl) {
+            videoEl.pause();
+            videoEl.src = "";
+        }
         document.body.style.overflow = '';
-        isFullscreenOpen = false;
+        document.body.style.position = '';
+        document.body.style.width = '';
+        isFullscreenActive = false;
+        currentFullscreenImages = [];
+        resetZoomTransform();
+        if (swipeHintTimer) {
+            clearTimeout(swipeHintTimer);
+            swipeHintTimer = null;
+        }
+        
+        // Only restore scroll position if modal is not active
+        if (!isModalActive && !isOwnerPopupActive) {
+            restoreOriginalScrollPosition();
+            originalScrollPosition = 0;
+        }
+        
         if (window.location.hash === '#fullscreen') {
             history.back();
         }
-    };
+    }
 
-    // ========== OWNER POPUP ==========
+    function initPinchZoom() {
+        const wrapper = document.getElementById('fsImageWrapper');
+        const img = document.getElementById('fullscreenImg');
+        if (!wrapper || !img) return;
+
+        function resetTransform() {
+            currentScale = 1;
+            currentTranslate = { x: 0, y: 0 };
+            img.style.transform = `translate(0px, 0px) scale(1)`;
+        }
+
+        wrapper.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 2) {
+                e.preventDefault();
+                const dx = e.touches[0].clientX - e.touches[1].clientX;
+                const dy = e.touches[0].clientY - e.touches[1].clientY;
+                initialDistance = Math.hypot(dx, dy);
+                initialScale = currentScale;
+                isTouching = true;
+            } else if (e.touches.length === 1 && currentScale > 1) {
+                startX = e.touches[0].clientX - currentTranslate.x;
+                startY = e.touches[0].clientY - currentTranslate.y;
+                isTouching = true;
+            }
+        });
+
+        wrapper.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 2 && initialDistance > 0) {
+                e.preventDefault();
+                const dx = e.touches[0].clientX - e.touches[1].clientX;
+                const dy = e.touches[0].clientY - e.touches[1].clientY;
+                const newDistance = Math.hypot(dx, dy);
+                const scale = Math.min(Math.max(initialScale * (newDistance / initialDistance), 1), 4);
+                currentScale = scale;
+                img.style.transform = `translate(${currentTranslate.x}px, ${currentTranslate.y}px) scale(${currentScale})`;
+            } else if (e.touches.length === 1 && currentScale > 1 && isTouching) {
+                e.preventDefault();
+                currentTranslate.x = e.touches[0].clientX - startX;
+                currentTranslate.y = e.touches[0].clientY - startY;
+                img.style.transform = `translate(${currentTranslate.x}px, ${currentTranslate.y}px) scale(${currentScale})`;
+            }
+        });
+
+        wrapper.addEventListener('touchend', (e) => {
+            if (currentScale < 1.1) {
+                resetTransform();
+            }
+            isTouching = false;
+            initialDistance = 0;
+        });
+
+        wrapper.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? -0.1 : 0.1;
+            currentScale = Math.min(Math.max(currentScale + delta, 1), 4);
+            img.style.transform = `translate(${currentTranslate.x}px, ${currentTranslate.y}px) scale(${currentScale})`;
+        });
+    }
+
+    function initFullscreenSwipe() {
+        const wrapper = document.getElementById('fsImageWrapper');
+        if (!wrapper) return;
+        let touchStartX = 0;
+        let touchMoved = false;
+
+        wrapper.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1 && currentScale === 1 && currentFullscreenImages.length > 1) {
+                touchStartX = e.touches[0].clientX;
+                touchMoved = false;
+            }
+        }, { passive: false });
+
+        wrapper.addEventListener('touchmove', (e) => {
+            if (e.touches.length !== 1 || currentScale > 1 || currentFullscreenImages.length <= 1) return;
+            const deltaX = e.touches[0].clientX - touchStartX;
+            if (Math.abs(deltaX) > 10) {
+                e.preventDefault();
+                touchMoved = true;
+            }
+        }, { passive: false });
+
+        wrapper.addEventListener('touchend', (e) => {
+            if (!touchMoved || currentScale > 1 || currentFullscreenImages.length <= 1) return;
+            const deltaX = e.changedTouches[0].clientX - touchStartX;
+            if (Math.abs(deltaX) > 40) {
+                if (deltaX > 0) {
+                    showPrevFullscreenImage();
+                } else {
+                    showNextFullscreenImage();
+                }
+            }
+            touchMoved = false;
+        });
+    }
+
+    function closeAllModals() {
+        const modal = document.getElementById('propertyModal');
+        const ownerPopup = document.getElementById('ownerPopup');
+        
+        if (modal.classList.contains('active')) {
+            modal.classList.remove('active');
+            isModalActive = false;
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.width = '';
+            document.body.style.top = '';
+            restoreOriginalScrollPosition();
+            originalScrollPosition = 0;
+            if (window.location.hash === '#modal') {
+                history.back();
+            }
+        }
+        if (ownerPopup.classList.contains('active')) {
+            ownerPopup.classList.remove('active');
+            isOwnerPopupActive = false;
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.width = '';
+            restoreOriginalScrollPosition();
+            originalScrollPosition = 0;
+            if (window.location.hash === '#owner') {
+                history.back();
+            }
+        }
+        if (isFullscreenActive) {
+            closeFullscreen();
+        }
+    }
+
+    window.addEventListener('popstate', function(event) {
+        const modalEl = document.getElementById('propertyModal');
+        const fsViewer = document.getElementById('fullscreenViewer');
+        const ownerPopupEl = document.getElementById('ownerPopup');
+        
+        if (fsViewer.classList.contains('active')) {
+            event.preventDefault();
+            closeFullscreen();
+        } else if (modalEl.classList.contains('active')) {
+            event.preventDefault();
+            closeAllModals();
+        } else if (ownerPopupEl.classList.contains('active')) {
+            event.preventDefault();
+            closeAllModals();
+        }
+    });
+
     function openOwnerPopup(propertyId) {
         const owner = ownersData[propertyId];
         if(!owner) return;
-        isOwnerPopupOpen = true;
+        storeOriginalScrollPosition();
+        isOwnerPopupActive = true;
         document.getElementById('ownerPopupImg').src = owner.avatar;
         document.getElementById('ownerPopupName').innerText = owner.name;
         document.getElementById('ownerPopupBio').innerText = owner.bio;
@@ -897,24 +1148,31 @@
         document.getElementById('ownerPopupContact').innerText = blurredDisplay;
         document.getElementById('ownerPopup').classList.add('active');
         document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
+        document.body.style.top = `-${originalScrollPosition}px`;
         history.pushState({ ownerPopupOpen: true }, "", "#owner");
     }
     
-    // ========== MODAL WITH WHATSAPP ==========
     window.openModal = function(propertyId) {
         const prop = properties.find(p => p.id === propertyId);
         if (!prop) return;
-        isModalOpen = true;
+        storeOriginalScrollPosition();
+        isModalActive = true;
         const modal = document.getElementById('propertyModal');
         const modalContent = document.getElementById('modalContent');
-        let mediaHtml = prop.images.map(img => `<img class="modal-img" src="${img}" onclick="event.stopPropagation(); openFullscreenMedia('${img}', false)">`).join('');
+        
+        let mediaHtml = '';
+        prop.images.forEach(img => {
+            mediaHtml += `<img class="modal-img" src="${img}" onclick="event.stopPropagation(); openFullscreenMedia('${img}', false, ${JSON.stringify(prop.images).replace(/"/g, '&quot;')})">`;
+        });
         if(prop.videos && prop.videos.length){
             prop.videos.forEach(vid => {
-                mediaHtml += `<div class="modal-video-item" onclick="event.stopPropagation(); openFullscreenMedia('${vid}', true)"><video preload="metadata" style="width:100%; height:100%; border-radius:1rem;"><source src="${vid}" type="video/mp4"></video><div style="position:absolute;bottom:5px;right:8px;background:rgba(0,0,0,0.6);padding:2px 6px;border-radius:15px;font-size:10px;color:white;"><i class="fas fa-expand"></i></div></div>`;
+                mediaHtml += `<div class="modal-video-item" onclick="event.stopPropagation(); openFullscreenMedia('${vid}', true, [])"><video preload="metadata" style="width:100%; height:100%; border-radius:1rem;"><source src="${vid}" type="video/mp4"></video><div style="position:absolute;bottom:5px;right:8px;background:rgba(0,0,0,0.6);padding:2px 6px;border-radius:15px;font-size:10px;color:white;"><i class="fas fa-expand"></i></div></div>`;
             });
         }
         modalContent.innerHTML = `
-            <div class="modal-img-gallery">${mediaHtml}</div>
+            <div class="modal-gallery">${mediaHtml}</div>
             <div class="modal-body">
                 <span class="modal-property-code"><i class="fas fa-tag"></i> Property Code: <strong>${prop.code}</strong></span>
                 <h2 style="margin:12px 0 8px">${prop.title}</h2>
@@ -935,16 +1193,15 @@
         `;
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
+        document.body.style.top = `-${originalScrollPosition}px`;
         history.pushState({ modalOpen: true }, "", "#modal");
         
-        // WhatsApp Handler - CHANGE THE NUMBER BELOW TO YOUR WHATSAPP NUMBER
         document.getElementById('sendQueryWhatsAppBtn')?.addEventListener('click', () => {
-            // 👇👇👇 REPLACE "919876543210" WITH YOUR ACTUAL WHATSAPP NUMBER 👇👇👇
-            const YOUR_WHATSAPP_NUMBER = "919170548739"; // CHANGE THIS!
-            
+            const YOUR_WHATSAPP_NUMBER = "919170548739";
             const message = `🏠 *STAYLOO PG INQUIRY* 🏠 
-Hey StayLoo!             
-I'm interested in this PG accommodation. Please share more details and schedule a visit.
+Hey StayLoo! I'm interested in this PG accommodation. Please share more details.
 ━━━━━━━━━━━━━━━━━━━━━
 📌 *Property Code:* ${prop.code}
 🏢 *PG Name:* ${prop.title}
@@ -952,14 +1209,11 @@ I'm interested in this PG accommodation. Please share more details and schedule 
 🏠 *BHK Type:* ${prop.bhk}
 💰 *Monthly Rent:* ₹${prop.price.toLocaleString()}
 📏 *Size:* ${prop.size}
-━━━━━━━━━━━━━━━━━━━━━
-📅 *Inquiry Date:* ${new Date().toLocaleString()}`;
-            
+━━━━━━━━━━━━━━━━━━━━━`;
             window.open(`https://wa.me/${YOUR_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
         });
     };
     
-    // ========== FILTER FUNCTIONS ==========
     function getFilteredProperties() {
         const city = document.getElementById('cityFilter').value;
         const areaQuery = document.getElementById('areaFilter').value.toLowerCase().trim();
@@ -974,7 +1228,6 @@ I'm interested in this PG accommodation. Please share more details and schedule 
         });
     }
     
-    // ========== RENDER CARDS WITH PAGINATION ==========
     function renderLimitedCards() {
         const grid = document.getElementById('propertiesGrid');
         const visible = filteredMasterList.slice(0, currentDisplayLimit);
@@ -986,12 +1239,8 @@ I'm interested in this PG accommodation. Please share more details and schedule 
                 const ownerAvatar = owner ? owner.avatar : "https://randomuser.me/api/portraits/lego/1.jpg";
                 const badges = propertyBadges[prop.id] || { verified: false, popular: false };
                 let badgesHtml = '';
-                if (badges.verified) {
-                    badgesHtml += `<span class="verified-badge"><i class="fas fa-check-circle"></i> Verified</span>`;
-                }
-                if (badges.popular) {
-                    badgesHtml += `<span class="popular-badge"><i class="fas fa-fire"></i> Popular</span>`;
-                }
+                if (badges.verified) badgesHtml += `<span class="verified-badge"><i class="fas fa-check-circle"></i> Verified</span>`;
+                if (badges.popular) badgesHtml += `<span class="popular-badge"><i class="fas fa-fire"></i> Popular</span>`;
                 return `
                 <div class="property-card">
                     <div onclick="openModal('${prop.id}')">
@@ -1050,16 +1299,15 @@ I'm interested in this PG accommodation. Please share more details and schedule 
         applyFiltersAndResetPagination(); 
     }
     
-    // ========== EVENT LISTENERS ==========
+    // Event Listeners
     document.getElementById('closeModalBtn').onclick = () => { closeAllModals(); };
     document.getElementById('closeOwnerPopupBtn').onclick = () => { closeAllModals(); };
-    document.getElementById('fullscreenViewer').querySelector('.close-fullscreen').onclick = () => window.closeFullscreen();
-    document.getElementById('fullscreenViewer').onclick = (e) => { if(e.target === document.getElementById('fullscreenViewer')) window.closeFullscreen(); };
+    document.getElementById('closeFullscreenBtn')?.addEventListener('click', closeFullscreen);
+    document.getElementById('fullscreenViewer').onclick = (e) => { if(e.target === document.getElementById('fullscreenViewer')) closeFullscreen(); };
     document.getElementById('applyFilterBtn').onclick = applyFiltersAndResetPagination;
     document.getElementById('resetFilterBtn').onclick = resetFilters;
     document.getElementById('viewMoreBtn').onclick = toggleViewMore;
     
-    // Click outside modal to close
     document.getElementById('propertyModal').onclick = (e) => { if(e.target === document.getElementById('propertyModal')) closeAllModals(); };
     document.getElementById('ownerPopup').onclick = (e) => { if(e.target === document.getElementById('ownerPopup')) closeAllModals(); };
     
@@ -1067,9 +1315,14 @@ I'm interested in this PG accommodation. Please share more details and schedule 
     filteredMasterList = properties;
     currentDisplayLimit = 6;
     renderLimitedCards();
+    initPinchZoom();
+    initFullscreenSwipe();
+    history.replaceState(null, null, window.location.pathname);
     
-    // Initial history state
-    history.pushState(null, null, window.location.pathname);
+    // Expose functions globally
+    window.openFullscreenMedia = openFullscreenMedia;
+    window.openModal = openModal;
+    window.openOwnerPopup = openOwnerPopup;
 </script>
 </body>
 </html>
