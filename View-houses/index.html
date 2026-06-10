@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
     <title>StayLoo | Independent Houses — Premium Homes for Rent</title>
     <link rel="icon" type="image/png" href="../images/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -19,11 +19,28 @@
             outline: none !important; 
             -webkit-tap-highlight-color: transparent !important; 
         }
+        /* Prevent text selection */
         body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
             font-family: 'Inter', sans-serif;
             background: #f5f9fe;
             color: #0a2540;
             line-height: 1.5;
+        }
+        input, select, textarea {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
+        body.modal-open {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
         }
         .page-wrapper {
             display: flex;
@@ -34,7 +51,7 @@
             flex: 1;
         }
 
-        /* ===== HERO SECTION (Full width, full screen similar to flats page) ===== */
+        /* ===== HERO SECTION ===== */
         .hero-section {
             background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), 
                         url('https://images.pexels.com/photos/2587054/pexels-photo-2587054.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover no-repeat;
@@ -181,8 +198,8 @@
             background: white;
             border-radius: 1.5rem;
             overflow: hidden;
+            transition: 0.25s;
             box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
             cursor: pointer;
             border: 1px solid #eef2f8;
         }
@@ -261,10 +278,29 @@
             color: #5c7c9a;
             margin: 10px 0;
         }
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
         .price {
             font-weight: 800;
             color: #0f2b3d;
             font-size: 1.2rem;
+        }
+        .security-badge {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 5px 10px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
         .owner-section {
             display: flex;
@@ -362,13 +398,22 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             z-index: 10;
         }
-        .modal-img-gallery {
+        .modal-gallery {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             overflow-x: auto;
-            padding: 1.2rem;
+            padding: 1rem;
             background: #f8fafc;
             scrollbar-width: thin;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        .modal-gallery::-webkit-scrollbar {
+            height: 6px;
+        }
+        .modal-gallery::-webkit-scrollbar-thumb {
+            background: #1c6a8f;
+            border-radius: 10px;
         }
         .modal-img {
             width: 200px;
@@ -452,6 +497,40 @@
             background: none;
             border: none;
             z-index: 2001;
+        }
+        .swipe-hint {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 10002;
+            opacity: 0;
+            animation: fadeInOut 3s ease-in-out forwards;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        .swipe-hint i {
+            font-size: 1rem;
+            animation: swipeAnim 1s ease-in-out infinite;
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+            15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-10px); visibility: hidden; }
+        }
+        @keyframes swipeAnim {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(8px); }
         }
         .owner-popup-card {
             background: white;
@@ -542,7 +621,6 @@
 <body>
 <div class="page-wrapper">
     <div class="main-content">
-        <!-- Hero Section with Full Width Background -->
         <div class="hero-section">
             <div class="hero-container">
                 <div class="header-flex">
@@ -557,7 +635,6 @@
                     <h1>Find your perfect <br>independent house</h1>
                     <p>Spacious homes with privacy, garden spaces, and complete freedom. Explore verified listings across top cities.</p>
                 </div>
-                <!-- Filter Card embedded inside hero for seamless look -->
                 <div class="filter-card">
                     <div class="filter-grid">
                         <div class="filter-group">
@@ -607,7 +684,6 @@
             </div>
         </div>
 
-        <!-- Properties Grid Container -->
         <div class="container">
             <div id="propertiesGrid" class="properties-grid"></div>
         </div>
@@ -645,6 +721,12 @@
     </div>
 </div>
 
+<div id="fullscreenViewer" class="fullscreen-img-viewer">
+    <button class="close-fullscreen">&times;</button>
+    <img id="fullscreenImg" class="fullscreen-img" src="">
+    <div class="swipe-hint" id="swipeHint"><i class="fas fa-hand-peace"></i> Swipe left / right to see more photos</div>
+</div>
+
 <script>
     // Owner data mapping
     const ownersData = {
@@ -672,7 +754,13 @@
         "STL109": { verified: true, popular: true }
     };
     
-    // Blur number helper
+    let savedScrollPosition = 0;
+    let isModalOpen = false;
+    let isFullscreenOpen = false;
+    let swipeHintTimer = null;
+    let currentFullscreenImages = [];
+    let currentFullscreenIndex = 0;
+    
     function getHalfBlurredNumber(fullNumber) {
         const cleanNumber = fullNumber.replace(/[\s+]/g, '');
         const length = cleanNumber.length;
@@ -686,7 +774,7 @@
         return maskedNumber;
     }
     
-    // Properties Data
+    // Properties Data with security deposit
     const properties = [
         { id: "STL101", code: "STL-101", city: "Lucknow", area: "Gomti Nagar", title: "Sunrise Villa", bhk: "2 BHK", price: 15000, security: 10000,
           images: ["https://picsum.photos/id/152/400/300", "https://picsum.photos/id/155/400/300", "https://picsum.photos/id/159/400/300", "https://picsum.photos/id/158/400/300"],
@@ -717,19 +805,119 @@
           videos: [], desc: "High-street location, cafes nearby, modern interiors, premium locality.", size: "1450 sqft", floor: "Ground+1", available: "Negotiable", features: "Premium Location, Modern Kitchen, Parking, Garden" }
     ];
 
-    let currentProperty = null;
+    // Fullscreen with swipe hint
+    function showSwipeHint() {
+        const hint = document.getElementById('swipeHint');
+        if (!hint) return;
+        hint.style.animation = 'none';
+        hint.offsetHeight;
+        hint.style.animation = 'fadeInOut 3s ease-in-out forwards';
+    }
+
+    function updateFullscreenImage() {
+        const imgEl = document.getElementById('fullscreenImg');
+        if (imgEl && currentFullscreenImages.length) {
+            imgEl.src = currentFullscreenImages[currentFullscreenIndex];
+        }
+    }
+
+    function showNextFullscreenImage() {
+        if (!currentFullscreenImages.length) return;
+        currentFullscreenIndex = (currentFullscreenIndex + 1) % currentFullscreenImages.length;
+        updateFullscreenImage();
+    }
+
+    function showPrevFullscreenImage() {
+        if (!currentFullscreenImages.length) return;
+        currentFullscreenIndex = (currentFullscreenIndex - 1 + currentFullscreenImages.length) % currentFullscreenImages.length;
+        updateFullscreenImage();
+    }
+
+    window.openFullScreen = function(imgSrc, allImages = []) {
+        const viewer = document.getElementById('fullscreenViewer');
+        const imgEl = document.getElementById('fullscreenImg');
+        if (!viewer) return;
+        
+        if (allImages.length > 0) {
+            currentFullscreenImages = allImages;
+            currentFullscreenIndex = currentFullscreenImages.indexOf(imgSrc);
+            if (currentFullscreenIndex === -1) currentFullscreenIndex = 0;
+            updateFullscreenImage();
+        } else {
+            imgEl.src = imgSrc;
+            currentFullscreenImages = [];
+        }
+        
+        viewer.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
+        isFullscreenOpen = true;
+        
+        if (swipeHintTimer) clearTimeout(swipeHintTimer);
+        swipeHintTimer = setTimeout(() => {
+            if (viewer.classList.contains('active')) {
+                showSwipeHint();
+            }
+        }, 3000);
+    };
     
-    // Fullscreen viewer
-    const fullscreenViewer = document.createElement('div');
-    fullscreenViewer.className = 'fullscreen-img-viewer';
-    fullscreenViewer.innerHTML = `<button class="close-fullscreen">&times;</button><img class="fullscreen-img" src="">`;
-    document.body.appendChild(fullscreenViewer);
-    const fullscreenImg = fullscreenViewer.querySelector('.fullscreen-img');
-    const closeFullscreenBtn = fullscreenViewer.querySelector('.close-fullscreen');
-    window.openFullScreen = function(imgSrc) { fullscreenImg.src = imgSrc; fullscreenViewer.classList.add('active'); document.body.style.overflow = 'hidden'; };
-    closeFullscreenBtn.onclick = () => { fullscreenViewer.classList.remove('active'); document.body.style.overflow = ''; };
-    fullscreenViewer.onclick = (e) => { if (e.target === fullscreenViewer) closeFullscreenBtn.click(); };
-    
+    function closeFullscreen() {
+        const viewer = document.getElementById('fullscreenViewer');
+        viewer.classList.remove('active');
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
+        isFullscreenOpen = false;
+        currentFullscreenImages = [];
+        if (swipeHintTimer) {
+            clearTimeout(swipeHintTimer);
+            swipeHintTimer = null;
+        }
+    }
+
+    // Swipe detection for fullscreen
+    function initFullscreenSwipe() {
+        const viewer = document.getElementById('fullscreenViewer');
+        if (!viewer) return;
+        let touchStartX = 0;
+        let touchMoved = false;
+
+        viewer.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1 && currentFullscreenImages.length > 1) {
+                touchStartX = e.touches[0].clientX;
+                touchMoved = false;
+            }
+        }, { passive: false });
+
+        viewer.addEventListener('touchmove', (e) => {
+            if (e.touches.length !== 1 || currentFullscreenImages.length <= 1) return;
+            const deltaX = e.touches[0].clientX - touchStartX;
+            if (Math.abs(deltaX) > 10) {
+                e.preventDefault();
+                touchMoved = true;
+            }
+        }, { passive: false });
+
+        viewer.addEventListener('touchend', (e) => {
+            if (!touchMoved || currentFullscreenImages.length <= 1) return;
+            const deltaX = e.changedTouches[0].clientX - touchStartX;
+            if (Math.abs(deltaX) > 40) {
+                if (deltaX > 0) {
+                    showPrevFullscreenImage();
+                } else {
+                    showNextFullscreenImage();
+                }
+            }
+            touchMoved = false;
+        });
+    }
+
+    document.querySelector('.close-fullscreen')?.addEventListener('click', closeFullscreen);
+    document.getElementById('fullscreenViewer')?.addEventListener('click', (e) => {
+        if (e.target === document.getElementById('fullscreenViewer')) closeFullscreen();
+    });
+
     // Owner Popup
     window.openOwnerPopup = function(propertyId) {
         const owner = ownersData[propertyId];
@@ -748,22 +936,39 @@
     };
     document.getElementById('ownerPopup').onclick = (e) => { if(e.target === document.getElementById('ownerPopup')) document.getElementById('ownerPopup').classList.remove('active'); };
     
-    // Modal open
+    // Modal open with back button handling
+    function closeModalAndRestore() {
+        if (!isModalOpen) return;
+        const modal = document.getElementById('propertyModal');
+        modal.classList.remove('active');
+        isModalOpen = false;
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
+        window.scrollTo(0, savedScrollPosition);
+    }
+
     window.openModal = function(propertyId) {
         const prop = properties.find(p => p.id === propertyId);
         if (!prop) return;
-        currentProperty = prop;
+        savedScrollPosition = window.scrollY;
+        isModalOpen = true;
+        
         const modal = document.getElementById('propertyModal');
         const modalContent = document.getElementById('modalContent');
-        let mediaHtml = prop.images.map(img => `<img class="modal-img" src="${img}" onclick="event.stopPropagation(); openFullScreen('${img}')">`).join('');
+        
+        let mediaHtml = '';
+        prop.images.forEach(img => {
+            mediaHtml += `<img class="modal-img" src="${img}" onclick="event.stopPropagation(); openFullScreen('${img}', ${JSON.stringify(prop.images).replace(/"/g, '&quot;')})">`;
+        });
         if(prop.videos && prop.videos.length){
             prop.videos.forEach(vid => {
-                mediaHtml += `<div class="modal-video-item"><video controls preload="metadata" style="width:100%; height:100%; border-radius:1rem;"><source src="${vid}" type="video/mp4"></video></div>`;
+                mediaHtml += `<div class="modal-video-item" onclick="event.stopPropagation(); openFullScreen('${vid}', [])"><video preload="metadata" style="width:100%; height:100%; border-radius:1rem;"><source src="${vid}" type="video/mp4"></video></div>`;
             });
         }
         const securityText = prop.security ? `₹${prop.security.toLocaleString()}` : 'N/A';
         modalContent.innerHTML = `
-            <div class="modal-img-gallery">${mediaHtml}</div>
+            <div class="modal-gallery">${mediaHtml}</div>
             <div class="modal-body">
                 <span class="modal-property-code"><i class="fas fa-tag"></i> Property Code: <strong>${prop.code}</strong></span>
                 <h2 style="margin:12px 0 8px">${prop.title}</h2>
@@ -778,23 +983,60 @@
                     <strong>📝 Description:</strong><br> ${prop.desc}<br><br>
                     <strong>✨ Features:</strong><br> ${prop.features}
                 </div>
-                <div><strong>💰 Monthly Rent:</strong> ₹${prop.price.toLocaleString()} + maintenance</div>
-                <div style="margin-top:8px;"><strong>🔒 Security Deposit:</strong> ${securityText}</div>
+                <div class="price-row">
+                    <div><strong>💰 Monthly Rent:</strong> ₹${prop.price.toLocaleString()} + maintenance</div>
+                    <div class="security-badge"><i class="fas fa-shield-alt"></i> Deposit: ${securityText}</div>
+                </div>
                 <button id="sendQueryWhatsAppBtn" class="send-query-btn"><i class="fab fa-whatsapp"></i> Send Query on WhatsApp</button>
             </div>
         `;
+        
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
+        document.body.style.top = `-${savedScrollPosition}px`;
+        
         document.getElementById('sendQueryWhatsAppBtn')?.addEventListener('click', () => {
-            const msg = `🏠 *StayLoo House Inquiry*\n\nProperty: ${currentProperty.title}\n📍 Area: ${currentProperty.area}, ${currentProperty.city}\n🏷️ Code: ${currentProperty.code}\n🏠 Type: ${currentProperty.bhk}\n💰 Rent: ₹${currentProperty.price.toLocaleString()}\n🔒 Deposit: ${securityText}`;
+            const msg = `🏠 *StayLoo House Inquiry* 🏠
+Hey StayLoo!            
+I'm interested in this property. Please share more details.            
+━━━━━━━━━━━━━━━━━━━━━
+📌 *Property Code:* ${prop.code}
+🏢 *Property Name:* ${prop.title}
+📍 *Location:* ${prop.area}, ${prop.city}
+🏠 *BHK Type:* ${prop.bhk}
+💰 *Monthly Rent:* ₹${prop.price.toLocaleString()}
+🔒 *Security Deposit:* ${securityText}
+━━━━━━━━━━━━━━━━━━━━━
+📅 *Inquiry Date:* ${new Date().toLocaleString()}`;
             window.open(`https://wa.me/919170548739?text=${encodeURIComponent(msg)}`, '_blank');
         });
     };
     
-    // Close modal
+    // Close modal handlers
     const modal = document.getElementById('propertyModal');
-    document.getElementById('closeModalBtn').onclick = () => { modal.classList.remove('active'); document.body.style.overflow = ''; };
-    modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
+    document.getElementById('closeModalBtn').onclick = () => closeModalAndRestore();
+    modal.onclick = (e) => { if (e.target === modal) closeModalAndRestore(); };
+    
+    // Back button handler
+    window.addEventListener('popstate', function(event) {
+        const modalEl = document.getElementById('propertyModal');
+        const fsViewer = document.getElementById('fullscreenViewer');
+        const ownerPopup = document.getElementById('ownerPopup');
+        
+        if (modalEl.classList.contains('active')) {
+            event.preventDefault();
+            closeModalAndRestore();
+        } else if (fsViewer.classList.contains('active')) {
+            event.preventDefault();
+            closeFullscreen();
+        } else if (ownerPopup.classList.contains('active')) {
+            event.preventDefault();
+            document.getElementById('ownerPopup').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
     
     // Filter logic
     function getFilteredProperties() {
@@ -821,6 +1063,7 @@
             let badgesHtml = '';
             if (badges.verified) badgesHtml += `<span class="verified-badge"><i class="fas fa-check-circle"></i> Verified</span>`;
             if (badges.popular) badgesHtml += `<span class="popular-badge"><i class="fas fa-fire"></i> Popular</span>`;
+            const securityText = prop.security ? `₹${prop.security.toLocaleString()}` : 'N/A';
             return `
             <div class="property-card">
                 <div onclick="openModal('${prop.id}')">
@@ -834,7 +1077,10 @@
                         <div class="card-title">${prop.title}</div>
                         <div class="card-location"><i class="fas fa-map-marker-alt"></i> ${prop.area}, ${prop.city}</div>
                         <div class="card-details"><span>🏠 ${prop.bhk}</span><span>📏 ${prop.size}</span></div>
-                        <div class="price">₹${prop.price.toLocaleString()}/month</div>
+                        <div class="price-row">
+                            <div class="price">₹${prop.price.toLocaleString()}/month</div>
+                            <div class="security-badge"><i class="fas fa-shield-alt"></i> ${securityText}</div>
+                        </div>
                     </div>
                     <div class="owner-section" onclick="openOwnerPopup('${prop.id}')">
                         <img class="owner-avatar" src="${ownerAvatar}" alt="owner">
@@ -863,6 +1109,8 @@
     
     // Initial render
     renderCards(properties);
+    initFullscreenSwipe();
+    history.pushState(null, null, window.location.pathname);
 </script>
 </body>
 </html>
