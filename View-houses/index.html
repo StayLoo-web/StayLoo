@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>StayLoo | Independent Houses for Rent — Verified Listings</title>
+    <title>StayLoo | Independent Houses — Premium Homes for Rent</title>
     <link rel="icon" type="image/png" href="../images/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -33,63 +33,81 @@
         .main-content {
             flex: 1;
         }
-        .container {
+
+        /* ===== HERO SECTION (Full width, full screen similar to flats page) ===== */
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.pexels.com/photos/2587054/pexels-photo-2587054.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover no-repeat;
+            background-size: cover;
+            background-position: center 30%;
+            padding: 2rem 2rem 4rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 0;
+        }
+        @media (max-width: 768px) {
+            .hero-section { padding: 1.5rem 1.2rem 2.5rem; }
+        }
+        .hero-container {
             max-width: 1280px;
             margin: 0 auto;
-            padding: 2rem 1.5rem 2rem;
         }
         .header-flex {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid rgba(44, 125, 160, 0.25);
+            margin-bottom: 2.5rem;
             flex-wrap: nowrap;
         }
-        .logo-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .logo-img {
+        .logo-left img {
             height: 52px;
             width: auto;
             object-fit: contain;
-            background: transparent;
+            filter: brightness(0) invert(1);
         }
-        .page-title-right {
-            text-align: right;
+        .page-title-right .tagline-right {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 0.5rem 1.5rem;
+            border-radius: 60px;
+            border: 1px solid rgba(255,255,255,0.4);
+            font-weight: 700;
+            color: white;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
         }
-        .tagline-right {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #1c6a8f;
-            background: #eef2f8;
-            padding: 6px 16px;
-            border-radius: 40px;
-            display: inline-block;
-        }
-        @media (max-width: 600px) {
-            .header-flex {
-                flex-direction: row;
-                justify-content: space-between;
-            }
-            .logo-img {
-                height: 40px;
-            }
-            .tagline-right {
-                font-size: 0.8rem;
-                padding: 4px 12px;
-            }
-        }
-        .filter-section {
-            background: white;
-            border-radius: 1.5rem;
-            padding: 1.5rem;
+        .hero-title-block {
+            margin-top: 1rem;
             margin-bottom: 2rem;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-            border: 1px solid #eef2f8;
+        }
+        .hero-title-block h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: white;
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            max-width: 700px;
+        }
+        .hero-title-block p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+            margin-top: 0.75rem;
+            font-weight: 500;
+            max-width: 600px;
+        }
+        @media (max-width: 700px) {
+            .hero-title-block h1 { font-size: 1.9rem; }
+            .logo-left img { height: 40px; }
+            .page-title-right .tagline-right { font-size: 0.8rem; padding: 0.4rem 1rem; }
+        }
+
+        /* Filter Card */
+        .filter-card {
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 1.8rem;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2);
+            margin-top: 0.8rem;
         }
         .filter-grid {
             display: flex;
@@ -97,58 +115,39 @@
             gap: 1rem;
             align-items: flex-end;
         }
-        @media (max-width: 700px) {
-            .filter-grid {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .filter-group {
-                width: 100%;
-            }
-            .filter-group select,
-            .filter-group input {
-                width: 100%;
-            }
-            .filter-buttons {
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                gap: 12px;
-                margin-top: 10px;
-            }
-            .btn-filter, .btn-reset {
-                flex: 1;
-                text-align: center;
-                justify-content: center;
-            }
-        }
         .filter-group {
             flex: 1;
             min-width: 150px;
         }
         .filter-group label {
-            font-weight: 600;
-            font-size: 0.8rem;
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             display: block;
             margin-bottom: 5px;
-            color: #1e405b;
+            color: #2c5a74;
         }
         .filter-group select, .filter-group input {
             width: 100%;
-            padding: 10px 14px;
-            border-radius: 40px;
-            border: 1.5px solid #e2e8f0;
+            padding: 11px 16px;
+            border-radius: 48px;
+            border: 1.5px solid #e2edf2;
             font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
             background: white;
         }
+        .filter-buttons {
+            display: flex;
+            gap: 12px;
+        }
         .btn-filter, .btn-reset {
-            padding: 10px 24px;
-            border-radius: 40px;
-            font-weight: 600;
+            padding: 11px 28px;
+            border-radius: 48px;
+            font-weight: 700;
             cursor: pointer;
             border: none;
-            font-family: inherit;
+            font-size: 0.85rem;
         }
         .btn-filter {
             background: #1c6a8f;
@@ -158,11 +157,25 @@
             background: #eef2f8;
             color: #1e405b;
         }
+        @media (max-width: 780px) {
+            .filter-grid { flex-direction: column; }
+            .filter-group { width: 100%; }
+            .filter-buttons { width: 100%; justify-content: stretch; }
+            .btn-filter, .btn-reset { flex: 1; text-align: center; }
+            .filter-card { padding: 1.2rem; }
+        }
+
+        /* Properties Grid */
+        .container {
+            max-width: 1280px;
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
+        }
         .properties-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 1.8rem;
-            margin-top: 1rem;
+            margin-top: 0.5rem;
         }
         .property-card {
             background: white;
@@ -171,10 +184,11 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.05);
             transition: transform 0.2s, box-shadow 0.2s;
             cursor: pointer;
+            border: 1px solid #eef2f8;
         }
         .property-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.12);
         }
         .card-img {
             height: 200px;
@@ -187,6 +201,7 @@
             top: 12px;
             right: 12px;
             background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(4px);
             color: white;
             padding: 4px 10px;
             border-radius: 20px;
@@ -194,7 +209,6 @@
             font-family: monospace;
             font-weight: 600;
         }
-        /* Verified and Popular Badges */
         .badge-container {
             position: absolute;
             top: 12px;
@@ -213,6 +227,7 @@
             display: flex;
             align-items: center;
             gap: 4px;
+            backdrop-filter: blur(2px);
         }
         .popular-badge {
             background: #ff6b35;
@@ -224,6 +239,7 @@
             display: flex;
             align-items: center;
             gap: 4px;
+            backdrop-filter: blur(2px);
         }
         .card-content {
             padding: 1.2rem;
@@ -294,15 +310,21 @@
             font-size: 0.85rem;
             font-weight: 600;
             color: #1c6a8f;
+            transition: 0.2s;
         }
-        .modal-overlay {
+        .view-details:hover {
+            background: #e2eaf0;
+        }
+
+        /* Modal Styles */
+        .modal-overlay, .owner-popup-overlay, .fullscreen-img-viewer {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -311,7 +333,7 @@
             opacity: 0;
             transition: 0.2s;
         }
-        .modal-overlay.active {
+        .modal-overlay.active, .owner-popup-overlay.active, .fullscreen-img-viewer.active {
             visibility: visible;
             opacity: 1;
         }
@@ -323,6 +345,22 @@
             border-radius: 2rem;
             overflow-y: auto;
             position: relative;
+        }
+        .close-modal {
+            position: sticky;
+            top: 10px;
+            right: 20px;
+            float: right;
+            background: white;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 10;
         }
         .modal-img-gallery {
             display: flex;
@@ -339,6 +377,10 @@
             border-radius: 1rem;
             flex-shrink: 0;
             cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .modal-img:hover {
+            transform: scale(1.02);
         }
         .modal-video-item {
             width: 200px;
@@ -385,21 +427,73 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            transition: 0.2s;
         }
-        .close-modal {
-            position: sticky;
-            top: 10px;
-            right: 20px;
-            float: right;
-            background: white;
-            border: none;
-            font-size: 1.8rem;
+        .send-query-btn:hover {
+            background: #1da15a;
+            transform: scale(1.01);
+        }
+        .fullscreen-img-viewer {
+            z-index: 2000;
             cursor: pointer;
+        }
+        .fullscreen-img {
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+        }
+        .close-fullscreen {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 2001;
+        }
+        .owner-popup-card {
+            background: white;
+            max-width: 380px;
+            width: 85%;
+            border-radius: 2rem;
+            text-align: center;
+            padding: 1.8rem 1.5rem;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        .owner-popup-img {
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            margin: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 4px solid #1c6a8f;
+        }
+        .close-owner-popup {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #8aaec0;
+            background: none;
+            border: none;
+        }
+        .half-blurred-number {
+            filter: blur(5px);
+            display: inline-block;
+            font-family: monospace;
+            letter-spacing: 0px;
+            background: #f0f0f0;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        .contact-display {
+            margin-top: 18px;
+            font-size: 1rem;
         }
         .main-footer {
             background: #0a1e2c;
@@ -430,6 +524,11 @@
             text-decoration: none;
             font-size: 0.8rem;
             margin-bottom: 0.5rem;
+            transition: 0.2s;
+        }
+        .footer-col a:hover {
+            color: white;
+            padding-left: 3px;
         }
         .copyright {
             text-align: center;
@@ -438,163 +537,78 @@
             margin-top: 1.5rem;
             font-size: 0.75rem;
         }
-        .fullscreen-img-viewer {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            visibility: hidden;
-            opacity: 0;
-            cursor: pointer;
-        }
-        .fullscreen-img-viewer.active {
-            visibility: visible;
-            opacity: 1;
-        }
-        .fullscreen-img {
-            max-width: 95%;
-            max-height: 95%;
-            object-fit: contain;
-        }
-        .close-fullscreen {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: white;
-            font-size: 40px;
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-        .owner-popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(4px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2100;
-            visibility: hidden;
-            opacity: 0;
-            transition: 0.2s;
-        }
-        .owner-popup-overlay.active {
-            visibility: visible;
-            opacity: 1;
-        }
-        .owner-popup-card {
-            background: white;
-            max-width: 380px;
-            width: 85%;
-            border-radius: 2rem;
-            text-align: center;
-            padding: 1.8rem 1.5rem;
-            box-shadow: 0 20px 35px rgba(0,0,0,0.2);
-            position: relative;
-        }
-        .owner-popup-img {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 1rem;
-            border: 4px solid #1c6a8f;
-        }
-        .close-owner-popup {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 28px;
-            cursor: pointer;
-            color: #8aaec0;
-        }
-        /* Half blurred number - permanently blurred, no interaction */
-        .half-blurred-number {
-            filter: blur(5px);
-            display: inline-block;
-            font-family: monospace;
-            letter-spacing: 0px;
-            background: #f0f0f0;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-        .contact-display {
-            margin-top: 18px;
-            font-size: 1rem;
-        }
     </style>
 </head>
 <body>
 <div class="page-wrapper">
     <div class="main-content">
+        <!-- Hero Section with Full Width Background -->
+        <div class="hero-section">
+            <div class="hero-container">
+                <div class="header-flex">
+                    <div class="logo-left">
+                        <img class="logo-img" src="../images/logonew1.png" alt="StayLoo Logo">
+                    </div>
+                    <div class="page-title-right">
+                        <div class="tagline-right"><i class="fas fa-home"></i> Independent Houses</div>
+                    </div>
+                </div>
+                <div class="hero-title-block">
+                    <h1>Find your perfect <br>independent house</h1>
+                    <p>Spacious homes with privacy, garden spaces, and complete freedom. Explore verified listings across top cities.</p>
+                </div>
+                <!-- Filter Card embedded inside hero for seamless look -->
+                <div class="filter-card">
+                    <div class="filter-grid">
+                        <div class="filter-group">
+                            <label>🏙️ City</label>
+                            <select id="cityFilter">
+                                <option value="all">All Cities</option>
+                                <option value="Lucknow">Lucknow</option>
+                                <option value="Delhi NCR">Delhi NCR</option>
+                                <option value="Mumbai">Mumbai</option>
+                                <option value="Bangalore">Bangalore</option>
+                                <option value="Pune">Pune</option>
+                                <option value="Chennai">Chennai</option>
+                                <option value="Kolkata">Kolkata</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>📍 Area / Locality</label>
+                            <input type="text" id="areaFilter" placeholder="e.g., Gomti Nagar">
+                        </div>
+                        <div class="filter-group">
+                            <label>💰 Max Budget (₹)</label>
+                            <select id="budgetFilter">
+                                <option value="any">Any</option>
+                                <option value="10000">Up to ₹10,000</option>
+                                <option value="20000">Up to ₹20,000</option>
+                                <option value="35000">Up to ₹35,000</option>
+                                <option value="50000">Up to ₹50,000</option>
+                                <option value="100000">50,000+</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>🏠 BHK Type</label>
+                            <select id="bhkFilter">
+                                <option value="all">All</option>
+                                <option value="1 BHK">1 BHK</option>
+                                <option value="2 BHK">2 BHK</option>
+                                <option value="3 BHK">3 BHK</option>
+                                <option value="4+ BHK">4+ BHK</option>
+                            </select>
+                        </div>
+                        <div class="filter-buttons">
+                            <button class="btn-filter" id="applyFilterBtn"><i class="fas fa-sliders-h"></i> Apply</button>
+                            <button class="btn-reset" id="resetFilterBtn"><i class="fas fa-undo-alt"></i> Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Properties Grid Container -->
         <div class="container">
-            <div class="header-flex">
-                <div class="logo-left">
-                    <img class="logo-img" src="../images/logonew1.png" alt="StayLoo Logo">
-                </div>
-                <div class="page-title-right">
-                    <div class="tagline-right">Independent Houses</div>
-                </div>
-            </div>
-
-            <div class="filter-section">
-                <div class="filter-grid">
-                    <div class="filter-group">
-                        <label>🏙️ City</label>
-                        <select id="cityFilter">
-                            <option value="all">All Cities</option>
-                            <option value="Lucknow">Lucknow</option>
-                            <option value="Delhi NCR">Delhi NCR</option>
-                            <option value="Mumbai">Mumbai</option>
-                            <option value="Bangalore">Bangalore</option>
-                            <option value="Pune">Pune</option>
-                            <option value="Chennai">Chennai</option>
-                            <option value="Kolkata">Kolkata</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>📍 Area / Locality</label>
-                        <input type="text" id="areaFilter" placeholder="e.g., Gomti Nagar">
-                    </div>
-                    <div class="filter-group">
-                        <label>💰 Max Budget (₹)</label>
-                        <select id="budgetFilter">
-                            <option value="any">Any</option>
-                            <option value="10000">Up to ₹10,000</option>
-                            <option value="20000">Up to ₹20,000</option>
-                            <option value="35000">Up to ₹35,000</option>
-                            <option value="50000">Up to ₹50,000</option>
-                            <option value="100000">50,000+</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>🏠 BHK Type</label>
-                        <select id="bhkFilter">
-                            <option value="all">All</option>
-                            <option value="1 BHK">1 BHK</option>
-                            <option value="2 BHK">2 BHK</option>
-                            <option value="3 BHK">3 BHK</option>
-                            <option value="4+ BHK">4+ BHK</option>
-                        </select>
-                    </div>
-                    <div class="filter-buttons">
-                        <button class="btn-filter" id="applyFilterBtn"> Apply Filter</button>
-                        <button class="btn-reset" id="resetFilterBtn"> Reset</button>
-                    </div>
-                </div>
-            </div>
-
             <div id="propertiesGrid" class="properties-grid"></div>
         </div>
     </div>
@@ -604,12 +618,13 @@
             <div class="footer-col"><h5>StayLoo</h5><a href="/about-us/">About Us</a><a href="/contact-us/">Contact Us</a></div>
             <div class="footer-col"><h5>Explore</h5><a href="/View-flats/">Flats & Apartments</a><a href="/View-rooms/">Rooms</a><a href="/View-PGs/">PG / Hostels</a></div>
             <div class="footer-col"><h5>Support</h5><a href="/pricing-queries/">Pricing & Queries</a><a href="/privacy-policies/">Privacy Policy</a><a href="/Terms-conditions/">Terms of Service</a></div>
-            <div class="footer-col"><h5>Connect</h5><a href="#"><i class="fab fa-whatsapp"></i> WhatsApp</a><a href="#"><i class="fab fa-instagram"></i> Instagram</a><a href="#"><i class="fab fa-twitter"></i> Twitter</a></div>
+            <div class="footer-col"><h5>Connect</h5><a href="#"><i class="fab fa-whatsapp"></i> WhatsApp</a><a href="https://www.instagram.com/stayloo.in"><i class="fab fa-instagram"></i> Instagram</a><a href="#"><i class="fab fa-twitter"></i> Twitter</a></div>
         </div>
         <div class="copyright">© 2026 StayLoo — Move with ease. All rights reserved.</div>
     </footer>
 </div>
 
+<!-- Modals -->
 <div id="propertyModal" class="modal-overlay">
     <div class="modal-container">
         <button class="close-modal" id="closeModalBtn">&times;</button>
@@ -619,7 +634,7 @@
 
 <div id="ownerPopup" class="owner-popup-overlay">
     <div class="owner-popup-card">
-        <span class="close-owner-popup" id="closeOwnerPopupBtn">&times;</span>
+        <button class="close-owner-popup" id="closeOwnerPopupBtn">&times;</button>
         <img id="ownerPopupImg" class="owner-popup-img" src="" alt="Owner">
         <h3 id="ownerPopupName" style="margin: 8px 0 4px;">Owner Name</h3>
         <p id="ownerPopupBio" style="color:#3c657e; font-size:0.9rem; margin-top:8px;"></p>
@@ -631,7 +646,7 @@
 </div>
 
 <script>
-    // Owner data for each property
+    // Owner data mapping
     const ownersData = {
         "STL101": { name: "Mr. Rajesh Verma", avatar: "https://randomuser.me/api/portraits/men/32.jpg", bio: "Real estate enthusiast with 8+ years experience. Passionate about helping families find their dream home.", contact: "+91 98765 12345" },
         "STL102": { name: "Mrs. Priya Singh", avatar: "https://randomuser.me/api/portraits/women/68.jpg", bio: "Interior designer turned landlord. Loves creating cozy spaces and green environments.", contact: "+91 99887 66554" },
@@ -644,7 +659,7 @@
         "STL109": { name: "Mr. Dheeraj Menon", avatar: "https://randomuser.me/api/portraits/men/64.jpg", bio: "Premium realtor in Koramangala, known for upscale rental experiences.", contact: "+91 77009 88112" }
     };
     
-    // Badge data for each property (verified and popular status)
+    // Property badges
     const propertyBadges = {
         "STL101": { verified: true, popular: true },
         "STL102": { verified: true, popular: false },
@@ -657,66 +672,75 @@
         "STL109": { verified: true, popular: true }
     };
     
-    // Function to create blurred half number (permanently blurred, no reveal)
+    // Blur number helper
     function getHalfBlurredNumber(fullNumber) {
-        // Remove spaces for counting
         const cleanNumber = fullNumber.replace(/[\s+]/g, '');
         const length = cleanNumber.length;
         const halfLength = Math.floor(length / 2);
-        // First half will be blurred (we'll replace with X's but apply CSS blur)
         const visiblePart = cleanNumber.slice(-halfLength);
         const hiddenPart = cleanNumber.slice(0, length - halfLength);
-        // Return a string that shows hidden part as X's but with blur class applied to whole
-        // For better visual: show asterisks for hidden part
         const maskedNumber = '•'.repeat(hiddenPart.length) + visiblePart;
-        // Format with proper spacing
         if (fullNumber.startsWith('+')) {
             return '+' + maskedNumber.slice(0, 2) + ' ' + maskedNumber.slice(2, 4) + ' ' + maskedNumber.slice(4);
         }
         return maskedNumber;
     }
     
+    // Properties Data
     const properties = [
-        { id: "STL101", code: "STL-101", city: "Lucknow", area: "Gomti Nagar", title: "Sunrise Apartments", bhk: "2 BHK", price: 15000,
+        { id: "STL101", code: "STL-101", city: "Lucknow", area: "Gomti Nagar", title: "Sunrise Villa", bhk: "2 BHK", price: 15000, security: 10000,
           images: ["https://picsum.photos/id/152/400/300", "https://picsum.photos/id/155/400/300", "https://picsum.photos/id/159/400/300", "https://picsum.photos/id/158/400/300"],
-          videos: ["https://www.w3schools.com/html/mov_bbb.mp4"], desc: "Fully furnished, near metro station, 24/7 security, covered parking available, modern amenities.", size: "1100 sqft", floor: "3rd Floor", available: "Immediate", features: "Wi-Fi, Gym, Power Backup, Lift" },
-        { id: "STL102", code: "STL-102", city: "Lucknow", area: "Indira Nagar", title: "Green Valley Homes", bhk: "3 BHK", price: 22000,
+          videos: ["https://www.w3schools.com/html/mov_bbb.mp4"], desc: "Fully furnished independent house, near metro station, 24/7 security, private garden.", size: "1100 sqft", floor: "Ground+1", available: "Immediate", features: "Private Garden, Parking, Wi-Fi, Security" },
+        { id: "STL102", code: "STL-102", city: "Lucknow", area: "Indira Nagar", title: "Green Valley Home", bhk: "3 BHK", price: 22000, security: 15000,
           images: ["https://picsum.photos/id/169/400/300", "https://picsum.photos/id/164/400/300", "https://picsum.photos/id/29/400/300", "https://picsum.photos/id/28/400/300"],
-          videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Semi-furnished, park facing, modular kitchen, spacious balconies, excellent ventilation.", size: "1350 sqft", floor: "2nd Floor", available: "Next month", features: "Park View, Modular Kitchen, Parking, CCTV" },
-        { id: "STL103", code: "STL-103", city: "Delhi NCR", area: "Dwarka", title: "Advent Residency", bhk: "2 BHK", price: 18500,
+          videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Semi-furnished, park facing, modular kitchen, spacious balconies, excellent ventilation.", size: "1350 sqft", floor: "Ground Floor", available: "Next month", features: "Park View, Modular Kitchen, Parking, CCTV" },
+        { id: "STL103", code: "STL-103", city: "Delhi NCR", area: "Dwarka", title: "Advent House", bhk: "2 BHK", price: 18500, security: 12000,
           images: ["https://picsum.photos/id/105/400/300", "https://picsum.photos/id/106/400/300", "https://picsum.photos/id/107/400/300", "https://picsum.photos/id/108/400/300"],
-          videos: [], desc: "Close to metro station, gym & swimming pool, wifi ready, 24x7 water supply.", size: "950 sqft", floor: "5th Floor", available: "15 days", features: "Swimming Pool, Gym, Security, Intercom" },
-        { id: "STL104", code: "STL-104", city: "Mumbai", area: "Andheri East", title: "Sea View Apartments", bhk: "1 BHK", price: 28000,
+          videos: [], desc: "Independent house close to metro station, gym & swimming pool, wifi ready.", size: "950 sqft", floor: "Ground", available: "15 days", features: "Swimming Pool, Gym, Security, Private Parking" },
+        { id: "STL104", code: "STL-104", city: "Mumbai", area: "Andheri East", title: "Sea Breeze Villa", bhk: "3 BHK", price: 35000, security: 25000,
           images: ["https://picsum.photos/id/21/400/300", "https://picsum.photos/id/22/400/300", "https://picsum.photos/id/23/400/300", "https://picsum.photos/id/24/400/300"],
-          videos: ["https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"], desc: "Premium location, 5 mins to metro, AC rooms, sea facing, luxury complex.", size: "650 sqft", floor: "12th Floor", available: "Immediate", features: "Sea View, AC, Lift, Club House" },
-        { id: "STL105", code: "STL-105", city: "Bangalore", area: "Whitefield", title: "Tech Hub Nest", bhk: "2 BHK", price: 25000,
+          videos: ["https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"], desc: "Premium independent house, sea facing, luxury complex, private terrace.", size: "1400 sqft", floor: "2 Floors", available: "Immediate", features: "Sea View, AC, Club House, Garden" },
+        { id: "STL105", code: "STL-105", city: "Bangalore", area: "Whitefield", title: "Tech Hub Villa", bhk: "3 BHK", price: 28000, security: 20000,
           images: ["https://picsum.photos/id/1/400/300", "https://picsum.photos/id/2/400/300", "https://picsum.photos/id/3/400/300", "https://picsum.photos/id/4/400/300"],
-          videos: [], desc: "Near IT parks, gated community, excellent ventilation, high speed internet ready.", size: "1050 sqft", floor: "8th Floor", available: "Immediate", features: "Gated Community, Power Backup, Parking, Garden" },
-        { id: "STL106", code: "STL-106", city: "Pune", area: "Hinjewadi", title: "Hinjewadi Heights", bhk: "3 BHK", price: 32000,
+          videos: [], desc: "Near IT parks, gated community, excellent ventilation, private garden.", size: "1250 sqft", floor: "Ground", available: "Immediate", features: "Garden, Power Backup, Parking, Security" },
+        { id: "STL106", code: "STL-106", city: "Pune", area: "Hinjewadi", title: "Hinjewadi Heights", bhk: "4 BHK", price: 42000, security: 30000,
           images: ["https://picsum.photos/id/5/400/300", "https://picsum.photos/id/6/400/300", "https://picsum.photos/id/7/400/300", "https://picsum.photos/id/8/400/300"],
-          videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Spacious, power backup, kids play area, near IT parks, great locality.", size: "1450 sqft", floor: "4th Floor", available: "Next week", features: "Kids Play Area, Power Backup, Gym, Security" },
-        { id: "STL107", code: "STL-107", city: "Lucknow", area: "Alambagh", title: "Royal Residency", bhk: "1 BHK", price: 8000,
+          videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Spacious, power backup, kids play area, near IT parks, great locality.", size: "1800 sqft", floor: "Ground+1", available: "Next week", features: "Kids Play Area, Power Backup, Gym, Security" },
+        { id: "STL107", code: "STL-107", city: "Lucknow", area: "Alambagh", title: "Royal Home", bhk: "2 BHK", price: 9000, security: 6000,
           images: ["https://picsum.photos/id/9/400/300", "https://picsum.photos/id/10/400/300", "https://picsum.photos/id/11/400/300"],
-          videos: [], desc: "Budget friendly, near bus stand, fully furnished, ideal for students.", size: "550 sqft", floor: "1st Floor", available: "Immediate", features: "Furnished, Water Filter, Parking" },
-        { id: "STL108", code: "STL-108", city: "Delhi NCR", area: "Noida Sector 62", title: "Elite Studio", bhk: "1 BHK", price: 12000,
+          videos: [], desc: "Budget friendly, near bus stand, fully furnished, ideal for families.", size: "750 sqft", floor: "Ground", available: "Immediate", features: "Furnished, Water Filter, Parking" },
+        { id: "STL108", code: "STL-108", city: "Delhi NCR", area: "Noida Sector 62", title: "Elite Independent House", bhk: "2 BHK", price: 18000, security: 12000,
           images: ["https://picsum.photos/id/12/400/300", "https://picsum.photos/id/13/400/300", "https://picsum.photos/id/14/400/300", "https://picsum.photos/id/15/400/300"],
-          videos: [], desc: "Smart studio apartment, high speed internet, nearby metro, modern interiors.", size: "480 sqft", floor: "9th Floor", available: "Immediate", features: "Smart Lock, High Speed WiFi, CCTV" },
-        { id: "STL109", code: "STL-109", city: "Bangalore", area: "Koramangala", title: "Central Vista", bhk: "2 BHK", price: 38000,
+          videos: [], desc: "Smart home, high speed internet, nearby metro, modern interiors.", size: "850 sqft", floor: "Ground", available: "Immediate", features: "Smart Lock, High Speed WiFi, CCTV, Garden" },
+        { id: "STL109", code: "STL-109", city: "Bangalore", area: "Koramangala", title: "Central Villa", bhk: "3 BHK", price: 45000, security: 35000,
           images: ["https://picsum.photos/id/16/400/300", "https://picsum.photos/id/17/400/300", "https://picsum.photos/id/18/400/300", "https://picsum.photos/id/19/400/300"],
-          videos: [], desc: "High-street location, cafes nearby, modern interiors, premium locality.", size: "1200 sqft", floor: "6th Floor", available: "Negotiable", features: "Premium Location, Modern Kitchen, Parking, Lift" }
+          videos: [], desc: "High-street location, cafes nearby, modern interiors, premium locality.", size: "1450 sqft", floor: "Ground+1", available: "Negotiable", features: "Premium Location, Modern Kitchen, Parking, Garden" }
     ];
 
-    function openOwnerPopup(propertyId) {
+    let currentProperty = null;
+    
+    // Fullscreen viewer
+    const fullscreenViewer = document.createElement('div');
+    fullscreenViewer.className = 'fullscreen-img-viewer';
+    fullscreenViewer.innerHTML = `<button class="close-fullscreen">&times;</button><img class="fullscreen-img" src="">`;
+    document.body.appendChild(fullscreenViewer);
+    const fullscreenImg = fullscreenViewer.querySelector('.fullscreen-img');
+    const closeFullscreenBtn = fullscreenViewer.querySelector('.close-fullscreen');
+    window.openFullScreen = function(imgSrc) { fullscreenImg.src = imgSrc; fullscreenViewer.classList.add('active'); document.body.style.overflow = 'hidden'; };
+    closeFullscreenBtn.onclick = () => { fullscreenViewer.classList.remove('active'); document.body.style.overflow = ''; };
+    fullscreenViewer.onclick = (e) => { if (e.target === fullscreenViewer) closeFullscreenBtn.click(); };
+    
+    // Owner Popup
+    window.openOwnerPopup = function(propertyId) {
         const owner = ownersData[propertyId];
         if(!owner) return;
         document.getElementById('ownerPopupImg').src = owner.avatar;
         document.getElementById('ownerPopupName').innerText = owner.name;
         document.getElementById('ownerPopupBio').innerText = owner.bio;
-        const blurredDisplay = getHalfBlurredNumber(owner.contact);
-        document.getElementById('ownerPopupContact').innerText = blurredDisplay;
+        document.getElementById('ownerPopupContact').innerText = getHalfBlurredNumber(owner.contact);
         document.getElementById('ownerPopup').classList.add('active');
         document.body.style.overflow = 'hidden';
-    }
+    };
     
     document.getElementById('closeOwnerPopupBtn').onclick = () => {
         document.getElementById('ownerPopup').classList.remove('active');
@@ -724,88 +748,20 @@
     };
     document.getElementById('ownerPopup').onclick = (e) => { if(e.target === document.getElementById('ownerPopup')) document.getElementById('ownerPopup').classList.remove('active'); };
     
-    function renderCards(filteredProps) {
-        const grid = document.getElementById('propertiesGrid');
-        if (!filteredProps.length) { grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 3rem;">🏠 No properties match your criteria.</div>`; return; }
-        grid.innerHTML = filteredProps.map(prop => {
-            const owner = ownersData[prop.id];
-            const ownerAvatar = owner ? owner.avatar : "https://randomuser.me/api/portraits/lego/1.jpg";
-            const badges = propertyBadges[prop.id] || { verified: false, popular: false };
-            let badgesHtml = '';
-            if (badges.verified) {
-                badgesHtml += `<span class="verified-badge"><i class="fas fa-check-circle"></i> Verified</span>`;
-            }
-            if (badges.popular) {
-                badgesHtml += `<span class="popular-badge"><i class="fas fa-fire"></i> Popular</span>`;
-            }
-            return `
-            <div class="property-card">
-                <div onclick="openModal('${prop.id}')">
-                    <div class="card-img" style="background-image: url('${prop.images[0]}');">
-                        <div class="badge-container">${badgesHtml}</div>
-                        <span class="property-code-badge">📌 ${prop.code}</span>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <div onclick="openModal('${prop.id}')" style="cursor:pointer;">
-                        <div class="card-title">${prop.title}</div>
-                        <div class="card-location"><i class="fas fa-map-marker-alt"></i> ${prop.area}, ${prop.city}</div>
-                        <div class="card-details"><span>🏠 ${prop.bhk}</span><span>📏 ${prop.size}</span></div>
-                        <div class="price">₹${prop.price.toLocaleString()}/month</div>
-                    </div>
-                    <!-- Owner section with circle + know more -->
-                    <div class="owner-section" onclick="openOwnerPopup('${prop.id}')">
-                        <img class="owner-avatar" src="${ownerAvatar}" alt="owner">
-                        <div class="owner-info-text">
-                            Know more about owner <i class="fas fa-chevron-right"></i><br>
-                            <small>${owner ? owner.name : "Verified Partner"}</small>
-                        </div>
-                    </div>
-                    <div class="view-details" onclick="openModal('${prop.id}')"><i class="fas fa-eye"></i> View Details</div>
-                </div>
-            </div>
-        `}).join('');
-    }
-    
-    const fullscreenViewer = document.createElement('div');
-    fullscreenViewer.className = 'fullscreen-img-viewer';
-    fullscreenViewer.innerHTML = `<button class="close-fullscreen">&times;</button><img class="fullscreen-img" src="">`;
-    document.body.appendChild(fullscreenViewer);
-    const fullscreenImg = fullscreenViewer.querySelector('.fullscreen-img');
-    const closeFullscreen = fullscreenViewer.querySelector('.close-fullscreen');
-    window.openFullScreen = function(imgSrc) { fullscreenImg.src = imgSrc; fullscreenViewer.classList.add('active'); document.body.style.overflow = 'hidden'; };
-    closeFullscreen.onclick = () => { fullscreenViewer.classList.remove('active'); document.body.style.overflow = ''; };
-    fullscreenViewer.onclick = (e) => { if (e.target === fullscreenViewer) closeFullscreen.click(); };
-    
-    function getFilteredProperties() {
-        const city = document.getElementById('cityFilter').value;
-        const areaQuery = document.getElementById('areaFilter').value.toLowerCase().trim();
-        const budgetVal = document.getElementById('budgetFilter').value;
-        const bhk = document.getElementById('bhkFilter').value;
-        return properties.filter(prop => {
-            if (city !== 'all' && prop.city !== city) return false;
-            if (areaQuery && !prop.area.toLowerCase().includes(areaQuery) && !prop.title.toLowerCase().includes(areaQuery)) return false;
-            if (bhk !== 'all' && prop.bhk !== bhk) return false;
-            if (budgetVal !== 'any') { const maxBudget = parseInt(budgetVal); if (prop.price > maxBudget) return false; }
-            return true;
-        });
-    }
-    function applyFilters() { renderCards(getFilteredProperties()); }
-    function resetFilters() { document.getElementById('cityFilter').value = 'all'; document.getElementById('areaFilter').value = ''; document.getElementById('budgetFilter').value = 'any'; document.getElementById('bhkFilter').value = 'all'; applyFilters(); }
-    
-    let currentProperty = null;
+    // Modal open
     window.openModal = function(propertyId) {
         const prop = properties.find(p => p.id === propertyId);
         if (!prop) return;
         currentProperty = prop;
         const modal = document.getElementById('propertyModal');
         const modalContent = document.getElementById('modalContent');
-        let mediaHtml = prop.images.map(img => `<img class="modal-img" src="${img}" onclick="openFullScreen('${img}')">`).join('');
+        let mediaHtml = prop.images.map(img => `<img class="modal-img" src="${img}" onclick="event.stopPropagation(); openFullScreen('${img}')">`).join('');
         if(prop.videos && prop.videos.length){
             prop.videos.forEach(vid => {
                 mediaHtml += `<div class="modal-video-item"><video controls preload="metadata" style="width:100%; height:100%; border-radius:1rem;"><source src="${vid}" type="video/mp4"></video></div>`;
             });
         }
+        const securityText = prop.security ? `₹${prop.security.toLocaleString()}` : 'N/A';
         modalContent.innerHTML = `
             <div class="modal-img-gallery">${mediaHtml}</div>
             <div class="modal-body">
@@ -823,23 +779,90 @@
                     <strong>✨ Features:</strong><br> ${prop.features}
                 </div>
                 <div><strong>💰 Monthly Rent:</strong> ₹${prop.price.toLocaleString()} + maintenance</div>
+                <div style="margin-top:8px;"><strong>🔒 Security Deposit:</strong> ${securityText}</div>
                 <button id="sendQueryWhatsAppBtn" class="send-query-btn"><i class="fab fa-whatsapp"></i> Send Query on WhatsApp</button>
             </div>
         `;
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
         document.getElementById('sendQueryWhatsAppBtn')?.addEventListener('click', () => {
-            const msg = `🏠 *StayLoo Property Inquiry*\n\nProperty: ${currentProperty.title}\n📍 Area: ${currentProperty.area}, ${currentProperty.city}\n🏷️ Code: ${currentProperty.code}\n🏠 Type: ${currentProperty.bhk}\n💰 Rent: ₹${currentProperty.price}`;
-            window.open(`https://wa.me/917311170545?text=${encodeURIComponent(msg)}`, '_blank');
+            const msg = `🏠 *StayLoo House Inquiry*\n\nProperty: ${currentProperty.title}\n📍 Area: ${currentProperty.area}, ${currentProperty.city}\n🏷️ Code: ${currentProperty.code}\n🏠 Type: ${currentProperty.bhk}\n💰 Rent: ₹${currentProperty.price.toLocaleString()}\n🔒 Deposit: ${securityText}`;
+            window.open(`https://wa.me/919170548739?text=${encodeURIComponent(msg)}`, '_blank');
         });
     };
     
+    // Close modal
     const modal = document.getElementById('propertyModal');
     document.getElementById('closeModalBtn').onclick = () => { modal.classList.remove('active'); document.body.style.overflow = ''; };
     modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
+    
+    // Filter logic
+    function getFilteredProperties() {
+        const city = document.getElementById('cityFilter').value;
+        const areaQuery = document.getElementById('areaFilter').value.toLowerCase().trim();
+        const budgetVal = document.getElementById('budgetFilter').value;
+        const bhk = document.getElementById('bhkFilter').value;
+        return properties.filter(prop => {
+            if (city !== 'all' && prop.city !== city) return false;
+            if (areaQuery && !prop.area.toLowerCase().includes(areaQuery) && !prop.title.toLowerCase().includes(areaQuery)) return false;
+            if (bhk !== 'all' && prop.bhk !== bhk) return false;
+            if (budgetVal !== 'any') { if (prop.price > parseInt(budgetVal)) return false; }
+            return true;
+        });
+    }
+    
+    function renderCards(filteredProps) {
+        const grid = document.getElementById('propertiesGrid');
+        if (!filteredProps.length) { grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 3rem;">🏠 No properties match your criteria.</div>`; return; }
+        grid.innerHTML = filteredProps.map(prop => {
+            const owner = ownersData[prop.id];
+            const ownerAvatar = owner ? owner.avatar : "https://randomuser.me/api/portraits/lego/1.jpg";
+            const badges = propertyBadges[prop.id] || { verified: false, popular: false };
+            let badgesHtml = '';
+            if (badges.verified) badgesHtml += `<span class="verified-badge"><i class="fas fa-check-circle"></i> Verified</span>`;
+            if (badges.popular) badgesHtml += `<span class="popular-badge"><i class="fas fa-fire"></i> Popular</span>`;
+            return `
+            <div class="property-card">
+                <div onclick="openModal('${prop.id}')">
+                    <div class="card-img" style="background-image: url('${prop.images[0]}');">
+                        <div class="badge-container">${badgesHtml}</div>
+                        <span class="property-code-badge">📌 ${prop.code}</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div onclick="openModal('${prop.id}')" style="cursor:pointer;">
+                        <div class="card-title">${prop.title}</div>
+                        <div class="card-location"><i class="fas fa-map-marker-alt"></i> ${prop.area}, ${prop.city}</div>
+                        <div class="card-details"><span>🏠 ${prop.bhk}</span><span>📏 ${prop.size}</span></div>
+                        <div class="price">₹${prop.price.toLocaleString()}/month</div>
+                    </div>
+                    <div class="owner-section" onclick="openOwnerPopup('${prop.id}')">
+                        <img class="owner-avatar" src="${ownerAvatar}" alt="owner">
+                        <div class="owner-info-text">
+                            Know more about owner <i class="fas fa-chevron-right"></i><br>
+                            <small>${owner ? owner.name : "Verified Partner"}</small>
+                        </div>
+                    </div>
+                    <div class="view-details" onclick="openModal('${prop.id}')"><i class="fas fa-eye"></i> View Details</div>
+                </div>
+            </div>
+        `}).join('');
+    }
+    
+    function applyFilters() { renderCards(getFilteredProperties()); }
+    function resetFilters() { 
+        document.getElementById('cityFilter').value = 'all'; 
+        document.getElementById('areaFilter').value = ''; 
+        document.getElementById('budgetFilter').value = 'any'; 
+        document.getElementById('bhkFilter').value = 'all'; 
+        applyFilters(); 
+    }
+    
     document.getElementById('applyFilterBtn').onclick = applyFilters;
     document.getElementById('resetFilterBtn').onclick = resetFilters;
-    window.addEventListener('DOMContentLoaded', () => { renderCards(properties); });
+    
+    // Initial render
+    renderCards(properties);
 </script>
 </body>
 </html>
