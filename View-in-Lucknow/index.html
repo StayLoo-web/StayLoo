@@ -394,7 +394,6 @@
       position: relative;
     }
 
-    /* Horizontal slider for images */
     .modal-gallery-slider {
       display: flex;
       flex-wrap: nowrap;
@@ -543,6 +542,7 @@
       font-size: 1rem;
     }
 
+    /* Fullscreen viewer with swipe navigation */
     .fullscreen-view {
       position: fixed;
       top: 0;
@@ -571,7 +571,7 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      touch-action: none;
+      touch-action: pan-x pinch-zoom; /* allow horizontal swipe and pinch */
     }
     .fs-image {
       max-width: 90%;
@@ -811,6 +811,7 @@
   </div>
 </div>
 
+<!-- Fullscreen viewer with swipe navigation (no buttons, just swipe) -->
 <div id="fsViewer" class="fullscreen-view">
   <button class="close-fs" id="closeFsBtn">&times;</button>
   <div class="fs-image-wrapper" id="fsImageWrapper">
@@ -897,6 +898,184 @@
     let currentFilteredList = [];
     let currentVideoElements = [];
 
+    // ---- Fullscreen swipe logic ----
+    let currentFullscreenImages = [];
+    let currentFullscreenIndex = 0;
+
+    function openFullscreen(imageSrc, allImages) {
+      const fsViewer = document.getElementById('fsViewer');
+      const fsImage = document.getElementById('fsImage');
+      if (!fsViewer || !fsImage) return;
+
+      // store the gallery array and find starting index
+      currentFullscreenImages = allImages || [imageSrc];
+      const idx = currentFullscreenImages.indexOf(imageSrc);
+      currentFullscreenIndex = idx >= 0 ? idx : 0;
+
+      // reset zoom
+      window.currentScale = 1;
+      window.currentTranslate = { x: 0, y: 0 };
+      fsImage.style.transform = `translate(0px, 0px) scale(1)`;
+      fsImage.src = currentFullscreenImages[currentFullscreenIndex];
+
+      fsViewer.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    }
+
+    function showNextFullscreenImage() {
+      if (!currentFullscreenImages.length) return;
+      currentFullscreenIndex = (currentFullscreenIndex + 1) % currentFullscreenImages.length;
+      const fsImage = document.getElementById('fsImage');
+      if (fsImage) {
+        fsImage.src = currentFullscreenImages[currentFullscreenIndex];
+        // reset zoom on image change
+        window.currentScale = 1;
+        window.currentTranslate = { x: 0, y: 0 };
+        fsImage.style.transform = `translate(0px, 0px) scale(1)`;
+      }
+    }
+
+    function showPrevFullscreenImage() {
+      if (!currentFullscreenImages.length) return;
+      currentFullscreenIndex = (currentFullscreenIndex - 1 + currentFullscreenImages.length) % currentFullscreenImages.length;
+      const fsImage = document.getElementById('fsImage');
+      if (fsImage) {
+        fsImage.src = currentFullscreenImages[currentFullscreenIndex];
+        window.currentScale = 1;
+        window.currentTranslate = { x: 0, y: 0 };
+        fsImage.style.transform = `translate(0px, 0px) scale(1)`;
+      }
+    }
+
+    function closeFullscreen() {
+      const fsViewer = document.getElementById('fsViewer');
+      if (fsViewer) fsViewer.classList.remove('active');
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      window.currentScale = 1;
+      window.currentTranslate = { x: 0, y: 0 };
+      const fsImage = document.getElementById('fsImage');
+      if (fsImage) fsImage.style.transform = `translate(0px, 0px) scale(1)`;
+      currentFullscreenImages = [];
+    }
+
+    // Attach swipe detection to fullscreen wrapper
+    function initFullscreenSwipe() {
+      const wrapper = document.getElementById('fsImageWrapper');
+      if (!wrapper) return;
+      let touchStartX = 0;
+      let touchStartY = 0;
+      let touchMoved = false;
+
+      wrapper.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+          touchMoved = false;
+        }
+      }, { passive: false });
+
+      wrapper.addEventListener('touchmove', (e) => {
+        if (e.touches.length !== 1) return;
+        const deltaX = e.touches[0].clientX - touchStartX;
+        const deltaY = e.touches[0].clientY - touchStartY;
+        // If horizontal movement is significant, treat as swipe
+        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 10) {
+          e.preventDefault();
+          touchMoved = true;
+        }
+      }, { passive: false });
+
+      wrapper.addEventListener('touchend', (e) => {
+        if (!touchMoved) return;
+        const deltaX = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(deltaX) > 40) {
+          if (deltaX > 0) {
+            showPrevFullscreenImage();
+          } else {
+            showNextFullscreenImage();
+          }
+        }
+        touchMoved = false;
+      });
+    }
+
+    // Pinch zoom (keep existing but attach to window for fullscreen)
+    window.currentScale = 1;
+    window.currentTranslate = { x: 0, y: 0 };
+    let initialDistance = 0;
+    let initialScale = 1;
+    let isTouching = false;
+    let startX = 0, startY = 0;
+
+    function initPinchZoom() {
+      const wrapper = document.getElementById('fsImageWrapper');
+      const img = document.getElementById('fsImage');
+      if (!wrapper || !img) return;
+
+      function resetTransform() {
+        window.currentScale = 1;
+        window.currentTranslate = { x: 0, y: 0 };
+        img.style.transform = `translate(0px, 0px) scale(1)`;
+      }
+
+      wrapper.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 2) {
+          e.preventDefault();
+          const dx = e.touches[0].clientX - e.touches[1].clientX;
+          const dy = e.touches[0].clientY - e.touches[1].clientY;
+          initialDistance = Math.hypot(dx, dy);
+          initialScale = window.currentScale;
+          isTouching = true;
+        } else if (e.touches.length === 1 && window.currentScale > 1) {
+          startX = e.touches[0].clientX - window.currentTranslate.x;
+          startY = e.touches[0].clientY - window.currentTranslate.y;
+          isTouching = true;
+        }
+      });
+
+      wrapper.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 2 && initialDistance > 0) {
+          e.preventDefault();
+          const dx = e.touches[0].clientX - e.touches[1].clientX;
+          const dy = e.touches[0].clientY - e.touches[1].clientY;
+          const newDistance = Math.hypot(dx, dy);
+          const scale = Math.min(Math.max(initialScale * (newDistance / initialDistance), 1), 4);
+          window.currentScale = scale;
+          img.style.transform = `translate(${window.currentTranslate.x}px, ${window.currentTranslate.y}px) scale(${window.currentScale})`;
+        } else if (e.touches.length === 1 && window.currentScale > 1 && isTouching) {
+          e.preventDefault();
+          window.currentTranslate.x = e.touches[0].clientX - startX;
+          window.currentTranslate.y = e.touches[0].clientY - startY;
+          img.style.transform = `translate(${window.currentTranslate.x}px, ${window.currentTranslate.y}px) scale(${window.currentScale})`;
+        }
+      });
+
+      wrapper.addEventListener('touchend', (e) => {
+        if (window.currentScale < 1.1) {
+          resetTransform();
+        }
+        isTouching = false;
+        initialDistance = 0;
+      });
+
+      wrapper.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const delta = e.deltaY > 0 ? -0.1 : 0.1;
+        window.currentScale = Math.min(Math.max(window.currentScale + delta, 1), 4);
+        img.style.transform = `translate(${window.currentTranslate.x}px, ${window.currentTranslate.y}px) scale(${window.currentScale})`;
+      });
+    }
+
+    // Override window.openFullscreen to use new swipe logic
+    window.openFullscreen = function(src, allImages) {
+      openFullscreen(src, allImages || [src]);
+    };
+
+    // ---- Cards & Modal ----
     function renderCards(propertiesToShow) {
       const grid = document.getElementById('propertiesGrid');
       if (!propertiesToShow.length) {
@@ -957,72 +1136,6 @@
       currentVideoElements = [];
     }
 
-    let currentScale = 1;
-    let currentTranslate = { x: 0, y: 0 };
-    let initialDistance = 0;
-    let initialScale = 1;
-    let isTouching = false;
-    let startX = 0, startY = 0;
-
-    function initPinchZoom() {
-      const wrapper = document.getElementById('fsImageWrapper');
-      const img = document.getElementById('fsImage');
-      if (!wrapper || !img) return;
-
-      function resetTransform() {
-        currentScale = 1;
-        currentTranslate = { x: 0, y: 0 };
-        img.style.transform = `translate(0px, 0px) scale(1)`;
-      }
-
-      wrapper.addEventListener('touchstart', (e) => {
-        if (e.touches.length === 2) {
-          e.preventDefault();
-          const dx = e.touches[0].clientX - e.touches[1].clientX;
-          const dy = e.touches[0].clientY - e.touches[1].clientY;
-          initialDistance = Math.hypot(dx, dy);
-          initialScale = currentScale;
-          isTouching = true;
-        } else if (e.touches.length === 1 && currentScale > 1) {
-          startX = e.touches[0].clientX - currentTranslate.x;
-          startY = e.touches[0].clientY - currentTranslate.y;
-          isTouching = true;
-        }
-      });
-
-      wrapper.addEventListener('touchmove', (e) => {
-        if (e.touches.length === 2 && initialDistance > 0) {
-          e.preventDefault();
-          const dx = e.touches[0].clientX - e.touches[1].clientX;
-          const dy = e.touches[0].clientY - e.touches[1].clientY;
-          const newDistance = Math.hypot(dx, dy);
-          const scale = Math.min(Math.max(initialScale * (newDistance / initialDistance), 1), 4);
-          currentScale = scale;
-          img.style.transform = `translate(${currentTranslate.x}px, ${currentTranslate.y}px) scale(${currentScale})`;
-        } else if (e.touches.length === 1 && currentScale > 1 && isTouching) {
-          e.preventDefault();
-          currentTranslate.x = e.touches[0].clientX - startX;
-          currentTranslate.y = e.touches[0].clientY - startY;
-          img.style.transform = `translate(${currentTranslate.x}px, ${currentTranslate.y}px) scale(${currentScale})`;
-        }
-      });
-
-      wrapper.addEventListener('touchend', (e) => {
-        if (currentScale < 1.1) {
-          resetTransform();
-        }
-        isTouching = false;
-        initialDistance = 0;
-      });
-
-      wrapper.addEventListener('wheel', (e) => {
-        e.preventDefault();
-        const delta = e.deltaY > 0 ? -0.1 : 0.1;
-        currentScale = Math.min(Math.max(currentScale + delta, 1), 4);
-        img.style.transform = `translate(${currentTranslate.x}px, ${currentTranslate.y}px) scale(${currentScale})`;
-      });
-    }
-
     function openModal(prop) {
       stopAllVideos();
       const modal = document.getElementById('propertyModal');
@@ -1030,11 +1143,11 @@
 
       let galleryHtml = '';
       prop.images.forEach(img => {
-        galleryHtml += `<img class="modal-img" src="${img}" onclick="openFullscreen('${img}')" style="cursor:pointer;" alt="Property image">`;
+        galleryHtml += `<img class="modal-img" src="${img}" onclick="window.openFullscreen('${img}', ${JSON.stringify(prop.images).replace(/"/g, '&quot;')})" style="cursor:pointer;" alt="Property image">`;
       });
 
       if(prop.videos && prop.videos.length) {
-        prop.videos.forEach((vidUrl, idx) => {
+        prop.videos.forEach((vidUrl) => {
           galleryHtml += `
             <div class="modal-video-item">
               <video controls preload="metadata" style="width:100%; height:100%; object-fit:cover;">
@@ -1081,31 +1194,7 @@
       stopAllVideos();
       document.getElementById('propertyModal').classList.remove('active');
       document.body.style.overflow = '';
-    }
-
-    window.openFullscreen = function(src) {
-      const fsViewer = document.getElementById('fsViewer');
-      const fsImage = document.getElementById('fsImage');
-      currentScale = 1;
-      currentTranslate = { x: 0, y: 0 };
-      fsImage.style.transform = `translate(0px, 0px) scale(1)`;
-      fsImage.src = src;
-      fsViewer.classList.add('active');
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.width = '100%';
-    }
-
-    function closeFullscreen() {
-      const fsViewer = document.getElementById('fsViewer');
-      fsViewer.classList.remove('active');
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
-      currentScale = 1;
-      currentTranslate = { x: 0, y: 0 };
-      const fsImage = document.getElementById('fsImage');
-      if (fsImage) fsImage.style.transform = `translate(0px, 0px) scale(1)`;
+      // No scroll to top – simply keep current scroll position
     }
 
     function applyFilters() {
@@ -1195,6 +1284,7 @@
     fsViewer.addEventListener('click', (e) => { if (e.target === fsViewer) closeFullscreen(); });
 
     initPinchZoom();
+    initFullscreenSwipe();
     applyFilters();
   })();
 </script>
