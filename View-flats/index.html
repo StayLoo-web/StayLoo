@@ -14,6 +14,22 @@
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
+        /* Prevent text selection and highlight popup */
+body {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* Allow selection only on input fields (so users can type in filters) */
+input, select, textarea {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
         body {
             font-family: 'Inter', sans-serif;
             background: #f5f9fe;
@@ -465,8 +481,8 @@
 <script>
     // ========== PROPERTIES DATA ==========
     const allProperties = [
-        { id: "STL101", code: "STL-101", city: "Lucknow", area: "Gomti Nagar", title: "Sunrise Luxury Apartments", bhk: "2 BHK", price: 15000, images: ["https://picsum.photos/id/152/500/350", "https://picsum.photos/id/155/500/350", "https://picsum.photos/id/159/500/350"], videos: ["https://www.w3schools.com/html/mov_bbb.mp4"], desc: "Fully furnished, metro accessible, 24/7 security, modern amenities.", size: "1100 sqft", floor: "3rd", available: "Immediate", features: "Wi-Fi, Gym, Lift, Power Backup" },
-        { id: "STL102", code: "STL-102", city: "Lucknow", area: "Indira Nagar", title: "Green Valley Flats", bhk: "3 BHK", price: 22000, images: ["https://picsum.photos/id/169/500/350", "https://picsum.photos/id/164/500/350", "https://picsum.photos/id/29/500/350"], videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Park facing, modular kitchen, spacious balconies.", size: "1350 sqft", floor: "2nd", available: "Next month", features: "Park View, Modular Kitchen, CCTV" },
+        { id: "STL101", code: "STL-101", city: "Lucknow", area: "Gomtinagar", title: "Sunrise Luxury Apartments", bhk: "2 BHK", price: 15000, images: ["https://picsum.photos/id/152/500/350", "https://picsum.photos/id/155/500/350", "https://picsum.photos/id/159/500/350"], videos: ["https://www.w3schools.com/html/mov_bbb.mp4"], desc: "Fully furnished, metro accessible, 24/7 security, modern amenities.", size: "1100 sqft", floor: "3rd", available: "Immediate", features: "Wi-Fi, Gym, Lift, Power Backup" },
+        { id: "STL102", code: "STL-102", city: "Lucknow", area: "Indiranagar", title: "Green Valley Flats", bhk: "3 BHK", price: 22000, images: ["https://picsum.photos/id/169/500/350", "https://picsum.photos/id/164/500/350", "https://picsum.photos/id/29/500/350"], videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Park facing, modular kitchen, spacious balconies.", size: "1350 sqft", floor: "2nd", available: "Next month", features: "Park View, Modular Kitchen, CCTV" },
         { id: "STL103", code: "STL-103", city: "Delhi NCR", area: "Dwarka", title: "Advent Residency", bhk: "2 BHK", price: 18500, images: ["https://picsum.photos/id/105/500/350", "https://picsum.photos/id/106/500/350"], videos: [], desc: "Close to metro, gym & pool, wifi ready.", size: "950 sqft", floor: "5th", available: "15 days", features: "Swimming Pool, Gym, Security" },
         { id: "STL104", code: "STL-104", city: "Mumbai", area: "Andheri East", title: "Sea View Apartments", bhk: "1 BHK", price: 28000, images: ["https://picsum.photos/id/21/500/350", "https://picsum.photos/id/22/500/350", "https://picsum.photos/id/23/500/350"], videos: ["https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"], desc: "Sea facing luxury complex, AC rooms.", size: "650 sqft", floor: "12th", available: "Immediate", features: "Sea View, AC, Club House" },
         { id: "STL105", code: "STL-105", city: "Bangalore", area: "Whitefield", title: "Tech Hub Nest", bhk: "2 BHK", price: 25000, images: ["https://picsum.photos/id/1/500/350", "https://picsum.photos/id/2/500/350", "https://picsum.photos/id/3/500/350"], videos: [], desc: "Near IT parks, gated community.", size: "1050 sqft", floor: "8th", available: "Immediate", features: "Gated Community, Power Backup, Parking" },
