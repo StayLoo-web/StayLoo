@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
     <title>StayLoo | Rooms for Rent — Verified Private Room Listings</title>
     <link rel="icon" type="image/png" href="../images/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -24,6 +24,13 @@
             background: #f5f9fe;
             color: #0a2540;
             line-height: 1.5;
+        }
+        /* Prevent body scroll when modal is open */
+        body.modal-open {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
         }
         .page-wrapper {
             display: flex;
@@ -194,7 +201,6 @@
             font-family: monospace;
             font-weight: 600;
         }
-        /* Verified and Popular Badges */
         .badge-container {
             position: absolute;
             top: 12px;
@@ -265,7 +271,6 @@
         .owner-section:hover {
             background: #eef3f8;
         }
-        /* Blank avatar style — Instagram style empty profile picture */
         .owner-avatar {
             width: 38px;
             height: 38px;
@@ -281,7 +286,6 @@
             font-size: 1.2rem;
             font-weight: 500;
         }
-        /* For blank avatar: show placeholder icon */
         .owner-avatar.blank-avatar {
             background: #eef2ff;
             color: #8b5cf6;
@@ -313,8 +317,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -412,6 +416,7 @@
             height: 40px;
             margin: 10px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 10;
         }
         .main-footer {
             background: #0a1e2c;
@@ -537,7 +542,6 @@
             cursor: pointer;
             color: #8aaec0;
         }
-        /* Half blurred number - permanently blurred, no interaction */
         .half-blurred-number {
             filter: blur(5px);
             display: inline-block;
@@ -652,20 +656,20 @@
 </div>
 
 <script>
-    // Owner data for each property — all avatars removed intentionally (blank profile)
+    // Owner data for each property — blank avatars
     const ownersData = {
         "STL101": { name: "Mrs. Manorama Maurya", bio: "Manorama is a homemaker and she is ready to help someone in need.", contact: "+91 98765 12345" },
-        "STL102": { name: "Mrs. Priya Singh", bio: "Interior designer turned landlord. Loves creating cozy spaces and green environments.", contact: "+91 99887 66554" },
-        "STL103": { name: "Mr. Ankit Sharma", bio: "Young entrepreneur focused on premium rental properties in prime locations.", contact: "+91 98112 33456" },
-        "STL104": { name: "Ms. Neha Mehta", bio: "Hospitality professional ensuring every tenant enjoys luxury and comfort.", contact: "+91 99200 77661" },
-        "STL105": { name: "Mr. Karthik Iyer", bio: "Tech professional renting out premium flats near IT parks. Quick responsive maintenance.", contact: "+91 97422 99881" },
-        "STL106": { name: "Mrs. Sneha Joshi", bio: "Property manager with keen eye for quality, providing fully equipped homes.", contact: "+91 91234 56789" },
-        "STL107": { name: "Mr. Akhtar Khan", bio: "Budget-friendly housing specialist focusing on student accommodations.", contact: "+91 88670 33221" },
-        "STL108": { name: "Ms. Ritu Bhatia", bio: "Modern living curator, smart homes and tech-ready apartments.", contact: "+91 98732 11457" },
-        "STL109": { name: "Mr. Dheeraj Menon", bio: "Premium realtor in Koramangala, known for upscale rental experiences.", contact: "+91 77009 88112" }
+        "STL102": { name: "Mrs. Priya Singh", bio: "Interior designer turned landlord. Loves creating cozy spaces.", contact: "+91 99887 66554" },
+        "STL103": { name: "Mr. Ankit Sharma", bio: "Young entrepreneur focused on premium rental properties.", contact: "+91 98112 33456" },
+        "STL104": { name: "Ms. Neha Mehta", bio: "Hospitality professional ensuring every tenant enjoys luxury.", contact: "+91 99200 77661" },
+        "STL105": { name: "Mr. Karthik Iyer", bio: "Tech professional renting out premium flats near IT parks.", contact: "+91 97422 99881" },
+        "STL106": { name: "Mrs. Sneha Joshi", bio: "Property manager with keen eye for quality.", contact: "+91 91234 56789" },
+        "STL107": { name: "Mr. Akhtar Khan", bio: "Budget-friendly housing specialist.", contact: "+91 88670 33221" },
+        "STL108": { name: "Ms. Ritu Bhatia", bio: "Modern living curator, smart homes.", contact: "+91 98732 11457" },
+        "STL109": { name: "Mr. Dheeraj Menon", bio: "Premium realtor in Koramangala.", contact: "+91 77009 88112" }
     };
     
-    // Badge data for each property (verified and popular status)
+    // Badge data for each property
     const propertyBadges = {
         "STL101": { verified: true, popular: true },
         "STL102": { verified: true, popular: false },
@@ -678,7 +682,6 @@
         "STL109": { verified: true, popular: true }
     };
     
-    // Function to create blurred half number (permanently blurred, no reveal)
     function getHalfBlurredNumber(fullNumber) {
         const cleanNumber = fullNumber.replace(/[\s+]/g, '');
         const length = cleanNumber.length;
@@ -692,71 +695,113 @@
         return maskedNumber;
     }
     
+    // Properties Data with fullAddress added, Features renamed to Amenities in modal
     const properties = [
         { id: "STL101", code: "STL-101", city: "Lucknow", area: "Gomti Nagar", title: "1 BHK Fully Furnished", bhk: "1 BHK", price: 7000,
-          images: ["../images/SHR1.jpeg", "../images/SHR4.jpeg", "../images/SHR3.jpeg", "../images/SHR5.jpeg", "../images/SHR2.jpeg"],
-          videos: [], desc: "Fully furnished, near Saraswati puram kharagpur, modern amenities.",  floor: "1st Floor", available: "Immediate", features: "Bed, Almirah, 2 Tables, Bed box, 1 Cooler", size: "550 sqft" },
+          images: ["https://picsum.photos/id/152/400/300", "https://picsum.photos/id/155/400/300", "https://picsum.photos/id/159/400/300"],
+          videos: [], desc: "Fully furnished, near metro station, modern amenities.", floor: "1st Floor", available: "Immediate", features: "Bed, Almirah, 2 Tables, Bed box, 1 Cooler", size: "550 sqft", fullAddress: "Sunrise PG, B-32, Vibhuti Khand, Gomti Nagar, Lucknow - 226010" },
         { id: "STL102", code: "STL-102", city: "Lucknow", area: "Indira Nagar", title: "Green Valley Homes", bhk: "3 BHK", price: 22000,
-          images: ["https://picsum.photos/id/169/400/300", "https://picsum.photos/id/164/400/300", "https://picsum.photos/id/29/400/300", "https://picsum.photos/id/28/400/300"],
-          videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Semi-furnished, park facing, modular kitchen, spacious balconies, excellent ventilation.", size: "1350 sqft", floor: "2nd Floor", available: "Next month", features: "Park View, Modular Kitchen, Parking, CCTV" },
+          images: ["https://picsum.photos/id/169/400/300", "https://picsum.photos/id/164/400/300", "https://picsum.photos/id/29/400/300"],
+          videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Semi-furnished, park facing, modular kitchen.", size: "1350 sqft", floor: "2nd Floor", available: "Next month", features: "Park View, Modular Kitchen, Parking, CCTV", fullAddress: "C-12, Green Valley Apartments, Indira Nagar, Lucknow - 226016" },
         { id: "STL103", code: "STL-103", city: "Delhi NCR", area: "Dwarka", title: "Advent Residency", bhk: "2 BHK", price: 18500,
-          images: ["https://picsum.photos/id/105/400/300", "https://picsum.photos/id/106/400/300", "https://picsum.photos/id/107/400/300", "https://picsum.photos/id/108/400/300"],
-          videos: [], desc: "Close to metro station, gym & swimming pool, wifi ready, 24x7 water supply.", size: "950 sqft", floor: "5th Floor", available: "15 days", features: "Swimming Pool, Gym, Security, Intercom" },
+          images: ["https://picsum.photos/id/105/400/300", "https://picsum.photos/id/106/400/300", "https://picsum.photos/id/107/400/300"],
+          videos: [], desc: "Close to metro station, gym & swimming pool.", size: "950 sqft", floor: "5th Floor", available: "15 days", features: "Swimming Pool, Gym, Security, Intercom", fullAddress: "Sector 12, Pocket 5, Dwarka, New Delhi - 110075" },
         { id: "STL104", code: "STL-104", city: "Mumbai", area: "Andheri East", title: "Sea View Apartments", bhk: "1 BHK", price: 28000,
-          images: ["https://picsum.photos/id/21/400/300", "https://picsum.photos/id/22/400/300", "https://picsum.photos/id/23/400/300", "https://picsum.photos/id/24/400/300"],
-          videos: ["https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"], desc: "Premium location, 5 mins to metro, AC rooms, sea facing, luxury complex.", size: "650 sqft", floor: "12th Floor", available: "Immediate", features: "Sea View, AC, Lift, Club House" },
+          images: ["https://picsum.photos/id/21/400/300", "https://picsum.photos/id/22/400/300", "https://picsum.photos/id/23/400/300"],
+          videos: ["https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"], desc: "Premium location, AC rooms, sea facing.", size: "650 sqft", floor: "12th Floor", available: "Immediate", features: "Sea View, AC, Lift, Club House", fullAddress: "Sea View PG, JP Road, Andheri East, Mumbai - 400069" },
         { id: "STL105", code: "STL-105", city: "Bangalore", area: "Whitefield", title: "Tech Hub Nest", bhk: "2 BHK", price: 25000,
-          images: ["https://picsum.photos/id/1/400/300", "https://picsum.photos/id/2/400/300", "https://picsum.photos/id/3/400/300", "https://picsum.photos/id/4/400/300"],
-          videos: [], desc: "Near IT parks, gated community, excellent ventilation, high speed internet ready.", size: "1050 sqft", floor: "8th Floor", available: "Immediate", features: "Gated Community, Power Backup, Parking, Garden" },
+          images: ["https://picsum.photos/id/1/400/300", "https://picsum.photos/id/2/400/300", "https://picsum.photos/id/3/400/300"],
+          videos: [], desc: "Near IT parks, gated community.", size: "1050 sqft", floor: "8th Floor", available: "Immediate", features: "Gated Community, Power Backup, Parking, Garden", fullAddress: "Prestige Ozone, Wing D, Whitefield, Bangalore - 560066" },
         { id: "STL106", code: "STL-106", city: "Pune", area: "Hinjewadi", title: "Hinjewadi Heights", bhk: "3 BHK", price: 32000,
-          images: ["https://picsum.photos/id/5/400/300", "https://picsum.photos/id/6/400/300", "https://picsum.photos/id/7/400/300", "https://picsum.photos/id/8/400/300"],
-          videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Spacious, power backup, kids play area, near IT parks, great locality.", size: "1450 sqft", floor: "4th Floor", available: "Next week", features: "Kids Play Area, Power Backup, Gym, Security" },
+          images: ["https://picsum.photos/id/5/400/300", "https://picsum.photos/id/6/400/300", "https://picsum.photos/id/7/400/300"],
+          videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Spacious, power backup, near IT parks.", size: "1450 sqft", floor: "4th Floor", available: "Next week", features: "Kids Play Area, Power Backup, Gym, Security", fullAddress: "Nyati County, Tower 3, Hinjewadi Phase 2, Pune - 411057" },
         { id: "STL107", code: "STL-107", city: "Lucknow", area: "Alambagh", title: "Royal Residency", bhk: "1 BHK", price: 8000,
           images: ["https://picsum.photos/id/9/400/300", "https://picsum.photos/id/10/400/300", "https://picsum.photos/id/11/400/300"],
-          videos: [], desc: "Budget friendly, near bus stand, fully furnished, ideal for students.", size: "550 sqft", floor: "1st Floor", available: "Immediate", features: "Furnished, Water Filter, Parking" },
+          videos: [], desc: "Budget friendly, near bus stand.", size: "550 sqft", floor: "1st Floor", available: "Immediate", features: "Furnished, Water Filter, Parking", fullAddress: "Near Alambagh Bus Stand, B-block, Royal Residency, Lucknow - 226005" },
         { id: "STL108", code: "STL-108", city: "Delhi NCR", area: "Noida Sector 62", title: "Elite Studio", bhk: "1 BHK", price: 12000,
-          images: ["https://picsum.photos/id/12/400/300", "https://picsum.photos/id/13/400/300", "https://picsum.photos/id/14/400/300", "https://picsum.photos/id/15/400/300"],
-          videos: [], desc: "Smart studio apartment, high speed internet, nearby metro, modern interiors.", size: "480 sqft", floor: "9th Floor", available: "Immediate", features: "Smart Lock, High Speed WiFi, CCTV" },
+          images: ["https://picsum.photos/id/12/400/300", "https://picsum.photos/id/13/400/300", "https://picsum.photos/id/14/400/300"],
+          videos: [], desc: "Smart studio apartment, high speed internet.", size: "480 sqft", floor: "9th Floor", available: "Immediate", features: "Smart Lock, High Speed WiFi, CCTV", fullAddress: "Logix Blossom, Sector 62, Noida - 201301" },
         { id: "STL109", code: "STL-109", city: "Bangalore", area: "Koramangala", title: "Central Vista", bhk: "2 BHK", price: 38000,
-          images: ["https://picsum.photos/id/16/400/300", "https://picsum.photos/id/17/400/300", "https://picsum.photos/id/18/400/300", "https://picsum.photos/id/19/400/300"],
-          videos: [], desc: "High-street location, cafes nearby, modern interiors, premium locality.", size: "1200 sqft", floor: "6th Floor", available: "Negotiable", features: "Premium Location, Modern Kitchen, Parking, Lift" }
+          images: ["https://picsum.photos/id/16/400/300", "https://picsum.photos/id/17/400/300", "https://picsum.photos/id/18/400/300"],
+          videos: [], desc: "High-street location, cafes nearby.", size: "1200 sqft", floor: "6th Floor", available: "Negotiable", features: "Premium Location, Modern Kitchen, Parking, Lift", fullAddress: "5th Block, Koramangala, 80ft Road, Bangalore - 560034" }
     ];
+
+    let savedScrollPosition = 0;
+    let isModalOpen = false;
+
+    function storeScrollPosition() {
+        savedScrollPosition = window.scrollY || document.documentElement.scrollTop;
+    }
+
+    function restoreScrollPosition() {
+        window.scrollTo(0, savedScrollPosition);
+    }
 
     function openOwnerPopup(propertyId) {
         const owner = ownersData[propertyId];
         if(!owner) return;
-        // Blank avatar: show icon instead of image
+        storeScrollPosition();
         const imgContainer = document.getElementById('ownerPopupImgContainer');
         imgContainer.innerHTML = '<i class="fas fa-user-circle" style="font-size: 4rem;"></i>';
         document.getElementById('ownerPopupName').innerText = owner.name;
         document.getElementById('ownerPopupBio').innerText = owner.bio;
-        const blurredDisplay = getHalfBlurredNumber(owner.contact);
-        document.getElementById('ownerPopupContact').innerText = blurredDisplay;
+        document.getElementById('ownerPopupContact').innerText = getHalfBlurredNumber(owner.contact);
         document.getElementById('ownerPopup').classList.add('active');
         document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
+        document.body.style.top = `-${savedScrollPosition}px`;
+        isModalOpen = true;
     }
     
-    document.getElementById('closeOwnerPopupBtn').onclick = () => {
+    function closeOwnerPopup() {
         document.getElementById('ownerPopup').classList.remove('active');
         document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
+        document.body.style.top = '';
+        restoreScrollPosition();
+        isModalOpen = false;
+    }
+    
+    document.getElementById('closeOwnerPopupBtn').onclick = closeOwnerPopup;
+    document.getElementById('ownerPopup').onclick = (e) => { if(e.target === document.getElementById('ownerPopup')) closeOwnerPopup(); };
+    
+    // Fullscreen viewer
+    const fullscreenViewer = document.createElement('div');
+    fullscreenViewer.className = 'fullscreen-img-viewer';
+    fullscreenViewer.innerHTML = `<button class="close-fullscreen">&times;</button><img class="fullscreen-img" src="">`;
+    document.body.appendChild(fullscreenViewer);
+    const fullscreenImg = fullscreenViewer.querySelector('.fullscreen-img');
+    const closeFullscreenBtn = fullscreenViewer.querySelector('.close-fullscreen');
+    window.openFullScreen = function(imgSrc) { 
+        fullscreenImg.src = imgSrc; 
+        fullscreenViewer.classList.add('active'); 
+        document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
     };
-    document.getElementById('ownerPopup').onclick = (e) => { if(e.target === document.getElementById('ownerPopup')) document.getElementById('ownerPopup').classList.remove('active'); };
+    closeFullscreenBtn.onclick = () => { 
+        fullscreenViewer.classList.remove('active'); 
+        if (!isModalOpen) {
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+        } else {
+            document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+        }
+    };
+    fullscreenViewer.onclick = (e) => { if (e.target === fullscreenViewer) closeFullscreenBtn.click(); };
     
     function renderCards(filteredProps) {
         const grid = document.getElementById('propertiesGrid');
         if (!filteredProps.length) { grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 3rem;">🏠 No properties match your criteria.</div>`; return; }
         grid.innerHTML = filteredProps.map(prop => {
             const owner = ownersData[prop.id];
-            // BLANK AVATAR - no image, show placeholder icon (Instagram-style empty)
             const avatarHtml = `<div class="owner-avatar blank-avatar"><i class="fas fa-user-circle"></i></div>`;
             const badges = propertyBadges[prop.id] || { verified: false, popular: false };
             let badgesHtml = '';
-            if (badges.verified) {
-                badgesHtml += `<span class="verified-badge"><i class="fas fa-check-circle"></i> Verified</span>`;
-            }
-            if (badges.popular) {
-                badgesHtml += `<span class="popular-badge"><i class="fas fa-fire"></i> Popular</span>`;
-            }
+            if (badges.verified) badgesHtml += `<span class="verified-badge"><i class="fas fa-check-circle"></i> Verified</span>`;
+            if (badges.popular) badgesHtml += `<span class="popular-badge"><i class="fas fa-fire"></i> Popular</span>`;
             return `
             <div class="property-card">
                 <div onclick="openModal('${prop.id}')">
@@ -772,7 +817,6 @@
                         <div class="card-details"><span>🏠 ${prop.bhk}</span><span>📏 ${prop.size || 'N/A'}</span></div>
                         <div class="price">₹${prop.price.toLocaleString()}/month</div>
                     </div>
-                    <!-- Owner section with blank avatar + know more -->
                     <div class="owner-section" onclick="openOwnerPopup('${prop.id}')">
                         ${avatarHtml}
                         <div class="owner-info-text">
@@ -785,16 +829,6 @@
             </div>
         `}).join('');
     }
-    
-    const fullscreenViewer = document.createElement('div');
-    fullscreenViewer.className = 'fullscreen-img-viewer';
-    fullscreenViewer.innerHTML = `<button class="close-fullscreen">&times;</button><img class="fullscreen-img" src="">`;
-    document.body.appendChild(fullscreenViewer);
-    const fullscreenImg = fullscreenViewer.querySelector('.fullscreen-img');
-    const closeFullscreen = fullscreenViewer.querySelector('.close-fullscreen');
-    window.openFullScreen = function(imgSrc) { fullscreenImg.src = imgSrc; fullscreenViewer.classList.add('active'); document.body.style.overflow = 'hidden'; };
-    closeFullscreen.onclick = () => { fullscreenViewer.classList.remove('active'); document.body.style.overflow = ''; };
-    fullscreenViewer.onclick = (e) => { if (e.target === fullscreenViewer) closeFullscreen.click(); };
     
     function getFilteredProperties() {
         const city = document.getElementById('cityFilter').value;
@@ -809,6 +843,7 @@
             return true;
         });
     }
+    
     function applyFilters() { renderCards(getFilteredProperties()); }
     function resetFilters() { document.getElementById('cityFilter').value = 'all'; document.getElementById('areaFilter').value = ''; document.getElementById('budgetFilter').value = 'any'; document.getElementById('bhkFilter').value = 'all'; applyFilters(); }
     
@@ -817,14 +852,17 @@
         const prop = properties.find(p => p.id === propertyId);
         if (!prop) return;
         currentProperty = prop;
+        storeScrollPosition();
+        isModalOpen = true;
         const modal = document.getElementById('propertyModal');
         const modalContent = document.getElementById('modalContent');
         let mediaHtml = prop.images.map(img => `<img class="modal-img" src="${img}" onclick="openFullScreen('${img}')">`).join('');
         if(prop.videos && prop.videos.length){
             prop.videos.forEach(vid => {
-                mediaHtml += `<div class="modal-video-item"><video controls preload="metadata" style="width:100%; height:100%; border-radius:1rem;"><source src="${vid}" type="video/mp4"></video></div>`;
+                mediaHtml += `<div class="modal-video-item" onclick="openFullScreen('${vid}')"><video preload="metadata" style="width:100%; height:100%; border-radius:1rem;"><source src="${vid}" type="video/mp4"></video><div style="position:absolute;bottom:5px;right:8px;background:rgba(0,0,0,0.6);padding:2px 6px;border-radius:15px;font-size:10px;color:white;"><i class="fas fa-expand"></i></div></div>`;
             });
         }
+        // CHANGES: "Features" changed to "Amenities" and added Full Address block
         modalContent.innerHTML = `
             <div class="modal-img-gallery">${mediaHtml}</div>
             <div class="modal-body">
@@ -839,7 +877,8 @@
                 </div>
                 <div style="background:#f0f7fb; padding:14px; border-radius:16px; margin:12px 0;">
                     <strong>📝 Description:</strong><br> ${prop.desc}<br><br>
-                    <strong>✨ Features:</strong><br> ${prop.features}
+                    <strong>✨ Amenities:</strong><br> ${prop.features}<br><br>
+                    <strong>📍 Full Address:</strong><br> ${prop.fullAddress}
                 </div>
                 <div><strong>💰 Monthly Rent:</strong> ₹${prop.price.toLocaleString()} + maintenance</div>
                 <button id="sendQueryWhatsAppBtn" class="send-query-btn"><i class="fab fa-whatsapp"></i> Send Query on WhatsApp</button>
@@ -847,17 +886,63 @@
         `;
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
+        document.body.style.top = `-${savedScrollPosition}px`;
+        
         document.getElementById('sendQueryWhatsAppBtn')?.addEventListener('click', () => {
-            const msg = `🏠 *StayLoo Property Inquiry*\n\nProperty: ${currentProperty.title}\n📍 Area: ${currentProperty.area}, ${currentProperty.city}\n🏷️ Code: ${currentProperty.code}\n🏠 Type: ${currentProperty.bhk}\n💰 Rent: ₹${currentProperty.price}`;
-            window.open(`https://wa.me/917311170545?text=${encodeURIComponent(msg)}`, '_blank');
+            const YOUR_WHATSAPP_NUMBER = "919170548739";
+            const message = `🏠 *STAYLOO ROOM INQUIRY* 🏠
+Hey StayLoo! I'm interested in this room.
+━━━━━━━━━━━━━━━━━━━━━
+📌 *Property Code:* ${currentProperty.code}
+🏢 *Property Name:* ${currentProperty.title}
+📍 *Location:* ${currentProperty.area}, ${currentProperty.city}
+🏠 *BHK Type:* ${currentProperty.bhk}
+💰 *Monthly Rent:* ₹${currentProperty.price.toLocaleString()}
+📏 *Size:* ${currentProperty.size || 'N/A'}
+📍 *Full Address:* ${currentProperty.fullAddress}
+━━━━━━━━━━━━━━━━━━━━━`;
+            window.open(`https://wa.me/${YOUR_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
         });
     };
     
+    function closeModal() {
+        const modal = document.getElementById('propertyModal');
+        if (modal.classList.contains('active')) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.width = '';
+            document.body.style.top = '';
+            restoreScrollPosition();
+            isModalOpen = false;
+        }
+    }
+    
     const modal = document.getElementById('propertyModal');
-    document.getElementById('closeModalBtn').onclick = () => { modal.classList.remove('active'); document.body.style.overflow = ''; };
-    modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
+    document.getElementById('closeModalBtn').onclick = closeModal;
+    modal.onclick = (e) => { if (e.target === modal) closeModal(); };
     document.getElementById('applyFilterBtn').onclick = applyFilters;
     document.getElementById('resetFilterBtn').onclick = resetFilters;
+    
+    // Handle browser back button
+    window.addEventListener('popstate', function(event) {
+        const modalEl = document.getElementById('propertyModal');
+        const ownerPopupEl = document.getElementById('ownerPopup');
+        const fsViewer = document.querySelector('.fullscreen-img-viewer');
+        if (fsViewer && fsViewer.classList.contains('active')) {
+            event.preventDefault();
+            closeFullscreenBtn.click();
+        } else if (modalEl.classList.contains('active')) {
+            event.preventDefault();
+            closeModal();
+        } else if (ownerPopupEl.classList.contains('active')) {
+            event.preventDefault();
+            closeOwnerPopup();
+        }
+    });
+    
     window.addEventListener('DOMContentLoaded', () => { renderCards(properties); });
 </script>
 </body>
