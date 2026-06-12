@@ -815,34 +815,35 @@
         return maskedNumber;
     }
     
+    // Properties Data with fullAddress added (Amenities renamed from Features, Full Address block added)
     const properties = [
         { id: "STL101", code: "STL-101", city: "Lucknow", area: "Gomti Nagar", title: "Sunrise PG for Boys", bhk: "2 BHK", price: 15000,
           images: ["https://picsum.photos/id/152/400/300", "https://picsum.photos/id/155/400/300", "https://picsum.photos/id/159/400/300"],
-          videos: ["https://www.w3schools.com/html/mov_bbb.mp4"], desc: "Fully furnished PG, near metro station, 24/7 security, meals included.", size: "1100 sqft", floor: "3rd Floor", available: "Immediate", features: "Wi-Fi, Gym, Power Backup, Lift, Meals Included" },
+          videos: ["https://www.w3schools.com/html/mov_bbb.mp4"], desc: "Fully furnished PG, near metro station, 24/7 security, meals included.", size: "1100 sqft", floor: "3rd Floor", available: "Immediate", features: "Wi-Fi, Gym, Power Backup, Lift, Meals Included", fullAddress: "Sunrise PG, B-32, Vibhuti Khand, Gomti Nagar, Lucknow - 226010" },
         { id: "STL102", code: "STL-102", city: "Lucknow", area: "Indira Nagar", title: "Green Valley PG for Girls", bhk: "3 BHK", price: 22000,
           images: ["https://picsum.photos/id/169/400/300", "https://picsum.photos/id/164/400/300", "https://picsum.photos/id/29/400/300"],
-          videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Semi-furnished, park facing, modular kitchen, lady owner.", size: "1350 sqft", floor: "2nd Floor", available: "Next month", features: "Park View, Modular Kitchen, CCTV, Ladies Only" },
+          videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Semi-furnished, park facing, modular kitchen, lady owner.", size: "1350 sqft", floor: "2nd Floor", available: "Next month", features: "Park View, Modular Kitchen, CCTV, Ladies Only", fullAddress: "C-12, Green Valley Apartments, Indira Nagar, Lucknow - 226016" },
         { id: "STL103", code: "STL-103", city: "Delhi NCR", area: "Dwarka", title: "Advent PG Residency", bhk: "2 BHK", price: 18500,
           images: ["https://picsum.photos/id/105/400/300", "https://picsum.photos/id/106/400/300", "https://picsum.photos/id/107/400/300"],
-          videos: [], desc: "Close to metro station, gym & swimming pool, wifi ready.", size: "950 sqft", floor: "5th Floor", available: "15 days", features: "Swimming Pool, Gym, Security, Meals" },
+          videos: [], desc: "Close to metro station, gym & swimming pool, wifi ready.", size: "950 sqft", floor: "5th Floor", available: "15 days", features: "Swimming Pool, Gym, Security, Meals", fullAddress: "Sector 12, Pocket 5, Dwarka, New Delhi - 110075" },
         { id: "STL104", code: "STL-104", city: "Mumbai", area: "Andheri East", title: "Sea View PG", bhk: "1 BHK", price: 28000,
           images: ["https://picsum.photos/id/21/400/300", "https://picsum.photos/id/22/400/300", "https://picsum.photos/id/23/400/300"],
-          videos: ["https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"], desc: "Premium location, AC rooms, sea facing, luxury PG complex.", size: "650 sqft", floor: "12th Floor", available: "Immediate", features: "Sea View, AC, Lift, Laundry" },
+          videos: ["https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"], desc: "Premium location, AC rooms, sea facing, luxury PG complex.", size: "650 sqft", floor: "12th Floor", available: "Immediate", features: "Sea View, AC, Lift, Laundry", fullAddress: "Sea View PG, JP Road, Andheri East, Mumbai - 400069" },
         { id: "STL105", code: "STL-105", city: "Bangalore", area: "Whitefield", title: "Tech Hub PG", bhk: "2 BHK", price: 25000,
           images: ["https://picsum.photos/id/1/400/300", "https://picsum.photos/id/2/400/300", "https://picsum.photos/id/3/400/300"],
-          videos: [], desc: "Near IT parks, gated community, high speed internet ready.", size: "1050 sqft", floor: "8th Floor", available: "Immediate", features: "Gated Community, Power Backup, Parking, High Speed WiFi" },
+          videos: [], desc: "Near IT parks, gated community, high speed internet ready.", size: "1050 sqft", floor: "8th Floor", available: "Immediate", features: "Gated Community, Power Backup, Parking, High Speed WiFi", fullAddress: "Prestige Ozone, Wing D, Whitefield, Bangalore - 560066" },
         { id: "STL106", code: "STL-106", city: "Pune", area: "Hinjewadi", title: "Hinjewadi PG Heights", bhk: "3 BHK", price: 32000,
           images: ["https://picsum.photos/id/5/400/300", "https://picsum.photos/id/6/400/300", "https://picsum.photos/id/7/400/300"],
-          videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Spacious, power backup, near IT parks.", size: "1450 sqft", floor: "4th Floor", available: "Next week", features: "Power Backup, Gym, Security" },
+          videos: ["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"], desc: "Spacious, power backup, near IT parks.", size: "1450 sqft", floor: "4th Floor", available: "Next week", features: "Power Backup, Gym, Security", fullAddress: "Nyati County, Tower 3, Hinjewadi Phase 2, Pune - 411057" },
         { id: "STL107", code: "STL-107", city: "Lucknow", area: "Alambagh", title: "Royal PG Residency", bhk: "1 BHK", price: 8000,
           images: ["https://picsum.photos/id/9/400/300", "https://picsum.photos/id/10/400/300", "https://picsum.photos/id/11/400/300"],
-          videos: [], desc: "Budget friendly, near bus stand, fully furnished.", size: "550 sqft", floor: "1st Floor", available: "Immediate", features: "Furnished, Water Filter, Parking, Tiffin Service" },
+          videos: [], desc: "Budget friendly, near bus stand, fully furnished.", size: "550 sqft", floor: "1st Floor", available: "Immediate", features: "Furnished, Water Filter, Parking, Tiffin Service", fullAddress: "Near Alambagh Bus Stand, B-block, Royal Residency, Lucknow - 226005" },
         { id: "STL108", code: "STL-108", city: "Delhi NCR", area: "Noida Sector 62", title: "Elite PG Studio", bhk: "1 BHK", price: 12000,
           images: ["https://picsum.photos/id/12/400/300", "https://picsum.photos/id/13/400/300", "https://picsum.photos/id/14/400/300"],
-          videos: [], desc: "Smart studio PG, high speed internet, nearby metro.", size: "480 sqft", floor: "9th Floor", available: "Immediate", features: "Smart Lock, High Speed WiFi, CCTV, AC" },
+          videos: [], desc: "Smart studio PG, high speed internet, nearby metro.", size: "480 sqft", floor: "9th Floor", available: "Immediate", features: "Smart Lock, High Speed WiFi, CCTV, AC", fullAddress: "Logix Blossom, Sector 62, Noida - 201301" },
         { id: "STL109", code: "STL-109", city: "Bangalore", area: "Koramangala", title: "Central Vista PG", bhk: "2 BHK", price: 38000,
           images: ["https://picsum.photos/id/16/400/300", "https://picsum.photos/id/17/400/300", "https://picsum.photos/id/18/400/300"],
-          videos: [], desc: "High-street location, cafes nearby, modern interiors.", size: "1200 sqft", floor: "6th Floor", available: "Negotiable", features: "Premium Location, Modern Kitchen, Parking, Lift, Gym" }
+          videos: [], desc: "High-street location, cafes nearby, modern interiors.", size: "1200 sqft", floor: "6th Floor", available: "Negotiable", features: "Premium Location, Modern Kitchen, Parking, Lift, Gym", fullAddress: "5th Block, Koramangala, 80ft Road, Bangalore - 560034" }
     ];
 
     let currentDisplayLimit = 6;
@@ -906,48 +907,30 @@
         hint.style.animation = 'fadeInOut 3s ease-in-out forwards';
     }
 
-    // CRITICAL FIX: Both cross button AND back button call the same close function
-    // No history.back() - just close the viewer and restore scroll
     function closeFullscreen() {
         if (!isFullscreenActive) return;
-        
         const viewer = document.getElementById('fullscreenViewer');
         viewer.classList.remove('active');
         const videoEl = document.getElementById('fullscreenVideo');
-        if (videoEl) {
-            videoEl.pause();
-            videoEl.src = "";
-        }
-        
+        if (videoEl) { videoEl.pause(); videoEl.src = ""; }
         isFullscreenActive = false;
         currentFullscreenImages = [];
         resetZoomTransform();
-        
-        if (swipeHintTimer) {
-            clearTimeout(swipeHintTimer);
-            swipeHintTimer = null;
-        }
-        
-        // Restore body scroll
+        if (swipeHintTimer) { clearTimeout(swipeHintTimer); swipeHintTimer = null; }
         document.body.style.overflow = '';
         document.body.style.position = '';
         document.body.style.width = '';
         document.body.style.top = '';
-        
-        // Only restore scroll if no other modal is active
         if (!isModalActive && !isOwnerPopupActive) {
             restoreOriginalScrollPosition();
             originalScrollPosition = 0;
         }
-        
-        // Remove hash without triggering navigation
         if (window.location.hash === '#fullscreen') {
             history.replaceState(null, null, window.location.pathname + window.location.search);
         }
     }
 
     function openFullscreenMedia(url, isVideo = false, allImages = []) {
-        // Store original scroll position if not already stored
         if (originalScrollPosition === 0 && !isModalActive && !isOwnerPopupActive) {
             storeOriginalScrollPosition();
         }
@@ -980,15 +963,10 @@
         document.body.style.overflow = 'hidden';
         document.body.style.position = 'fixed';
         document.body.style.width = '100%';
-        
-        // Use replaceState instead of pushState to avoid extra history entries
         history.replaceState({ fullscreenOpen: true }, "", "#fullscreen");
-        
         if (swipeHintTimer) clearTimeout(swipeHintTimer);
         swipeHintTimer = setTimeout(() => {
-            if (viewer.classList.contains('active')) {
-                showSwipeHint();
-            }
+            if (viewer.classList.contains('active')) showSwipeHint();
         }, 3000);
     }
 
@@ -996,13 +974,11 @@
         const wrapper = document.getElementById('fsImageWrapper');
         const img = document.getElementById('fullscreenImg');
         if (!wrapper || !img) return;
-
         function resetTransform() {
             currentScale = 1;
             currentTranslate = { x: 0, y: 0 };
             img.style.transform = `translate(0px, 0px) scale(1)`;
         }
-
         wrapper.addEventListener('touchstart', (e) => {
             if (e.touches.length === 2) {
                 e.preventDefault();
@@ -1017,7 +993,6 @@
                 isTouching = true;
             }
         });
-
         wrapper.addEventListener('touchmove', (e) => {
             if (e.touches.length === 2 && initialDistance > 0) {
                 e.preventDefault();
@@ -1034,15 +1009,11 @@
                 img.style.transform = `translate(${currentTranslate.x}px, ${currentTranslate.y}px) scale(${currentScale})`;
             }
         });
-
         wrapper.addEventListener('touchend', (e) => {
-            if (currentScale < 1.1) {
-                resetTransform();
-            }
+            if (currentScale < 1.1) resetTransform();
             isTouching = false;
             initialDistance = 0;
         });
-
         wrapper.addEventListener('wheel', (e) => {
             e.preventDefault();
             const delta = e.deltaY > 0 ? -0.1 : 0.1;
@@ -1054,34 +1025,24 @@
     function initFullscreenSwipe() {
         const wrapper = document.getElementById('fsImageWrapper');
         if (!wrapper) return;
-        let touchStartX = 0;
-        let touchMoved = false;
-
+        let touchStartX = 0, touchMoved = false;
         wrapper.addEventListener('touchstart', (e) => {
             if (e.touches.length === 1 && currentScale === 1 && currentFullscreenImages.length > 1) {
                 touchStartX = e.touches[0].clientX;
                 touchMoved = false;
             }
         }, { passive: false });
-
         wrapper.addEventListener('touchmove', (e) => {
             if (e.touches.length !== 1 || currentScale > 1 || currentFullscreenImages.length <= 1) return;
             const deltaX = e.touches[0].clientX - touchStartX;
-            if (Math.abs(deltaX) > 10) {
-                e.preventDefault();
-                touchMoved = true;
-            }
+            if (Math.abs(deltaX) > 10) { e.preventDefault(); touchMoved = true; }
         }, { passive: false });
-
         wrapper.addEventListener('touchend', (e) => {
             if (!touchMoved || currentScale > 1 || currentFullscreenImages.length <= 1) return;
             const deltaX = e.changedTouches[0].clientX - touchStartX;
             if (Math.abs(deltaX) > 40) {
-                if (deltaX > 0) {
-                    showPrevFullscreenImage();
-                } else {
-                    showNextFullscreenImage();
-                }
+                if (deltaX > 0) showPrevFullscreenImage();
+                else showNextFullscreenImage();
             }
             touchMoved = false;
         });
@@ -1090,7 +1051,6 @@
     function closeAllModals() {
         const modal = document.getElementById('propertyModal');
         const ownerPopup = document.getElementById('ownerPopup');
-        
         if (modal.classList.contains('active')) {
             modal.classList.remove('active');
             isModalActive = false;
@@ -1100,9 +1060,7 @@
             document.body.style.top = '';
             restoreOriginalScrollPosition();
             originalScrollPosition = 0;
-            if (window.location.hash === '#modal') {
-                history.replaceState(null, null, window.location.pathname + window.location.search);
-            }
+            if (window.location.hash === '#modal') history.replaceState(null, null, window.location.pathname + window.location.search);
         }
         if (ownerPopup.classList.contains('active')) {
             ownerPopup.classList.remove('active');
@@ -1112,29 +1070,17 @@
             document.body.style.width = '';
             restoreOriginalScrollPosition();
             originalScrollPosition = 0;
-            if (window.location.hash === '#owner') {
-                history.replaceState(null, null, window.location.pathname + window.location.search);
-            }
+            if (window.location.hash === '#owner') history.replaceState(null, null, window.location.pathname + window.location.search);
         }
     }
 
-    // Handle browser back button - same as cross button
     window.addEventListener('popstate', function(event) {
         const modalEl = document.getElementById('propertyModal');
         const fsViewer = document.getElementById('fullscreenViewer');
         const ownerPopupEl = document.getElementById('ownerPopup');
-        
-        if (fsViewer.classList.contains('active')) {
-            event.preventDefault();
-            closeFullscreen();
-        } else if (modalEl.classList.contains('active')) {
-            event.preventDefault();
-            closeAllModals();
-        } else if (ownerPopupEl.classList.contains('active')) {
-            event.preventDefault();
-            closeAllModals();
-        }
-        // If no modals open, allow natural navigation
+        if (fsViewer.classList.contains('active')) { event.preventDefault(); closeFullscreen(); }
+        else if (modalEl.classList.contains('active')) { event.preventDefault(); closeAllModals(); }
+        else if (ownerPopupEl.classList.contains('active')) { event.preventDefault(); closeAllModals(); }
     });
 
     function openOwnerPopup(propertyId) {
@@ -1145,8 +1091,7 @@
         document.getElementById('ownerPopupImg').src = owner.avatar;
         document.getElementById('ownerPopupName').innerText = owner.name;
         document.getElementById('ownerPopupBio').innerText = owner.bio;
-        const blurredDisplay = getHalfBlurredNumber(owner.contact);
-        document.getElementById('ownerPopupContact').innerText = blurredDisplay;
+        document.getElementById('ownerPopupContact').innerText = getHalfBlurredNumber(owner.contact);
         document.getElementById('ownerPopup').classList.add('active');
         document.body.style.overflow = 'hidden';
         document.body.style.position = 'fixed';
@@ -1172,6 +1117,7 @@
                 mediaHtml += `<div class="modal-video-item" onclick="event.stopPropagation(); openFullscreenMedia('${vid}', true, [])"><video preload="metadata" style="width:100%; height:100%; border-radius:1rem;"><source src="${vid}" type="video/mp4"></video><div style="position:absolute;bottom:5px;right:8px;background:rgba(0,0,0,0.6);padding:2px 6px;border-radius:15px;font-size:10px;color:white;"><i class="fas fa-expand"></i></div></div>`;
             });
         }
+        // CHANGES: "Features" changed to "Amenities" and added Full Address block
         modalContent.innerHTML = `
             <div class="modal-gallery">${mediaHtml}</div>
             <div class="modal-body">
@@ -1186,7 +1132,8 @@
                 </div>
                 <div style="background:#f0f7fb; padding:14px; border-radius:16px; margin:12px 0;">
                     <strong>📝 Description:</strong><br> ${prop.desc}<br><br>
-                    <strong>✨ Features:</strong><br> ${prop.features}
+                    <strong>✨ Amenities:</strong><br> ${prop.features}<br><br>
+                    <strong>📍 Full Address:</strong><br> ${prop.fullAddress}
                 </div>
                 <div><strong>💰 Monthly Rent:</strong> ₹${prop.price.toLocaleString()} + maintenance</div>
                 <button id="sendQueryWhatsAppBtn" class="send-query-btn"><i class="fab fa-whatsapp"></i> Send Query on WhatsApp</button>
@@ -1210,6 +1157,7 @@ Hey StayLoo! I'm interested in this PG accommodation.
 🏠 *BHK Type:* ${prop.bhk}
 💰 *Monthly Rent:* ₹${prop.price.toLocaleString()}
 📏 *Size:* ${prop.size}
+📍 *Full Address:* ${prop.fullAddress}
 ━━━━━━━━━━━━━━━━━━━━━`;
             window.open(`https://wa.me/${YOUR_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
         });
@@ -1308,7 +1256,6 @@ Hey StayLoo! I'm interested in this PG accommodation.
     document.getElementById('applyFilterBtn').onclick = applyFiltersAndResetPagination;
     document.getElementById('resetFilterBtn').onclick = resetFilters;
     document.getElementById('viewMoreBtn').onclick = toggleViewMore;
-    
     document.getElementById('propertyModal').onclick = (e) => { if(e.target === document.getElementById('propertyModal')) closeAllModals(); };
     document.getElementById('ownerPopup').onclick = (e) => { if(e.target === document.getElementById('ownerPopup')) closeAllModals(); };
     
