@@ -28,26 +28,30 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+        /* Prevent text selection and highlight popup */
+body {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* Allow selection only on input fields (so users can type in filters) */
+input, select, textarea {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
         body {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-touch-callout: none;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: var(--dark);
             background-color: var(--light);
             overflow-x: hidden;
             width: 100%;
-        }
-
-        input, select, textarea {
-            -webkit-user-select: text;
-            -moz-user-select: text;
-            -ms-user-select: text;
-            user-select: text;
         }
 
         .container {
@@ -65,7 +69,7 @@
             color: var(--dark);
         }
 
-        /* ===== Header Styles ===== */
+        /* ===== Header Styles (ORIGINAL - WHITE BACKGROUND) ===== */
         .site-header {
             background: #ffffff;
             box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
@@ -331,27 +335,27 @@
             text-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
-        /* ===== BUTTON STYLES - FIXED FOR MOBILE ===== */
+        /* ===== BUTTON STYLES WITH FREE BADGE ===== */
         .hero-buttons {
             display: flex;
             gap: 20px;
-            margin-bottom: 35px;
+            margin-bottom: 40px;
             flex-wrap: wrap;
         }
 
         .btn {
             display: inline-block;
-            font-weight: 700;
+            padding: 14px 32px;
+            font-weight: 600;
             border-radius: 60px;
             text-decoration: none;
+            font-size: 1rem;
             font-family: inherit;
             transition: all 0.25s ease;
             cursor: pointer;
             text-align: center;
             letter-spacing: 0.5px;
             white-space: nowrap;
-            padding: 14px 36px;
-            font-size: 1rem;
         }
 
         .btn-primary {
@@ -367,40 +371,38 @@
             box-shadow: 0 12px 24px rgba(37, 99, 235, 0.4);
         }
 
+        /* Wrapper for the List Property button to position badge relative to it */
         .list-btn-wrapper {
             position: relative;
             display: inline-block;
         }
 
         .btn-secondary {
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(10px);
-            border: 1.5px solid rgba(255,255,255,0.65);
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(8px);
+            border: 1.5px solid rgba(255,255,255,0.45);
             color: white;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .btn-secondary:hover {
-            background: rgba(255,255,255,0.3);
-            border-color: rgba(255,255,255,0.95);
+            background: rgba(255,255,255,0.25);
+            border-color: rgba(255,255,255,0.7);
             transform: translateY(-2px);
         }
         
-        .btn-icon {
-            font-size: 1rem;
-        }
-        
+        /* FREE BADGE / STICKER - Eye-catching and shows it's absolutely free */
         .free-badge {
             position: absolute;
-            top: -12px;
-            right: -14px;
+            top: -14px;
+            right: -18px;
             background: linear-gradient(135deg, #10b981, #059669);
             color: white;
-            font-size: 0.68rem;
+            font-size: 0.7rem;
             font-weight: 800;
-            padding: 4px 10px;
+            padding: 5px 12px;
             border-radius: 60px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
             letter-spacing: 0.5px;
@@ -412,12 +414,14 @@
         }
         
         .free-badge i {
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             margin-right: 4px;
         }
         
         .list-btn-wrapper:hover .free-badge {
             transform: scale(1.05) rotate(1deg);
+            background: linear-gradient(135deg, #059669, #047857);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
         }
 
         /* ===== FEATURES BADGES ===== */
@@ -441,30 +445,30 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            background: rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.12);
             backdrop-filter: blur(12px);
             padding: 10px 22px;
             border-radius: 50px;
             font-size: 0.9rem;
-            font-weight: 600;
+            font-weight: 500;
             color: #ffffff;
-            letter-spacing: 0.3px;
-            border: 0.5px solid rgba(255, 255, 255, 0.35);
+            letter-spacing: 0.2px;
+            border: 0.5px solid rgba(255, 255, 255, 0.25);
             transition: all 0.2s ease;
             white-space: nowrap;
         }
 
         .badge-pill:hover {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
         }
 
         .badge-icon {
             font-size: 1rem;
-            color: #90cdf4;
+            color: #60a5fa;
         }
 
-        /* ===== CRITICAL MOBILE FIX - Buttons stay side by side ===== */
+        /* ===== RESPONSIVE - FIXED MOBILE BUTTONS ===== */
         @media (max-width: 760px) {
             .hero-content {
                 margin-left: 4%;
@@ -474,92 +478,99 @@
             }
             
             .hero-headline .no-brokers {
-                font-size: 3.5rem;
-                margin-bottom: 6px;
+                font-size: 3.8rem;
+                margin-bottom: 8px;
             }
             
             .hero-headline .find-verified {
-                font-size: 2.8rem;
+                font-size: 3.2rem;
                 display: block;
                 margin-bottom: 4px;
             }
             
             .hero-headline .blue-easily {
-                font-size: 2.8rem;
+                font-size: 3.2rem;
                 display: block;
             }
             
-            /* FIX: Keep buttons side by side without wrapping */
             .hero-buttons {
-                gap: 12px;
-                margin-bottom: 30px;
+                gap: 16px;
+                margin-bottom: 35px;
                 flex-direction: row;
                 flex-wrap: nowrap;
-                justify-content: flex-start;
             }
             
             .btn {
                 padding: 12px 20px;
-                font-size: 0.85rem;
+                font-size: 0.9rem;
+                flex: 1;
                 white-space: nowrap;
-                flex: 0 0 auto;
-            }
-            
-            .btn-secondary {
-                gap: 6px;
-            }
-            
-            .btn-icon {
-                font-size: 0.85rem;
+                letter-spacing: 0.3px;
             }
             
             .free-badge {
-                top: -10px;
-                right: -10px;
-                font-size: 0.6rem;
-                padding: 3px 8px;
+                top: -12px;
+                right: -12px;
+                font-size: 0.65rem;
+                padding: 4px 10px;
             }
             
             .free-badge i {
-                font-size: 0.6rem;
+                font-size: 0.65rem;
             }
             
             .badge-pill {
-                padding: 8px 16px;
-                font-size: 0.8rem;
-                gap: 6px;
+                padding: 8px 18px;
+                font-size: 0.85rem;
+                gap: 8px;
             }
             
             .trusted-line {
-                font-size: 0.75rem;
-                padding: 5px 14px;
-                margin-bottom: 20px;
+                font-size: 0.8rem;
+                padding: 6px 16px;
+                margin-bottom: 24px;
             }
         }
 
-        /* For very small screens (<= 480px) */
-        @media (max-width: 550px) {
-            .hero-headline .no-brokers {
-                font-size: 2.8rem;
-            }
-            .hero-headline .find-verified {
-                font-size: 2.2rem;
-            }
-            .hero-headline .blue-easily {
-                font-size: 2.2rem;
+        @media (max-width: 580px) {
+            .btn {
+                padding: 10px 14px;
+                font-size: 0.8rem;
+                letter-spacing: 0.2px;
             }
             
-            .hero-buttons {
-                gap: 10px;
+            .free-badge {
+                font-size: 0.6rem;
+                padding: 3px 8px;
+                top: -10px;
+                right: -10px;
+            }
+            
+            .badge-pill {
+                padding: 6px 14px;
+                font-size: 0.75rem;
+                gap: 6px;
+            }
+            
+            .badge-icon {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-headline .no-brokers {
+                font-size: 3rem;
+            }
+            .hero-headline .find-verified {
+                font-size: 2.5rem;
+            }
+            .hero-headline .blue-easily {
+                font-size: 2.5rem;
             }
             
             .btn {
-                padding: 10px 16px;
-                font-size: 0.78rem;
-            }
-            
-            .btn-icon {
-                font-size: 0.78rem;
+                padding: 9px 12px;
+                font-size: 0.75rem;
             }
             
             .free-badge {
@@ -569,36 +580,13 @@
                 right: -8px;
             }
             
+            .features-badges {
+                gap: 10px;
+            }
+            
             .badge-pill {
-                padding: 6px 14px;
-                font-size: 0.72rem;
-            }
-            
-            .badge-icon {
-                font-size: 0.8rem;
-            }
-        }
-
-        /* For extremely narrow screens (<= 400px) - still keep side by side */
-        @media (max-width: 430px) {
-            .btn {
-                padding: 8px 12px;
+                padding: 5px 12px;
                 font-size: 0.7rem;
-            }
-            
-            .btn-icon {
-                font-size: 0.7rem;
-            }
-            
-            .hero-buttons {
-                gap: 8px;
-            }
-            
-            .free-badge {
-                font-size: 0.5rem;
-                padding: 2px 6px;
-                top: -7px;
-                right: -7px;
             }
         }
 
@@ -1195,6 +1183,7 @@
             <div class="trusted-line">⭐ TRUSTED BY 500+ USERS</div>
             <div class="hero-buttons">
                 <a href="Browse-spaces" class="btn btn-primary"><span class="btn-icon">🔍</span> Find a Room</a>
+                <!-- List Property Button with FREE badge wrapper -->
                 <div class="list-btn-wrapper">
                     <a href="list-space" class="btn btn-secondary"><span class="btn-icon">🏠</span> List Your Property</a>
                     <div class="free-badge"><i class="fas fa-gem"></i> 100% FREE</div>
@@ -1219,7 +1208,7 @@
             </div>
         </div>
     </section>
-
+    
     <section class="why-stayloo">
         <div class="section-header">
             <h2>Why Choose StayLoo?</h2>
